@@ -1,0 +1,51 @@
+import type { NextPage } from "next";
+
+export type GroupComponentType = {
+  className?: string;
+  maskGroup?: string;
+  group289551?: string;
+  productDelivery?: string;
+};
+
+const GroupComponent: NextPage<GroupComponentType> = ({
+  className = "",
+  maskGroup,
+  group289551,
+  productDelivery,
+}) => {
+  return (
+    <div
+      className={`w-[358px] flex flex-col items-start justify-start pt-6 px-6 pb-5 box-border relative gap-[90px] max-w-full z-[1] text-left text-3xl text-white font-sora ${className}`}
+    >
+      <img
+        className="w-full h-full absolute !m-[0] top-[0px] right-[0px] bottom-[0px] left-[0px] max-w-full overflow-hidden max-h-full object-cover"
+        alt=""
+        src={maskGroup}
+      />
+      <img
+        className="w-16 h-16 relative z-[1]"
+        loading="lazy"
+        alt=""
+        src={group289551}
+      />
+      <div className="self-stretch flex flex-col items-end justify-start gap-6">
+        <div className="self-stretch flex flex-col items-start justify-start gap-4">
+          <h2 className="m-0 relative text-inherit tracking-[0.02em] leading-[30px] font-semibold font-[inherit] z-[1] mq450:text-lg mq450:leading-[24px]">
+            {productDelivery}
+          </h2>
+          <div className="self-stretch relative text-sm tracking-[0.02em] leading-[22px] font-reg text-white-60 z-[1]">
+            Lorem ipsum dolor sit amet, consec tetur adipiscing elit, sed do
+            eiusmodop tempor incididunt ut labore et dol
+          </div>
+        </div>
+        <img
+          className="w-8 h-8 relative overflow-hidden shrink-0 z-[1]"
+          alt=""
+          src="/frame-289552.svg"
+        />
+      </div>
+    </div>
+  );
+};
+
+export default GroupComponent;
