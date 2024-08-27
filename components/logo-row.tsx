@@ -5,6 +5,7 @@ export type LogoRowType = {
   className?: string;
   maskGroup?: string;
   liquid?: string;
+  size?: string; // Add size prop
 
   /** Style props */
   propPadding?: CSSProperties["padding"];
@@ -17,6 +18,7 @@ const LogoRow: NextPage<LogoRowType> = ({
   maskGroup,
   liquid,
   propMinWidth,
+  size = "100px", // Set default size
 }) => {
   const logoRowStyle: CSSProperties = useMemo(() => {
     return {
@@ -30,15 +32,23 @@ const LogoRow: NextPage<LogoRowType> = ({
     };
   }, [propMinWidth]);
 
+  const imageStyle: CSSProperties = useMemo(() => {
+    return {
+      width: size,
+      height: size,
+    };
+  }, [size]);
+
   return (
     <div
       className={`flex flex-col items-end justify-start py-0 pl-0 pr-1 gap-4 text-center text-xs text-white font-reg ${className}`}
       style={logoRowStyle}
     >
       <img
-        className="w-[100px] h-[100px] relative object-contain"
+        className="relative object-contain"
         alt=""
         src={maskGroup}
+        style={imageStyle} // Apply image style
       />
       <div className="flex flex-row items-start justify-end py-0 pl-6 pr-[21px]">
         <div

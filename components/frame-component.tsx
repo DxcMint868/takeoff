@@ -8,7 +8,7 @@ export type FrameComponentType = {
 const FrameComponent: NextPage<FrameComponentType> = ({ className = "" }) => {
   return (
     <div
-      className={`self-stretch flex flex-row items-start justify-center py-0 px-5 box-border max-w-full text-center text-5xl text-white font-sora ${className}`}
+      className={`self-stretch flex flex-row items-start justify-center px-5 box-border max-w-full text-center text-5xl text-white font-sora ${className}`}
     >
       <div className="w-[638px] flex flex-col items-center justify-start gap-10 max-w-full z-[1] mq700:gap-5">
         <div className="self-stretch flex flex-col items-center justify-start gap-6">

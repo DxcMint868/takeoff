@@ -1,16 +1,16 @@
 import type { NextPage } from "next";
 
-export type GroupComponent1Type = {
+export type ContactComponentType = {
   className?: string;
 };
 
-const GroupComponent1: NextPage<GroupComponent1Type> = ({ className = "" }) => {
+const ContactComponent: NextPage<ContactComponentType> = ({ className = "" }) => {
   return (
     <section
-      className={`absolute top-[4216px] left-[calc(50%_-_745px)] w-[1531px] flex flex-col items-start justify-start pt-10 px-[25px] pb-8 box-border gap-8 text-center text-xl text-white font-sora ${className}`}
+      className={`w-full flex flex-col items-start justify-start pt-10 px-[25px] pb-8 box-border gap-8 text-center text-xl text-white font-sora ${className}`}
     >
-      <div className="w-[1440px] h-[386px] relative hidden max-w-full" />
-      <div className="w-[1440px] flex flex-row items-start justify-center py-0 px-5 box-border max-w-full">
+      <div className="w-full relative hidden max-w-full" />
+      <div className="w-full flex flex-row items-start justify-center py-0 px-5 box-border max-w-full">
         <div className="w-[348px] flex flex-col items-start justify-start gap-12 max-w-full">
           <div className="self-stretch flex flex-col items-center justify-center gap-6 z-[1]">
             <h2 className="m-0 relative text-inherit tracking-[0.04em] leading-[26px] font-semibold font-[inherit] mq450:text-base mq450:leading-[21px]">
@@ -37,7 +37,7 @@ const GroupComponent1: NextPage<GroupComponent1Type> = ({ className = "" }) => {
                     src="/24mail@2x.png"
                   />
                   <div className="relative tracking-[0.02em] leading-[24px] font-light inline-block min-w-[128px] whitespace-nowrap">
-                    email@gmil.com
+                    contact@hoasen.io
                   </div>
                 </div>
               </div>
@@ -97,21 +97,22 @@ const GroupComponent1: NextPage<GroupComponent1Type> = ({ className = "" }) => {
                     </div>
                   </div>
                 </div>
+
               </div>
+              <div className="relative tracking-[0.2em] leading-[16px] uppercase z-[2]">
+                  AL Hamra Industrial Zone-FZ, Ras Al Khaimah, UAE
+                </div>
             </div>
           </div>
         </div>
       </div>
-      <div className="flex flex-col items-start justify-start pt-2 px-[499px] pb-12 box-border relative min-h-[72px] max-w-full text-xs text-white-60 font-reg">
-        <footer className="w-[1531px] absolute !m-[0] top-[0px] right-[-59px] text-397xl leading-[72px] font-sora text-transparent !bg-clip-text [background:linear-gradient(180deg,_rgba(255,_255,_255,_0.04),_rgba(27,_19,_51,_0))] [-webkit-background-clip:text] [-webkit-text-fill-color:transparent] text-center inline-block whitespace-nowrap z-[1] mq450:text-85xl mq450:leading-[29px] mq900:text-147xl mq900:leading-[43px]">
+      {/* <div className="flex flex-col items-start justify-start pt-2 px-[499px] pb-12 box-border relative min-h-[72px] max-w-full text-xs text-white-60 font-reg">
+        <footer className="w-full !m-[0] top-[0px] right-[-59px] text-397xl leading-[72px] font-sora text-transparent !bg-clip-text [background:linear-gradient(180deg,_rgba(255,_255,_255,_0.04),_rgba(27,_19,_51,_0))] [-webkit-background-clip:text] [-webkit-text-fill-color:transparent] text-center inline-block whitespace-nowrap z-[1] mq450:text-85xl mq450:leading-[29px] mq900:text-147xl mq900:leading-[43px]">
           hoasen
         </footer>
-        <div className="relative tracking-[0.2em] leading-[16px] uppercase z-[2]">
-          AL Hamra Industrial Zone-FZ, Ras Al Khaimah, UAE
-        </div>
-      </div>
+      </div> */}
     </section>
   );
 };
 
-export default GroupComponent1;
+export default ContactComponent;
