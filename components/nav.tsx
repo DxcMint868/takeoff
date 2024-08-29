@@ -13,7 +13,7 @@ const Nav: NextPage<NavType> = ({ className = "" }) => {
       <div className="h-full w-full absolute !m-[0] top-[0px] right-[0px] bottom-[0px] left-[0px]" />
       <div className="w-[149px] flex flex-col items-start justify-start pt-[7px] pb-0 pl-0 pr-[9px] box-border">
         <img
-          className="self-stretch h-[27px] relative max-w-full overflow-hidden shrink-0 object-cover z-[1]"
+          className="self-stretch h-[27px] relative max-w-full overflow-hidden shrink-0 object-contain z-[1]"
           loading="lazy"
           alt=""
           src="/logo@2x.png"

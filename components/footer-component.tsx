@@ -25,9 +25,9 @@ const FooterComponent: NextPage<FooterComponentType> = ({ className = "" }) => {
                     alt=""
                     src="/24phone.svg"
                   />
-                  <div className="relative tracking-[0.02em] leading-[24px] font-light inline-block min-w-[118px]">
-                    012344566788
-                  </div>
+                  <a href="tel:+971585401286" className="relative tracking-[0.02em] leading-[24px] font-light inline-block min-w-[118px] text-white hover:text-purple transition-colors duration-300 no-underline">
+                    +971585401286
+                  </a>
                 </div>
                 <div className="flex flex-row items-center justify-start gap-3.5">
                   <img
@@ -36,9 +36,9 @@ const FooterComponent: NextPage<FooterComponentType> = ({ className = "" }) => {
                     alt=""
                     src="/24mail@2x.png"
                   />
-                  <div className="relative tracking-[0.02em] leading-[24px] font-light inline-block min-w-[128px] whitespace-nowrap">
-                    hello@hoasen.io
-                  </div>
+                  <a href="mailto:marek@hoasen.io" className="relative tracking-[0.02em] leading-[24px] font-light inline-block min-w-[128px] whitespace-nowrap text-white hover:text-purple transition-colors duration-300 no-underline">
+                    marek@hoasen.io
+                  </a>
                 </div>
               </div>
               <div className="w-[260px] hidden flex-row items-center justify-start gap-3">
@@ -56,24 +56,30 @@ const FooterComponent: NextPage<FooterComponentType> = ({ className = "" }) => {
           <div className="self-stretch flex flex-col items-center justify-start py-0 px-2.5 box-border max-w-full text-xs text-white-60 font-reg">
             <div className="flex flex-col items-center justify-start gap-[46px] max-w-full">
               <div className="flex flex-row items-center justify-center gap-[30px]">
-                <img
-                  className="h-6 w-6 relative overflow-hidden shrink-0 min-h-[24px] z-[1]"
-                  loading="lazy"
-                  alt=""
-                  src="/telegram.svg"
-                />
-                <img
-                  className="h-6 w-6 relative overflow-hidden shrink-0 min-h-[24px] z-[1]"
-                  loading="lazy"
-                  alt=""
-                  src="/linkind.svg"
-                />
-                <img
-                  className="h-6 w-6 relative overflow-hidden shrink-0 min-h-[24px] z-[1]"
-                  loading="lazy"
-                  alt=""
-                  src="/x.svg"
-                />
+                <a href="https://t.me/+4rZ4ipEl2yk2ODlk" target="_blank" rel="noopener noreferrer">
+                  <img
+                    className="h-6 w-6 relative overflow-hidden shrink-0 min-h-[24px] z-[1] cursor-pointer"
+                    loading="lazy"
+                    alt="Telegram"
+                    src="/telegram.svg"
+                  />
+                </a>
+                <a href="https://www.linkedin.com/company/hoasendigital" target="_blank" rel="noopener noreferrer">
+                  <img
+                    className="h-6 w-6 relative overflow-hidden shrink-0 min-h-[24px] z-[1] cursor-pointer"
+                    loading="lazy"
+                    alt="LinkedIn"
+                    src="/linkind.svg"
+                  />
+                </a>
+                <a href="https://x.com/hoasenhub" target="_blank" rel="noopener noreferrer">
+                  <img
+                    className="h-6 w-6 relative overflow-hidden shrink-0 min-h-[24px] z-[1] cursor-pointer"
+                    loading="lazy"
+                    alt="Twitter"
+                    src="/x.svg"
+                  />
+                </a>
               </div>
               {/* <div className="self-stretch flex flex-row items-start justify-start py-0 pl-2.5 pr-0">
                 <div className="flex-1 flex flex-row items-start justify-start gap-[18.7px]">
