@@ -22,7 +22,7 @@ const TechnologiesSection = () => (
       </div> */}
       <div className="w-full flex flex-col items-start justify-start pt-[89px] px-0 pb-0 box-border max-w-[calc(100%_-_1px)] text-center text-29xl font-sora">
         <h1 className="m-0 self-stretch relative text-inherit leading-[68px] font-normal font-[inherit] mq450:text-10xl mq450:leading-[41px] mq900:text-19xl mq900:leading-[54px]">
-          <p className="m-0">Let us bring your ideas to life</p>
+          <p className="m-0">Technologies we work with</p>
         </h1>
       </div>
     </div>

@@ -111,6 +111,11 @@ const ContactForm: React.FC = () => {
             type="submit"
             className="bg-transparent hover:bg-transparent font-normal flex items-center text-inherit tracking-[0.02em] font-normal font-[inherit] cursor-pointer">
             Submit
+            <img
+              src="/arrow.svg"
+              alt="Submit"
+              className="ml-2 w-6 h-6"
+            />
             </button>
             {submitStatus === 'success' && (
               <p className="text-green-500 text-sm mt-2">Form submitted successfully! Thank you for your interest in working with us.</p>

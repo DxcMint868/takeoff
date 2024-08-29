@@ -20,27 +20,25 @@ const ContactSection: NextPage<ServicesContentType> = ({ className = "" }) => {
                     <div className="w-[445px] flex flex-col items-start justify-start gap-5 min-w-[445px] max-w-full mq700:min-w-full mq900:flex-1">
 
                       <div className="self-stretch flex flex-col items-start justify-start relative pl-3">
-                        <h1 className="mb-2 m-0 self-stretch relative text-inherit font-normal font-[inherit] z-[1] mq450:text-19xl mq900:text-[51px]">
-                          Get in touch
+                        <h1 className="mb-2 m-0 self-stretch relative text-inherit font-normal font-[inherit] z-[1] text-19xl">
+                          Get in touch with us
                         </h1>
-                        <div className="flex items-center justify-center">
-                          <span className="m-0 self-stretch relative text-inherit font-normal font-[inherit] z-[1] mq450:text-19xl mq900:text-[51px]">with us</span>
-                          <div className="flex items-center space-x-2 relative top-2 mq450:top-1 cursor-pointer" onClick={() => window.open('https://t.me/+4rZ4ipEl2yk2ODlk', '_blank', 'noopener,noreferrer')}>
-                            <img
-                              className="w-10 h-10 pl-5 pb-1 pr-1"
-                              loading="lazy"
-                              alt="Telegram"
-                              src="/telegramsvgrepocom-1-2.svg"
-                            />
-                            <span className="text-lg">Telegram</span>
-                          </div>
-                        </div>                        
                       </div>
                       
                       <div className="self-stretch relative text-base tracking-[0.02em] leading-[24px] font-reg text-white-60 z-[1] pl-3">
                         <p className="m-0">Let's build something extraordinary together!</p>
                       </div>
-                      
+
+                      <div className="flex items-center space-x-1 relative cursor-pointer" onClick={() => window.open('https://t.me/+4rZ4ipEl2yk2ODlk', '_blank', 'noopener,noreferrer')}>
+                        <img
+                          className="px-3"
+                          loading="lazy"
+                          alt="Telegram"
+                          src="/telegram.svg"
+                        />
+                        <span className="text-lg">Telegram</span>
+                      </div>
+
                     </div>
                     <ContactForm />
                   </div>

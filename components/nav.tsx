@@ -28,7 +28,7 @@ const Nav: NextPage<NavType> = ({ className = "" }) => {
             Works
           </a>
           <a href="#our-team" className="[text-decoration:none] tracking-[0.02em] leading-[24px] text-[inherit] inline-block min-w-[77px] whitespace-nowrap z-[1]">
-            Team
+            Our Team
           </a>
           <a href="#contact-us" className="[text-decoration:none] tracking-[0.02em] leading-[24px] text-[inherit] inline-block min-w-[88px] whitespace-nowrap z-[1]">
             Contact Us
