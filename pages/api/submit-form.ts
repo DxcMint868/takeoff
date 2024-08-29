@@ -21,11 +21,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const response = await notion.pages.create({
         parent: { database_id: databaseId },
         properties: {
-          'Full Name': {
+          'Company Name': {
             title: [
               {
                 text: {
-                  content: fullName
+                  content: companyName
                 }
               }
             ]
@@ -42,11 +42,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
               }
             ]
           },
-          'Company Name': {
+          'Full Name': {
             rich_text: [
               {
                 text: {
-                  content: companyName
+                  content: fullName
                 }
               }
             ]

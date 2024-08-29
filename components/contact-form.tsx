@@ -66,13 +66,13 @@ const ContactForm: React.FC = () => {
             <input
                 type="email"
                 name="email"
+                required
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="Email"
                 className="w-full bg-transparent border-x-0 border-t-0 border-b border-gray-600 rounded-none px-0 py-2 focus:outline-none focus:ring-0 focus:border-gray-300 font-reg text-sm text-white-60"
-                pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
                 title="Please enter a valid email address"
-                required
             />
             </div>
             <div>
@@ -90,6 +90,7 @@ const ContactForm: React.FC = () => {
             <input
             type="text"
             name="companyName"
+            required
             value={formData.companyName}
             onChange={handleChange}
             placeholder="Company Name"
@@ -99,7 +100,6 @@ const ContactForm: React.FC = () => {
         <div>
             <textarea
             name="projectDetails"
-            required
             value={formData.projectDetails}
             onChange={handleChange}
             placeholder="Tell us about your project..."
