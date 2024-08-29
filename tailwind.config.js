@@ -59,6 +59,7 @@ module.exports = {
         raw: "screen and (max-width: 450px)",
       },
       ms1024: '1024px',
+
     },
   },
   corePlugins: {

@@ -4,8 +4,8 @@ import { useMemo, type CSSProperties } from "react";
 export type LogoRowType = {
   className?: string;
   maskGroup?: string;
-  liquid?: string;
-  size?: string; // Add size prop
+  label?: string;
+  size?: string;
 
   /** Style props */
   propPadding?: CSSProperties["padding"];
@@ -16,9 +16,9 @@ const LogoRow: NextPage<LogoRowType> = ({
   className = "",
   propPadding,
   maskGroup,
-  liquid,
+  label,
   propMinWidth,
-  size = "100px", // Set default size
+  size = "100px",
 }) => {
   const logoRowStyle: CSSProperties = useMemo(() => {
     return {
@@ -26,7 +26,7 @@ const LogoRow: NextPage<LogoRowType> = ({
     };
   }, [propPadding]);
 
-  const liquidStyle: CSSProperties = useMemo(() => {
+  const labelStyle: CSSProperties = useMemo(() => {
     return {
       minWidth: propMinWidth,
     };
@@ -41,21 +41,21 @@ const LogoRow: NextPage<LogoRowType> = ({
 
   return (
     <div
-      className={`flex flex-col items-end justify-start py-0 pl-0 pr-1 gap-4 text-center text-xs text-white font-reg ${className}`}
+      className={`flex flex-col items-center justify-start py-0 px-1 gap-4 text-center text-xs text-white font-reg ${className}`}
       style={logoRowStyle}
     >
       <img
-        className="relative object-contain"
+        className="w-[100px] h-[100px] rounded-full bg-white p-[5px] object-contain"
         alt=""
         src={maskGroup}
-        style={imageStyle} // Apply image style
+        style={imageStyle}
       />
-      <div className="flex flex-row items-start justify-end py-0 pl-6 pr-[21px]">
+      <div className="w-full flex justify-center">
         <div
-          className="relative tracking-[0.2em] leading-[16px] uppercase inline-block min-w-[55px]"
-          style={liquidStyle}
+          className="relative tracking-[0.2em] leading-[16px] uppercase inline-block"
+          style={labelStyle}
         >
-          {liquid}
+          {label}
         </div>
       </div>
     </div>

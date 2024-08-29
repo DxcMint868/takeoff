@@ -49,7 +49,7 @@ const ContactForm: React.FC = () => {
   };
 
   return (
-    <div className="w-[420px] flex flex-col items-start justify-start pt-[23px] px-0 pb-0 box-border min-w-[420px] max-w-full text-sm text-white-60 font-reg mq700:min-w-full mq900:flex-1">
+    <div className="w-full max-w-[420px] flex flex-col items-start justify-start pt-[23px] px-4 pb-0 box-border text-sm text-white-60 font-reg">
         <form onSubmit={handleSubmit} className="w-full max-w-md space-y-8">
         <div>
             <input

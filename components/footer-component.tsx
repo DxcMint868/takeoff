@@ -1,10 +1,10 @@
 import type { NextPage } from "next";
 
-export type ContactComponentType = {
+export type FooterComponentType = {
   className?: string;
 };
 
-const ContactComponent: NextPage<ContactComponentType> = ({ className = "" }) => {
+const FooterComponent: NextPage<FooterComponentType> = ({ className = "" }) => {
   return (
     <section
       className={`w-full flex flex-col items-start justify-start pt-10 px-[25px] pb-8 box-border gap-8 text-center text-xl text-white font-sora ${className}`}
@@ -53,55 +53,48 @@ const ContactComponent: NextPage<ContactComponentType> = ({ className = "" }) =>
               </div>
             </div>
           </div>
-          <div className="self-stretch flex flex-row items-start justify-start py-0 px-2.5 box-border max-w-full text-xs text-white-60 font-reg">
-            <div className="flex-1 flex flex-row items-start justify-start flex-wrap content-start gap-[9px] max-w-full">
-              <div className="flex flex-col items-start justify-start pt-[70px] px-0 pb-0">
-                <div className="relative tracking-[0.02em] leading-[18px] inline-block min-w-[89px] z-[1]">
-                  Hoasen Fz LLC
-                </div>
+          <div className="self-stretch flex flex-col items-center justify-start py-0 px-2.5 box-border max-w-full text-xs text-white-60 font-reg">
+            <div className="flex flex-col items-center justify-start gap-[46px] max-w-full">
+              <div className="flex flex-row items-center justify-center gap-[30px]">
+                <img
+                  className="h-6 w-6 relative overflow-hidden shrink-0 min-h-[24px] z-[1]"
+                  loading="lazy"
+                  alt=""
+                  src="/telegram.svg"
+                />
+                <img
+                  className="h-6 w-6 relative overflow-hidden shrink-0 min-h-[24px] z-[1]"
+                  loading="lazy"
+                  alt=""
+                  src="/linkind.svg"
+                />
+                <img
+                  className="h-6 w-6 relative overflow-hidden shrink-0 min-h-[24px] z-[1]"
+                  loading="lazy"
+                  alt=""
+                  src="/x.svg"
+                />
               </div>
-              <div className="flex-1 flex flex-col items-start justify-start gap-[46px] min-w-[149px]">
-                <div className="flex flex-row items-start justify-start gap-[30px]">
-                  <img
-                    className="h-6 w-6 relative overflow-hidden shrink-0 min-h-[24px] z-[1]"
-                    loading="lazy"
-                    alt=""
-                    src="/telegram.svg"
-                  />
-                  <img
-                    className="h-6 w-6 relative overflow-hidden shrink-0 min-h-[24px] z-[1]"
-                    loading="lazy"
-                    alt=""
-                    src="/linkind.svg"
-                  />
-                  <img
-                    className="h-6 w-6 relative overflow-hidden shrink-0 min-h-[24px] z-[1]"
-                    loading="lazy"
-                    alt=""
-                    src="/x.svg"
-                  />
-                </div>
-                <div className="self-stretch flex flex-row items-start justify-start py-0 pl-2.5 pr-0">
-                  <div className="flex-1 flex flex-row items-start justify-start gap-[18.7px]">
-                    <div className="h-[15px] flex flex-col items-start justify-start pt-[3px] px-0 pb-0 box-border">
-                      <div className="w-px h-[13px] relative border-white-30 border-r-[1px] border-solid box-border z-[1]" />
-                    </div>
-                    <a className="[text-decoration:none] flex-1 relative tracking-[0.02em] leading-[18px] text-[inherit] inline-block min-w-[83px] z-[1]">
-                      Privacy Policy
-                    </a>
-                    <div className="h-[15px] flex flex-col items-start justify-start pt-[3px] px-0 pb-0 box-border">
-                      <div className="w-px h-[13px] relative border-white-30 border-r-[1px] border-solid box-border z-[1]" />
-                    </div>
-                    <div className="flex-1 relative tracking-[0.02em] leading-[18px] inline-block min-w-[79px] z-[1]">
-                      Terms of Use
-                    </div>
+              {/* <div className="self-stretch flex flex-row items-start justify-start py-0 pl-2.5 pr-0">
+                <div className="flex-1 flex flex-row items-start justify-start gap-[18.7px]">
+                  <div className="h-[15px] flex flex-col items-start justify-start pt-[3px] px-0 pb-0 box-border">
+                    <div className="w-px h-[13px] relative border-white-30 border-r-[1px] border-solid box-border z-[1]" />
+                  </div>
+                  <a className="[text-decoration:none] flex-1 relative tracking-[0.02em] leading-[18px] text-[inherit] inline-block min-w-[83px] z-[1]">
+                    Privacy Policy
+                  </a>
+                  <div className="h-[15px] flex flex-col items-start justify-start pt-[3px] px-0 pb-0 box-border">
+                    <div className="w-px h-[13px] relative border-white-30 border-r-[1px] border-solid box-border z-[1]" />
+                  </div>
+                  <div className="flex-1 relative tracking-[0.02em] leading-[18px] inline-block min-w-[79px] z-[1]">
+                    Terms of Use
                   </div>
                 </div>
+              </div> */}
 
+              <div className="relative tracking-[0.2em] leading-[16px] uppercase z-[2] text-center">
+                AL Hamra Industrial Zone-FZ, Ras Al Khaimah, UAE
               </div>
-              <div className="relative tracking-[0.2em] leading-[16px] uppercase z-[2]">
-                  AL Hamra Industrial Zone-FZ, Ras Al Khaimah, UAE
-                </div>
             </div>
           </div>
         </div>
@@ -115,4 +108,4 @@ const ContactComponent: NextPage<ContactComponentType> = ({ className = "" }) =>
   );
 };
 
-export default ContactComponent;
+export default FooterComponent;

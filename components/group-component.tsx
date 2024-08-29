@@ -5,6 +5,7 @@ export type GroupComponentType = {
   maskGroup?: string;
   group289551?: string;
   productDelivery?: string;
+  skills: string[];
 };
 
 const GroupComponent: NextPage<GroupComponentType> = ({
@@ -12,6 +13,7 @@ const GroupComponent: NextPage<GroupComponentType> = ({
   maskGroup,
   group289551,
   productDelivery,
+  skills,
 }) => {
   return (
     <div
@@ -28,7 +30,8 @@ const GroupComponent: NextPage<GroupComponentType> = ({
         alt=""
         src={group289551}
       />
-      <div className="self-stretch flex flex-col items-end justify-start gap-6">
+
+      <div className="self-stretch flex flex-col items-start justify-start gap-6">
         <div className="self-stretch flex flex-col items-start justify-start gap-4">
           <h2 className="m-0 relative text-inherit tracking-[0.02em] leading-[30px] font-semibold font-[inherit] z-[1] mq450:text-lg mq450:leading-[24px]">
             {productDelivery}
@@ -38,11 +41,16 @@ const GroupComponent: NextPage<GroupComponentType> = ({
             eiusmodop tempor incididunt ut labore et dol
           </div>
         </div>
-        <img
-          className="w-8 h-8 relative overflow-hidden shrink-0 z-[1]"
-          alt=""
-          src="/frame-289552.svg"
-        />
+        <div className="self-stretch flex flex-wrap gap-2 z-[1]">
+          {skills.map((skill, index) => (
+            <div
+              key={index}
+              className="px-3 py-1 bg-white bg-opacity-10 rounded-md text-sm"
+            >
+              {skill}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

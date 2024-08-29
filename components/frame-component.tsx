@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import CTASolid from "./c-t-a-solid";
+import CTASolid from "./cta-solid";
 
 export type FrameComponentType = {
   className?: string;
@@ -18,7 +18,7 @@ const FrameComponent: NextPage<FrameComponentType> = ({ className = "" }) => {
               Fintech Products
             </h1>
             <h2 className="m-0 self-stretch relative text-3xl tracking-[0.02em] leading-[34px] font-light font-reg text-white-60 mq450:text-lg mq450:leading-[27px]">
-              <p className="m-0">{`We help startups and small enterprises build `}</p>
+              <p className="m-0">We help startups and small enterprises build</p>
               <p className="m-0">and launch their product on chain</p>
             </h2>
           </div>

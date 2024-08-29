@@ -44,6 +44,12 @@ const CTASolid: NextPage<CTASolidType> = ({
     <button
       className={`cursor-pointer [border:none] py-[12.5px] px-8 bg-purple rounded-81xl flex flex-row items-center justify-center whitespace-nowrap hover:bg-mediumpurple ${className}`}
       style={cTASolidStyle}
+      onClick={() => {
+        const contactSection = document.getElementById('contact-us');
+        if (contactSection) {
+          contactSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      }}
     >
       <div
         className="w-[136px] relative text-base tracking-[0.02em] font-semibold font-reg text-white text-center flex items-center justify-center"
