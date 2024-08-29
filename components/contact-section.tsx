@@ -20,7 +20,7 @@ const ContactSection: NextPage<ServicesContentType> = ({ className = "" }) => {
                     <div className="w-[445px] flex flex-col items-start justify-start gap-5 min-w-[445px] max-w-full mq700:min-w-full mq900:flex-1">
 
                       <div className="self-stretch flex flex-col items-start justify-start relative pl-3">
-                        <h1 className="mb-2 m-0 self-stretch relative text-inherit font-normal font-[inherit] z-[1] text-19xl">
+                        <h1 className="mb-2 m-0 self-stretch relative font-normal font-[inherit] z-[1] text-19xl">
                           Get in touch with us
                         </h1>
                       </div>
