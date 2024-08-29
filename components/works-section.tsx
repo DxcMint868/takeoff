@@ -15,7 +15,9 @@ const WorksSection = () => (
             Who we've worked with
           </h1>
           <div className="self-stretch relative text-base tracking-[0.02em] leading-[24px] font-light font-reg text-white-60">
-            Our team has experience working with companies large and small
+            <p>Our team has experience working with companies</p>
+            <p>large and small in the top of their sector</p>
+
           </div>
         </div>
       </div>

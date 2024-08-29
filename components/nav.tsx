@@ -37,7 +37,7 @@ const Nav: NextPage<NavType> = ({ className = "" }) => {
       </nav>
       <CTASolid
         propWidth="150px"
-        label="Connect"
+        label="Start Today"
         propWidth1="unset"
         propTextDecoration="none"
         propHeight="14px"

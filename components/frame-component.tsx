@@ -23,7 +23,7 @@ const FrameComponent: NextPage<FrameComponentType> = ({ className = "" }) => {
             </h2>
           </div>
         </div>
-        <CTASolid label="Connect With Us" />
+        <CTASolid label="Build with us" />
       </div>
     </div>
   );

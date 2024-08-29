@@ -22,8 +22,7 @@ const TechnologiesSection = () => (
       </div> */}
       <div className="w-full flex flex-col items-start justify-start pt-[89px] px-0 pb-0 box-border max-w-[calc(100%_-_1px)] text-center text-29xl font-sora">
         <h1 className="m-0 self-stretch relative text-inherit leading-[68px] font-normal font-[inherit] mq450:text-10xl mq450:leading-[41px] mq900:text-19xl mq900:leading-[54px]">
-          <p className="m-0">We work with the following</p>
-          <p className="m-0">technologies</p>
+          <p className="m-0">Let us bring your ideas to life</p>
         </h1>
       </div>
     </div>
@@ -32,21 +31,21 @@ const TechnologiesSection = () => (
       <div className="group-container flex-1 flex mq700:flex-col items-center justify-center min-w-[300px] gap-8 w-full">
         <GroupComponent
           maskGroup="/mask-group@2x.png"
-          group289551="/group-289551.svg"
+          group289551="/group-blockchain.svg"
           productDelivery="Blockchain"
           description="Specializing in creating secure and decentralized applications for various blockchain platforms."
           skills={['Solidity', 'Rust', 'FunC']}
         />
         <GroupComponent
           maskGroup="/mask-group@2x.png"
-          group289551="/group-289551-1.svg"
+          group289551="/group-frontend.svg"
           productDelivery="Frontend"
           description="Focused on designing and developing visually appealing, responsive user interfaces."
           skills={['React', 'Next.js', 'TypeScript']}
         />
         <GroupComponent
           maskGroup="/mask-group@2x.png"
-          group289551="/group-289551.svg"
+          group289551="/group-backend.svg"
           productDelivery="Backend"
           description="Specializing in building scalable and secure backend systems for web and mobile applications."
           skills={['Node.js', 'Golang']}
@@ -55,14 +54,14 @@ const TechnologiesSection = () => (
       <div className="group-container flex-1 flex mq700:flex-col items-center justify-center min-w-[300px] gap-8 w-full">
         <GroupComponent
           maskGroup="/mask-group@2x.png"
-          group289551="/group-289551.svg"
+          group289551="/group-delivery.svg"
           productDelivery="Product Delivery"
           description="Driving project success through effective management, strategic planning, and thorough research."
           skills={['BA', 'PM', 'Research']}
         />
         <GroupComponent
           maskGroup="/mask-group@2x.png"
-          group289551="/group-289551-1.svg"
+          group289551="/group-design.svg"
           productDelivery="Product Design"
           description="Designing intuitive and engaging digital experiences with a strong emphasis on usability and aesthetics."
           skills={['UI/UX', 'Interaction', 'Motion']}
