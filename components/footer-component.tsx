@@ -37,7 +37,7 @@ const FooterComponent: NextPage<FooterComponentType> = ({ className = "" }) => {
                     src="/24mail@2x.png"
                   />
                   <div className="relative tracking-[0.02em] leading-[24px] font-light inline-block min-w-[128px] whitespace-nowrap">
-                    contact@hoasen.io
+                    hello@hoasen.io
                   </div>
                 </div>
               </div>

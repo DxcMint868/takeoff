@@ -2,7 +2,7 @@ import React from 'react';
 
 const TeamSection: React.FC = () => {
   return (
-    <section id="our-team" className="w-full flex flex-row items-start justify-start pt-64 px-2 pb-[52px] box-border max-w-full text-29xl font-sora relative">
+    <section id="our-team" className="w-full flex flex-row items-start justify-start pt-64 px-2 box-border max-w-full text-29xl font-sora relative">
       <img
         className="absolute w-full max-w-[800px] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 overflow-hidden"
         loading="lazy"
@@ -11,7 +11,7 @@ const TeamSection: React.FC = () => {
       />
       <div className="flex-1 flex flex-row items-end justify-between max-w-full gap-5">
         <div className="w-full text-center flex flex-col items-center gap-4">
-          <h1 className="m-0 relative text-inherit leading-[58px] font-normal font-[inherit] mq450:text-10xl mq450:leading-[35px] mq900:text-19xl mq900:leading-[46px]">
+          <h1 className="m-0 relative text-inherit leading-[58px] pb-12 font-normal font-[inherit] mq450:text-10xl mq450:leading-[35px] mq900:text-19xl mq900:leading-[46px]">
             Our team & Values
           </h1>
           <div className="self-stretch relative text-base tracking-[0.02em] leading-[24px] font-light font-reg text-white-60">

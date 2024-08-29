@@ -5,6 +5,7 @@ export type GroupComponentType = {
   maskGroup?: string;
   group289551?: string;
   productDelivery?: string;
+  description?: string;
   skills: string[];
 };
 
@@ -13,6 +14,7 @@ const GroupComponent: NextPage<GroupComponentType> = ({
   maskGroup,
   group289551,
   productDelivery,
+  description,
   skills,
 }) => {
   return (
@@ -37,8 +39,7 @@ const GroupComponent: NextPage<GroupComponentType> = ({
             {productDelivery}
           </h2>
           <div className="self-stretch relative text-sm tracking-[0.02em] leading-[22px] font-reg text-white-60 z-[1]">
-            Lorem ipsum dolor sit amet, consec tetur adipiscing elit, sed do
-            eiusmodop tempor incididunt ut labore et dol
+            {description}
           </div>
         </div>
         <div className="self-stretch flex flex-wrap gap-2 z-[1]">

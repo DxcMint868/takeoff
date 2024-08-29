@@ -9,7 +9,7 @@ const ContactSection: NextPage<ServicesContentType> = ({ className = "" }) => {
   return (
 
     <section
-      className={`flex flex-col pt-96 items-start justify-start gap-3 max-w-[1200px] w-full text-center text-xs text-white font-reg ${className}`}
+      className={`flex flex-col pt-32 items-start justify-start gap-3 max-w-[1200px] w-full text-center text-xs text-white font-reg ${className}`}
     >
       <div id="contact-us" className="self-stretch flex flex-row items-start justify-start py-0 pl-[9px] pr-0 box-border max-w-full text-center text-29xl font-sora">
           <div className="flex-1 flex flex-row items-start justify-start flex-wrap content-start gap-5 max-w-full">

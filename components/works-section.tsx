@@ -4,7 +4,7 @@ import TestimonialCard from "./testimonial-card";
 
 const WorksSection = () => (
   <section id="our-work" className="w-full">
-    <div className="w-full flex flex-row items-start justify-start pt-32 px-2 pb-[52px] box-border max-w-full text-29xl font-sora">
+    <div className="w-full flex flex-row items-start justify-start pt-64 px-2 pb-[52px] box-border max-w-full text-29xl font-sora">
       <div className="flex-1 flex flex-row items-end justify-between max-w-full gap-5">
         {/* <div className="h-[100px] w-px relative">
       <div className="absolute top-[0px] left-[0px] border-white-30 border-r-[1px] border-dashed box-border w-full h-full" />
@@ -12,7 +12,7 @@ const WorksSection = () => (
     </div> */}
         <div className="w-full text-center flex flex-col items-center gap-4 max-w-[calc(100%_-_21px)]">
           <h1 className="m-0 relative text-inherit leading-[58px] font-normal font-[inherit] mq450:text-10xl mq450:leading-[35px] mq900:text-19xl mq900:leading-[46px]">
-            Who we’ve worked with
+            Who we've worked with
           </h1>
           <div className="self-stretch relative text-base tracking-[0.02em] leading-[24px] font-light font-reg text-white-60">
             Our team has experience working with companies large and small
@@ -27,9 +27,9 @@ const WorksSection = () => (
         <div className="self-stretch flex flex-row items-start justify-start gap-6 max-w-full mq900:flex-wrap">
           
           <TestimonialCard
-            name="Name here"
+            name="Ben"
             position="CTO"
-            quote="Lorem ipsum dolor sit amet, consectetur adip is cing elit, sed do eiusmod tempor incididunt ut labore et doloresed do eiusmod et dolo resed do eiu smod dolo dolo onsectetur adip is cing labore et dol ca dolo dolo dolo oresed do eiusmod et..."
+            quote="Hoasen brought a level of professionalism to our project that made it extremely enjoyable and seamless to work with them. They moved fast, with little direction, and helped us meet a tight deadline for our staking platform."
             companyLogo="/group-289500@2x.png"
             companyWebsite="dash.io"
           />
@@ -39,7 +39,7 @@ const WorksSection = () => (
             position="CTO"
             quote="I worked with Meg and Marek at label and was impressed by their quality of work and depth of industry knowledge. It was a pleasure working with them"
             companyLogo="/group-289496@2x.png"
-            companyWebsite="label.com"
+            companyWebsite="rain.com"
           />
         </div>
 

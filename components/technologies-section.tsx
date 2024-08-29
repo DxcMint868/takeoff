@@ -2,6 +2,12 @@ import GroupComponent from "./group-component";
 
 const TechnologiesSection = () => (
   <section id="our-service" className="w-full">
+      <img
+        className="absolute w-full max-w-[800px] top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 overflow-hidden"
+        loading="lazy"
+        src="/vector-3.svg"
+      />
+
     <div className="w-full flex flex-row items-start justify-between pt-20 pb-11 pl-0 pr-0 box-border gap-5 max-w-full text-right">
       {/* <div className="h-[225px] w-4 flex flex-col items-end justify-start gap-3">
         <div className="w-[113px] relative tracking-[0.2em] leading-[16px] uppercase inline-block [transform:_rotate(-90deg)]">
@@ -27,19 +33,22 @@ const TechnologiesSection = () => (
         <GroupComponent
           maskGroup="/mask-group@2x.png"
           group289551="/group-289551.svg"
-          productDelivery="Blockchain Stack"
+          productDelivery="Blockchain"
+          description="Specializing in creating secure and decentralized applications for various blockchain platforms."
           skills={['Solidity', 'Rust', 'FunC']}
         />
         <GroupComponent
           maskGroup="/mask-group@2x.png"
           group289551="/group-289551-1.svg"
           productDelivery="Frontend"
+          description="Focused on designing and developing visually appealing, responsive user interfaces."
           skills={['React', 'Next.js', 'TypeScript']}
         />
         <GroupComponent
           maskGroup="/mask-group@2x.png"
           group289551="/group-289551.svg"
           productDelivery="Backend"
+          description="Specializing in building scalable and secure backend systems for web and mobile applications."
           skills={['Node.js', 'Golang']}
         />
       </div>
@@ -48,13 +57,15 @@ const TechnologiesSection = () => (
           maskGroup="/mask-group@2x.png"
           group289551="/group-289551.svg"
           productDelivery="Product Delivery"
-          skills={['AWS', 'Kubernetes', 'CI/CD']}
+          description="Driving project success through effective management, strategic planning, and thorough research."
+          skills={['BA', 'PM', 'Research']}
         />
         <GroupComponent
           maskGroup="/mask-group@2x.png"
           group289551="/group-289551-1.svg"
           productDelivery="Product Design"
-          skills={['Figma']}
+          description="Designing intuitive and engaging digital experiences with a strong emphasis on usability and aesthetics."
+          skills={['UI/UX', 'Interaction', 'Motion']}
         />
       </div>
     </div>
