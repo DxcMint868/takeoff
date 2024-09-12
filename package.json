@@ -4,9 +4,9 @@
   "private": true,
   "dependencies": {
     "@notionhq/client": "^2.2.15",
-    "next": "^14.1.4",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "next": "^14.2.10",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "react-router-dom": "^6.22.3"
   },
   "devDependencies": {

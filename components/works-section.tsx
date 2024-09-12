@@ -31,13 +31,13 @@ const WorksSection = () => (
             position="CTO"
             quote="Hoasen brought a level of professionalism to our project that made it extremely enjoyable and seamless to work with them. They moved fast, with little direction, and helped us meet a tight deadline for our staking platform."
             companyLogo="/group-289500@2x.png"
-            companyWebsite="dash.io"
+            companyWebsite="dashdapp.io"
           />
 
           <TestimonialCard
             name="Frank A."
             position="CTO"
-            quote="I worked with Meg and Marek and was impressed by their quality of work and depth of industry knowledge. It was a pleasure working with them"
+            quote="I worked with Meg and Marek [Hoasen team] and was impressed by their quality of work and depth of industry knowledge. It was a pleasure working with them"
             companyLogo="/group-289496@2x.png"
             companyWebsite="rain.com"
           />

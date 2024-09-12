@@ -36,8 +36,8 @@ const FooterComponent: NextPage<FooterComponentType> = ({ className = "" }) => {
                     alt=""
                     src="/24mail@2x.png"
                   />
-                  <a href="mailto:marek@hoasen.io" className="relative tracking-[0.02em] leading-[24px] font-light inline-block min-w-[128px] whitespace-nowrap text-white hover:text-purple transition-colors duration-300 no-underline">
-                    marek@hoasen.io
+                  <a href="mailto:contact@hoasen.io" className="relative tracking-[0.02em] leading-[24px] font-light inline-block min-w-[128px] whitespace-nowrap text-white hover:text-purple transition-colors duration-300 no-underline">
+                    contact@hoasen.io
                   </a>
                 </div>
               </div>
