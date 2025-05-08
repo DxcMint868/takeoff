@@ -22,7 +22,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         parent: { database_id: databaseId },
         properties: {
           'Company': {
-            title: [
+            rich_text: [
               {
                 text: {
                   content: companyName
