@@ -21,7 +21,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const response = await notion.pages.create({
         parent: { database_id: databaseId },
         properties: {
-          'Company Name': {
+          'Company': {
             title: [
               {
                 text: {
