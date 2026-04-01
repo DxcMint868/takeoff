@@ -42,21 +42,22 @@ const CTASolid: NextPage<CTASolidType> = ({
 
   return (
     <button
-      className={`cursor-pointer [border:none] py-[12.5px] px-8 bg-purple rounded-81xl flex flex-row items-center justify-center whitespace-nowrap hover:bg-mediumpurple ${className}`}
+      type="button"
+      className={`relative z-[1] cursor-pointer select-none [border:none] py-[12.5px] px-8 bg-purple rounded-81xl inline-flex min-w-0 flex-row items-center justify-center whitespace-nowrap transition-colors duration-200 ease-in-out hover:bg-mediumpurple ${className}`}
       style={cTASolidStyle}
       onClick={() => {
-        const contactSection = document.getElementById('contact-us');
+        const contactSection = document.getElementById("contact-us");
         if (contactSection) {
-          contactSection.scrollIntoView({ behavior: 'smooth' });
+          contactSection.scrollIntoView({ behavior: "smooth" });
         }
       }}
     >
-      <div
-        className="w-[136px] relative text-base tracking-[0.02em] font-semibold font-reg text-white text-center flex items-center justify-center"
+      <span
+        className="pointer-events-none relative min-h-[1em] w-full min-w-0 flex-1 text-center text-base font-semibold font-reg tracking-[0.02em] text-white"
         style={labelStyle}
       >
         {label}
-      </div>
+      </span>
     </button>
   );
 };

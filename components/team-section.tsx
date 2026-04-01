@@ -4,7 +4,7 @@ const TeamSection: React.FC = () => {
   return (
     <section id="our-team" className="w-full flex flex-row items-start justify-start pt-64 px-2 box-border max-w-full text-29xl font-sora relative">
       <img
-        className="absolute w-full max-w-[800px] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 overflow-hidden"
+        className="pointer-events-none absolute w-full max-w-[800px] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 overflow-hidden"
         loading="lazy"
         alt=""
         src="/vector-4.svg"

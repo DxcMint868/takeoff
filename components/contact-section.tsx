@@ -9,9 +9,9 @@ const ContactSection: NextPage<ServicesContentType> = ({ className = "" }) => {
   return (
 
     <section
-      className={`flex flex-col pt-32 items-start justify-start gap-3 max-w-[1200px] w-full text-center text-xs text-white font-reg ${className}`}
+      className={`flex flex-col pt-32 items-start justify-start gap-3 max-w-[1200px] w-full text-center text-xs text-white font-reg ${className}`} id="contact-us"
     >
-      <div id="contact-us" className="self-stretch flex flex-row items-start justify-start py-0 pl-[9px] pr-0 box-border max-w-full text-center text-29xl font-sora">
+      <div className="self-stretch flex flex-row items-start justify-start py-0 pl-[9px] pr-0 box-border max-w-full text-center text-29xl font-sora">
           <div className="flex-1 flex flex-row items-start justify-start flex-wrap content-start gap-5 max-w-full">
             <div className="flex-1 flex flex-col items-start justify-start pt-[42px] px-0 pb-0 box-border min-w-[702px] max-w-full mq900:min-w-full">
               <div className="self-stretch flex flex-col items-start justify-start gap-[214px] max-w-full">
@@ -24,7 +24,7 @@ const ContactSection: NextPage<ServicesContentType> = ({ className = "" }) => {
                           Get in touch with us
                         </h1>
                       </div>
-                      
+
                       <div className="self-stretch relative text-base tracking-[0.02em] leading-[24px] font-reg text-white-60 z-[1] pl-3">
                         <p className="m-0">Let's build something extraordinary together!</p>
                       </div>

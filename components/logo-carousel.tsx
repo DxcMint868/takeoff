@@ -1,7 +1,7 @@
-type Logo = { src: string; alt: string; url: string; invert?: boolean };
+type Logo = { src: string; alt: string; url: string; invert?: boolean; name?: string };
 
-const logos: Logo[] = [
-  { src: "/mask-group-6@2x.png", alt: "PowerTrade", url: "https://powertrade.com" },
+const LOGOS: Logo[] = [
+  { src: "/mask-group-6@2x.png", alt: "PowerTrade", url: "https://powertrade.com", name: "PowerTrade" },
   { src: "/rain-logo.svg", alt: "Rain", url: "https://rain.com" },
   { src: "/liquid-logo.svg", alt: "Liquid", url: "https://www.liquid.com" },
   { src: "/emurgo-logo.svg", alt: "Emurgo", url: "https://emurgo.io" },
@@ -10,54 +10,52 @@ const logos: Logo[] = [
   { src: "/oceanus-logo@2x.png", alt: "Oceanus", url: "https://oceanus.com.sg", invert: true },
   { src: "/cryptoparadise-logo@2x.png", alt: "Crypto Paradise", url: "https://cryptoparadise.net" },
   { src: "/base-logo.svg", alt: "Base Design", url: "https://www.basedesign.com" },
-  { src: "/rice-logo.png", alt: "Rice Studios", url: "https://thisisrice.com", invert: true },
+  { src: "/rice-logo.png", alt: "Rice Studios", url: "https://thisisrice.com", name: "Studios" },
 ];
 
-const ITEM_WIDTH = 260;
+const LogoCarousel = () => {
+  const doubled = [...LOGOS, ...LOGOS];
 
-const LogoTrack = () => (
-  <div className="flex items-center shrink-0">
-    {logos.map((logo) => (
-      <a
-        key={logo.alt}
-        href={logo.url}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="flex items-center justify-center"
-        style={{ width: `${ITEM_WIDTH}px`, padding: "0 32px" }}
+  return (
+    <div className="group w-full overflow-hidden py-10">
+      <style>{`
+        @keyframes logo-scroll {
+          from { transform: translateX(0); }
+          to { transform: translateX(-50%); }
+        }
+      `}</style>
+      <div
+        className="flex w-max group-hover:[animation-play-state:paused]"
+        style={{
+          animationName: "logo-scroll",
+          animationDuration: "30s",
+          animationTimingFunction: "linear",
+          animationIterationCount: "infinite",
+        }}
       >
-        <img
-          src={logo.src}
-          alt={logo.alt}
-          style={{ height: "50px", width: "auto" }}
-          className={`object-contain opacity-80 hover:opacity-100 transition-opacity ${logo.invert ? "brightness-0 invert" : ""}`}
-        />
-      </a>
-    ))}
-  </div>
-);
-
-const LogoCarousel = () => (
-  <div className="w-full overflow-hidden py-10">
-    <style>{`
-      @keyframes scroll {
-        0% { transform: translateX(0); }
-        100% { transform: translateX(-${ITEM_WIDTH * logos.length}px); }
-      }
-      .logo-scroll {
-        display: flex;
-        animation: scroll 30s linear infinite;
-        width: max-content;
-      }
-      .logo-scroll:hover {
-        animation-play-state: paused;
-      }
-    `}</style>
-    <div className="logo-scroll">
-      <LogoTrack />
-      <LogoTrack />
+        {doubled.map((logo, i) => (
+          <a
+            key={`${logo.alt}-${i}`}
+            href={logo.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mr-16 flex shrink-0 items-center justify-center no-underline"
+          >
+            <img
+              src={logo.src}
+              alt={logo.alt}
+              className={`h-[50px] w-auto object-contain opacity-80 transition-opacity hover:opacity-100 ${logo.invert ? "brightness-0 invert" : ""}`}
+            />
+            {logo.name && (
+              <span className="ml-2 whitespace-nowrap text-10xl font-semibold text-white no-underline opacity-80 transition-opacity hover:opacity-100">
+                {logo.name}
+              </span>
+            )}
+          </a>
+        ))}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default LogoCarousel;
