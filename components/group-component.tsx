@@ -19,7 +19,7 @@ const GroupComponent: NextPage<GroupComponentType> = ({
 }) => {
   return (
     <div
-      className={`w-[358px] flex flex-col items-start justify-start pt-6 px-6 pb-5 box-border relative gap-[90px] max-w-full z-[1] text-left text-3xl text-white font-sora ${className}`}
+      className={`w-[358px] flex flex-col items-start justify-start pt-6 px-6 pb-5 box-border relative gap-[90px] max-w-full z-[1] text-left text-3xl text-white font-sora rounded-2xl overflow-hidden ${className}`}
     >
       <img
         className="w-full h-full absolute !m-[0] top-[0px] right-[0px] bottom-[0px] left-[0px] max-w-full overflow-hidden max-h-full object-cover"
