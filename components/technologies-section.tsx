@@ -22,49 +22,69 @@ const TechnologiesSection = () => (
       </div> */}
       <div className="w-full flex flex-col items-start justify-start pt-[89px] px-0 pb-0 box-border max-w-[calc(100%_-_1px)] text-center text-29xl font-sora">
         <h1 className="m-0 self-stretch relative text-inherit leading-[68px] font-normal font-[inherit] mq450:text-10xl mq450:leading-[41px] mq900:text-19xl mq900:leading-[54px]">
-          <p className="m-0">Technologies we work with</p>
+          <p className="m-0">Our Capabilities in Tech and Design</p>
         </h1>
       </div>
     </div>
     
+    <div className="self-stretch relative text-base tracking-[0.02em] leading-[24px] font-light font-reg text-white-60 text-center pb-8">
+      Proven, well rounded teams, with fintech acumen
+    </div>
+
     <div className="self-stretch flex flex-col items-start justify-start gap-8 max-w-full text-left text-3xl font-sora">
       <div className="group-container flex-1 flex mq700:flex-col items-center justify-center min-w-[300px] gap-8 w-full">
         <GroupComponent
           maskGroup="/mask-group@2x.png"
           group289551="/group-blockchain.svg"
-          productDelivery="Blockchain"
+          productDelivery="Blockchain Development"
           description="Specializing in creating secure and decentralized applications for various blockchain platforms."
-          skills={['Solidity', 'Rust', 'FunC']}
+          skills={['Solana (Rust)', 'EVM (ETH, AVAX, ETC)', 'Canton, Cardano, Midnight (Haskell)', 'Solidity', 'FunC', 'Move']}
         />
         <GroupComponent
           maskGroup="/mask-group@2x.png"
           group289551="/group-frontend.svg"
-          productDelivery="Frontend"
+          productDelivery="FrontEnd"
           description="Focused on designing and developing visually appealing, responsive user interfaces."
-          skills={['React', 'Next.js', 'TypeScript']}
+          skills={['Angular.JS', 'React', 'VUE', 'TypeScript', 'Next.js', 'Tailwind CSS']}
         />
         <GroupComponent
           maskGroup="/mask-group@2x.png"
+          group289551="/group-design.svg"
+          productDelivery="Mobile"
+          description="Building performant native and cross-platform mobile applications."
+          skills={['Kotlin', 'Swift', 'Java', 'Flutter', 'React Native']}
+        />
+      </div>
+      <div className="group-container flex-1 flex mq700:flex-col items-center justify-center min-w-[300px] gap-8 w-full">
+        <GroupComponent
+          maskGroup="/mask-group@2x.png"
           group289551="/group-backend.svg"
-          productDelivery="Backend"
+          productDelivery="BackEnd"
           description="Specializing in building scalable and secure backend systems for web and mobile applications."
-          skills={['Node.js', 'Golang']}
+          skills={['Node.js', 'Express', 'Rest / GraphQL', 'C#', 'Python', 'PHP Laravel', 'Golang']}
+        />
+        <GroupComponent
+          maskGroup="/mask-group@2x.png"
+          group289551="/group-delivery.svg"
+          productDelivery="Artificial Intelligence"
+          description="Integrating AI-driven solutions to automate workflows, enhance products, and unlock new capabilities."
+          skills={['Langchain', 'Langraph', 'Agents', 'Openrouter', 'RAG', 'Fine-tuning']}
+        />
+        <GroupComponent
+          maskGroup="/mask-group@2x.png"
+          group289551="/group-design.svg"
+          productDelivery="Product Design & Product Management"
+          description="Designing intuitive digital experiences and driving product strategy from discovery to delivery."
+          skills={['UI Design', 'Framer / Webflow', 'Interaction Design', 'BA', 'PM', 'Research']}
         />
       </div>
       <div className="group-container flex-1 flex mq700:flex-col items-center justify-center min-w-[300px] gap-8 w-full">
         <GroupComponent
           maskGroup="/mask-group@2x.png"
           group289551="/group-delivery.svg"
-          productDelivery="Product Delivery"
-          description="Driving project success through effective management, strategic planning, and thorough research."
-          skills={['BA', 'PM', 'Research']}
-        />
-        <GroupComponent
-          maskGroup="/mask-group@2x.png"
-          group289551="/group-design.svg"
-          productDelivery="Product Design"
-          description="Designing intuitive and engaging digital experiences with a strong emphasis on usability and aesthetics."
-          skills={['UI/UX', 'Interaction', 'Motion']}
+          productDelivery="Test Automation"
+          description="Ensuring product quality through automated testing pipelines, blockchain-specific validation, and end-to-end coverage."
+          skills={['Cucumber', 'Playwright', 'Cypress', 'Blockchain Testing', 'Jest', 'CI/CD Integration']}
         />
       </div>
     </div>

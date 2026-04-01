@@ -30,15 +30,20 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
     </div>
     <div className="w-[246px] flex flex-row items-start justify-between gap-5 text-right text-purple">
       <img
-        className="h-10 w-[100px] relative object-cover z-[1]"
+        className="h-10 w-[100px] relative object-contain z-[1]"
         loading="lazy"
         alt=""
         src={companyLogo}
       />
       <div className="flex flex-col items-start justify-start pt-[9px] px-0 pb-0">
-        <div className="relative [text-decoration:underline] tracking-[0.02em] leading-[22px] font-medium inline-block min-w-[44px] z-[1]">
+        <a
+          href={`https://${companyWebsite}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="relative [text-decoration:underline] tracking-[0.02em] leading-[22px] font-medium inline-block min-w-[44px] z-[1] text-purple hover:text-mediumpurple transition-colors"
+        >
           {companyWebsite}
-        </div>
+        </a>
       </div>
     </div>
   </div>

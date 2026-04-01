@@ -1,6 +1,5 @@
-import LogoRow from "./logo-row";
-import LogoRow1 from "./logo-row1";
 import TestimonialCard from "./testimonial-card";
+import LogoCarousel from "./logo-carousel";
 
 const WorksSection = () => (
   <section id="our-work" className="w-full">
@@ -27,11 +26,11 @@ const WorksSection = () => (
         <div className="self-stretch flex flex-row items-start justify-start gap-6 max-w-full mq900:flex-wrap">
           
           <TestimonialCard
-            name="Brian"
-            position="CTO"
-            quote="Hoasen brought a level of professionalism to our project that made it extremely enjoyable and seamless to work with them. They moved fast, with little direction, and helped us meet a tight deadline for our staking platform."
-            companyLogo="/group-289500@2x.png"
-            companyWebsite="dashdapp.io"
+            name="Patrick Hizon"
+            position="CEO"
+            quote="Great job and reimagined work of a prior design firm at a much higher quality deliverable. and the project management was managed very well - including churning out preliminary deliverables during the Christmas holiday period. They were responsive and on time with deliverables"
+            companyLogo="/mudigital-logo.svg"
+            companyWebsite="mudigital.net"
           />
 
           <TestimonialCard
@@ -46,60 +45,7 @@ const WorksSection = () => (
       </div>
     </div>
 
-    <div className="self-stretch flex flex-row items-start justify-start py-0 pl-[26px] pr-[25px] box-border max-w-full">
-      <div className="mq900:hidden flex-1 flex flex-row items-start justify-between max-w-full gap-5 mq900:flex-wrap mq900:justify-center">
-
-        <LogoRow maskGroup="/mask-group-6@2x.png" label="powertrade" />
-
-        <LogoRow1 maskGroup="/mask-group-7@2x.png" label="rain" />
-        <LogoRow maskGroup="/mask-group-8@2x.png" label="liquid" />
-        <LogoRow1
-          maskGroup="/mask-group-9@2x.png"
-          label="dash"
-        />
-        <LogoRow
-          maskGroup="/mask-group-10@2x.png"
-          label="TIKI"
-        />
-        <LogoRow1
-          maskGroup="/mask-group-11@2x.png"
-          label="agoda"
-        />
-        <LogoRow
-          maskGroup="/mask-group-12@2x.png"
-          label="Emirates"
-        />
-      </div>
-
-      <div className="hidden mq900:block flex-1 flex flex-row items-start justify-between max-w-full gap-5 mq900:flex-wrap mq900:justify-center">
-        <div className="flex flex-col items-center justify-center gap-8">
-          <div className="flex flex-row items-center justify-center gap-4">
-            <LogoRow maskGroup="/mask-group-7@2x.png" size="70px" className="mq450:hidden" />
-            <LogoRow maskGroup="/mask-group-8@2x.png" size="70px" />
-            <LogoRow
-              maskGroup="/mask-group-9@2x.png"
-              size="70px"
-            />
-            <LogoRow
-              maskGroup="/mask-group-10@2x.png"
-              size="70px"
-            />
-          </div>
-          <div className="flex flex-row items-center justify-center gap-4">
-            <LogoRow
-              maskGroup="/mask-group-11@2x.png"
-              size="70px"
-            />
-            <LogoRow
-              maskGroup="/mask-group-12@2x.png"
-              size="70px"
-            />
-            <LogoRow maskGroup="/mask-group-6@2x.png" size="70px" />
-          </div>
-        </div>
-      </div>
-
-    </div>
+    <LogoCarousel />
 
   </section>);
 
