@@ -6,6 +6,7 @@ import FrameComponent from "../components/frame-component";
 import FooterComponent from "../components/footer-component";
 import ContactSection from "../components/contact-section";
 import TechnologiesSection from "../components/technologies-section";
+import WorkExamplesSection from "../components/work-examples-section";
 import WorksSection from "../components/works-section";
 import TeamSection from "../components/team-section";
 
@@ -306,6 +307,7 @@ const Web: NextPage = () => {
             className={`flex flex-col pt-96 items-start justify-start gap-3 max-w-[1200px] w-full text-center text-xs text-white font-reg`}
           >
             <TechnologiesSection />
+            <WorkExamplesSection />
             <WorksSection />
             <TeamSection />
             <ContactSection />

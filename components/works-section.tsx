@@ -23,7 +23,7 @@ const TESTIMONIALS = [
 ];
 
 const WorksSection = () => (
-  <section id="our-work" className="w-full">
+  <section id="testimonials" className="w-full">
     <div className="box-border flex w-full max-w-full flex-row items-start justify-start px-2 pb-[52px] pt-64 font-sora text-29xl">
       <div className="flex max-w-full flex-1 flex-row items-end justify-between gap-5">
         <div

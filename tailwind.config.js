@@ -23,6 +23,21 @@ module.exports = {
         gray: "rgba(255, 255, 255, 0.2)",
         purple: "#735fd4",
         mediumpurple: "#8c78ed",
+        /** Work / marketing cards (Figma) */
+        "surface-card": "#261d44",
+        "surface-media": "#060e24",
+        "surface-border": "rgba(112, 104, 163, 0.4)",
+        /** Pill/tag accents — reuse for labels, badges, highlights */
+        "tag-cyan": "#71f6ed",
+        "tag-mint": "#75f671",
+        "tag-amber": "#ffda8f",
+        "tag-pink": "#ffb9fa",
+        "tag-lime": "#edff9d",
+        "tag-sky": "#92d5ff",
+        "tag-coral": "#ffb57d",
+      },
+      boxShadow: {
+        card: "0px 0px 30px 0px rgba(0, 0, 0, 0.06)",
       },
       spacing: {},
       fontFamily: {
@@ -68,7 +83,6 @@ module.exports = {
         raw: "screen and (max-width: 450px)",
       },
       ms1024: '1024px',
-
     },
   },
   corePlugins: {
