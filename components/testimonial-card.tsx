@@ -29,7 +29,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
       </div>
       <div className="self-stretch flex flex-row items-start justify-end py-0 px-2 box-border max-w-full text-sm text-white-60">
         <blockquote className="m-0 flex-1 relative tracking-[0.02em] leading-[22px] font-light inline-block max-w-full z-[1] overflow-hidden">
-          <p className="m-0 line-clamp-6">"{quote}"</p>
+          <p className="m-0 line-clamp-6">&ldquo;{quote}&rdquo;</p>
         </blockquote>
       </div>
     </div>

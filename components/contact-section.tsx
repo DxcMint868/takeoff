@@ -26,7 +26,7 @@ const ContactSection: NextPage<ServicesContentType> = ({ className = "" }) => {
                       </div>
 
                       <div className="self-stretch relative text-base tracking-[0.02em] leading-[24px] font-reg text-white-60 z-[1] pl-3">
-                        <p className="m-0">Let's build something extraordinary together!</p>
+                        <p className="m-0">Let&apos;s build something extraordinary together!</p>
                       </div>
 
                       <div className="flex items-center space-x-1 relative cursor-pointer" onClick={() => window.open('https://t.me/+4rZ4ipEl2yk2ODlk', '_blank', 'noopener,noreferrer')}>

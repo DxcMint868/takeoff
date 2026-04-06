@@ -31,7 +31,7 @@ const WorksSection = () => (
           className="flex w-full max-w-[calc(100%_-_21px)] flex-col items-center gap-4 text-center"
         >
           <h1 className="font-[inherit] relative m-0 font-normal leading-[58px] text-inherit mq450:text-10xl mq450:leading-[35px] mq900:text-19xl mq900:leading-[46px]">
-            Who we've worked with
+            Who we&apos;ve worked with
           </h1>
           <div className="relative self-stretch font-reg text-base font-light leading-[24px] tracking-[0.02em] text-white-60">
             Our team has experience working with companies large and small
