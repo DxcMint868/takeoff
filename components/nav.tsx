@@ -7,6 +7,7 @@ import CTASolid from "./cta-solid";
 export type NavType = {
   className?: string;
   initialTransparent?: boolean;
+  scrollThreshold?: number;
 };
 
 const navInactive =
@@ -14,20 +15,20 @@ const navInactive =
 const navActive =
   "[text-decoration:none] tracking-[0.02em] leading-[24px] text-white font-semibold font-reg z-[1] cursor-pointer whitespace-nowrap";
 
-const SCROLL_THRESHOLD = 300;
+const DEFAULT_SCROLL_THRESHOLD = 300;
 
-const Nav = ({ className = "", initialTransparent = false }: NavType) => {
+const Nav = ({ className = "", initialTransparent = false, scrollThreshold = DEFAULT_SCROLL_THRESHOLD }: NavType) => {
   const { pathname } = useRouter();
-  const onWorksPage = pathname === "/works";
+  const onWorksPage = pathname.startsWith("/works");
   const [scrolled, setScrolled] = useState(!initialTransparent);
 
   useEffect(() => {
     if (!initialTransparent) return;
-    const onScroll = () => setScrolled(window.scrollY > SCROLL_THRESHOLD);
+    const onScroll = () => setScrolled(window.scrollY > scrollThreshold);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, [initialTransparent]);
+  }, [initialTransparent, scrollThreshold]);
 
   return (
     <header

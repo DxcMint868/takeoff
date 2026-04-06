@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import Image from "next/image";
-import { PhoneIcon, LocationIcon, TelegramIcon, LinkedInIcon, XIcon } from "./icons";
+import { PhoneIcon, TelegramIcon, LinkedInIcon, XIcon } from "./icons";
 
 export type FooterComponentType = {
   className?: string;
@@ -11,7 +11,6 @@ const FooterComponent: NextPage<FooterComponentType> = ({ className = "" }) => {
     <section
       className={`w-full flex flex-col items-start justify-start pt-10 px-[25px] pb-8 box-border gap-8 text-center text-xl text-white font-sora ${className}`}
     >
-      <div className="w-full relative hidden max-w-full" />
       <div className="w-full flex flex-row items-start justify-center py-0 px-5 box-border max-w-full">
         <div className="w-[348px] flex flex-col items-start justify-start gap-12 max-w-full">
           <div className="self-stretch flex flex-col items-center justify-center gap-6 z-[1]">
@@ -37,12 +36,6 @@ const FooterComponent: NextPage<FooterComponentType> = ({ className = "" }) => {
                   <a href="mailto:contact@hoasen.io" className="relative tracking-[0.02em] leading-[24px] font-light inline-block min-w-[128px] whitespace-nowrap text-white hover:text-purple transition-colors duration-300 no-underline">
                     contact@hoasen.io
                   </a>
-                </div>
-              </div>
-              <div className="w-[260px] hidden flex-row items-center justify-start gap-3">
-                <LocationIcon className="shrink-0" />
-                <div className="flex-1 relative tracking-[0.02em] leading-[24px] font-light">
-                  AL Hamra Industrial Zone-FZ
                 </div>
               </div>
             </div>

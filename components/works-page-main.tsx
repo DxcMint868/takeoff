@@ -3,21 +3,21 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import CTASolid from "./cta-solid";
+import { GradientGlow } from "./gradient-glow";
 import {
   CORE_PROJECT_CARDS,
   EXTRA_PAGE_PROJECT_CARDS,
   OCEAN_FINANCE_PROJECT,
   TAG_TONE_CLASSES,
+  WorkExamplesPortfolio,
   type WorkProjectCard,
   type WorkTagSpec,
-  WorkExamplesPortfolio,
 } from "./work-examples-portfolio";
 
 const PAGE_SUBTITLE = (
-  <>
-    <p className="m-0 mb-0">Featured projects and case studies showcasing our expertise across</p>
-    <p className="m-0">fintech, blockchain, and enterprise software.</p>
-  </>
+  <p className="m-0 [text-wrap:balance]">
+    Featured projects and case studies showcasing our expertise across fintech, blockchain, and enterprise software.
+  </p>
 );
 
 const FILTER_CHIPS: WorkTagSpec[] = [
@@ -76,13 +76,7 @@ const WorksPageMain = () => {
 
   return (
     <main className="relative box-border flex w-full flex-col items-center overflow-x-clip px-5 pb-24 pt-8 text-white mq900:px-6">
-      <div
-        className="pointer-events-none absolute left-1/2 top-0 -translate-x-1/2 h-[480px] w-[900px] opacity-[0.24] blur-[109px]"
-        aria-hidden
-        style={{
-          background: "linear-gradient(90deg, #613BAA 0%, #AF51B9 33%, #EB6A97 71%, #FD9E67 96.5%)",
-        }}
-      />
+      <GradientGlow className="top-0" />
       <div className="relative flex w-full max-w-[1200px] flex-col items-stretch gap-10">
         <div className="flex w-full flex-col gap-6">
           <Link
@@ -117,7 +111,7 @@ const WorksPageMain = () => {
             <h1 className="m-0 max-w-[900px] font-sora text-[40px] font-normal leading-[1.1] tracking-[0.02em] text-white mq450:text-3xl mq900:text-[52px] mq900:leading-tight">
               Our Work Examples
             </h1>
-            <div className="max-w-[638px] font-reg text-3xl font-light leading-[34px] tracking-[0.02em] text-white-60 mq450:text-base mq450:leading-7">
+            <div className="w-full max-w-[900px] font-reg text-3xl font-light leading-[34px] tracking-[0.02em] text-white-60 mq450:text-base mq450:leading-7">
               {PAGE_SUBTITLE}
             </div>
           </div>

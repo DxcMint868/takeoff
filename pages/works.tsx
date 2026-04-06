@@ -101,7 +101,7 @@ const Works: NextPage = () => {
       </Head>
 
       <div className="w-full min-h-screen bg-dark leading-[normal] tracking-[normal] text-left text-3xl text-white font-sora mq450:min-h-0">
-        <Nav initialTransparent />
+        <Nav initialTransparent scrollThreshold={80} />
         <WorksPageMain />
         <FooterComponent />
       </div>
