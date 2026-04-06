@@ -1,5 +1,5 @@
-import Image from "next/image";
 import React, { useState } from 'react';
+import { ArrowIcon } from './icons';
 
 const ContactForm: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -112,14 +112,7 @@ const ContactForm: React.FC = () => {
             type="submit"
             className="bg-transparent hover:bg-transparent font-normal flex items-center text-inherit tracking-[0.02em] font-normal font-[inherit] cursor-pointer">
             Submit
-            <Image
-              src="/arrow.svg"
-              alt="Submit"
-              width={24}
-              height={24}
-              className="ml-2"
-              unoptimized
-            />
+            <ArrowIcon width="24" height="18" className="ml-2" />
             </button>
             {submitStatus === 'success' && (
               <p className="text-green-500 text-sm mt-2">Form submitted successfully! Thank you for your interest in working with us.</p>
