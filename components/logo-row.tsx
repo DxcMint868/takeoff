@@ -1,4 +1,5 @@
 import type { NextPage } from "next";
+import Image from "next/image";
 import { useMemo, type CSSProperties } from "react";
 
 export type LogoRowType = {
@@ -44,11 +45,14 @@ const LogoRow: NextPage<LogoRowType> = ({
       className={`flex flex-col items-center justify-start py-0 px-1 gap-4 text-center text-xs text-white font-reg ${className}`}
       style={logoRowStyle}
     >
-      <img
-        className="w-[100px] h-[100px] rounded-full bg-white p-[5px] object-contain"
+      <Image
+        className="rounded-full bg-white p-[5px] object-contain"
         alt=""
-        src={maskGroup}
+        src={maskGroup ?? ""}
+        width={parseInt(String(size)) || 100}
+        height={parseInt(String(size)) || 100}
         style={imageStyle}
+        unoptimized={maskGroup?.endsWith(".svg")}
       />
       <div className="w-full flex justify-center">
         <div

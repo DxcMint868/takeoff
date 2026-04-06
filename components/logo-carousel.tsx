@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 type Logo = { src: string; alt: string; url: string; invert?: boolean; name?: string };
 
 const LOGOS: Logo[] = [
@@ -41,10 +43,13 @@ const LogoCarousel = () => {
             rel="noopener noreferrer"
             className="mr-16 flex shrink-0 items-center justify-center no-underline"
           >
-            <img
+            <Image
               src={logo.src}
               alt={logo.alt}
+              width={150}
+              height={50}
               className={`h-[50px] w-auto object-contain opacity-80 transition-opacity hover:opacity-100 ${logo.invert ? "brightness-0 invert" : ""}`}
+              unoptimized={logo.src.endsWith(".svg")}
             />
             {logo.name && (
               <span className="ml-2 whitespace-nowrap text-10xl font-semibold text-white no-underline opacity-80 transition-opacity hover:opacity-100">

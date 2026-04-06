@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from 'react';
 
 interface TestimonialCardProps {
@@ -34,11 +35,13 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
       </div>
     </div>
     <div className="w-[246px] flex flex-row items-start justify-between gap-5 text-right text-purple">
-      <img
-        className="h-10 w-[100px] relative object-contain z-[1]"
-        loading="lazy"
+      <Image
+        className="relative object-contain z-[1]"
         alt=""
         src={companyLogo}
+        width={100}
+        height={40}
+        unoptimized={companyLogo.endsWith(".svg")}
       />
       <div className="flex flex-col items-start justify-start pt-[9px] px-0 pb-0">
         <a

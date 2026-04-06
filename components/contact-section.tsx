@@ -1,4 +1,5 @@
 import type { NextPage } from "next";
+import Image from "next/image";
 import ContactForm from "./contact-form";
 
 export type ServicesContentType = {
@@ -30,11 +31,13 @@ const ContactSection: NextPage<ServicesContentType> = ({ className = "" }) => {
                       </div>
 
                       <div className="flex items-center space-x-1 relative cursor-pointer" onClick={() => window.open('https://t.me/+4rZ4ipEl2yk2ODlk', '_blank', 'noopener,noreferrer')}>
-                        <img
+                        <Image
                           className="px-3"
-                          loading="lazy"
                           alt="Telegram"
                           src="/telegram.svg"
+                          width={48}
+                          height={24}
+                          unoptimized
                         />
                         <span className="text-lg">Telegram</span>
                       </div>

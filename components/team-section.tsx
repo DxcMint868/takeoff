@@ -1,13 +1,16 @@
+import Image from "next/image";
 import React from 'react';
 
 const TeamSection: React.FC = () => {
   return (
     <section id="our-team" className="w-full flex flex-row items-start justify-start pt-64 px-2 box-border max-w-full text-29xl font-sora relative">
-      <img
+      <Image
         className="pointer-events-none absolute w-full max-w-[800px] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 overflow-hidden"
-        loading="lazy"
         alt=""
         src="/vector-4.svg"
+        width={800}
+        height={800}
+        unoptimized
       />
       <div className="flex-1 flex flex-row items-end justify-between max-w-full gap-5">
         <div className="w-full text-center flex flex-col items-center gap-4">

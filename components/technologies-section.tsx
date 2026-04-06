@@ -1,3 +1,4 @@
+import Image from "next/image";
 import GroupComponent from "./group-component";
 
 const TECHNOLOGY_ROWS = [
@@ -126,11 +127,13 @@ const TECHNOLOGY_ROWS = [
 
 const TechnologiesSection = () => (
   <section id="our-service" className="w-full">
-    <img
+    <Image
       className="pointer-events-none absolute left-1/2 top-1/3 w-full max-w-[800px] -translate-x-1/2 -translate-y-1/2 transform overflow-hidden"
-      loading="lazy"
       src="/vector-3.svg"
       alt=""
+      width={800}
+      height={800}
+      unoptimized
     />
 
     <div className="box-border flex w-full max-w-full flex-row items-start justify-between gap-5 pb-11 pl-0 pr-0 pt-20 text-right">

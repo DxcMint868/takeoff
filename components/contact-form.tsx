@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React, { useState } from 'react';
 
 const ContactForm: React.FC = () => {
@@ -111,10 +112,13 @@ const ContactForm: React.FC = () => {
             type="submit"
             className="bg-transparent hover:bg-transparent font-normal flex items-center text-inherit tracking-[0.02em] font-normal font-[inherit] cursor-pointer">
             Submit
-            <img
+            <Image
               src="/arrow.svg"
               alt="Submit"
-              className="ml-2 w-6 h-6"
+              width={24}
+              height={24}
+              className="ml-2"
+              unoptimized
             />
             </button>
             {submitStatus === 'success' && (
