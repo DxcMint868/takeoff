@@ -188,7 +188,7 @@ export function WorkExamplesPortfolio({ projectCards, showFeatured = true }: Wor
               key={project.id}
               className="flex w-[358px] max-w-full flex-col overflow-hidden rounded-[20px] border border-surface-border bg-surface-card shadow-card mq700:w-full"
             >
-              <div className="relative h-[360px] w-full shrink-0 bg-black">
+              <div className="relative h-[360px] w-full shrink-0">
                 {project.imageSrc ? (
                   <Image
                     src={project.imageSrc}
