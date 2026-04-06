@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { ArrowIcon } from './icons';
 
+const fieldClass =
+  "w-full bg-transparent border-x-0 border-t-0 border-b border-white-30 rounded-none px-0 py-2 focus:outline-none focus:ring-0 focus:border-white-60 font-reg text-sm leading-[22px] tracking-[0.02em] text-white placeholder:text-white-60";
+
 const ContactForm: React.FC = () => {
   const [formData, setFormData] = useState({
     fullName: '',
@@ -13,10 +16,7 @@ const ContactForm: React.FC = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -25,21 +25,13 @@ const ContactForm: React.FC = () => {
     try {
       const response = await fetch('/api/submit-form', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
 
       if (response.ok) {
         setSubmitStatus('success');
-        setFormData({
-          fullName: '',
-          email: '',
-          telegram: '',
-          companyName: '',
-          projectDetails: ''
-        });
+        setFormData({ fullName: '', email: '', telegram: '', companyName: '', projectDetails: '' });
       } else {
         setSubmitStatus('error');
       }
@@ -50,78 +42,77 @@ const ContactForm: React.FC = () => {
   };
 
   return (
-    <div className="w-full max-w-[420px] flex flex-col items-start justify-start pt-[23px] px-4 pb-0 box-border text-sm text-white-60 font-reg">
-        <form onSubmit={handleSubmit} className="w-full max-w-md space-y-8">
-        <div>
-            <input
-            type="text"
-            name="fullName"
-            value={formData.fullName}
-            onChange={handleChange}
-            placeholder="Full Name"
-            className="w-full bg-transparent border-x-0 border-t-0 border-b border-gray-600 rounded-none px-0 py-2 focus:outline-none focus:ring-0 focus:border-gray-300 font-reg text-sm text-white-60"
-            />
-        </div>
-        <div className="grid grid-cols-1 grid-cols-2 gap-8 gap-4">
-            <div>
-            <input
-                type="email"
-                name="email"
-                required
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="Email"
-                className="w-full bg-transparent border-x-0 border-t-0 border-b border-gray-600 rounded-none px-0 py-2 focus:outline-none focus:ring-0 focus:border-gray-300 font-reg text-sm text-white-60"
-                pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
-                title="Please enter a valid email address"
-            />
-            </div>
-            <div>
-            <input
-                type="text"
-                name="telegram"
-                value={formData.telegram}
-                onChange={handleChange}
-                placeholder="Telegram"
-                className="w-full bg-transparent border-x-0 border-t-0 border-b border-gray-600 rounded-none px-0 py-2 focus:outline-none focus:ring-0 focus:border-gray-300 font-reg text-sm text-white-60"
-            />
-            </div>
-        </div>
-        <div>
-            <input
-            type="text"
-            name="companyName"
+    <div className="w-full max-w-[420px] shrink-0 mq900:max-w-full">
+      <form onSubmit={handleSubmit} className="w-full flex flex-col gap-10">
+        <input
+          type="text"
+          name="fullName"
+          value={formData.fullName}
+          onChange={handleChange}
+          placeholder="Full Name"
+          className={fieldClass}
+        />
+
+        <div className="grid grid-cols-2 gap-5 mq450:grid-cols-1 mq450:gap-10">
+          <input
+            type="email"
+            name="email"
             required
-            value={formData.companyName}
+            value={formData.email}
             onChange={handleChange}
-            placeholder="Company Name"
-            className="w-full bg-transparent border-x-0 border-t-0 border-b border-gray-600 rounded-none px-0 py-2 focus:outline-none focus:ring-0 focus:border-gray-300 font-reg text-sm text-white-60"
-            />
-        </div>
-        <div>
-            <textarea
-            name="projectDetails"
-            value={formData.projectDetails}
+            placeholder="Email"
+            className={fieldClass}
+            pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+            title="Please enter a valid email address"
+          />
+          <input
+            type="text"
+            name="telegram"
+            value={formData.telegram}
             onChange={handleChange}
-            placeholder="Tell us about your project..."
-            className="w-full bg-transparent border-x-0 border-t-0 border-b border-gray-600 rounded-none px-0 py-2 focus:outline-none focus:ring-0 focus:border-gray-300 font-reg text-sm text-white-60 min-h-[35px] resize-none"
-            ></textarea>
+            placeholder="Telegram"
+            className={fieldClass}
+          />
         </div>
-        <div className="flex flex-col items-end justify-end py-0 text-right text-xl text-white font-sora">
-            <button
+
+        <input
+          type="text"
+          name="companyName"
+          required
+          value={formData.companyName}
+          onChange={handleChange}
+          placeholder="Company Name"
+          className={fieldClass}
+        />
+
+        <textarea
+          name="projectDetails"
+          value={formData.projectDetails}
+          onChange={handleChange}
+          placeholder="Tell us about your project..."
+          className={`${fieldClass} min-h-[35px] resize-none`}
+        />
+
+        <div className="flex flex-col items-end">
+          <button
             type="submit"
-            className="bg-transparent hover:bg-transparent font-normal flex items-center text-inherit tracking-[0.02em] font-normal font-[inherit] cursor-pointer">
+            className="bg-transparent border-0 p-0 flex items-center gap-2 text-white font-sora font-normal text-xl leading-[26px] tracking-[0.02em] cursor-pointer hover:opacity-80 transition-opacity"
+          >
             Submit
-            <ArrowIcon width="24" height="18" className="ml-2" />
-            </button>
-            {submitStatus === 'success' && (
-              <p className="text-green-500 text-sm mt-2">Form submitted successfully! Thank you for your interest in working with us.</p>
-            )}
-            {submitStatus === 'error' && (
-              <p className="text-red-500 text-sm mt-2">Form submission failed. Please try again.</p>
-            )}
+            <ArrowIcon width="32" height="24" />
+          </button>
+          {submitStatus === 'success' && (
+            <p className="text-green-500 text-sm mt-2 font-reg">
+              Form submitted successfully!
+            </p>
+          )}
+          {submitStatus === 'error' && (
+            <p className="text-red-500 text-sm mt-2 font-reg">
+              Submission failed. Please try again.
+            </p>
+          )}
         </div>
-        </form>
+      </form>
     </div>
   );
 };

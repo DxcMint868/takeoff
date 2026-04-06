@@ -1,50 +1,52 @@
 import type { NextPage } from "next";
+import Image from "next/image";
 import ContactForm from "./contact-form";
 import { TelegramIcon } from "./icons";
 
-export type ServicesContentType = {
+export type ContactSectionType = {
   className?: string;
 };
 
-const ContactSection: NextPage<ServicesContentType> = ({ className = "" }) => {
+const ContactSection: NextPage<ContactSectionType> = ({ className = "" }) => {
   return (
+    <section id="contact-us" className={`w-full pt-32 mq700:pt-20 mq450:pt-14 ${className}`}>
+      <div className="relative w-full rounded-[20px] overflow-hidden shadow-card bg-[#282042]">
+        <Image
+          src="/mask-group-1@2x.png"
+          alt=""
+          fill
+          className="object-cover pointer-events-none"
+          sizes="1200px"
+        />
 
-    <section
-      className={`flex flex-col pt-32 items-start justify-start gap-3 max-w-[1200px] w-full text-center text-xs text-white font-reg ${className}`} id="contact-us"
-    >
-      <div className="self-stretch flex flex-row items-start justify-start py-0 pl-[9px] pr-0 box-border max-w-full text-center text-29xl font-sora">
-          <div className="flex-1 flex flex-row items-start justify-start flex-wrap content-start gap-5 max-w-full">
-            <div className="flex-1 flex flex-col items-start justify-start pt-[42px] px-0 pb-0 box-border min-w-[702px] max-w-full mq900:min-w-full">
-              <div className="self-stretch flex flex-col items-start justify-start gap-[214px] max-w-full">
-                <div className="self-stretch flex flex-col items-end justify-start gap-4 max-w-full text-left text-[64px]">
-                  <div className="self-stretch flex flex-row items-start justify-between max-w-full gap-5 mq900:flex-wrap">
-                    <div className="w-[445px] flex flex-col items-start justify-start gap-5 min-w-[445px] max-w-full mq700:min-w-full mq900:flex-1">
-
-                      <div className="self-stretch flex flex-col items-start justify-start relative pl-3">
-                        <h1 className="mb-2 m-0 self-stretch relative font-normal font-[inherit] z-[1] text-19xl">
-                          Get in touch with us
-                        </h1>
-                      </div>
-
-                      <div className="self-stretch relative text-base tracking-[0.02em] leading-[24px] font-reg text-white-60 z-[1] pl-3">
-                        <p className="m-0">Let&apos;s build something extraordinary together!</p>
-                      </div>
-
-                      <div className="flex items-center space-x-1 relative cursor-pointer" onClick={() => window.open('https://t.me/+4rZ4ipEl2yk2ODlk', '_blank', 'noopener,noreferrer')}>
-                        <TelegramIcon className="mx-3" />
-                        <span className="text-lg">Telegram</span>
-                      </div>
-
-                    </div>
-                    <ContactForm />
-                  </div>
-                </div>
-              </div>
+        <div className="relative z-10 flex items-start justify-between px-20 pt-[72px] pb-10 gap-[80px] mq900:flex-col mq900:items-center mq900:gap-10 mq900:px-10 mq700:px-6 mq450:px-4 mq450:pt-10 mq450:pb-6">
+          <div className="flex flex-col items-start gap-4 max-w-[429px] shrink-0 mq900:max-w-full mq900:items-center mq900:text-center">
+            <h2 className="m-0 font-sora font-normal text-[42px] leading-[50px] text-white mq900:text-[32px] mq900:leading-[40px] mq450:text-5xl mq450:leading-[32px]">
+              Get in touch with us
+            </h2>
+            <p className="m-0 font-reg font-normal text-base leading-[24px] tracking-[0.02em] text-white-60">
+              Let&apos;s build something extraordinary together!
+            </p>
+            <div
+              className="flex items-center gap-3 cursor-pointer mt-2"
+              onClick={() =>
+                window.open(
+                  "https://t.me/+4rZ4ipEl2yk2ODlk",
+                  "_blank",
+                  "noopener,noreferrer"
+                )
+              }
+            >
+              <TelegramIcon className="w-8 h-8" />
+              <span className="font-reg font-medium text-sm leading-[22px] tracking-[0.02em] text-white">
+                Telegram
+              </span>
             </div>
           </div>
+
+          <ContactForm />
+        </div>
       </div>
-
-
     </section>
   );
 };
