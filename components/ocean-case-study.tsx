@@ -4,9 +4,9 @@ import { GradientBorderCard } from "./gradient-border-card";
 import { GradientGlow } from "./gradient-glow";
 import {
   CoinIcon,
-  TrendingUpIcon,
-  ProgressBoltIcon,
   FileAnalyticsIcon,
+  ProgressBoltIcon,
+  TrendingUpIcon,
 } from "./icons";
 import ProjectGallery from "./project-gallery";
 
@@ -99,9 +99,10 @@ const TECH_TAGS = [
 ];
 
 const GALLERY_SLIDES = [
-  { src: "/works/ocean/dashboard-1.png", alt: "Ocean Finance dashboard overview" },
+  { src: "/works/ocean/ocean-nav-management.png", alt: "Ocean Finance NAV Management" },
   { src: "/works/ocean/dashboard-2.png", alt: "NAV data pipeline dashboard" },
   { src: "/works/ocean/dashboard-1.png", alt: "Token administration panel" },
+  { src: "/works/ocean/ocean-emergency.png", alt: "Emergency panel - Freeze and unfreeze" },
 ];
 
 const OBJECTIVE_ICONS = [CoinIcon, TrendingUpIcon, ProgressBoltIcon, FileAnalyticsIcon];
@@ -109,35 +110,91 @@ const OBJECTIVE_ICONS = [CoinIcon, TrendingUpIcon, ProgressBoltIcon, FileAnalyti
 /* ── Code preview block ────────────────────────────────────── */
 
 function CodePreview() {
-  const line = (
+  const code = (
     <>
-      <span className="text-white/80">{`<p `}</span>
-      <span className="text-[#eb81fe]">class</span>
-      <span className="text-white/80">{`="`}</span>
-      <span className="text-[#8df17c]">placeholder-glow</span>
-      <span className="text-white/80">{`">`}</span>
+      <span className="text-white/40">{`/// @notice Only callable by BURNER_ROLE.`}</span>
       {"\n"}
-      <span className="text-white/80">{`  <span `}</span>
-      <span className="text-[#eb81fe]">class</span>
-      <span className="text-white/80">{`="`}</span>
-      <span className="text-[#8df17c]">placeholder</span>
-      <span className="text-white/80">{` col-12"></span>`}</span>
+      <span className="text-white/40">{`/// @dev Bypasses freeze checks.`}</span>
       {"\n"}
-      <span className="text-white/80">{`</p>`}</span>
+      <span className="text-[#eb81fe]">function </span>
+      <span className="text-[#8df17c]">adminBurn</span>
+      <span className="text-white/80">(</span>
+      {"\n"}
+      <span className="text-white/80">{"    "}</span>
+      <span className="text-[#eb81fe]">address </span>
+      <span className="text-white/80">from,</span>
+      {"\n"}
+      <span className="text-white/80">{"    "}</span>
+      <span className="text-[#eb81fe]">uint256 </span>
+      <span className="text-white/80">amount</span>
+      {"\n"}
+      <span className="text-white/80">{`) `}</span>
+      <span className="text-[#eb81fe]">external </span>
+      <span className="text-[#79b8ff]">onlyRole</span>
+      <span className="text-white/80">(BURNER_ROLE) </span>
+      <span className="text-[#79b8ff]">nonReentrant</span>
+      <span className="text-white/80">{` {`}</span>
+      {"\n"}
+      <span className="text-white/80">{"    "}</span>
+      <span className="text-[#eb81fe]">if </span>
+      <span className="text-white/80">(</span>
+      <span className="text-[#8df17c]">paused</span>
+      <span className="text-white/80">()) </span>
+      <span className="text-[#eb81fe]">revert </span>
+      <span className="text-[#8df17c]">TokenPaused</span>
+      <span className="text-white/80">();</span>
+      {"\n"}
+      <span className="text-white/80">{"    "}</span>
+      <span className="text-[#eb81fe]">if </span>
+      <span className="text-white/80">(from == </span>
+      <span className="text-[#eb81fe]">address</span>
+      <span className="text-white/80">(0)) </span>
+      <span className="text-[#eb81fe]">revert </span>
+      <span className="text-[#8df17c]">ZeroAddress</span>
+      <span className="text-white/80">();</span>
+      {"\n"}
+      <span className="text-white/80">{"    "}</span>
+      <span className="text-[#eb81fe]">if </span>
+      <span className="text-white/80">(amount == 0) </span>
+      <span className="text-[#eb81fe]">revert </span>
+      <span className="text-[#8df17c]">ZeroAmount</span>
+      <span className="text-white/80">();</span>
+      {"\n"}
+      <span className="text-white/80">{"    "}</span>
+      <span className="text-[#79b8ff]">ERC20Upgradeable</span>
+      <span className="text-white/80">.</span>
+      <span className="text-[#8df17c]">_update</span>
+      <span className="text-white/80">(from, </span>
+      <span className="text-[#eb81fe]">address</span>
+      <span className="text-white/80">(0), amount);</span>
+      {"\n"}
+      <span className="text-white/80">{"    "}</span>
+      <span className="text-[#eb81fe]">emit </span>
+      <span className="text-[#8df17c]">AdminBurned</span>
+      <span className="text-white/80">(from, amount);</span>
+      {"\n"}
+      <span className="text-white/80">{"}"}</span>
+      {"\n\n"}
+      <span className="text-[#eb81fe]">function </span>
+      <span className="text-[#8df17c]">pause</span>
+      <span className="text-white/80">() </span>
+      <span className="text-[#eb81fe]">external </span>
+      <span className="text-[#79b8ff]">onlyRole</span>
+      <span className="text-white/80">(PAUSER_ROLE) {"{"}</span>
+      {"\n"}
+      <span className="text-white/80">{"    "}</span>
+      <span className="text-[#8df17c]">_pause</span>
+      <span className="text-white/80">();</span>
+      {"\n"}
+      <span className="text-white/80">{"}"}</span>
     </>
   );
 
   return (
     <div className="relative h-[430px] w-[560px] shrink-0 overflow-hidden rounded-[20px] bg-gradient-to-b from-transparent to-white/5 mq1100:w-full mq1100:h-[300px]">
-      <div className="absolute inset-0 overflow-hidden rounded-[20px] bg-[#1a1332] p-[46px] font-mono text-lg leading-[36px] text-white/80 mq450:p-6 mq450:text-sm mq450:leading-7">
+      <div className="absolute inset-0 overflow-hidden rounded-[20px] bg-[#1a1332] p-[46px] font-mono text-sm leading-[26px] text-white/80 mq450:p-6 mq450:text-xs mq450:leading-5">
         <code className="block whitespace-pre">
-          {line}
-          {"\n\n"}
-          {line}
-          {"\n"}
-          {line}
-          {"\n"}
-          {line}
+          {code}
         </code>
       </div>
       <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-[223px] rounded-b-[20px] bg-gradient-to-b from-transparent to-[#2a2240]" />
