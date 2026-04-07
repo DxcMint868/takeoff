@@ -24,6 +24,7 @@ export type WorkProjectCard = {
   imageAlt: string;
   tags: WorkTagSpec[];
   extra?: string;
+  href?: string;
 };
 
 export const FEATURED_TAGS_ROW1: WorkTagSpec[] = [
@@ -40,7 +41,7 @@ export const FEATURED_TAGS_ROW2: WorkTagSpec[] = [
 export const OCEAN_FINANCE_PROJECT: WorkProjectCard = {
   id: "ocean-finance",
   title: "Ocean Finance",
-  imageSrc: "/ocean-finance-dashboard.png",
+  imageSrc: "/works/ocean/ocean-finance-dashboard.png",
   imageAlt: "Ocean Finance admin dashboard with token operations and activity",
   description:
     "End-to-end tokenized fund infrastructure for institutional investors. From smart contract development to web application delivery and on-chain data infrastructure.",
@@ -48,6 +49,21 @@ export const OCEAN_FINANCE_PROJECT: WorkProjectCard = {
 };
 
 export const CORE_PROJECT_CARDS: WorkProjectCard[] = [
+  {
+    id: "second-swap",
+    title: "SecondSwap",
+    imageSrc: "/works/second-swap/second-swap-app.png",
+    imageAlt: "SecondSwap mobile app showing Solana token bidding and best deals marketplace",
+    description:
+      "One-year engagement delivering a multi-chain marketplace for tradable vesting contracts across Avalanche, Ethereum, and Solana. Peak TVL of $6M, 5,000+ active users.",
+    tags: [
+      { label: "Tokenization", tone: "lime" },
+      { label: "DeFi", tone: "cyan" },
+      { label: "Web3 Integration", tone: "amber" },
+      { label: "Blockchain", tone: "sky" },
+    ],
+    href: "/works/second-swap",
+  },
   {
     id: "powertrade",
     title: "PowerTrade",
@@ -78,6 +94,10 @@ export const CORE_PROJECT_CARDS: WorkProjectCard[] = [
     ],
     extra: "+1",
   },
+];
+
+/** Additional case studies shown only on the /works page (Figma). */
+export const EXTRA_PAGE_PROJECT_CARDS: WorkProjectCard[] = [
   {
     id: "bspin",
     title: "bspin",
@@ -91,10 +111,6 @@ export const CORE_PROJECT_CARDS: WorkProjectCard[] = [
       { label: "Development", tone: "pink" },
     ],
   },
-];
-
-/** Additional case studies shown only on the /works page (Figma). */
-export const EXTRA_PAGE_PROJECT_CARDS: WorkProjectCard[] = [
   {
     id: "triptips",
     title: "TripTips",
@@ -144,27 +160,29 @@ export function WorkExamplesPortfolio({ projectCards, showFeatured = true }: Wor
   return (
     <div className="mx-auto flex w-full max-w-[1138px] flex-col gap-8">
       {showFeatured && <div className="relative flex min-h-0 w-full flex-col overflow-hidden rounded-[20px] border border-surface-border bg-surface-card shadow-card ms1024:min-h-[400px] ms1024:flex-row">
-        <div className="relative order-2 flex min-w-0 flex-1 flex-col px-4 pb-8 pt-12 ms1024:order-1 ms1024:px-0 ms1024:pb-10 ms1024:pl-[42px] ms1024:pr-6 ms1024:pt-10">
-          <h3 className="relative z-[2] m-0 text-center font-reg text-[32px] font-semibold leading-[40px] tracking-[0.04em] text-white ms1024:text-left">
-            Ocean Finance
-          </h3>
-          <p className="relative z-[2] m-0 mt-3 text-center font-reg text-xs font-normal leading-[18px] tracking-[0.02em] text-white ms1024:text-left">
-            {OCEAN_FINANCE_TAGLINE}
-          </p>
-          <p className="relative z-[2] m-0 mt-2 text-center font-reg text-sm font-medium leading-[22px] tracking-[0.02em] text-white-60 ms1024:text-left">
-            End-to-end tokenized fund infrastructure for institutional investors. From smart
-            contract development to web application delivery and on-chain data infrastructure.
-          </p>
-          <div className="relative z-[2] mt-6 flex max-w-[520px] flex-col gap-2 self-center ms1024:self-start">
-            <div className="flex flex-wrap justify-center gap-2 ms1024:justify-start">
-              {FEATURED_TAGS_ROW1.map((t) => (
-                <WorkTag key={t.label} {...t} />
-              ))}
-            </div>
-            <div className="flex flex-wrap justify-center gap-2 ms1024:justify-start">
-              {FEATURED_TAGS_ROW2.map((t) => (
-                <WorkTag key={t.label} {...t} />
-              ))}
+        <div className="relative order-2 flex min-w-0 flex-1 flex-col justify-between px-4 pb-8 pt-12 ms1024:order-1 ms1024:px-0 ms1024:pb-10 ms1024:pl-[42px] ms1024:pr-6 ms1024:pt-10">
+          <div>
+            <h3 className="relative z-[2] m-0 text-center font-reg text-[32px] font-semibold leading-[40px] tracking-[0.04em] text-white ms1024:text-left">
+              Ocean Finance
+            </h3>
+            <p className="relative z-[2] m-0 mt-3 text-center font-reg text-xs font-normal leading-[18px] tracking-[0.02em] text-white ms1024:text-left">
+              {OCEAN_FINANCE_TAGLINE}
+            </p>
+            <p className="relative z-[2] m-0 mt-2 text-center font-reg text-sm font-medium leading-[22px] tracking-[0.02em] text-white-60 ms1024:text-left">
+              End-to-end tokenized fund infrastructure for institutional investors. From smart
+              contract development to web application delivery and on-chain data infrastructure.
+            </p>
+            <div className="relative z-[2] mt-6 flex max-w-[520px] flex-col gap-2 self-center ms1024:self-start">
+              <div className="flex flex-wrap justify-center gap-2 ms1024:justify-start">
+                {FEATURED_TAGS_ROW1.map((t) => (
+                  <WorkTag key={t.label} {...t} />
+                ))}
+              </div>
+              <div className="flex flex-wrap justify-center gap-2 ms1024:justify-start">
+                {FEATURED_TAGS_ROW2.map((t) => (
+                  <WorkTag key={t.label} {...t} />
+                ))}
+              </div>
             </div>
           </div>
           <Link
@@ -179,7 +197,7 @@ export function WorkExamplesPortfolio({ projectCards, showFeatured = true }: Wor
         </div>
         <div className="relative order-1 h-[220px] w-full shrink-0 bg-surface-media ms1024:order-2 ms1024:h-[400px] ms1024:w-[569px]">
           <Image
-            src="/ocean-finance-dashboard.png"
+            src="/works/ocean/ocean-finance-dashboard.png"
             alt="Ocean Finance admin dashboard with token operations and activity"
             fill
             className="object-cover object-left-top"
@@ -227,6 +245,17 @@ export function WorkExamplesPortfolio({ projectCards, showFeatured = true }: Wor
                     </span>
                   ) : null}
                 </div>
+                {project.href && (
+                  <Link
+                    href={project.href}
+                    className="mt-5 inline-flex w-fit items-center gap-2 rounded-81xl bg-purple px-5 py-2.5 font-reg text-sm font-semibold tracking-[0.02em] text-white transition-colors duration-200 hover:bg-mediumpurple [text-decoration:none]"
+                  >
+                    View Case Study
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
+                      <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </Link>
+                )}
               </div>
             </article>
           ))}

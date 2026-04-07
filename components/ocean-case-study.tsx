@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { OCEAN_FINANCE_TAGLINE } from "../constants/ocean-finance";
+import { CaseStudyObjectives } from "./case-study-objectives";
 import ContactSection from "./contact-section";
 import { GradientBorderCard } from "./gradient-border-card";
 import { GradientGlow } from "./gradient-glow";
@@ -280,10 +281,11 @@ export default function OceanCaseStudy() {
       </section>
 
       {/* ── Stats ──────────────────────────────────────────── */}
-      <section className="w-full bg-dark px-5 pt-16 pb-20">
+      <section className="w-full bg-dark px-5 pt-16 pb-20 mq900:pb-16 mq450:pb-12">
         <div className="mx-auto flex max-w-[1200px] flex-col items-center gap-10">
-          <h2 className="m-0 text-center font-sora text-[26px] font-semibold capitalize leading-none mq450:text-xl">
-            Tokenizing Trade Finance Capital Flows
+          <h2 className="m-0 text-center font-sora text-[26px] font-semibold capitalize leading-none mq450:text-xl mq450:leading-[1.25]">
+            Tokenizing Trade{" "}
+            <span className="mq450:block">Finance Capital Flows</span>
           </h2>
           <p className="m-0 max-w-[747px] text-center font-reg text-sm font-medium leading-[22px] tracking-[0.02em] text-white-60">
             End-to-end tokenized fund infrastructure for institutional investors.
@@ -314,7 +316,7 @@ export default function OceanCaseStudy() {
       <section className="w-full bg-dark px-5 py-16">
         <div className="relative mx-auto max-w-[1132px]">
           <GradientBorderCard backgroundSrc="/token-noise-bg.png">
-            <h2 className="m-0 font-sora text-[40px] font-semibold capitalize leading-none mq900:text-[32px] mq450:text-5xl">
+            <h2 className="m-0 font-sora text-[40px] font-semibold capitalize leading-none mq900:text-[32px] mq900:leading-[1.2] mq450:text-5xl">
               Brief &amp; Background
             </h2>
             <div className="mt-10 flex max-w-[663px] flex-col gap-4 font-reg text-sm font-normal leading-[22px] tracking-[0.02em] text-white-60">
@@ -338,36 +340,11 @@ export default function OceanCaseStudy() {
       </section>
 
       {/* ── Business Objectives ──────────────────────────────── */}
-      <section className="w-full bg-dark px-5 pb-16 pt-6 mq1100:px-8 mq450:px-5">
-        <div className="mx-auto max-w-[1132px]">
-          <h3 className="m-0 text-center font-sora text-[26px] font-semibold capitalize leading-none mq450:text-xl">
-            Business Objectives
-          </h3>
-          <div className="mt-10 grid grid-cols-2 gap-x-8 gap-y-6 mq900:grid-cols-1">
-            {OBJECTIVES.map((obj, i) => {
-              const Icon = OBJECTIVE_ICONS[i];
-              return (
-                <div
-                  key={obj.title}
-                  className="relative flex items-start gap-4 overflow-hidden rounded-3xs border border-solid border-white/20 bg-[rgba(27,19,51,0.4)] p-6 shadow-[0_0_12px_0_#2b1f62] transition-all duration-300 ease-out hover:-translate-y-px hover:border-white/25 hover:shadow-[0_0_18px_2px_#2b1f62] mq450:flex-col mq450:items-center mq450:text-center"
-                >
-                  <span className="shrink-0 text-white">
-                    <Icon />
-                  </span>
-                  <div className="min-w-0">
-                    <h4 className="m-0 font-sora text-xl font-semibold leading-[30px] tracking-[0.02em]">
-                      {obj.title}
-                    </h4>
-                    <p className="m-0 mt-2 font-reg text-sm font-normal leading-[22px] tracking-[0.02em] text-white-60">
-                      {obj.description}
-                    </p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
+      <CaseStudyObjectives
+        title="Business Objectives"
+        objectives={OBJECTIVES}
+        icons={OBJECTIVE_ICONS}
+      />
 
       {/* ── Our Solution ───────────────────────────────────── */}
       <section className="w-full bg-dark px-5 py-16 mq450:px-3">
@@ -380,7 +357,7 @@ export default function OceanCaseStudy() {
             className="pointer-events-none absolute left-0 top-0 w-full object-cover"
             aria-hidden
           />
-          <h2 className="relative m-0 text-center font-sora text-[40px] font-semibold capitalize leading-none mq900:text-[32px] mq450:text-5xl">
+          <h2 className="relative m-0 text-center font-sora text-[40px] font-semibold capitalize leading-none mq900:text-[32px] mq900:leading-[1.2] mq450:text-5xl">
             Our Solution
           </h2>
 
@@ -462,7 +439,7 @@ export default function OceanCaseStudy() {
       <section className="relative w-full bg-dark px-5 py-12">
         <GradientGlow className="top-1/2 -translate-y-1/2" size="sm" />
         <div className="relative mx-auto flex max-w-[1200px] flex-col items-center gap-8">
-          <h2 className="m-0 text-center font-sora text-[26px] font-semibold capitalize leading-none mq450:text-xl">
+          <h2 className="m-0 text-center font-sora text-[26px] font-semibold capitalize leading-none mq450:text-xl mq450:leading-[1.25]">
             Technical Infrastructure
           </h2>
           <div className="flex flex-wrap justify-center gap-3">
@@ -488,7 +465,7 @@ export default function OceanCaseStudy() {
             backgroundSrc="/works/ocean/outcome-bg.png"
             backgroundClassName="pointer-events-none object-cover object-right"
           >
-            <h2 className="m-0 font-sora text-[40px] font-semibold capitalize leading-none mq900:text-[32px] mq450:text-5xl">
+            <h2 className="m-0 font-sora text-[40px] font-semibold capitalize leading-none mq900:text-[32px] mq900:leading-[1.2] mq450:text-5xl">
               Outcome
             </h2>
             <div className="mt-10 flex max-w-[663px] flex-col gap-6 font-reg text-sm font-normal leading-[22px] tracking-[0.02em] text-white-60">

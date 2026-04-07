@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useState } from "react";
+import { type TouchEvent, useCallback, useEffect, useRef, useState } from "react";
 
 interface GallerySlide {
   src: string;
@@ -19,6 +19,8 @@ export default function ProjectGallery({
 }: ProjectGalleryProps) {
   const [active, setActive] = useState(0);
   const [tick, setTick] = useState(0);
+  const touchStartRef = useRef<{ x: number; y: number } | null>(null);
+  const touchEndRef = useRef<{ x: number; y: number } | null>(null);
   const len = slides.length;
 
   const goTo = useCallback(
@@ -49,9 +51,34 @@ export default function ProjectGallery({
     return diff > 0 ? 2 : -2;
   };
 
+  const handleTouchStart = useCallback((event: TouchEvent<HTMLDivElement>) => {
+    const touch = event.touches[0];
+    touchStartRef.current = { x: touch.clientX, y: touch.clientY };
+    touchEndRef.current = { x: touch.clientX, y: touch.clientY };
+  }, []);
+
+  const handleTouchMove = useCallback((event: TouchEvent<HTMLDivElement>) => {
+    const touch = event.touches[0];
+    touchEndRef.current = { x: touch.clientX, y: touch.clientY };
+  }, []);
+
+  const handleTouchEnd = useCallback(() => {
+    if (!touchStartRef.current || !touchEndRef.current) return;
+
+    const deltaX = touchEndRef.current.x - touchStartRef.current.x;
+    const deltaY = touchEndRef.current.y - touchStartRef.current.y;
+
+    touchStartRef.current = null;
+    touchEndRef.current = null;
+
+    if (Math.abs(deltaX) < 40 || Math.abs(deltaX) <= Math.abs(deltaY)) return;
+
+    go(deltaX < 0 ? 1 : -1);
+  }, [go]);
+
   return (
     <section className="w-full overflow-hidden bg-dark py-16">
-      <h2 className="m-0 mb-10 text-center font-sora text-[26px] font-semibold capitalize leading-none mq450:text-xl">
+      <h2 className="m-0 mb-10 text-center font-sora text-[26px] font-semibold capitalize leading-none mq450:text-xl mq450:leading-[1.25]">
         Project Gallery
       </h2>
 
@@ -78,12 +105,12 @@ export default function ProjectGallery({
                 pointerEvents: isVisible ? "auto" : "none",
               }}
             >
-              <div className="relative aspect-[890/505] w-full overflow-hidden rounded-[20px]">
+              <div className="relative aspect-[890/505] w-full overflow-hidden rounded-[20px] bg-[#0d0b1a]">
                 <Image
                   src={slide.src}
                   alt={slide.alt}
                   fill
-                  className="object-cover object-left-top"
+                  className="object-contain"
                   sizes="(max-width: 1200px) 62vw, 744px"
                 />
               </div>
@@ -110,14 +137,21 @@ export default function ProjectGallery({
       </div>
 
       {/* Mobile: simple single-image view */}
-      <div className="relative mx-auto hidden max-w-[890px] px-5 mq900:block mq900:px-5">
-        <div className="relative aspect-[890/505] w-full overflow-hidden rounded-[20px] mq450:rounded-[12px]">
+      <div className="relative hidden mq900:block">
+        <div
+          className="relative aspect-[890/505] w-full overflow-hidden rounded-[20px] bg-[#0d0b1a] mq450:rounded-[12px]"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+          onTouchCancel={handleTouchEnd}
+          style={{ touchAction: "pan-y" }}
+        >
           <Image
             src={slides[active].src}
             alt={slides[active].alt}
             fill
-            className="object-cover object-left-top transition-opacity duration-500"
-            sizes="(max-width: 900px) 100vw, 890px"
+            className="object-contain transition-opacity duration-500"
+            sizes="100vw"
           />
         </div>
       </div>

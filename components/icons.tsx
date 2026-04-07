@@ -2,6 +2,14 @@ import { SVGProps } from "react";
 
 type IconProps = SVGProps<SVGSVGElement>;
 
+export function MailIcon(props: IconProps) {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
+      <path fillRule="evenodd" clipRule="evenodd" d="M21.0479 7.36437L12.3105 13.481C12.1384 13.6015 11.9095 13.6015 11.7373 13.481L3 7.365V17.833C3 18.6043 3.63303 19.238 4.4043 19.2383H19.6426C20.4141 19.2383 21.0479 18.6045 21.0479 17.833V7.36437ZM19.6426 5C20.3306 5 20.9091 5.50365 21.0262 6.15981L12.0234 12.4605L3.02162 6.15981C3.13864 5.5038 3.7165 5.00023 4.4043 5H19.6426ZM19.6426 20.2383C20.9663 20.2383 22.0479 19.1568 22.0479 17.833V6.4043C22.0476 5.08075 20.9662 4 19.6426 4H4.4043C3.0809 4.00025 2.00025 5.0809 2 6.4043V17.833C2 19.1566 3.08075 20.238 4.4043 20.2383H19.6426Z" fill="currentColor"/>
+    </svg>
+  );
+}
+
 export function PhoneIcon(props: IconProps) {
   return (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
@@ -144,6 +152,34 @@ export function FileAnalyticsIcon(props: IconProps) {
           <rect width="42" height="42" fill="white"/>
         </clipPath>
       </defs>
+    </svg>
+  );
+}
+
+export function CheckCircleIcon(props: IconProps) {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
+      <path d="M22 11.08V12a10 10 0 11-5.93-9.14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M22 4L12 14.01l-3-3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  );
+}
+
+export function ToolIcon(props: IconProps) {
+  return (
+    <svg width="42" height="42" viewBox="0 0 42 42" fill="none" aria-hidden {...props}>
+      <path d="M25.2 16.8L36.75 5.25M33.25 5.25h3.5v3.5M36.225 20.475c.321 1.149.487 2.334.525 3.525 0 7.042-5.708 12.75-12.75 12.75S11.25 31.042 11.25 24 16.958 11.25 24 11.25c1.19.038 2.376.204 3.525.525" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M24 29.75a5.75 5.75 0 100-11.5 5.75 5.75 0 000 11.5z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  );
+}
+
+export function RosetteCheckIcon(props: IconProps) {
+  return (
+    <svg width="42" height="42" viewBox="0 0 42 42" fill="none" aria-hidden {...props}>
+      <path d="M21 28c5.523 0 10-4.477 10-10S26.523 8 21 8s-10 4.477-10 10 4.477 10 10 10z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M16.31 26.37l-1.56 8.38 6.25-3.5 6.25 3.5-1.56-8.38" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M17.5 18l3.5 3.5 5.25-5.25" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
   );
 }

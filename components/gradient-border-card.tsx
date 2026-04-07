@@ -6,7 +6,7 @@ const DEFAULT_PADDING =
 
 type GradientBorderCardProps = {
   children: ReactNode;
-  backgroundSrc: string;
+  backgroundSrc?: string;
   /** Decorative backgrounds should use "" */
   backgroundAlt?: string;
   backgroundClassName?: string;
@@ -29,14 +29,16 @@ export function GradientBorderCard({
     <div
       className={`gradient-border relative overflow-hidden rounded-[20px] shadow-card ${surfaceClassName}`}
     >
-      <Image
-        src={backgroundSrc}
-        alt={backgroundAlt}
-        fill
-        className={backgroundClassName}
-        sizes={sizes}
-        aria-hidden={backgroundAlt === ""}
-      />
+      {backgroundSrc && (
+        <Image
+          src={backgroundSrc}
+          alt={backgroundAlt}
+          fill
+          className={backgroundClassName}
+          sizes={sizes}
+          aria-hidden={backgroundAlt === ""}
+        />
+      )}
       <div className={contentClassName}>{children}</div>
     </div>
   );

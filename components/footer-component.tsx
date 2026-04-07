@@ -1,6 +1,5 @@
 import type { NextPage } from "next";
-import Image from "next/image";
-import { PhoneIcon, TelegramIcon, LinkedInIcon, XIcon } from "./icons";
+import { PhoneIcon, MailIcon, TelegramIcon, LinkedInIcon, XIcon } from "./icons";
 
 export type FooterComponentType = {
   className?: string;
@@ -26,13 +25,7 @@ const FooterComponent: NextPage<FooterComponentType> = ({ className = "" }) => {
                   </a>
                 </div>
                 <div className="flex flex-row items-center justify-start gap-3.5">
-                  <Image
-                    className="relative overflow-hidden shrink-0 object-cover"
-                    alt=""
-                    src="/24mail@2x.png"
-                    width={24}
-                    height={24}
-                  />
+                  <MailIcon className="shrink-0" />
                   <a href="mailto:contact@hoasen.io" className="relative tracking-[0.02em] leading-[24px] font-light inline-block min-w-[128px] whitespace-nowrap text-white hover:text-purple transition-colors duration-300 no-underline">
                     contact@hoasen.io
                   </a>
