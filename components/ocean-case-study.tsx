@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { OCEAN_FINANCE_TAGLINE } from "../constants/ocean-finance";
 import ContactSection from "./contact-section";
 import { GradientBorderCard } from "./gradient-border-card";
 import { GradientGlow } from "./gradient-glow";
@@ -13,11 +14,12 @@ import ProjectGallery from "./project-gallery";
 /* ── Static data ───────────────────────────────────────────── */
 
 const HERO_TAGS = [
-  "Smart Contract Development",
-  "Product Management",
-  "Development",
-  "Compliance Controls",
-  "Data Infrastructure",
+  "RWA Platform",
+  "Web3 Integration",
+  "Real-world Assets",
+  "Tokenization",
+  "Institutional",
+  "Trade Finance",
 ];
 
 const STATS = [
@@ -208,48 +210,69 @@ export default function OceanCaseStudy() {
   return (
     <main className="relative flex w-full flex-col items-center overflow-x-clip text-white">
       {/* ── Hero ────────────────────────────────────────────── */}
-      <section className="relative w-full">
-        <div className="absolute inset-0 bg-[#040b1e] overflow-hidden">
+      <section className="relative w-full overflow-hidden bg-[#040b1e] pt-[77px] mq900:pt-0">
+        {/* Background image layer — visible only on small screens */}
+        <div className="pointer-events-none absolute inset-0 hidden mq900:block" aria-hidden>
           <Image
             src="/works/ocean/hero-bg.png"
             alt=""
             fill
-            className="object-cover object-right-top opacity-60"
+            className="object-cover object-center"
             sizes="100vw"
-            priority
           />
+          <div className="absolute inset-0 bg-[#040b1e]/70" />
         </div>
-        <div className="relative mx-auto w-full max-w-[1440px] px-[150px] pb-24 pt-[280px] mq900:px-[60px] mq900:pt-[220px] mq450:px-5 mq450:pt-[160px] mq450:pb-16">
-          <Image
-            src="/works/ocean/logo.png"
-            alt="Ocean Finance logo"
-            width={100}
-            height={98}
-            className="mb-8"
-            priority
-          />
-          <h1 className="m-0 font-sora text-[64px] font-semibold capitalize leading-[82px] mq900:text-[48px] mq900:leading-[60px] mq450:text-[38px] mq450:leading-[48px]">
-            Ocean Finance
-          </h1>
-          <p className="m-0 mt-2 font-reg text-sm font-normal leading-[22px] tracking-[0.02em]">
-            Real-World Asset Tokenisation - Trade Finance
-          </p>
-          <div className="mt-10">
-            <p className="m-0 font-reg text-[10px] font-semibold uppercase leading-3 tracking-[2px] text-white-60">
-              What we did:
-            </p>
-            <div className="mt-4 flex flex-wrap gap-3">
-              {HERO_TAGS.map((tag) => (
-                <span
-                  key={tag}
-                  className="inline-flex items-center rounded-md bg-white/10 px-2.5 py-1 font-reg text-xs font-medium leading-[18px] tracking-[0.02em] text-white"
-                >
-                  {tag}
-                </span>
-              ))}
+
+        <div className="relative flex min-h-[640px] w-full items-stretch mq1100:min-h-[520px] mq900:min-h-[560px] mq450:min-h-[500px]">
+          {/* Left column — exactly 50vw */}
+          <div className="relative z-10 flex w-2/5 flex-none flex-col justify-between pb-[160px] pl-[60px] pr-8 mq1100:pb-10 mq900:w-full mq900:pb-16 mq900:pl-[30px] mq900:pr-[30px] mq900:pt-[60px] mq450:pl-5 mq450:pr-5">
+            <Image
+              src="/works/ocean/logo.png"
+              alt="Ocean Finance logo"
+              width={100}
+              height={98}
+              priority
+            />
+            <div className="max-w-[600px]">
+              <h1 className="m-0 font-sora text-[64px] font-semibold capitalize leading-[82px] mq1100:text-[50px] mq1100:leading-[64px] mq900:text-[48px] mq900:leading-[60px] mq450:text-[38px] mq450:leading-[48px]">
+                Ocean Finance
+              </h1>
+              <p className="m-0 mt-2 font-reg text-sm font-normal leading-[22px] tracking-[0.02em]">
+                {OCEAN_FINANCE_TAGLINE}
+              </p>
+              <div className="mt-10">
+                <p className="m-0 font-reg text-[10px] font-semibold uppercase leading-3 tracking-[2px] text-white-60">
+                  What we did:
+                </p>
+                <div className="mt-4 flex flex-wrap gap-3">
+                  {HERO_TAGS.map((tag) => (
+                    <span
+                      key={tag}
+                      className="inline-flex cursor-default items-center rounded-md bg-white/10 px-2.5 py-1 font-reg text-xs font-medium leading-[18px] tracking-[0.02em] text-white transition-all duration-200 hover:bg-white/20 hover:-translate-y-0.5"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right column — exactly 50vw, desktop only */}
+          <div className="pointer-events-none relative w-3/5 flex-none overflow-hidden mq900:hidden" aria-hidden>
+            <div className="top-0 h-full w-[108%]">
+              <Image
+                src="/works/ocean/hero-bg.png"
+                alt="Ocean Finance Dashboard"
+                fill
+                className="object-cover object-left-top"
+                sizes="85vw"
+                priority
+              />
             </div>
           </div>
         </div>
+
         <div
           className="absolute bottom-0 left-0 right-0 h-[60px]"
           style={{ background: "linear-gradient(to bottom, transparent, #1b1333)" }}
@@ -326,7 +349,7 @@ export default function OceanCaseStudy() {
               return (
                 <div
                   key={obj.title}
-                  className="relative flex items-start gap-4 overflow-hidden rounded-3xs border border-solid border-white/20 bg-[rgba(27,19,51,0.4)] p-6 shadow-[0_0_12px_0_#2b1f62] mq450:flex-col mq450:items-center mq450:text-center"
+                  className="relative flex items-start gap-4 overflow-hidden rounded-3xs border border-solid border-white/20 bg-[rgba(27,19,51,0.4)] p-6 shadow-[0_0_12px_0_#2b1f62] transition-all duration-300 ease-out hover:-translate-y-px hover:border-white/25 hover:shadow-[0_0_18px_2px_#2b1f62] mq450:flex-col mq450:items-center mq450:text-center"
                 >
                   <span className="shrink-0 text-white">
                     <Icon />

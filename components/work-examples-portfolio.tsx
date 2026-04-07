@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { OCEAN_FINANCE_TAGLINE } from "../constants/ocean-finance";
 
 export const TAG_TONE_CLASSES = {
   cyan: "bg-tag-cyan/20 text-tag-cyan",
@@ -148,7 +149,7 @@ export function WorkExamplesPortfolio({ projectCards, showFeatured = true }: Wor
             Ocean Finance
           </h3>
           <p className="relative z-[2] m-0 mt-3 text-center font-reg text-xs font-normal leading-[18px] tracking-[0.02em] text-white ms1024:text-left">
-            Real-World Asset Tokenisation - Trade Finance
+            {OCEAN_FINANCE_TAGLINE}
           </p>
           <p className="relative z-[2] m-0 mt-2 text-center font-reg text-sm font-medium leading-[22px] tracking-[0.02em] text-white-60 ms1024:text-left">
             End-to-end tokenized fund infrastructure for institutional investors. From smart
@@ -167,7 +168,7 @@ export function WorkExamplesPortfolio({ projectCards, showFeatured = true }: Wor
             </div>
           </div>
           <Link
-            href="/works/ocean"
+            href="/works/ocean-finance"
             className="relative z-[2] mt-6 inline-flex w-fit items-center gap-2 self-center rounded-81xl bg-purple px-6 py-3 font-reg text-sm font-semibold tracking-[0.02em] text-white transition-colors duration-200 hover:bg-mediumpurple [text-decoration:none] ms1024:self-start"
           >
             View Case Study
