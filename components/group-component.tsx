@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import Image from "next/image";
+import { Badge } from "./badge";
 
 export type GroupComponentType = {
   id?: string;
@@ -69,12 +70,7 @@ const GroupComponent: NextPage<GroupComponentType> = ({
           </div>
           <div className="z-[1] flex min-h-[6rem] flex-wrap content-start gap-2 self-stretch">
             {skills.map((skill, index) => (
-              <div
-                key={index}
-                className="select-none rounded-md bg-white bg-opacity-10 px-2 py-1 text-sm"
-              >
-                {skill}
-              </div>
+              <Badge key={index}>{skill}</Badge>
             ))}
           </div>
         </div>

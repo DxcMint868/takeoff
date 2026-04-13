@@ -2,13 +2,13 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import { BADGE_SURFACE_CLASSES } from "./badge";
 import CTASolid from "./cta-solid";
 import { GradientGlow } from "./gradient-glow";
 import {
   CORE_PROJECT_CARDS,
   EXTRA_PAGE_PROJECT_CARDS,
   OCEAN_FINANCE_PROJECT,
-  TAG_TONE_CLASSES,
   WorkExamplesPortfolio,
   type WorkProjectCard,
   type WorkTagSpec,
@@ -151,7 +151,7 @@ const WorksPageMain = () => {
                   key={chip.label}
                   type="button"
                   onClick={() => toggleFilter(chip.label)}
-                  className={`cursor-pointer select-none rounded-md border border-transparent px-2.5 py-1 font-reg text-xs font-medium leading-[18px] tracking-[0.02em] transition-opacity ${TAG_TONE_CLASSES[chip.tone]} ${
+                  className={`${BADGE_SURFACE_CLASSES} cursor-pointer select-none transition-opacity ${
                     active ? "opacity-100 ring-2 ring-white/50" : "opacity-90 hover:opacity-100"
                   }`}
                 >

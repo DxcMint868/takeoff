@@ -1,5 +1,6 @@
 import Image from "next/image";
 import React from "react";
+import { Badge } from "./badge";
 import { CaseStudyObjectives } from "./case-study-objectives";
 import ContactSection from "./contact-section";
 import { GradientBorderCard } from "./gradient-border-card";
@@ -319,22 +320,16 @@ export default function SecondSwapCaseStudy() {
                 <div className="mt-4 flex flex-col gap-3">
                   <div className="flex flex-wrap gap-3">
                     {HERO_TAGS_ROW1.map((tag) => (
-                      <span
-                        key={tag}
-                        className="inline-flex cursor-default items-center rounded-md bg-white/10 px-2.5 py-1 font-reg text-xs font-medium leading-[18px] tracking-[0.02em] text-white transition-all duration-200 hover:bg-white/20 hover:-translate-y-0.5"
-                      >
+                      <Badge key={tag}>
                         {tag}
-                      </span>
+                      </Badge>
                     ))}
                   </div>
                   <div className="flex flex-wrap gap-3">
                     {HERO_TAGS_ROW2.map((tag) => (
-                      <span
-                        key={tag}
-                        className="inline-flex cursor-default items-center rounded-md bg-white/10 px-2.5 py-1 font-reg text-xs font-medium leading-[18px] tracking-[0.02em] text-white transition-all duration-200 hover:bg-white/20 hover:-translate-y-0.5"
-                      >
+                      <Badge key={tag}>
                         {tag}
-                      </span>
+                      </Badge>
                     ))}
                   </div>
                 </div>
