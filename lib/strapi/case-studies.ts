@@ -94,13 +94,6 @@ type WorksDataResult = {
   source: "cms" | "none";
 };
 
-type MediaUseCase =
-  | "hero_image"
-  | "card_thumbnail"
-  | "featured_card_thumbnail"
-  | "gallery_item"
-  | "";
-
 const STRAPI_BASE_URL = normalizeBaseUrl(process.env.NEXT_PUBLIC_STRAPI_URL);
 const STRAPI_TOKEN =
   process.env.STRAPI_API_TOKEN || process.env.STRAPI_BEARER_TOKEN || "";
@@ -237,28 +230,19 @@ function mapProjectToCaseStudy(
   const project = unwrapStrapiData<any>(projectLike);
   if (!project) return null;
 
-  const mediaStack = toArray<any>(project.media_stack).map((entry) => {
-    const normalized = unwrapStrapiData<any>(entry);
-    return {
-      useCase: normalized.use_case,
-      caption: stringifyValue(normalized.caption),
-      order: toOrder(normalized.order),
-      file: toMedia(normalized.file),
-    };
-  });
-
-  const heroMedia = sortByOrder(
-    mediaStack.filter((entry) => entry.useCase === "hero_image" && entry.file),
-  )[0]?.file;
+  const heroMedia = toMedia(project.hero_image);
 
   const gallery = sortByOrder(
-    mediaStack
-      .filter((entry) => entry.useCase === "gallery_item" && entry.file)
-      .map((entry) => ({
-        src: entry.file?.url ?? "",
-        alt: entry.caption || entry.file?.alt || "",
-        order: entry.order,
-      }))
+    toArray<any>(project.gallery_images)
+      .map((entry, index) => {
+        const normalized = unwrapStrapiData<any>(entry);
+        const file = toMedia(normalized.file);
+        return {
+          src: file?.url ?? "",
+          alt: stringifyValue(normalized.alt_text) || file?.alt || "",
+          order: toOrder(normalized.order, index + 1),
+        };
+      })
       .filter((entry) => !!entry.src),
   );
 
@@ -360,18 +344,20 @@ function mapProjectToCaseStudy(
     slug,
     title,
     shortDescription,
-    subtitle: stringifyValue(project.domain_subtitle) || undefined,
-    logo,
-    heroImage: heroMedia,
     heroTags: skills,
     stats,
     objectives,
     solutions,
     technicalInfrastructure: techInfra,
     gallery,
-    briefAndBackground,
-    outcome,
-    testimonial,
+    ...(stringifyValue(project.domain_subtitle)
+      ? { subtitle: stringifyValue(project.domain_subtitle) }
+      : {}),
+    ...(logo ? { logo } : {}),
+    ...(heroMedia ? { heroImage: heroMedia } : {}),
+    ...(briefAndBackground ? { briefAndBackground } : {}),
+    ...(outcome ? { outcome } : {}),
+    ...(testimonial ? { testimonial } : {}),
   };
 }
 
@@ -380,34 +366,34 @@ function findFeaturedMedia(
   isFeaturedProject: boolean,
 ): CaseStudyMedia | undefined {
   const project = unwrapStrapiData<any>(projectLike);
-  const mediaStack = toArray<any>(project?.media_stack)
-    .map((entry) => unwrapStrapiData<any>(entry))
-    .filter(Boolean)
-    .map((entry) => ({
-      useCase: entry.use_case,
-      order: toOrder(entry.order),
-      file: toMedia(entry.file),
-      caption: stringifyValue(entry.caption),
-    }));
+  const thumbnail = toMedia(project?.thumbnail_image);
+  if (thumbnail) return thumbnail;
 
-  const preferredUseCases: MediaUseCase[] = isFeaturedProject
-    ? ["featured_card_thumbnail", "card_thumbnail", "hero_image"]
-    : ["card_thumbnail", "featured_card_thumbnail", "hero_image"];
+  const hero = toMedia(project?.hero_image);
+  if (hero) return hero;
 
-  for (const useCase of preferredUseCases) {
-    const candidate = sortByOrder(
-      mediaStack.filter((entry) => entry.useCase === useCase && entry.file),
-    )[0];
+  const galleryFirst = sortByOrder(
+    toArray<any>(project?.gallery_images)
+      .map((entry, index) => {
+        const normalized = unwrapStrapiData<any>(entry);
+        const file = toMedia(normalized.file);
+        return {
+          file,
+          alt: stringifyValue(normalized.alt_text),
+          order: toOrder(normalized.order, index + 1),
+        };
+      })
+      .filter((entry) => !!entry.file),
+  )[0];
 
-    if (candidate?.file) {
-      return {
-        url: candidate.file.url,
-        alt: candidate.caption || candidate.file.alt,
-      };
-    }
+  if (galleryFirst?.file) {
+    return {
+      url: galleryFirst.file.url,
+      alt: galleryFirst.alt || galleryFirst.file.alt,
+    };
   }
 
-  return undefined;
+  return isFeaturedProject ? hero : undefined;
 }
 
 function mapProjectToWorkCard(
@@ -508,6 +494,8 @@ function populateMediaFields(params: URLSearchParams, baseKey: string) {
 function buildProjectPopulateQuery() {
   const params = new URLSearchParams();
   populateMediaFields(params, "populate[logo_icon]");
+  populateMediaFields(params, "populate[hero_image]");
+  populateMediaFields(params, "populate[thumbnail_image]");
   params.set("populate[skills][fields][0]", "name");
   params.set("populate[skills][fields][1]", "slug");
   params.set("populate[industries][fields][0]", "name");
@@ -526,7 +514,9 @@ function buildProjectPopulateQuery() {
   params.set("populate[testimonial]", "*");
   params.set("populate[tech_infra_items][fields][0]", "name");
   params.set("populate[tech_infra_items][fields][1]", "order");
-  populateMediaFields(params, "populate[media_stack][populate][file]");
+  params.set("populate[gallery_images][fields][0]", "alt_text");
+  params.set("populate[gallery_images][fields][1]", "order");
+  populateMediaFields(params, "populate[gallery_images][populate][file]");
   return params;
 }
 
