@@ -14,13 +14,7 @@ import {
 } from "../../lib/strapi/case-studies";
 
 const SITE_URL = "https://www.hoasen.io";
-// Filesystem route names are already protected by Next.js routing priority,
-// but the CMS slugs those pages actually fetch must be blocked explicitly so
-// the dynamic route never generates a duplicate public URL for the same content.
-const RESERVED_SLUGS = new Set([
-  "ocean-finance", "ocean",      // pages/works/ocean-finance.tsx
-  "second-swap",   "secondswap", // pages/works/second-swap.tsx
-]);
+const RESERVED_SLUGS = new Set(["ocean-finance", "second-swap"]); // these have their own hardcoded pages (fallback demos)
 
 type DynamicCaseStudyPageProps = {
   caseStudy: CaseStudyViewModel;
