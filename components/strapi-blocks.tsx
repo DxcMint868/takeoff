@@ -1,4 +1,12 @@
 import { Fragment, type ReactNode } from "react";
+
+const SAFE_URL_RE = /^(https?|mailto|tel):/i;
+
+function sanitizeHref(raw: string): string | undefined {
+  const url = raw.trim();
+  if (!url || !SAFE_URL_RE.test(url)) return undefined;
+  return url;
+}
 import type {
   StrapiBlocksNode,
   StrapiTextNode,
@@ -41,13 +49,24 @@ function renderInline(
     }
 
     if (node.type === "link") {
-      const href = ((node as unknown as { url?: string }).url || "").trim();
+      const href = sanitizeHref(
+        (node as unknown as { url?: string }).url ?? "",
+      );
+      if (!href) {
+        return (
+          <span key={key} className="underline">
+            {renderInline(node.children, `${key}-child`)}
+          </span>
+        );
+      }
+      const isExternal = /^https?:/i.test(href);
       return (
         <a
           key={key}
-          href={href || "#"}
-          target="_blank"
-          rel="noreferrer"
+          href={href}
+          {...(isExternal
+            ? { target: "_blank", rel: "noopener noreferrer" }
+            : {})}
           className="underline"
         >
           {renderInline(node.children, `${key}-child`)}

@@ -1,4 +1,5 @@
 import { type ComponentType, type SVGProps } from "react";
+import Image from "next/image";
 import ContactSection from "./contact-section";
 import { GradientBorderCard } from "./gradient-border-card";
 import { GradientGlow } from "./gradient-glow";
@@ -40,10 +41,13 @@ export default function CaseStudyTemplate({
               className="pointer-events-none absolute inset-0 hidden mq900:block"
               aria-hidden
             >
-              <img
+              <Image
                 src={caseStudy.heroImage.url}
                 alt=""
-                className="h-full w-full object-cover object-center"
+                fill
+                priority
+                sizes="100vw"
+                className="object-cover object-center"
               />
               <div className="absolute inset-0 bg-[#040b1e]/70" />
             </div>
@@ -51,10 +55,13 @@ export default function CaseStudyTemplate({
               className="pointer-events-none absolute right-0 top-0 h-full w-3/5 overflow-hidden mq900:hidden"
               aria-hidden
             >
-              <img
+              <Image
                 src={caseStudy.heroImage.url}
                 alt=""
-                className="h-full w-full object-cover object-left-top"
+                fill
+                priority
+                sizes="60vw"
+                className="object-cover object-left-top"
               />
             </div>
           </>
@@ -63,10 +70,13 @@ export default function CaseStudyTemplate({
         <div className="relative flex min-h-[640px] w-full items-stretch mq1100:min-h-[520px] mq900:min-h-[560px] mq450:min-h-[500px]">
           <div className="relative z-10 flex w-2/5 flex-none flex-col justify-between pb-[160px] pl-[60px] pr-8 mq1100:pb-10 mq900:w-full mq900:pb-16 mq900:pl-[30px] mq900:pr-[30px] mq900:pt-[60px] mq450:pl-5 mq450:pr-5">
             {caseStudy.logo?.url ? (
-              <img
+              <Image
                 src={caseStudy.logo.url}
                 alt={caseStudy.logo.alt || `${caseStudy.title} logo`}
-                className="h-[98px] w-[100px] object-contain"
+                width={100}
+                height={98}
+                priority
+                className="object-contain"
               />
             ) : null}
 
@@ -191,10 +201,12 @@ export default function CaseStudyTemplate({
                   >
                     {image && isLeft ? (
                       <div className="relative h-[430px] w-[560px] shrink-0 overflow-hidden rounded-[20px] mq1100:order-2 mq1100:h-[300px] mq1100:w-full mq450:h-[220px]">
-                        <img
+                        <Image
                           src={image.url}
                           alt={image.alt || solution.title}
-                          className="h-full w-full object-cover object-left-top"
+                          fill
+                          sizes="(max-width: 1100px) 100vw, 560px"
+                          className="object-cover object-left-top"
                         />
                       </div>
                     ) : null}
@@ -211,10 +223,12 @@ export default function CaseStudyTemplate({
 
                     {image && !isLeft ? (
                       <div className="relative h-[430px] w-[560px] shrink-0 overflow-hidden rounded-[20px] mq1100:h-[300px] mq1100:w-full mq450:h-[220px]">
-                        <img
+                        <Image
                           src={image.url}
                           alt={image.alt || solution.title}
-                          className="h-full w-full object-cover object-left-top"
+                          fill
+                          sizes="(max-width: 1100px) 100vw, 560px"
+                          className="object-cover object-left-top"
                         />
                       </div>
                     ) : null}
