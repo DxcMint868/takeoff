@@ -1,6 +1,8 @@
 import CTASolid from "./cta-solid";
 import {
   CORE_PROJECT_CARDS,
+  EXTRA_PAGE_PROJECT_CARDS,
+  OCEAN_FINANCE_PROJECT,
   WorkExamplesPortfolio,
 } from "./work-examples-portfolio";
 
@@ -13,10 +15,13 @@ const WorkExamplesSection = () => (
         </h2>
       </div>
 
-      <WorkExamplesPortfolio projectCards={CORE_PROJECT_CARDS} />
+      <WorkExamplesPortfolio
+        featuredProject={OCEAN_FINANCE_PROJECT}
+        projectCards={[...CORE_PROJECT_CARDS, ...EXTRA_PAGE_PROJECT_CARDS]}
+      />
 
       <div className="flex justify-center pt-2">
-        <CTASolid propWidth="200px" label="More Projects" href="/works" />
+        <CTASolid propWidth="200px" label="More Projects" href="" />
       </div>
     </div>
   </section>
