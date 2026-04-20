@@ -1,18 +1,16 @@
 import Image from "next/image";
 import Link from "next/link";
 import { OCEAN_FINANCE_TAGLINE } from "../constants/ocean-finance";
+import { Badge } from "./badge";
 
-export const TAG_TONE_CLASSES = {
-  cyan: "bg-tag-cyan/20 text-tag-cyan",
-  mint: "bg-tag-mint/20 text-tag-mint",
-  amber: "bg-tag-amber/20 text-tag-amber",
-  pink: "bg-tag-pink/20 text-tag-pink",
-  lime: "bg-tag-lime/20 text-tag-lime",
-  sky: "bg-tag-sky/20 text-tag-sky",
-  coral: "bg-tag-coral/20 text-tag-coral",
-} as const;
-
-export type WorkTagTone = keyof typeof TAG_TONE_CLASSES;
+export type WorkTagTone =
+  | "cyan"
+  | "mint"
+  | "amber"
+  | "pink"
+  | "lime"
+  | "sky"
+  | "coral";
 
 export type WorkTagSpec = { label: string; tone: WorkTagTone };
 
@@ -147,14 +145,8 @@ export const EXTRA_PAGE_PROJECT_CARDS: WorkProjectCard[] = [
   },
 ];
 
-export function WorkTag({ label, tone }: WorkTagSpec) {
-  return (
-    <span
-      className={`inline-flex h-[26px] items-center justify-center rounded-md px-2.5 font-reg text-xs font-medium leading-[18px] tracking-[0.02em] ${TAG_TONE_CLASSES[tone]}`}
-    >
-      {label}
-    </span>
-  );
+export function WorkTag({ label }: WorkTagSpec) {
+  return <Badge>{label}</Badge>;
 }
 
 type WorkExamplesPortfolioProps = {

@@ -1,10 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ArrowIcon } from './icons';
 
 const fieldClass =
-  "w-full bg-transparent border-x-0 border-t-0 border-b border-white-30 rounded-none px-0 py-2 focus:outline-none focus:ring-0 focus:border-white-60 font-reg text-sm leading-[22px] tracking-[0.02em] text-white placeholder:text-white-60";
+  "w-full bg-transparent border-x-0 border-t-0 border-b border-white-30 rounded-none px-0 py-2 focus:outline-none focus:ring-0 focus:border-white-60 font-reg text-sm leading-[22px] tracking-[0.02em] !text-white";
+
+const fieldStyle: React.CSSProperties = {
+  color: "#fff",
+  WebkitTextFillColor: "#fff",
+  caretColor: "#fff",
+};
+
+const TEXTAREA_BASE_HEIGHT = 39;
+
+const textareaStyle: React.CSSProperties = {
+  ...fieldStyle,
+  minHeight: `${TEXTAREA_BASE_HEIGHT}px`,
+  boxSizing: "border-box",
+};
 
 const ContactForm: React.FC = () => {
+  const projectDetailsRef = useRef<HTMLTextAreaElement>(null);
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -18,6 +33,17 @@ const ContactForm: React.FC = () => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
+
+  useEffect(() => {
+    const textarea = projectDetailsRef.current;
+
+    if (!textarea) {
+      return;
+    }
+
+    textarea.style.height = `${TEXTAREA_BASE_HEIGHT}px`;
+    textarea.style.height = `${Math.max(textarea.scrollHeight, TEXTAREA_BASE_HEIGHT)}px`;
+  }, [formData.projectDetails]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -43,7 +69,10 @@ const ContactForm: React.FC = () => {
 
   return (
     <div className="w-full max-w-[420px] shrink-0 mq900:max-w-full">
-      <form onSubmit={handleSubmit} className="w-full flex flex-col gap-10">
+      <form
+        onSubmit={handleSubmit}
+        className="contact-form w-full flex flex-col gap-10"
+      >
         <input
           type="text"
           name="fullName"
@@ -51,6 +80,7 @@ const ContactForm: React.FC = () => {
           onChange={handleChange}
           placeholder="Full Name"
           className={fieldClass}
+          style={fieldStyle}
         />
 
         <div className="grid grid-cols-2 gap-5 mq450:grid-cols-1 mq450:gap-10">
@@ -62,6 +92,7 @@ const ContactForm: React.FC = () => {
             onChange={handleChange}
             placeholder="Email"
             className={fieldClass}
+            style={fieldStyle}
             pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
             title="Please enter a valid email address"
           />
@@ -72,6 +103,7 @@ const ContactForm: React.FC = () => {
             onChange={handleChange}
             placeholder="Telegram"
             className={fieldClass}
+            style={fieldStyle}
           />
         </div>
 
@@ -83,14 +115,18 @@ const ContactForm: React.FC = () => {
           onChange={handleChange}
           placeholder="Company Name"
           className={fieldClass}
+          style={fieldStyle}
         />
 
         <textarea
+          ref={projectDetailsRef}
           name="projectDetails"
+          rows={1}
           value={formData.projectDetails}
           onChange={handleChange}
           placeholder="Tell us about your project..."
-          className={`${fieldClass} min-h-[35px] resize-none`}
+          className={`${fieldClass} resize-none overflow-hidden`}
+          style={textareaStyle}
         />
 
         <div className="flex flex-col items-end">

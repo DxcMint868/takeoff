@@ -39,6 +39,74 @@ body {
   pointer-events: none;
 }
 
+/* Focus + autofill: `color` alone loses to Chrome UA on autofilled focused fields — set both + !important */
+.contact-form input,
+.contact-form textarea {
+  color-scheme: dark;
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: #a4a1ad !important;
+  -webkit-text-fill-color: #a4a1ad !important;
+  opacity: 1;
+}
+
+.contact-form input:focus,
+.contact-form input:focus-visible,
+.contact-form textarea:focus,
+.contact-form textarea:focus-visible {
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  caret-color: #fff;
+}
+
+/* Autofill: keep text/caret light and paint the field to match the card background */
+.contact-form input:-webkit-autofill,
+.contact-form input:-webkit-autofill:hover,
+.contact-form input:-webkit-autofill:focus,
+.contact-form input:-webkit-autofill:active,
+.contact-form textarea:-webkit-autofill,
+.contact-form textarea:-webkit-autofill:hover,
+.contact-form textarea:-webkit-autofill:focus,
+.contact-form textarea:-webkit-autofill:active {
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  caret-color: #fff;
+  background-color: #282042 !important;
+  -webkit-box-shadow: 0 0 0 1000px #282042 inset !important;
+  box-shadow: 0 0 0 1000px #282042 inset !important;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  transition: background-color 99999s ease-out 0s;
+}
+
+.contact-form input:autofill,
+.contact-form input:autofill:hover,
+.contact-form input:autofill:focus,
+.contact-form textarea:autofill,
+.contact-form textarea:autofill:hover,
+.contact-form textarea:autofill:focus {
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  caret-color: #fff;
+  background-color: #282042 !important;
+  box-shadow: 0 0 0 1000px #282042 inset !important;
+  background-clip: padding-box;
+}
+
+.contact-form input:-moz-autofill,
+.contact-form input:-moz-autofill:hover,
+.contact-form input:-moz-autofill:focus,
+.contact-form textarea:-moz-autofill,
+.contact-form textarea:-moz-autofill:hover,
+.contact-form textarea:-moz-autofill:focus {
+  background-color: #282042 !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  caret-color: #fff;
+}
+
 input[type="search"]::-webkit-search-cancel-button {
   -webkit-appearance: none;
   appearance: none;

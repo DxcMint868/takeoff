@@ -16,7 +16,7 @@ const WorkExamplesSection = () => (
       <WorkExamplesPortfolio projectCards={CORE_PROJECT_CARDS} />
 
       <div className="flex justify-center pt-2">
-        <CTASolid propWidth="200px" label="More Project" href="/works" />
+        <CTASolid propWidth="200px" label="More Projects" href="/works" />
       </div>
     </div>
   </section>

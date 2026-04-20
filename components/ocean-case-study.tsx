@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { OCEAN_FINANCE_TAGLINE } from "../constants/ocean-finance";
+import { Badge } from "./badge";
 import { CaseStudyObjectives } from "./case-study-objectives";
 import ContactSection from "./contact-section";
 import { GradientBorderCard } from "./gradient-border-card";
@@ -247,12 +248,7 @@ export default function OceanCaseStudy() {
                 </p>
                 <div className="mt-4 flex flex-wrap gap-3">
                   {HERO_TAGS.map((tag) => (
-                    <span
-                      key={tag}
-                      className="inline-flex cursor-default items-center rounded-md bg-white/10 px-2.5 py-1 font-reg text-xs font-medium leading-[18px] tracking-[0.02em] text-white transition-all duration-200 hover:bg-white/20 hover:-translate-y-0.5"
-                    >
-                      {tag}
-                    </span>
+                    <Badge key={tag}>{tag}</Badge>
                   ))}
                 </div>
               </div>
@@ -444,12 +440,7 @@ export default function OceanCaseStudy() {
           </h2>
           <div className="flex flex-wrap justify-center gap-3">
             {TECH_TAGS.map((tag) => (
-              <span
-                key={tag}
-                className="inline-flex h-9 cursor-default items-center justify-center rounded-md bg-tag-sky/[0.16] px-3 py-1 font-reg text-base font-medium leading-none tracking-[0.02em] text-tag-sky transition-colors duration-200 hover:bg-tag-sky/[0.28] hover:text-white"
-              >
-                {tag}
-              </span>
+              <Badge key={tag}>{tag}</Badge>
             ))}
           </div>
         </div>
