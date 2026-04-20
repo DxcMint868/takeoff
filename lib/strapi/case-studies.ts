@@ -536,9 +536,11 @@ export async function fetchCaseStudyBySlug(
     params.set("filters[slug][$eq]", slug);
     params.set("pagination[pageSize]", "1");
 
-    console.log(
-      `Fetching url: ${STRAPI_BASE_URL}/api/projects?${params.toString()}\n\n`,
-    );
+    if (process.env.NODE_ENV !== "production") {
+      console.log(
+        `Fetching url: ${STRAPI_BASE_URL}/api/projects?${params.toString()}\n\n`,
+      );
+    }
     const payload = await fetchStrapiJson(`/api/projects?${params.toString()}`);
     const projects = toArray<any>(unwrapStrapiData(payload?.data));
     const caseStudy = mapProjectToCaseStudy(projects[0]);
