@@ -16,7 +16,8 @@ import {
 
 const PAGE_SUBTITLE = (
   <p className="m-0 [text-wrap:balance]">
-    Featured projects and case studies showcasing our expertise across fintech, blockchain, and enterprise software.
+    Featured projects and case studies showcasing our expertise across fintech,
+    blockchain, and enterprise software.
   </p>
 );
 
@@ -37,6 +38,12 @@ const ALL_PROJECT_CARDS: WorkProjectCard[] = [
   ...EXTRA_PAGE_PROJECT_CARDS,
 ];
 
+type WorksPageMainProps = {
+  projectCards?: WorkProjectCard[];
+  featuredProject?: WorkProjectCard | null;
+  filterChips?: WorkTagSpec[];
+};
+
 function projectMatchesFilters(project: WorkProjectCard, active: Set<string>) {
   if (active.size === 0) return true;
   return project.tags.some((t) => active.has(t.label));
@@ -51,19 +58,35 @@ function projectMatchesSearch(project: WorkProjectCard, q: string) {
   );
 }
 
-const WorksPageMain = () => {
+const WorksPageMain = ({
+  projectCards,
+  featuredProject,
+  filterChips,
+}: WorksPageMainProps) => {
+  const cardsSource = projectCards ?? ALL_PROJECT_CARDS;
+  const featuredSource = featuredProject ?? OCEAN_FINANCE_PROJECT;
+  const chipsSource = filterChips ?? FILTER_CHIPS;
+
   const [query, setQuery] = useState("");
-  const [activeFilters, setActiveFilters] = useState<Set<string>>(() => new Set());
+  const [activeFilters, setActiveFilters] = useState<Set<string>>(
+    () => new Set(),
+  );
 
   const filteredProjects = useMemo(() => {
-    return ALL_PROJECT_CARDS.filter(
-      (p) => projectMatchesSearch(p, query) && projectMatchesFilters(p, activeFilters)
+    return cardsSource.filter(
+      (p) =>
+        projectMatchesSearch(p, query) &&
+        projectMatchesFilters(p, activeFilters),
     );
-  }, [query, activeFilters]);
+  }, [query, activeFilters, cardsSource]);
 
   const showFeatured = useMemo(() => {
-    return projectMatchesSearch(OCEAN_FINANCE_PROJECT, query) && projectMatchesFilters(OCEAN_FINANCE_PROJECT, activeFilters);
-  }, [query, activeFilters]);
+    if (!featuredSource) return false;
+    return (
+      projectMatchesSearch(featuredSource, query) &&
+      projectMatchesFilters(featuredSource, activeFilters)
+    );
+  }, [query, activeFilters, featuredSource]);
 
   const toggleFilter = (label: string) => {
     setActiveFilters((prev) => {
@@ -144,7 +167,7 @@ const WorksPageMain = () => {
           </div>
 
           <div className="flex flex-wrap justify-center gap-2">
-            {FILTER_CHIPS.map((chip) => {
+            {chipsSource.map((chip) => {
               const active = activeFilters.has(chip.label);
               return (
                 <button
@@ -162,7 +185,11 @@ const WorksPageMain = () => {
           </div>
         </div>
 
-        <WorkExamplesPortfolio projectCards={filteredProjects} showFeatured={showFeatured} />
+        <WorkExamplesPortfolio
+          projectCards={filteredProjects}
+          showFeatured={showFeatured}
+          featuredProject={featuredSource}
+        />
 
         <section
           id="works-cta"
@@ -182,7 +209,8 @@ const WorksPageMain = () => {
             Ready to Build Something Great?
           </h2>
           <p className="relative z-[1] m-0 max-w-[520px] font-reg text-base font-light leading-6 tracking-[0.02em] text-white-60">
-            Tell us about your product—we&apos;ll help you design, build, and ship with confidence.
+            Tell us about your product—we&apos;ll help you design, build, and
+            ship with confidence.
           </p>
           <CTASolid label="Start a Conversation" href="/#contact-us" />
         </section>

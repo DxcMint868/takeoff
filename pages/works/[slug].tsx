@@ -1,29 +1,50 @@
-import type { GetStaticProps, NextPage } from "next";
+import type {
+  GetStaticPaths,
+  GetStaticProps,
+  InferGetStaticPropsType,
+} from "next";
 import Head from "next/head";
-import Nav from "../../components/nav";
 import FooterComponent from "../../components/footer-component";
-import OceanCaseStudy from "../../components/ocean-case-study";
+import Nav from "../../components/nav";
 import CaseStudyTemplate from "../../components/case-study-template";
 import {
   fetchCaseStudyBySlug,
+  fetchCaseStudySlugs,
   type CaseStudyViewModel,
 } from "../../lib/strapi/case-studies";
 
 const SITE_URL = "https://www.hoasen.io";
-const TAB_TITLE = "Ocean Finance — RWA Trade Finance Case Study | Hoasen";
-const TITLE = "Ocean Finance × Hoasen — RWA tokenization for trade finance";
-const DESCRIPTION =
-  "How Hoasen delivered tokenization, NAV pipeline, and admin tooling for institutional trade finance on Avalanche.";
-const KEYWORDS =
-  "RWA, trade finance, tokenization, Avalanche, NAV, institutional";
-const OG_IMAGE = `${SITE_URL}/og-image.png`;
+const RESERVED_SLUGS = new Set(["ocean-finance", "second-swap"]); // these have their own hardcoded pages (fallback demos)
 
-type OceanPageProps = {
-  caseStudy: CaseStudyViewModel | null;
+type DynamicCaseStudyPageProps = {
+  caseStudy: CaseStudyViewModel;
 };
 
-export const getStaticProps: GetStaticProps<OceanPageProps> = async () => {
-  const result = await fetchCaseStudyBySlug("ocean");
+export const getStaticPaths: GetStaticPaths = async () => {
+  const slugs = await fetchCaseStudySlugs();
+
+  return {
+    paths: slugs
+      .filter((slug) => !RESERVED_SLUGS.has(slug))
+      .map((slug) => ({ params: { slug } })),
+    fallback: "blocking",
+  };
+};
+
+export const getStaticProps: GetStaticProps<DynamicCaseStudyPageProps> = async (
+  context,
+) => {
+  const slug = String(context.params?.slug || "").trim();
+
+  if (!slug || RESERVED_SLUGS.has(slug)) {
+    return { notFound: true, revalidate: 60 };
+  }
+
+  const result = await fetchCaseStudyBySlug(slug);
+  if (!result.caseStudy) {
+    return { notFound: true, revalidate: 120 };
+  }
+
   return {
     props: {
       caseStudy: result.caseStudy,
@@ -32,13 +53,14 @@ export const getStaticProps: GetStaticProps<OceanPageProps> = async () => {
   };
 };
 
-const OceanPage: NextPage<OceanPageProps> = ({ caseStudy }) => {
-  const metaTitle = caseStudy
-    ? `${caseStudy.title} — Case Study | Hoasen`
-    : TAB_TITLE;
-  const metaDescription = caseStudy?.shortDescription || DESCRIPTION;
-  const metaKeywords = caseStudy?.heroTags.join(", ") || KEYWORDS;
-  const metaOgImage = caseStudy?.heroImage?.url || OG_IMAGE;
+export default function DynamicCaseStudyPage({
+  caseStudy,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
+  const canonical = `${SITE_URL}/works/${caseStudy.slug}`;
+  const metaTitle = `${caseStudy.title} — Case Study | Hoasen`;
+  const metaDescription = caseStudy.shortDescription;
+  const metaKeywords = caseStudy.heroTags.join(", ");
+  const metaOgImage = caseStudy.heroImage?.url || `${SITE_URL}/og-image.png`;
 
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",
@@ -54,8 +76,8 @@ const OceanPage: NextPage<OceanPageProps> = ({ caseStudy }) => {
       {
         "@type": "ListItem",
         position: 3,
-        name: caseStudy?.title || "Ocean Finance",
-        item: `${SITE_URL}/works/ocean-finance`,
+        name: caseStudy.title,
+        item: canonical,
       },
     ],
   };
@@ -67,16 +89,16 @@ const OceanPage: NextPage<OceanPageProps> = ({ caseStudy }) => {
         <meta name="description" content={metaDescription} />
         <meta name="keywords" content={metaKeywords} />
         <meta name="robots" content="index, follow" />
-        <link rel="canonical" href={`${SITE_URL}/works/ocean-finance`} />
+        <link rel="canonical" href={canonical} />
 
-        <meta property="og:title" content={caseStudy?.title || TITLE} />
+        <meta property="og:title" content={caseStudy.title} />
         <meta property="og:description" content={metaDescription} />
-        <meta property="og:url" content={`${SITE_URL}/works/ocean-finance`} />
+        <meta property="og:url" content={canonical} />
         <meta property="og:image" content={metaOgImage} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
 
-        <meta name="twitter:title" content={caseStudy?.title || TITLE} />
+        <meta name="twitter:title" content={caseStudy.title} />
         <meta name="twitter:description" content={metaDescription} />
         <meta name="twitter:image" content={metaOgImage} />
 
@@ -88,15 +110,9 @@ const OceanPage: NextPage<OceanPageProps> = ({ caseStudy }) => {
 
       <div className="w-full min-h-screen bg-dark leading-[normal] tracking-[normal] text-left text-3xl text-white font-sora mq450:min-h-0">
         <Nav initialTransparent scrollThreshold={80} />
-        {caseStudy ? (
-          <CaseStudyTemplate caseStudy={caseStudy} />
-        ) : (
-          <OceanCaseStudy />
-        )}
+        <CaseStudyTemplate caseStudy={caseStudy} />
         <FooterComponent />
       </div>
     </>
   );
-};
-
-export default OceanPage;
+}

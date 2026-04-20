@@ -1,8 +1,16 @@
-import type { NextPage } from "next";
+import type { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import FooterComponent from "../components/footer-component";
 import Nav from "../components/nav";
 import WorksPageMain from "../components/works-page-main";
+import {
+  CORE_PROJECT_CARDS,
+  EXTRA_PAGE_PROJECT_CARDS,
+  OCEAN_FINANCE_PROJECT,
+  type WorkProjectCard,
+  type WorkTagSpec,
+} from "../components/work-examples-portfolio";
+import { fetchWorksData } from "../lib/strapi/case-studies";
 
 const SITE_URL = "https://www.hoasen.io";
 const TITLE = "Our Work Examples | Hoasen";
@@ -15,62 +23,92 @@ const breadcrumbJsonLd = {
   "@type": "BreadcrumbList",
   itemListElement: [
     { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
-    { "@type": "ListItem", position: 2, name: "Works", item: `${SITE_URL}/works` },
-  ],
-};
-
-const portfolioJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "ItemList",
-  name: "Hoasen Project Portfolio",
-  numberOfItems: 6,
-  itemListElement: [
-    {
-      "@type": "ListItem",
-      position: 1,
-      name: "Ocean Finance",
-      description:
-        "End-to-end tokenized fund infrastructure for institutional investors. Smart contract development, web application delivery, and on-chain data infrastructure.",
-    },
     {
       "@type": "ListItem",
       position: 2,
-      name: "PowerTrade",
-      description:
-        "An altcoin options exchange with a sleek portfolio tracker for managing crypto assets and trading options.",
-    },
-    {
-      "@type": "ListItem",
-      position: 3,
-      name: "Crypto Paradise",
-      description:
-        "A crypto lifestyle community and mini app powered by the $SURF token, offering alpha, education, and investment opportunities.",
-    },
-    {
-      "@type": "ListItem",
-      position: 4,
-      name: "bspin",
-      description:
-        "A Bitcoin casino offering slots, poker, sports betting, and live games with provably fair gameplay and crypto deposits.",
-    },
-    {
-      "@type": "ListItem",
-      position: 5,
-      name: "TripTips",
-      description:
-        "A curated city guide app for discovering the best local spots to eat, drink, shop, and explore worldwide.",
-    },
-    {
-      "@type": "ListItem",
-      position: 6,
-      name: "Spinly",
-      description:
-        "A crypto-native casino platform blending retro pixel-art aesthetics with responsible gaming tools and 4,000+ games.",
+      name: "Works",
+      item: `${SITE_URL}/works`,
     },
   ],
 };
 
-const Works: NextPage = () => {
+type WorksPageProps = {
+  featuredProject: WorkProjectCard | null;
+  projectCards: WorkProjectCard[];
+  filterChips: WorkTagSpec[];
+};
+
+function buildFallbackFilterChips(items: WorkProjectCard[]) {
+  const map = new Map<string, WorkTagSpec>();
+  for (const item of items) {
+    for (const tag of item.tags) {
+      if (!map.has(tag.label)) {
+        map.set(tag.label, tag);
+      }
+    }
+  }
+  return Array.from(map.values());
+}
+
+export const getStaticProps: GetStaticProps<WorksPageProps> = async () => {
+  const cmsWorks = await fetchWorksData();
+
+  const fallbackFeatured = OCEAN_FINANCE_PROJECT;
+  const fallbackCards = [...CORE_PROJECT_CARDS, ...EXTRA_PAGE_PROJECT_CARDS];
+  const fallbackFilterChips = buildFallbackFilterChips([
+    fallbackFeatured,
+    ...fallbackCards,
+  ]);
+
+  if (
+    cmsWorks.source === "cms" &&
+    (cmsWorks.featuredProject || cmsWorks.projectCards.length > 0)
+  ) {
+    return {
+      props: {
+        featuredProject: cmsWorks.featuredProject,
+        projectCards: cmsWorks.projectCards,
+        filterChips:
+          cmsWorks.filterChips.length > 0
+            ? cmsWorks.filterChips
+            : fallbackFilterChips,
+      },
+      revalidate: 3600,
+    };
+  }
+
+  return {
+    props: {
+      featuredProject: fallbackFeatured,
+      projectCards: fallbackCards,
+      filterChips: fallbackFilterChips,
+    },
+    revalidate: 3600,
+  };
+};
+
+const Works: NextPage<WorksPageProps> = ({
+  featuredProject,
+  projectCards,
+  filterChips,
+}) => {
+  const portfolioItems = [featuredProject, ...projectCards].filter(
+    (item): item is WorkProjectCard => !!item,
+  );
+
+  const portfolioJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Hoasen Project Portfolio",
+    numberOfItems: portfolioItems.length,
+    itemListElement: portfolioItems.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.title,
+      description: item.description,
+    })),
+  };
+
   return (
     <>
       <Head>
@@ -102,7 +140,11 @@ const Works: NextPage = () => {
 
       <div className="w-full min-h-screen bg-dark leading-[normal] tracking-[normal] text-left text-3xl text-white font-sora mq450:min-h-0">
         <Nav initialTransparent scrollThreshold={80} />
-        <WorksPageMain />
+        <WorksPageMain
+          featuredProject={featuredProject}
+          projectCards={projectCards}
+          filterChips={filterChips}
+        />
         <FooterComponent />
       </div>
     </>
