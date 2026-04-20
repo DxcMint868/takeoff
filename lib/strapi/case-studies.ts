@@ -422,9 +422,12 @@ function mapProjectToWorkCard(
 
   const media = findFeaturedMedia(project, isFeaturedProject);
 
+  const subtitle = stringifyValue(project.domain_subtitle);
+
   return {
     id: slug,
     title,
+    ...(subtitle ? { subtitle } : {}),
     description: stringifyValue(project.short_description),
     imageSrc: media?.url || null,
     imageAlt: media?.alt || `${title} preview image`,

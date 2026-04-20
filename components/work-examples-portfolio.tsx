@@ -180,9 +180,11 @@ export function WorkExamplesPortfolio({
               <h3 className="relative z-[2] m-0 text-center font-reg text-[32px] font-semibold leading-[40px] tracking-[0.04em] text-white ms1024:text-left">
                 {featuredProject.title}
               </h3>
-              <p className="relative z-[2] m-0 mt-3 text-center font-reg text-xs font-normal leading-[18px] tracking-[0.02em] text-white ms1024:text-left">
-                {featuredProject.subtitle || featuredProject.description}
-              </p>
+              {featuredProject.subtitle && (
+                <p className="relative z-[2] m-0 mt-3 text-center font-reg text-xs font-normal leading-[18px] tracking-[0.02em] text-white ms1024:text-left">
+                  {featuredProject.subtitle}
+                </p>
+              )}
               <p className="relative z-[2] m-0 mt-2 text-center font-reg text-sm font-medium leading-[22px] tracking-[0.02em] text-white-60 ms1024:text-left">
                 {featuredProject.description}
               </p>
