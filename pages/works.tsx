@@ -52,7 +52,6 @@ function buildFallbackFilterChips(items: WorkProjectCard[]) {
 
 export const getStaticProps: GetStaticProps<WorksPageProps> = async () => {
   const cmsWorks = await fetchWorksData();
-  console.log('Fetched works data from CMS:', cmsWorks);
 
   const fallbackFeatured = OCEAN_FINANCE_PROJECT;
   const fallbackCards = [...CORE_PROJECT_CARDS, ...EXTRA_PAGE_PROJECT_CARDS];
