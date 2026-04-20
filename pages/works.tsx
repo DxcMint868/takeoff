@@ -78,7 +78,6 @@ export const getStaticProps: GetStaticProps<WorksPageProps> = async () => {
     };
   }
 
-  console.log('Using fallback data for Works page');
   return {
     props: {
       featuredProject: fallbackFeatured,
