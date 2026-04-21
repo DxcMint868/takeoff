@@ -48,6 +48,7 @@ export type CaseStudySolution = {
 };
 
 export type CaseStudyOutcome = {
+  title: string;
   descriptionBlocks: StrapiBlocksNode[];
   backgroundImage?: CaseStudyMedia;
 };

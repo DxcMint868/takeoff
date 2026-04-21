@@ -89,6 +89,78 @@ function getNodeChildren(node: StrapiBlocksNode | StrapiTextNode) {
   return undefined;
 }
 
+type MergedListBlock = {
+  type: "list";
+  format: "ordered" | "unordered";
+  children: Array<StrapiBlocksNode | StrapiTextNode>;
+  mergeKey: string;
+};
+
+type RenderBlock = StrapiBlocksNode | MergedListBlock;
+
+function isEmptyParagraph(block: StrapiBlocksNode): boolean {
+  if (block.type !== "paragraph") return false;
+  if (!block.children || block.children.length === 0) return true;
+  return block.children.every(
+    (child) => isTextNode(child) && child.text.trim() === "",
+  );
+}
+
+function mergeAdjacentLists(blocks: StrapiBlocksNode[]): RenderBlock[] {
+  const result: RenderBlock[] = [];
+  let i = 0;
+
+  while (i < blocks.length) {
+    const block = blocks[i];
+
+    if (block.type !== "list") {
+      result.push(block);
+      i++;
+      continue;
+    }
+
+    const format = block.format ?? "unordered";
+    const mergedChildren = [...(block.children ?? [])];
+    let j = i + 1;
+
+    while (j < blocks.length) {
+      const next = blocks[j];
+
+      if (next.type === "list" && (next.format ?? "unordered") === format) {
+        mergedChildren.push(...(next.children ?? []));
+        j++;
+      } else if (isEmptyParagraph(next)) {
+        // Peek past empty paragraphs to see if the same list format continues
+        let k = j + 1;
+        while (k < blocks.length && isEmptyParagraph(blocks[k])) k++;
+
+        if (
+          k < blocks.length &&
+          blocks[k].type === "list" &&
+          (blocks[k].format ?? "unordered") === format
+        ) {
+          mergedChildren.push(...(blocks[k].children ?? []));
+          j = k + 1;
+        } else {
+          break;
+        }
+      } else {
+        break;
+      }
+    }
+
+    result.push({
+      type: "list",
+      format,
+      children: mergedChildren,
+      mergeKey: `list-${i}`,
+    });
+    i = j;
+  }
+
+  return result;
+}
+
 export default function StrapiBlocks({
   blocks,
   className = "",
@@ -97,11 +169,46 @@ export default function StrapiBlocks({
     return null;
   }
 
+  const renderBlocks = mergeAdjacentLists(blocks);
+
   return (
     <div className={className}>
-      {blocks.map((block, index) => {
-        const key = `block-${index}`;
-        const inline = renderInline(block.children, `${key}-inline`);
+      {renderBlocks.map((block, index) => {
+        const key = "mergeKey" in block ? block.mergeKey : `block-${index}`;
+        const inline =
+          "mergeKey" in block
+            ? null
+            : renderInline(block.children, `${key}-inline`);
+
+        if ("mergeKey" in block) {
+          const items = block.children || [];
+          if (block.format === "ordered") {
+            return (
+              <ol key={key} className="list-decimal pl-5">
+                {items.map((item, itemIndex) => (
+                  <li key={`${key}-item-${itemIndex}`}>
+                    {renderInline(
+                      getNodeChildren(item),
+                      `${key}-item-inline-${itemIndex}`,
+                    )}
+                  </li>
+                ))}
+              </ol>
+            );
+          }
+          return (
+            <ul key={key} className="list-disc pl-5">
+              {items.map((item, itemIndex) => (
+                <li key={`${key}-item-${itemIndex}`}>
+                  {renderInline(
+                    getNodeChildren(item),
+                    `${key}-item-inline-${itemIndex}`,
+                  )}
+                </li>
+              ))}
+            </ul>
+          );
+        }
 
         switch (block.type) {
           case "heading": {
@@ -111,37 +218,6 @@ export default function StrapiBlocks({
             if (level === 3) return <h3 key={key}>{inline}</h3>;
             if (level === 4) return <h4 key={key}>{inline}</h4>;
             return <h5 key={key}>{inline}</h5>;
-          }
-
-          case "list": {
-            const items = block.children || [];
-            if (block.format === "ordered") {
-              return (
-                <ol key={key} className="list-decimal pl-5">
-                  {items.map((item, itemIndex) => (
-                    <li key={`${key}-item-${itemIndex}`}>
-                      {renderInline(
-                        getNodeChildren(item),
-                        `${key}-item-inline-${itemIndex}`,
-                      )}
-                    </li>
-                  ))}
-                </ol>
-              );
-            }
-
-            return (
-              <ul key={key} className="list-disc pl-5">
-                {items.map((item, itemIndex) => (
-                  <li key={`${key}-item-${itemIndex}`}>
-                    {renderInline(
-                      getNodeChildren(item),
-                      `${key}-item-inline-${itemIndex}`,
-                    )}
-                  </li>
-                ))}
-              </ul>
-            );
           }
 
           case "quote":
