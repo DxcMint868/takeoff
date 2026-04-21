@@ -42,6 +42,18 @@ export const MEMBERS: Member[] = [
         description:
           "Integrated additional payment providers and improved product execution, contributing to significant growth in card-buy and trading volumes.",
       },
+      {
+        company: "Senior Product Manager - Payment Technology Company",
+        time: "Jun 2023 - Feb 2024",
+        description:
+          "Developed discovery and analytics frameworks, mentored PMs, and supported enterprise readiness initiatives for new value-added services.",
+      },
+      {
+        company: "Senior Consultant - IBM",
+        time: "Oct 2017 - Oct 2018",
+        description:
+          "Delivered process improvement and operational efficiency projects for large enterprises in utilities, insurance, and customer operations.",
+      },
     ],
     links: [
       {
@@ -71,6 +83,18 @@ export const MEMBERS: Member[] = [
         time: "Feb 2022 - Nov 2022",
         description:
           "Built a high-impact tiger team and launched recurring payments initiatives while supporting strategic technical due diligence.",
+      },
+      {
+        company: "Digital Asset Custody Consultant - Octowill",
+        time: "Nov 2022 - Mar 2023",
+        description:
+          "Designed a custody solution around Fireblocks with MPC, security controls, and compliance workflows for digital asset operations.",
+      },
+      {
+        company: "VP of Crypto Quantitative Trading - QuantDART",
+        time: "Feb 2018 - Sep 2022",
+        description:
+          "Led crypto asset management and trading platform initiatives focused on custody, payments, and secure large-scale trading systems.",
       },
     ],
     links: [
@@ -102,6 +126,24 @@ export const MEMBERS: Member[] = [
         description:
           "Designed key platform journeys and product surfaces, including wallet and market flows, support, and external product pages.",
       },
+      {
+        company: "Senior Product Designer - tkana",
+        time: "May 2023 - Dec 2024",
+        description:
+          "Led design for portal and premium subscriber experiences, rebuilt key pages, and maintained a scalable design system across products.",
+      },
+      {
+        company: "Product Designer - Seera Group",
+        time: "Apr 2018 - Jun 2021",
+        description:
+          "Owned flight booking flows across iOS, Android, desktop, and PWA products while building UI libraries and cross-platform design consistency.",
+      },
+      {
+        company: "Product Designer - Tigerspike / Agoda",
+        time: "2016 - 2018",
+        description:
+          "Contributed to major digital products and B2B tools, including UX redesign and feature launches for global consumer platforms.",
+      },
     ],
     links: [
       {
@@ -127,10 +169,22 @@ export const MEMBERS: Member[] = [
           "Guiding engineers across full-stack and smart contract projects, translating requirements into execution plans, and unblocking delivery risks.",
       },
       {
+        company: "Full Stack Engineer - Propine",
+        time: "Sep 2022 - Jul 2025",
+        description:
+          "Built and maintained secure, scalable systems for financial products with a focus on performance, reliability, and developer experience.",
+      },
+      {
         company: "Senior Software Engineer - Quoine (Liquid)",
         time: "Jun 2018 - Jul 2022",
         description:
           "Built and maintained backend services for a global crypto platform using Golang/Node.js, PostgreSQL, Docker, and production-ready APIs.",
+      },
+      {
+        company: "Software Engineer - ShareCarForAds",
+        time: "Jan 2017 - May 2018",
+        description:
+          "Contributed to core application features, collaborated through Git-based workflows, and supported internal system improvements.",
       },
     ],
     links: [
@@ -247,10 +301,16 @@ export const MEMBERS: Member[] = [
           "Contributed to backend architecture for SecondSwap.io, including wallet auth, order/swap logic, and blockchain integrations for secure secondary trading.",
       },
       {
-        company: "Back-end Developer - Thasa / DeCarbon Projects",
-        time: "2023",
+        company: "Back-end Developer - Thasa Project",
+        time: "Jul 2023 - Sep 2023",
         description:
-          "Built backend services and data pipelines for crypto wallet and climate-tech projects, covering API development, data processing, and warehouse design.",
+          "Developed server-side services and controllers for a custodial crypto wallet product.",
+      },
+      {
+        company: "Back-end Developer - DeCarbon Project",
+        time: "Jul 2023 - Sep 2023",
+        description:
+          "Built data pipelines and APIs for blockchain carbon-emission analysis, including aggregation, validation, and reporting logic.",
       },
     ],
     links: [
@@ -282,6 +342,18 @@ export const MEMBERS: Member[] = [
         description:
           "Led product and visual design initiatives in crypto-focused products, improving usability and design consistency across releases.",
       },
+      {
+        company: "Product Designer - Liquid",
+        time: "2023 - 2024",
+        description:
+          "Contributed to product UX and interface design for cryptocurrency workflows with a focus on usability and visual clarity.",
+      },
+      {
+        company: "Web Designer - TNCL Digital Agency",
+        time: "Jan 2016 - Aug 2016",
+        description:
+          "Designed marketing and product-facing web experiences, building a strong foundation in visual design and digital storytelling.",
+      },
     ],
     links: [
       {
@@ -311,6 +383,12 @@ export const MEMBERS: Member[] = [
         time: "2022 - 2025",
         description:
           "Managed software projects for multiple clients, including healthcare platforms, AI tools, and campaign modules with Agile processes.",
+      },
+      {
+        company: "Knowledge Management Lead - Deutsche Sparkassenstiftung",
+        time: "Oct 2019 - Feb 2022",
+        description:
+          "Built and managed regional knowledge systems supporting financial inclusion programs across distributed international teams.",
       },
     ],
     links: [
