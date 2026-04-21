@@ -23,6 +23,7 @@ module.exports = {
         gray: "rgba(255, 255, 255, 0.2)",
         purple: "#735fd4",
         mediumpurple: "#8c78ed",
+        colbalt:'#33277C',
         /** Work / marketing cards (Figma) */
         "surface-card": "#261d44",
         "surface-media": "#060e24",
