@@ -53,22 +53,23 @@ function renderInline(
         (node as unknown as { url?: string }).url ?? "",
       );
       if (!href) {
-        return (
-          <span key={key} className="underline">
-            {renderInline(node.children, `${key}-child`)}
-          </span>
-        );
-      }
-      const isExternal = /^https?:/i.test(href);
       return (
-        <a
-          key={key}
-          href={href}
-          {...(isExternal
-            ? { target: "_blank", rel: "noopener noreferrer" }
-            : {})}
-          className="underline"
-        >
+        <span key={key} className="underline" style={{ color: "#735FD4" }}>
+          {renderInline(node.children, `${key}-child`)}
+        </span>
+      );
+    }
+    const isExternal = /^https?:/i.test(href);
+    return (
+      <a
+        key={key}
+        href={href}
+        {...(isExternal
+          ? { target: "_blank", rel: "noopener noreferrer" }
+          : {})}
+        className="underline"
+        style={{ color: "#735FD4" }}
+      >
           {renderInline(node.children, `${key}-child`)}
         </a>
       );
