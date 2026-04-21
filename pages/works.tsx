@@ -73,7 +73,7 @@ export const getStaticProps: GetStaticProps<WorksPageProps> = async () => {
             ? cmsWorks.filterChips
             : fallbackFilterChips,
       },
-      revalidate: 3600,
+      revalidate: 60,
     };
   }
 
@@ -83,7 +83,7 @@ export const getStaticProps: GetStaticProps<WorksPageProps> = async () => {
       projectCards: fallbackCards,
       filterChips: fallbackFilterChips,
     },
-    revalidate: 3600,
+    revalidate: 60,
   };
 };
 
