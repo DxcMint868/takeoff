@@ -12,12 +12,6 @@ import {
 import ContactSection from "./contact-section";
 import ContactForm from "./contact-form";
 
-const PAGE_SUBTITLE = (
-  <p className="m-0 [text-wrap:balance]">
-    Lorem ipsum dolor sit amet, consec tetur adipiscing elit, sed do eiusmodop tempor
-  </p>
-);
-
 const VALUES: {
   Icon: ComponentType<SVGProps<SVGSVGElement>>;
   title: string;
@@ -137,9 +131,6 @@ const AboutPageMain = () => {
             <h1 className="m-0 max-w-[900px] font-sora text-[40px] font-normal leading-[1.1] tracking-[0.02em] text-white mq450:text-3xl mq900:text-[52px] mq900:leading-tight">
               About Us
             </h1>
-            <div className="w-full max-w-[900px] font-reg text-3xl font-light leading-[34px] tracking-[0.02em] text-white-60 mq450:text-base mq450:leading-7">
-              {PAGE_SUBTITLE}
-            </div>
           </div>
 
           <div id="team-pic" className="w-full mt-24">
