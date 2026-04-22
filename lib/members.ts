@@ -226,36 +226,6 @@ export const MEMBERS: Member[] = [
   },
   {
     id: 6,
-    name: "Hao",
-    role: "QA Engineer",
-    image: "/Hao-pic.png",
-    frameworks: ["Playwright", "Postman", "Jira", "SQL"],
-    skill: ["Manual Testing", "Automation Testing", "Regression Testing"],
-    getToKnow:
-      "I focus on product quality and release confidence. I like building clear test plans, catching edge cases early, and helping teams ship stable features.",
-    experience: [
-      {
-        company: "QA Engineer - Hoasen",
-        time: "2025 - Present",
-        description:
-          "Owns test planning and release validation for web and mobile product sprints, covering smoke, regression, and bug triage with engineering teams.",
-      },
-      {
-        company: "QA Specialist - Product Teams",
-        time: "2023 - 2025",
-        description:
-          "Executed end-to-end and API testing, wrote reproducible bug reports, and introduced automation checks to reduce recurring production issues.",
-      },
-    ],
-    links: [
-      {
-        label: "LinkedIn",
-        url: "https://www.linkedin.com/company/hoasendigital/",
-      },
-    ],
-  },
-  {
-    id: 7,
     name: "Nhu Nguyen",
     role: "Frontend Engineer",
     image: "/Nhu-pic.png",
@@ -285,7 +255,7 @@ export const MEMBERS: Member[] = [
     ],
   },
   {
-    id: 8,
+    id: 7,
     name: "Minh Nguyen",
     role: "Backend / Smart Contract Engineer",
     image: "/Minh-pic.png",
@@ -321,7 +291,7 @@ export const MEMBERS: Member[] = [
     ],
   },
   {
-    id: 9,
+    id: 8,
     name: "Bao Ngo",
     role: "Senior Product Designer",
     image: "/Bao-pic.png",
@@ -363,7 +333,7 @@ export const MEMBERS: Member[] = [
     ],
   },
   {
-    id: 10,
+    id: 9,
     name: "Trang Nguyen",
     role: "Project Manager / Product Owner",
     image: "/Trang-pic.png",

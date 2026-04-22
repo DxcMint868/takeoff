@@ -45,7 +45,7 @@ export default function MemberProfileModal({ member, onClose }: MemberProfileMod
       >
         <button
           type="button"
-          className="absolute right-5 top-5 inline-flex items-center justify-center border-0 bg-transparent p-0"
+          className="absolute right-5 top-5 inline-flex items-center justify-center border-0 bg-transparent p-0 cursor-pointer"
           onClick={onClose}
           aria-label="Close member profile"
         >
