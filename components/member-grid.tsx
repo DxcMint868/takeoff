@@ -32,11 +32,11 @@ export default function MemberGrid() {
               <div className="absolute right-3 top-3 hidden size-10 items-center justify-center rounded-full bg-white/50 transition-all duration-300 ease-in-out group-hover:flex">
                 <Image src={ArrowIcon} alt="" width={32} height={32} className="size-8" />
               </div>
-              <div className="absolute bottom-0 left-0 hidden min-w-0 w-full max-w-full flex-col gap-1 px-2 py-4 transition-all duration-300 ease-in-out group-hover:flex">
-                <p className="m-0 min-w-0 break-words text-[22px] font-sora font-semibold leading-tight text-white">
+              <div className="absolute bottom-0 left-0 right-0 box-border hidden min-w-0 w-full max-w-full flex-col gap-1 px-2 py-4 transition-all duration-300 ease-in-out group-hover:flex">
+                <p className="m-0 min-w-0 whitespace-normal break-words text-[22px] font-sora font-semibold leading-tight text-white">
                   {member.name}
                 </p>
-                <p className="m-0 w-full min-w-0 break-words text-[14px] font-reg font-normal leading-snug text-white/50">
+                <p className="m-0 w-full min-w-0 whitespace-normal break-words text-[14px] font-reg font-normal leading-snug text-white/50">
                   {member.role}
                 </p>
               </div>
