@@ -36,39 +36,24 @@ export default function CaseStudyTemplate({
     <main className="relative flex w-full flex-col items-center overflow-x-clip bg-dark text-white">
       <section className="relative w-full overflow-hidden bg-[#040b1e] pt-[77px] mq900:pt-0">
         {caseStudy.heroImage?.url ? (
-          <>
-            <div
-              className="pointer-events-none absolute inset-0 hidden mq900:block"
-              aria-hidden
-            >
-              <Image
-                src={caseStudy.heroImage.url}
-                alt=""
-                fill
-                priority
-                sizes="100vw"
-                className="object-cover object-center"
-              />
-              <div className="absolute inset-0 bg-[#040b1e]/70" />
-            </div>
-            <div
-              className="pointer-events-none absolute right-0 top-0 h-full w-3/5 overflow-hidden mq900:hidden"
-              aria-hidden
-            >
-              <Image
-                src={caseStudy.heroImage.url}
-                alt=""
-                fill
-                priority
-                sizes="60vw"
-                className="object-cover object-left-top"
-              />
-            </div>
-          </>
+          <div
+            className="pointer-events-none absolute inset-0"
+            aria-hidden
+          >
+            <Image
+              src={caseStudy.heroImage.url}
+              alt=""
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover object-center"
+            />
+            <div className="absolute inset-0 bg-[#040b1e]/70" />
+          </div>
         ) : null}
 
         <div className="relative flex min-h-[640px] w-full items-stretch mq1100:min-h-[520px] mq900:min-h-[560px] mq450:min-h-[500px]">
-          <div className="relative z-10 flex w-2/5 flex-none flex-col justify-between pb-[160px] pl-[60px] pr-8 mq1100:pb-10 mq900:w-full mq900:pb-16 mq900:pl-[30px] mq900:pr-[30px] mq900:pt-[60px] mq450:pl-5 mq450:pr-5">
+          <div className="relative z-10 flex w-full flex-none flex-col justify-between pb-[160px] pl-[60px] pr-8 mq1100:pb-10 mq900:pb-16 mq900:pl-[30px] mq900:pr-[30px] mq900:pt-[60px] mq450:pl-5 mq450:pr-5">
             {caseStudy.logo?.url ? (
               <Image
                 src={caseStudy.logo.url}
