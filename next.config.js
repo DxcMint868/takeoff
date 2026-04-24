@@ -20,6 +20,14 @@ const nextConfig = {
   images: {
     remotePatterns,
   },
+  async rewrites() {
+    return [
+      {
+        source: "/works/:slug/llms.txt",
+        destination: "/api/works-llms-txt/:slug",
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;

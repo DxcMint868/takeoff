@@ -81,6 +81,7 @@ export type CaseStudyViewModel = {
   briefAndBackground?: CaseStudyBriefBackground;
   outcome?: CaseStudyOutcome;
   testimonial?: CaseStudyTestimonial;
+  llmTxt?: string;
 };
 
 type StrapiFetchResult = {
@@ -359,6 +360,9 @@ function mapProjectToCaseStudy(
     ...(briefAndBackground ? { briefAndBackground } : {}),
     ...(outcome ? { outcome } : {}),
     ...(testimonial ? { testimonial } : {}),
+    ...(stringifyValue(project.llm_txt)
+      ? { llmTxt: stringifyValue(project.llm_txt) }
+      : {}),
   };
 }
 
