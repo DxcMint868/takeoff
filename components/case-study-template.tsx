@@ -48,7 +48,6 @@ export default function CaseStudyTemplate({
               sizes="100vw"
               className="object-cover object-center"
             />
-            <div className="absolute inset-0 bg-[#040b1e]/70" />
           </div>
         ) : null}
 
