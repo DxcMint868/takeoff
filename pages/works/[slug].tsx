@@ -49,7 +49,7 @@ export const getStaticProps: GetStaticProps<DynamicCaseStudyPageProps> = async (
     props: {
       caseStudy: result.caseStudy,
     },
-    revalidate: 3600,
+    revalidate: 60,
   };
 };
 
