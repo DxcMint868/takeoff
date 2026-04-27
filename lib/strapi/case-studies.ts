@@ -136,6 +136,19 @@ function normalizeMediaUrl(url: string | undefined) {
   return `${STRAPI_BASE_URL}${url.startsWith("/") ? "" : "/"}${url}`;
 }
 
+/**
+ * Strapi (and S3/Cloudinary behind it) often serves uploads with a long
+ * `Cache-Control`. The public URL can stay the same when a file is replaced,
+ * so browsers keep showing stale bytes. Appending a version token derived from
+ * the media document forces a new cache key after publish.
+ */
+function appendCacheBuster(url: string, versionToken: string | undefined) {
+  const token = (versionToken ?? "").trim();
+  if (!token) return url;
+  const joiner = url.includes("?") ? "&" : "?";
+  return `${url}${joiner}v=${encodeURIComponent(token)}`;
+}
+
 function hashText(input: string) {
   let hash = 0;
   for (let i = 0; i < input.length; i += 1) {
@@ -195,8 +208,11 @@ function toMedia(mediaLike: unknown): CaseStudyMedia | undefined {
   const resolved = Array.isArray(media) ? media[0] : media;
   if (!resolved || typeof resolved !== "object") return undefined;
 
-  const url = normalizeMediaUrl(stringifyValue(resolved.url));
-  if (!url) return undefined;
+  const baseUrl = normalizeMediaUrl(stringifyValue(resolved.url));
+  if (!baseUrl) return undefined;
+
+  const versionToken = stringifyValue(resolved.updatedAt);
+  const url = appendCacheBuster(baseUrl, versionToken);
 
   const alt =
     stringifyValue(resolved.alternativeText) ||
@@ -497,6 +513,7 @@ function populateMediaFields(params: URLSearchParams, baseKey: string) {
   params.set(`${baseKey}[fields][1]`, "alternativeText");
   params.set(`${baseKey}[fields][2]`, "caption");
   params.set(`${baseKey}[fields][3]`, "name");
+  params.set(`${baseKey}[fields][4]`, "updatedAt");
 }
 
 function buildProjectPopulateQuery() {
