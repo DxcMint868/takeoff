@@ -1,4 +1,5 @@
 import type { NextPage } from "next";
+import Image from "next/image";
 import { PhoneIcon, MailIcon, TelegramIcon, LinkedInIcon, XIcon } from "./icons";
 
 export type FooterComponentType = {
@@ -8,8 +9,17 @@ export type FooterComponentType = {
 const FooterComponent: NextPage<FooterComponentType> = ({ className = "" }) => {
   return (
     <section
-      className={`w-full flex flex-col items-start justify-start pt-10 px-[25px] pb-8 box-border gap-8 text-center text-xl text-white font-sora ${className}`}
+      className={`relative w-full flex flex-col items-start justify-start pt-10 px-[25px] pb-8 box-border gap-8 text-center text-xl text-white font-sora overflow-hidden ${className}`}
     >
+      <Image
+        src="/hoasen-footer.png"
+        alt=""
+        aria-hidden
+        width={1440}
+        height={200}
+        className="pointer-events-none absolute bottom-0 left-1/2 w-full max-w-[1440px] -translate-x-1/2 object-contain object-bottom opacity-100"
+        priority={false}
+      />
       <div className="w-full flex flex-row items-start justify-center py-0 px-5 box-border max-w-full">
         <div className="w-[348px] flex flex-col items-start justify-start gap-12 max-w-full">
           <div className="self-stretch flex flex-col items-center justify-center gap-6 z-[1]">
