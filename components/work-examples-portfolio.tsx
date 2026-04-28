@@ -168,7 +168,7 @@ export function WorkExamplesPortfolio({
   return (
     <div className="mx-auto flex w-full max-w-[1138px] flex-col gap-8">
       {showFeatured && featuredProject && (
-        <div className="relative flex min-h-0 w-full flex-col overflow-hidden rounded-[20px] border border-surface-border bg-surface-card shadow-card ms1024:min-h-[400px] ms1024:flex-row">
+        <div className="relative flex min-h-0 w-full cursor-pointer flex-col overflow-hidden rounded-[20px] border border-surface-border bg-surface-card shadow-card transition-shadow duration-300 hover:shadow-[0_0_30px_0_rgba(255,255,255,0.2)] ms1024:min-h-[400px] ms1024:flex-row">
           {featuredProject.logoSrc && (
             <div className="absolute -left-3 -top-3 z-10 flex h-[102px] w-[102px] items-center justify-center rounded-full bg-[#1B1333]">
               <Image
@@ -247,7 +247,7 @@ export function WorkExamplesPortfolio({
           {projectCards.map((project) => (
             <article
               key={project.id}
-              className="flex w-[358px] max-w-full flex-col overflow-hidden rounded-[20px] border border-surface-border bg-surface-card shadow-card mq700:w-full"
+              className="flex w-[358px] max-w-full cursor-pointer flex-col overflow-hidden rounded-[20px] border border-surface-border bg-surface-card shadow-card transition-shadow duration-300 hover:shadow-[0_0_30px_0_rgba(255,255,255,0.2)] mq700:w-full"
             >
               <div className="relative h-[360px] w-full shrink-0">
                 {project.imageSrc ? (
