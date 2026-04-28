@@ -169,6 +169,10 @@ export function WorkExamplesPortfolio({
   return (
     <div className="mx-auto flex w-full max-w-[1138px] flex-col gap-8">
       {showFeatured && featuredProject && (
+        <Link
+          href={featuredProject.href || `/works/${featuredProject.id}`}
+          className="group [text-decoration:none]"
+        >
         <div className="relative flex min-h-0 w-full cursor-pointer flex-col overflow-hidden rounded-[20px] border border-surface-border bg-surface-card shadow-card transition-shadow duration-300 hover:shadow-[0_0_30px_0_rgba(255,255,255,0.2)] ms1024:min-h-[400px] ms1024:flex-row">
           {featuredProject.logoSrc && (
             <div className="absolute -left-3 -top-3 z-10 flex h-[102px] w-[102px] items-center justify-center rounded-full bg-[#1B1333]">
@@ -203,10 +207,7 @@ export function WorkExamplesPortfolio({
                 </div>
               ) : null}
             </div>
-            <Link
-              href={featuredProject.href || `/works/${featuredProject.id}`}
-              className="relative z-[2] mt-6 inline-flex w-fit items-center gap-2 self-center rounded-81xl bg-purple px-6 py-3 font-reg text-sm font-semibold tracking-[0.02em] text-white transition-colors duration-200 hover:bg-mediumpurple [text-decoration:none] ms1024:self-start"
-            >
+            <div className="relative z-[2] mt-6 inline-flex w-fit items-center gap-2 self-center rounded-81xl bg-purple px-6 py-3 font-reg text-sm font-semibold tracking-[0.02em] text-white transition-colors duration-200 group-hover:bg-mediumpurple ms1024:self-start">
               View Case Study
               <svg
                 width="16"
@@ -223,7 +224,7 @@ export function WorkExamplesPortfolio({
                   strokeLinejoin="round"
                 />
               </svg>
-            </Link>
+            </div>
           </div>
           <div className="relative order-1 h-[220px] w-full shrink-0 overflow-hidden bg-surface-media ms1024:order-2 ms1024:h-[400px] ms1024:w-[569px] ms1024:self-start ms1024:rounded-bl-[20px]">
             {featuredProject.imageSrc ? (
@@ -237,6 +238,7 @@ export function WorkExamplesPortfolio({
             ) : null}
           </div>
         </div>
+        </Link>
       )}
 
       {!hasResults ? (
