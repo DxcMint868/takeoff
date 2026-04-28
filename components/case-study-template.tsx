@@ -60,6 +60,7 @@ export default function CaseStudyTemplate({
                 width={100}
                 height={98}
                 priority
+                unoptimized
                 className="object-contain"
               />
             ) : null}
@@ -259,6 +260,7 @@ export default function CaseStudyTemplate({
           slides={caseStudy.gallery.map((slide) => ({
             src: slide.src,
             alt: slide.alt,
+            ...(slide.productPlatform ? { productPlatform: slide.productPlatform } : {}),
           }))}
         />
       ) : null}

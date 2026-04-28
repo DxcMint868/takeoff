@@ -1,11 +1,11 @@
 "use client";
 
-import Image from "next/image";
 import { type TouchEvent, useCallback, useEffect, useRef, useState } from "react";
 
 interface GallerySlide {
   src: string;
   alt: string;
+  productPlatform?: "mobile" | "web" | "tablet";
 }
 
 interface ProjectGalleryProps {
@@ -83,7 +83,7 @@ export default function ProjectGallery({
       </h2>
 
       {/* Desktop carousel */}
-      <div className="relative mx-auto h-[520px] max-w-[1200px] mq900:hidden">
+      <div className="relative mx-auto h-[580px] max-w-[1200px] mq900:hidden">
         {slides.map((slide, i) => {
           const offset = getOffset(i);
           const isCenter = offset === 0;
@@ -95,7 +95,7 @@ export default function ProjectGallery({
               type="button"
               onClick={() => goTo(i)}
               aria-label={isCenter ? `Current slide: ${slide.alt}` : `Go to: ${slide.alt}`}
-              className="absolute left-1/2 top-1/2 w-[62%] cursor-pointer border-0 bg-transparent p-0 outline-none focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2"
+              className="absolute left-1/2 top-1/2 flex w-[62%] -translate-x-1/2 -translate-y-1/2 cursor-pointer items-center justify-center border-0 bg-transparent p-0 outline-none focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2"
               style={{
                 transform: `translate(-50%, -50%) translateX(${offset * 42}%) scale(${isCenter ? 1 : 0.78})`,
                 filter: isCenter ? "none" : "blur(4px) brightness(0.5)",
@@ -105,15 +105,12 @@ export default function ProjectGallery({
                 pointerEvents: isVisible ? "auto" : "none",
               }}
             >
-              <div className="relative aspect-[890/505] w-full overflow-hidden rounded-[20px] bg-[#0d0b1a]">
-                <Image
-                  src={slide.src}
-                  alt={slide.alt}
-                  fill
-                  className="object-contain"
-                  sizes="(max-width: 1200px) 62vw, 744px"
-                />
-              </div>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={slide.src}
+                alt={slide.alt}
+                className="max-h-[520px] w-auto max-w-full rounded-[20px] object-contain"
+              />
             </button>
           );
         })}
@@ -137,23 +134,20 @@ export default function ProjectGallery({
       </div>
 
       {/* Mobile: simple single-image view */}
-      <div className="relative hidden mq900:block">
-        <div
-          className="relative aspect-[890/505] w-full overflow-hidden rounded-[20px] bg-[#0d0b1a] mq450:rounded-[12px]"
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
-          onTouchCancel={handleTouchEnd}
-          style={{ touchAction: "pan-y" }}
-        >
-          <Image
-            src={slides[active].src}
-            alt={slides[active].alt}
-            fill
-            className="object-contain transition-opacity duration-500"
-            sizes="100vw"
-          />
-        </div>
+      <div
+        className="relative hidden mq900:flex mq900:justify-center mq900:px-4"
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        onTouchCancel={handleTouchEnd}
+        style={{ touchAction: "pan-y" }}
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={slides[active].src}
+          alt={slides[active].alt}
+          className="max-h-[480px] w-auto max-w-full rounded-[20px] object-contain transition-opacity duration-500 mq450:rounded-[12px]"
+        />
       </div>
 
       {/* Dots */}

@@ -77,7 +77,7 @@ export type CaseStudyViewModel = {
   objectives: CaseStudyObjective[];
   solutions: CaseStudySolution[];
   technicalInfrastructure: string[];
-  gallery: Array<{ src: string; alt: string; order: number }>;
+  gallery: Array<{ src: string; alt: string; order: number; productPlatform?: "mobile" | "web" | "tablet" }>;
   briefAndBackground?: CaseStudyBriefBackground;
   outcome?: CaseStudyOutcome;
   testimonial?: CaseStudyTestimonial;
@@ -255,10 +255,14 @@ function mapProjectToCaseStudy(
       .map((entry, index) => {
         const normalized = unwrapStrapiData<any>(entry);
         const file = toMedia(normalized.file);
+        const platform = stringifyValue(normalized.productPlatform);
         return {
           src: file?.url ?? "",
           alt: stringifyValue(normalized.alt_text) || file?.alt || "",
           order: toOrder(normalized.order, index + 1),
+          ...(platform === "mobile" || platform === "web" || platform === "tablet"
+            ? { productPlatform: platform as "mobile" | "web" | "tablet" }
+            : {}),
         };
       })
       .filter((entry) => !!entry.src),
@@ -542,6 +546,7 @@ function buildProjectPopulateQuery() {
   params.set("populate[tech_infra_items][fields][1]", "order");
   params.set("populate[gallery_images][fields][0]", "alt_text");
   params.set("populate[gallery_images][fields][1]", "order");
+  params.set("populate[gallery_images][fields][2]", "productPlatform");
   populateMediaFields(params, "populate[gallery_images][populate][file]");
   return params;
 }

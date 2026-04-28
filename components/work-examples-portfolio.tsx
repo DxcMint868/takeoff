@@ -176,6 +176,7 @@ export function WorkExamplesPortfolio({
                 alt={featuredProject.logoAlt || `${featuredProject.title} logo`}
                 width={82}
                 height={82}
+                unoptimized
                 className="rounded-full object-contain"
               />
             </div>
@@ -265,6 +266,7 @@ export function WorkExamplesPortfolio({
                       alt={project.logoAlt || `${project.title} logo`}
                       width={72}
                       height={72}
+                      unoptimized
                       className="object-contain"
                     />
                   </div>
