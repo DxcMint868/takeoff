@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { BADGE_SURFACE_CLASSES } from "./badge";
@@ -195,15 +196,13 @@ const WorksPageMain = ({
           id="works-cta"
           className="relative mt-[167px] flex w-full max-w-[1138px] self-center flex-col items-center gap-8 overflow-hidden rounded-2xl bg-surface-card px-8 py-14 text-center mq900:mt-24 mq700:mt-16 mq450:px-5 mq450:py-10"
         >
-          <div
-            className="pointer-events-none absolute inset-0 z-0 opacity-[0.04]"
+          <Image
+            src="/backgrounds/noise.png"
+            alt=""
             aria-hidden
-            style={{
-              backgroundImage:
-                "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
-              backgroundRepeat: "repeat",
-              backgroundSize: "256px 256px",
-            }}
+            fill
+            className="pointer-events-none object-cover opacity-[0.95]"
+            sizes="100vw"
           />
           <h2 className="relative z-[1] m-0 font-sora text-29xl font-normal leading-[58px] tracking-[0.02em] text-white mq450:text-10xl mq450:leading-[41px] mq900:text-19xl mq900:leading-[46px]">
             Ready to Build Something Great?

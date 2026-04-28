@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { OCEAN_FINANCE_TAGLINE } from "../constants/ocean-finance";
 import { Badge } from "./badge";
+import { TagsDisplay } from "./tags-display";
 
 export type WorkTagTone =
   | "cyan"
@@ -245,11 +246,15 @@ export function WorkExamplesPortfolio({
       ) : projectCards.length > 0 ? (
         <div className="flex flex-wrap justify-center gap-8 mq700:flex-col mq700:items-stretch">
           {projectCards.map((project) => (
-            <article
+            <Link
               key={project.id}
-              className="flex w-[358px] max-w-full cursor-pointer flex-col overflow-hidden rounded-[20px] border border-surface-border bg-surface-card shadow-card transition-shadow duration-300 hover:shadow-[0_0_30px_0_rgba(255,255,255,0.2)] mq700:w-full"
+              href={project.href || `/works/${project.id}`}
+              className="group [text-decoration:none]"
             >
-              <div className="relative h-[360px] w-full shrink-0">
+            <article
+              className="relative flex h-[640px] w-[358px] max-w-full cursor-pointer flex-col overflow-hidden rounded-[20px] border border-surface-border bg-surface-card shadow-card transition-shadow duration-300 hover:shadow-[0_0_30px_0_rgba(255,255,255,0.2)] mq700:h-auto mq700:w-full"
+            >
+              <div className="relative h-[320px] w-full shrink-0 overflow-hidden rounded-b-[20px]">
                 {project.imageSrc ? (
                   <Image
                     src={project.imageSrc}
@@ -272,48 +277,50 @@ export function WorkExamplesPortfolio({
                   </div>
                 )}
               </div>
-              <div className="flex flex-col px-4 pb-6 pt-4 text-left">
-                <h3 className="m-0 font-reg text-lg font-semibold leading-normal tracking-[0.02em] text-white">
-                  {project.title}
-                </h3>
-                <p className="m-0 mt-3 min-h-[44px] font-reg text-sm font-medium leading-[22px] tracking-[0.02em] text-white-60">
-                  {project.description}
-                </p>
-                <div className="mt-4 flex flex-wrap items-center gap-2">
-                  {project.tags.map((t) => (
-                    <WorkTag key={`${project.id}-${t.label}`} {...t} />
-                  ))}
-                  {project.extra ? (
-                    <span className="font-reg text-sm font-medium leading-[22px] tracking-[0.02em] text-white-60">
-                      {project.extra}
-                    </span>
-                  ) : null}
+
+              <div className="flex flex-1 flex-col px-4 pb-8 pt-4 text-left">
+                <div>
+                  <h3 className="m-0 font-reg text-lg font-semibold leading-normal tracking-[0.02em] text-white">
+                    {project.title}
+                  </h3>
+                  <p className="m-0 mt-3 line-clamp-5 font-reg text-sm font-medium leading-[22px] tracking-[0.02em] text-white-60">
+                    {project.description}
+                  </p>
                 </div>
+
+                <div className="mt-4">
+                  <TagsDisplay
+                    tags={project.tags}
+                    projectId={project.id}
+                    extra={project.extra}
+                  />
+                </div>
+
                 {project.href && (
-                  <Link
-                    href={project.href}
-                    className="mt-5 inline-flex w-fit items-center gap-2 rounded-81xl bg-purple px-5 py-2.5 font-reg text-sm font-semibold tracking-[0.02em] text-white transition-colors duration-200 hover:bg-mediumpurple [text-decoration:none]"
-                  >
-                    View Case Study
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      aria-hidden
-                    >
-                      <path
-                        d="M5 12h14M12 5l7 7-7 7"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </Link>
+                  <div className="mt-auto pt-5">
+                    <div className="inline-flex w-fit items-center gap-2 rounded-81xl bg-purple px-5 py-2.5 font-reg text-sm font-semibold tracking-[0.02em] text-white transition-colors duration-200 group-hover:bg-mediumpurple">
+                      View Case Study
+                      <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        aria-hidden
+                      >
+                        <path
+                          d="M5 12h14M12 5l7 7-7 7"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </div>
+                  </div>
                 )}
               </div>
             </article>
+            </Link>
           ))}
         </div>
       ) : null}
