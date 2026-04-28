@@ -28,7 +28,7 @@ export const getStaticProps: GetStaticProps<OceanPageProps> = async () => {
     props: {
       caseStudy: result.caseStudy,
     },
-    revalidate: 3600,
+    revalidate: 60,
   };
 };
 

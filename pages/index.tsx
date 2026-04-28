@@ -1,4 +1,4 @@
-import type { NextPage } from "next";
+import type { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import Nav from "../components/nav";
@@ -9,6 +9,14 @@ import TechnologiesSection from "../components/technologies-section";
 import WorkExamplesSection from "../components/work-examples-section";
 import WorksSection from "../components/works-section";
 import TeamSection from "../components/team-section";
+import {
+  CORE_PROJECT_CARDS,
+  EXTRA_PAGE_PROJECT_CARDS,
+  OCEAN_FINANCE_PROJECT,
+  type WorkProjectCard,
+  type WorkTagSpec,
+} from "../components/work-examples-portfolio";
+import { fetchWorksData } from "../lib/strapi/case-studies";
 
 const SITE_URL = "https://www.hoasen.io";
 
@@ -241,7 +249,37 @@ const breadcrumbJsonLd = {
   ],
 };
 
-const Web: NextPage = () => {
+type HomeProps = {
+  featuredProject: WorkProjectCard | null;
+  projectCards: WorkProjectCard[];
+};
+
+export const getStaticProps: GetStaticProps<HomeProps> = async () => {
+  const cmsWorks = await fetchWorksData();
+
+  if (
+    cmsWorks.source === "cms" &&
+    (cmsWorks.featuredProject || cmsWorks.projectCards.length > 0)
+  ) {
+    return {
+      props: {
+        featuredProject: cmsWorks.featuredProject,
+        projectCards: cmsWorks.projectCards,
+      },
+      revalidate: 60,
+    };
+  }
+
+  return {
+    props: {
+      featuredProject: OCEAN_FINANCE_PROJECT,
+      projectCards: [...CORE_PROJECT_CARDS, ...EXTRA_PAGE_PROJECT_CARDS],
+    },
+    revalidate: 60,
+  };
+};
+
+const Web: NextPage<HomeProps> = ({ featuredProject, projectCards }) => {
   return (
     <>
       <Head>
@@ -307,7 +345,7 @@ const Web: NextPage = () => {
             className={`flex flex-col pt-96 items-start justify-start gap-3 max-w-[1200px] w-full text-center text-xs text-white font-reg`}
           >
             <TechnologiesSection />
-            <WorkExamplesSection />
+            <WorkExamplesSection featuredProject={featuredProject} projectCards={projectCards} />
             <WorksSection />
             <TeamSection />
             <ContactSection />
