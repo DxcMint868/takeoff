@@ -21,6 +21,8 @@ export type WorkProjectCard = {
   description: string;
   imageSrc: string | null;
   imageAlt: string;
+  logoSrc?: string | null;
+  logoAlt?: string;
   tags: WorkTagSpec[];
   extra?: string;
   href?: string;
@@ -167,7 +169,18 @@ export function WorkExamplesPortfolio({
     <div className="mx-auto flex w-full max-w-[1138px] flex-col gap-8">
       {showFeatured && featuredProject && (
         <div className="relative flex min-h-0 w-full flex-col overflow-hidden rounded-[20px] border border-surface-border bg-surface-card shadow-card ms1024:min-h-[400px] ms1024:flex-row">
-          <div className="relative order-2 flex min-w-0 flex-1 flex-col justify-between px-4 pb-8 pt-12 ms1024:order-1 ms1024:px-0 ms1024:pb-10 ms1024:pl-[42px] ms1024:pr-6 ms1024:pt-10">
+          {featuredProject.logoSrc && (
+            <div className="absolute -left-3 -top-3 z-10 flex h-[102px] w-[102px] items-center justify-center rounded-full bg-[#1B1333]">
+              <Image
+                src={featuredProject.logoSrc}
+                alt={featuredProject.logoAlt || `${featuredProject.title} logo`}
+                width={82}
+                height={82}
+                className="rounded-full object-contain"
+              />
+            </div>
+          )}
+          <div className="relative order-2 flex min-w-0 flex-1 flex-col justify-between px-4 pb-8 pt-24 ms1024:order-1 ms1024:px-0 ms1024:pb-10 ms1024:pl-[42px] ms1024:pr-6 ms1024:pt-28">
             <div>
               <h3 className="relative z-[2] m-0 text-center font-reg text-[32px] font-semibold leading-[40px] tracking-[0.04em] text-white ms1024:text-left">
                 {featuredProject.title}
@@ -245,6 +258,17 @@ export function WorkExamplesPortfolio({
                     sizes="(max-width: 700px) 100vw, 358px"
                   />
                 ) : null}
+                {project.logoSrc && (
+                  <div className="absolute -right-2 -top-2 z-10">
+                    <Image
+                      src={project.logoSrc}
+                      alt={project.logoAlt || `${project.title} logo`}
+                      width={72}
+                      height={72}
+                      className="object-contain"
+                    />
+                  </div>
+                )}
               </div>
               <div className="flex flex-col px-4 pb-6 pt-4 text-left">
                 <h3 className="m-0 font-reg text-lg font-semibold leading-normal tracking-[0.02em] text-white">

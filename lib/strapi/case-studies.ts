@@ -442,7 +442,7 @@ function mapProjectToWorkCard(
   })) as WorkTagSpec[];
 
   const media = findFeaturedMedia(project, isFeaturedProject);
-
+  const logo = toMedia(project.logo_icon);
   const subtitle = stringifyValue(project.domain_subtitle);
 
   return {
@@ -452,6 +452,7 @@ function mapProjectToWorkCard(
     description: stringifyValue(project.short_description),
     imageSrc: media?.url || null,
     imageAlt: media?.alt || `${title} preview image`,
+    ...(logo ? { logoSrc: logo.url, logoAlt: logo.alt } : {}),
     tags,
     href: `/works/${slug}`,
   };
