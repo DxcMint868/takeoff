@@ -224,7 +224,7 @@ export function WorkExamplesPortfolio({
               </svg>
             </Link>
           </div>
-          <div className="relative order-1 h-[220px] w-full shrink-0 bg-surface-media ms1024:order-2 ms1024:h-[400px] ms1024:w-[569px]">
+          <div className="relative order-1 h-[220px] w-full shrink-0 overflow-hidden bg-surface-media ms1024:order-2 ms1024:h-[400px] ms1024:w-[569px] ms1024:self-start ms1024:rounded-bl-[20px]">
             {featuredProject.imageSrc ? (
               <Image
                 src={featuredProject.imageSrc}
