@@ -17,7 +17,7 @@ const FooterComponent: NextPage<FooterComponentType> = ({ className = "" }) => {
         aria-hidden
         width={1425}
         height={253}
-        className="pointer-events-none absolute bottom-0 left-1/2 w-full max-w-[1440px] -translate-x-1/2 opacity-100"
+        className="pointer-events-none absolute bottom-0 left-1/2 w-screen -translate-x-1/2 opacity-100"
         priority={false}
       />
       <div className="w-full flex flex-row items-start justify-center py-0 px-5 box-border max-w-full">
