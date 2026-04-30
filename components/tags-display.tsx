@@ -9,9 +9,10 @@ type TagsDisplayProps = {
   tags: WorkTagSpec[];
   projectId: string;
   extra?: string;
+  containerClassName?: string;
 };
 
-export function TagsDisplay({ tags, projectId, extra }: TagsDisplayProps) {
+export function TagsDisplay({ tags, projectId, extra, containerClassName }: TagsDisplayProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [visibleCount, setVisibleCount] = useState<number>(tags.length);
   const [tooltipAnchor, setTooltipAnchor] = useState<DOMRect | null>(null);
@@ -55,7 +56,7 @@ export function TagsDisplay({ tags, projectId, extra }: TagsDisplayProps) {
   return (
     <div
       ref={containerRef}
-      className="flex flex-wrap gap-2"
+      className={`flex flex-wrap gap-2${containerClassName ? ` ${containerClassName}` : ""}`}
       onClick={(e) => e.preventDefault()}
     >
       {shown.map((t) => (
