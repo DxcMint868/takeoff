@@ -207,24 +207,6 @@ export function WorkExamplesPortfolio({
                 </div>
               ) : null}
             </div>
-            <div className="relative z-[2] mt-6 inline-flex w-fit items-center gap-2 self-center rounded-81xl bg-purple px-6 py-3 font-reg text-sm font-semibold tracking-[0.02em] text-white transition-colors duration-200 group-hover:bg-mediumpurple ms1024:self-start">
-              View Case Study
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                aria-hidden
-              >
-                <path
-                  d="M5 12h14M12 5l7 7-7 7"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </div>
           </div>
           <div className="relative order-1 h-[220px] w-full shrink-0 overflow-hidden bg-surface-media ms1024:order-2 ms1024:h-[400px] ms1024:w-[569px] ms1024:self-start ms1024:rounded-bl-[20px]">
             {featuredProject.imageSrc ? (
@@ -298,28 +280,6 @@ export function WorkExamplesPortfolio({
                   />
                 </div>
 
-                {project.href && (
-                  <div className="mt-auto pt-5">
-                    <div className="inline-flex w-fit items-center gap-2 rounded-81xl bg-purple px-5 py-2.5 font-reg text-sm font-semibold tracking-[0.02em] text-white transition-colors duration-200 group-hover:bg-mediumpurple">
-                      View Case Study
-                      <svg
-                        width="16"
-                        height="16"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        aria-hidden
-                      >
-                        <path
-                          d="M5 12h14M12 5l7 7-7 7"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </div>
-                  </div>
-                )}
               </div>
             </article>
             </Link>
