@@ -24,7 +24,7 @@ const GroupComponent: NextPage<GroupComponentType> = ({
   return (
     <div
       id={id}
-      className={`group relative z-[1] box-border flex h-full min-h-[420px] w-full origin-center flex-col overflow-hidden rounded-2xl p-[2px] transition-transform duration-[480ms] ease-[cubic-bezier(0.23,1,0.32,1)] hover:z-10 hover:scale-[1.05] motion-reduce:transition-none motion-reduce:hover:scale-100 ${className}`}
+      className={`group relative z-[1] box-border flex h-full min-h-[420px] w-full px-4 origin-center flex-col overflow-hidden rounded-2xl p-[2px] transition-transform duration-[480ms] ease-[cubic-bezier(0.23,1,0.32,1)] hover:z-10 hover:scale-[1.05] motion-reduce:transition-none motion-reduce:hover:scale-100 ${className}`}
     >
       <div
         className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center overflow-hidden"

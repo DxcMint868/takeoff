@@ -11,17 +11,22 @@ export type NavType = {
 };
 
 const navInactive =
-  "[text-decoration:none] tracking-[0.02em] leading-[24px] text-white-60 z-[1] cursor-pointer whitespace-nowrap transition-colors duration-200 ease-in-out hover:text-white";
+  "[text-decoration:none] tracking-[0.02em] leading-[24px] text-white-60 z-[1] cursor-pointer whitespace-nowrap transition-[color,text-shadow] duration-200 ease-in-out hover:text-white";
 const navActive =
-  "[text-decoration:none] tracking-[0.02em] leading-[24px] text-white font-semibold font-reg z-[1] cursor-pointer whitespace-nowrap";
+  "[text-decoration:none] tracking-[0.02em] leading-[24px] text-white font-semibold font-reg z-[1] cursor-pointer whitespace-nowrap [text-shadow:0_0_12px_rgba(140,120,237,0.55),0_0_28px_rgba(115,95,212,0.28)] transition-[color,text-shadow] duration-200 ease-in-out";
 
 const DEFAULT_SCROLL_THRESHOLD = 300;
 
-const Nav = ({ className = "", initialTransparent = false, scrollThreshold = DEFAULT_SCROLL_THRESHOLD }: NavType) => {
+const Nav = ({
+  className = "",
+  initialTransparent = false,
+  scrollThreshold = DEFAULT_SCROLL_THRESHOLD,
+}: NavType) => {
   const { pathname } = useRouter();
   const onWorksPage = pathname.startsWith("/works");
   const onAboutPage = pathname === "/about-us";
   const [scrolled, setScrolled] = useState(!initialTransparent);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     if (!initialTransparent) return;
@@ -30,6 +35,34 @@ const Nav = ({ className = "", initialTransparent = false, scrollThreshold = DEF
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, [initialTransparent, scrollThreshold]);
+
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMobileMenuOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = prev;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [mobileMenuOpen]);
+
+  useEffect(() => {
+    const onResize = () => {
+      if (typeof window !== "undefined" && window.innerWidth > 1100) {
+        setMobileMenuOpen(false);
+      }
+    };
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
 
   return (
     <header
@@ -71,7 +104,98 @@ const Nav = ({ className = "", initialTransparent = false, scrollThreshold = DEF
           </Link>
         </nav>
       </nav>
-      <CTASolid propWidth="150px" label="Start Today" href="/#contact-us" />
+      <div className="mq1100:hidden shrink-0">
+        <CTASolid propWidth="150px" label="Start Today" href="/#contact-us" />
+      </div>
+
+      <button
+        type="button"
+        className="relative z-[1] mt-1.5 hidden mq1100:flex size-11 shrink-0 items-center justify-center self-center border-0 bg-transparent p-0 outline-none transition-opacity hover:opacity-80 focus-visible:ring-2 focus-visible:ring-purple focus-visible:ring-offset-2 focus-visible:ring-offset-dark"
+        aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+        aria-expanded={mobileMenuOpen}
+        aria-controls="mobile-nav-panel"
+        onClick={() => setMobileMenuOpen((o) => !o)}
+      >
+        <Image
+          src="/menu-icon.svg"
+          alt=""
+          width={40}
+          height={43}
+          unoptimized
+          className="pointer-events-none block"
+        />
+      </button>
+
+      {mobileMenuOpen ? (
+        <div
+          id="mobile-nav-panel"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Site navigation"
+          className="fixed inset-0 z-[100] box-border flex min-h-[100dvh] w-full max-w-none min-w-0 flex-col gap-8 overflow-y-auto overflow-x-hidden bg-surface-card/95 px-8 pb-12 pt-20 mq900:px-6 mq450:px-5"
+        >
+          <button
+            type="button"
+            className="absolute right-5 top-5 z-[1] flex size-11 items-center justify-center border-0 bg-transparent p-0 outline-none transition-opacity hover:opacity-80 focus-visible:ring-2 focus-visible:ring-purple focus-visible:ring-offset-2 focus-visible:ring-offset-surface-card mq900:right-4 mq900:top-4"
+            aria-label="Close menu"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            <Image
+              src="/close-icon.svg"
+              alt=""
+              width={24}
+              height={24}
+              unoptimized
+              className="pointer-events-none block"
+            />
+          </button>
+          <nav className="flex flex-1 flex-col justify-center w-full gap-8 text-center text-xl font-reg mq450:gap-6 mq450:text-lg">
+            <Link
+              href="/#our-service"
+              className={navInactive}
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Services
+            </Link>
+            <Link
+              href="/works"
+              className={onWorksPage ? navActive : navInactive}
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Works
+            </Link>
+            <Link
+              href="/#our-team"
+              className={navInactive}
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Our Team
+            </Link>
+            <Link
+              href="/about-us"
+              className={onAboutPage ? navActive : navInactive}
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              About Us
+            </Link>
+            <Link
+              href="/#contact-us"
+              className={navInactive}
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Contact Us
+            </Link>
+          </nav>
+          <div className="mt-auto w-full shrink-0 pt-6">
+            <CTASolid
+              className="flex w-full justify-center"
+              propWidth="100%"
+              label="Start Today"
+              href="/#contact-us"
+            />
+          </div>
+        </div>
+      ) : null}
     </header>
   );
 };

@@ -167,61 +167,61 @@ export function WorkExamplesPortfolio({
     (showFeatured && !!featuredProject) || projectCards.length > 0;
 
   return (
-    <div className="mx-auto flex w-full max-w-[1138px] flex-col gap-8">
+    <div className="mx-auto box-border flex w-full min-w-0 max-w-[1138px] flex-col gap-8 overflow-x-clip px-4">
       {showFeatured && featuredProject && (
         <Link
           href={featuredProject.href || `/works/${featuredProject.id}`}
-          className="group [text-decoration:none]"
+          className="group block w-full min-w-0 max-w-full [text-decoration:none]"
         >
-        <div className="relative flex min-h-0 w-full cursor-pointer flex-col overflow-hidden rounded-[20px] border border-surface-border bg-surface-card shadow-card transition-shadow duration-300 hover:shadow-[0_0_30px_0_rgba(255,255,255,0.2)] ms1024:min-h-[400px] ms1024:max-h-[400px] ms1024:flex-row">
-          {featuredProject.logoSrc && (
-            <div className="absolute -left-3 -top-3 z-10 flex h-[92px] w-[92px] items-center justify-center rounded-full bg-[#1B1333]">
-              <Image
-                src={featuredProject.logoSrc}
-                alt={featuredProject.logoAlt || `${featuredProject.title} logo`}
-                width={74}
-                height={74}
-                unoptimized
-                className="rounded-full object-contain"
-              />
-            </div>
-          )}
-          <div className="relative order-2 flex min-w-0 flex-1 flex-col justify-between px-4 pb-8 pt-[90px] ms1024:order-1 ms1024:px-0 ms1024:pb-10 ms1024:pl-[42px] ms1024:pr-6 ms1024:pt-[90px]">
-            <div>
-              <h3 className="relative z-[2] m-0 text-center font-reg text-[32px] font-semibold leading-[40px] tracking-[0.04em] text-white ms1024:text-left">
-                {featuredProject.title}
-              </h3>
-              {featuredProject.subtitle && (
-                <p className="relative z-[2] m-0 mt-3 text-center font-reg text-xs font-normal leading-[18px] tracking-[0.02em] text-white ms1024:text-left">
-                  {featuredProject.subtitle}
+          <div className="relative flex min-h-0 w-full min-w-0 cursor-pointer flex-col overflow-hidden rounded-[20px] border border-surface-border bg-surface-card shadow-card transition-shadow duration-300 hover:shadow-[0_0_30px_0_rgba(255,255,255,0.2)] ms1024:min-h-[400px] ms1024:max-h-[400px] ms1024:flex-row">
+            {featuredProject.logoSrc && (
+              <div className="absolute -left-3 -top-3 z-10 flex h-[92px] w-[92px] items-center justify-center rounded-full bg-[#1B1333]">
+                <Image
+                  src={featuredProject.logoSrc}
+                  alt={featuredProject.logoAlt || `${featuredProject.title} logo`}
+                  width={74}
+                  height={74}
+                  unoptimized
+                  className="rounded-full object-contain"
+                />
+              </div>
+            )}
+            <div className="relative order-2 flex min-w-0 flex-1 flex-col justify-between px-4 pb-8 pt-[90px] ms1024:order-1 ms1024:px-0 ms1024:pb-10 ms1024:pl-[42px] ms1024:pr-6 ms1024:pt-[90px]">
+              <div>
+                <h3 className="relative z-[2] m-0 text-center font-reg text-[32px] font-semibold leading-[40px] tracking-[0.04em] text-white ms1024:text-left">
+                  {featuredProject.title}
+                </h3>
+                {featuredProject.subtitle && (
+                  <p className="relative z-[2] m-0 mt-3 text-center font-reg text-xs font-normal leading-[18px] tracking-[0.02em] text-white ms1024:text-left">
+                    {featuredProject.subtitle}
+                  </p>
+                )}
+                <p className="relative z-[2] m-0 mt-2 line-clamp-3 text-center font-reg text-sm font-medium leading-[22px] tracking-[0.02em] text-white-60 ms1024:text-left">
+                  {featuredProject.description}
                 </p>
-              )}
-              <p className="relative z-[2] m-0 mt-2 line-clamp-3 text-center font-reg text-sm font-medium leading-[22px] tracking-[0.02em] text-white-60 ms1024:text-left">
-                {featuredProject.description}
-              </p>
-              {featuredProject.tags.length > 0 ? (
-                <div className="relative z-[2] mt-6 max-w-[520px] self-center ms1024:self-start">
-                  <TagsDisplay
-                    tags={featuredProject.tags}
-                    projectId={featuredProject.id}
-                    containerClassName="justify-center ms1024:justify-start"
-                  />
-                </div>
+                {featuredProject.tags.length > 0 ? (
+                  <div className="relative z-[2] mt-6 max-w-[520px] self-center ms1024:self-start">
+                    <TagsDisplay
+                      tags={featuredProject.tags}
+                      projectId={featuredProject.id}
+                      containerClassName="justify-center ms1024:justify-start"
+                    />
+                  </div>
+                ) : null}
+              </div>
+            </div>
+            <div className="relative order-1 h-[220px] w-full shrink-0 overflow-hidden bg-surface-media ms1024:order-2 ms1024:h-[400px] ms1024:w-[569px] ms1024:self-start ms1024:rounded-bl-[20px]">
+              {featuredProject.imageSrc ? (
+                <Image
+                  src={featuredProject.imageSrc}
+                  alt={featuredProject.imageAlt}
+                  fill
+                  className="object-cover object-left-top"
+                  sizes="(max-width: 1023px) 100vw, 569px"
+                />
               ) : null}
             </div>
           </div>
-          <div className="relative order-1 h-[220px] w-full shrink-0 overflow-hidden bg-surface-media ms1024:order-2 ms1024:h-[400px] ms1024:w-[569px] ms1024:self-start ms1024:rounded-bl-[20px]">
-            {featuredProject.imageSrc ? (
-              <Image
-                src={featuredProject.imageSrc}
-                alt={featuredProject.imageAlt}
-                fill
-                className="object-cover object-left-top"
-                sizes="(max-width: 1023px) 100vw, 569px"
-              />
-            ) : null}
-          </div>
-        </div>
         </Link>
       )}
 
@@ -230,60 +230,60 @@ export function WorkExamplesPortfolio({
           No projects match your search or filters.
         </p>
       ) : projectCards.length > 0 ? (
-        <div className="flex flex-wrap justify-center gap-8 mq700:flex-col mq700:items-stretch">
+        <div className="flex w-full min-w-0 flex-wrap justify-center gap-8 mq700:flex-col mq700:items-stretch">
           {projectCards.map((project) => (
             <Link
               key={project.id}
               href={project.href || `/works/${project.id}`}
-              className="group [text-decoration:none]"
+              className="group flex min-w-0 max-w-full shrink-0 basis-[358px] justify-center [text-decoration:none] mq700:w-full mq700:basis-auto mq700:max-w-none"
             >
-            <article
-              className="relative flex h-[560px] w-[358px] max-w-full cursor-pointer flex-col overflow-hidden rounded-[20px] border border-surface-border bg-surface-card shadow-card transition-shadow duration-300 hover:shadow-[0_0_30px_0_rgba(255,255,255,0.2)] mq700:h-auto mq700:w-full"
-            >
-              <div className="relative h-[320px] w-full shrink-0 overflow-hidden rounded-b-[20px]">
-                {project.imageSrc ? (
-                  <Image
-                    src={project.imageSrc}
-                    alt={project.imageAlt}
-                    fill
-                    className="object-cover object-center"
-                    sizes="(max-width: 700px) 100vw, 358px"
-                  />
-                ) : null}
-                {project.logoSrc && (
-                  <div className="absolute -right-2 -top-2 z-10">
+              <article
+                className="relative flex h-[560px] w-full max-w-[358px] cursor-pointer flex-col overflow-hidden rounded-[20px] border border-surface-border bg-surface-card shadow-card transition-shadow duration-300 hover:shadow-[0_0_30px_0_rgba(255,255,255,0.2)] mq700:h-auto mq700:max-w-none"
+              >
+                <div className="relative h-[320px] w-full shrink-0 overflow-hidden rounded-b-[20px]">
+                  {project.imageSrc ? (
                     <Image
-                      src={project.logoSrc}
-                      alt={project.logoAlt || `${project.title} logo`}
-                      width={72}
-                      height={72}
-                      unoptimized
-                      className="object-contain"
+                      src={project.imageSrc}
+                      alt={project.imageAlt}
+                      fill
+                      className="object-cover object-right-top"
+                      sizes="(max-width: 700px) 100vw, 358px"
+                    />
+                  ) : null}
+                  {project.logoSrc && (
+                    <div className="absolute -right-2 -top-2 z-10">
+                      <Image
+                        src={project.logoSrc}
+                        alt={project.logoAlt || `${project.title} logo`}
+                        width={72}
+                        height={72}
+                        unoptimized
+                        className="object-contain object-right-top"
+                      />
+                    </div>
+                  )}
+                </div>
+
+                <div className="flex flex-1 flex-col px-4 pb-8 pt-4 text-left">
+                  <div>
+                    <h3 className="m-0 font-reg text-lg font-semibold leading-normal tracking-[0.02em] text-white">
+                      {project.title}
+                    </h3>
+                    <p className="m-0 mt-3 line-clamp-5 font-reg text-sm font-medium leading-[22px] tracking-[0.02em] text-white-60">
+                      {project.description}
+                    </p>
+                  </div>
+
+                  <div className="mt-4">
+                    <TagsDisplay
+                      tags={project.tags}
+                      projectId={project.id}
+                      extra={project.extra}
                     />
                   </div>
-                )}
-              </div>
 
-              <div className="flex flex-1 flex-col px-4 pb-8 pt-4 text-left">
-                <div>
-                  <h3 className="m-0 font-reg text-lg font-semibold leading-normal tracking-[0.02em] text-white">
-                    {project.title}
-                  </h3>
-                  <p className="m-0 mt-3 line-clamp-5 font-reg text-sm font-medium leading-[22px] tracking-[0.02em] text-white-60">
-                    {project.description}
-                  </p>
                 </div>
-
-                <div className="mt-4">
-                  <TagsDisplay
-                    tags={project.tags}
-                    projectId={project.id}
-                    extra={project.extra}
-                  />
-                </div>
-
-              </div>
-            </article>
+              </article>
             </Link>
           ))}
         </div>

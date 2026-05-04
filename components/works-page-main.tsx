@@ -175,9 +175,8 @@ const WorksPageMain = ({
                   key={chip.label}
                   type="button"
                   onClick={() => toggleFilter(chip.label)}
-                  className={`${BADGE_SURFACE_CLASSES} cursor-pointer select-none transition-opacity ${
-                    active ? "opacity-100 ring-2 ring-white/50" : "opacity-90 hover:opacity-100"
-                  }`}
+                  className={`${BADGE_SURFACE_CLASSES} cursor-pointer select-none transition-opacity ${active ? "opacity-100 ring-2 ring-white/50" : "opacity-90 hover:opacity-100"
+                    }`}
                 >
                   {chip.label}
                 </button>
