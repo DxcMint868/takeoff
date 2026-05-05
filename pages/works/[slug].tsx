@@ -14,7 +14,7 @@ import {
 } from "../../lib/strapi/case-studies";
 
 const SITE_URL = "https://www.hoasen.io";
-const RESERVED_SLUGS = new Set(["ocean-finance", "second-swap"]); // these have their own hardcoded pages (fallback demos)
+const RESERVED_SLUGS = new Set<string>(); // no slugs are reserved; all projects are served from Strapi
 
 type DynamicCaseStudyPageProps = {
   caseStudy: CaseStudyViewModel;

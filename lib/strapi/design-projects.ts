@@ -1,7 +1,6 @@
 import type {
   CaseStudyBriefBackground,
   CaseStudyMedia,
-  CaseStudyOutcome,
   CaseStudyTeamMember,
   StrapiBlocksNode,
 } from "./case-studies";
@@ -53,7 +52,8 @@ export type DesignProjectViewModel = {
   logoGallery?: DesignGalleryViewModel;
   patternGallery?: DesignGalleryViewModel;
   productGallery?: DesignGalleryViewModel;
-  outcome?: CaseStudyOutcome;
+  /** Design project outcome has no title field (unlike regular case studies) */
+  outcome?: { descriptionBlocks: StrapiBlocksNode[] };
   motionAnimationGallery?: DesignGalleryViewModel;
   teamMembers?: CaseStudyTeamMember[];
 };
@@ -88,36 +88,26 @@ function buildDesignProjectFullPopulateQuery(): URLSearchParams {
   params.set("populate[skills][fields][0]", "name");
   params.set("populate[skills][fields][1]", "slug");
 
-  // Brief & Background
-  params.set("populate[brief_and_background][fields][0]", "description");
-  populateMediaFields(
-    params,
-    "populate[brief_and_background][populate][background_image]",
-  );
+  // Request component scalars only – no =* so Strapi won't try to expand background_image
+  params.set("populate[brief_and_background]", "true");
 
   // Design Tone (scalar-only component)
   params.set("populate[design_tone]", "*");
 
-  // Design Gallery components – populate medias for each
+  // Design Gallery components – don't use a `fields` whitelist (Strapi rejects
+  // scalar keys like `title` when mixed with nested populate on components).
+  // All scalars (title, description, media_layout) are returned automatically.
   for (const key of [
     "logo_gallery",
     "pattern_gallery",
     "product_gallery",
     "motion_animation_gallery",
   ]) {
-    params.set(`populate[${key}][fields][0]`, "title");
-    params.set(`populate[${key}][fields][1]`, "description");
-    params.set(`populate[${key}][fields][2]`, "media_layout");
     populateMediaFields(params, `populate[${key}][populate][medias]`);
   }
 
-  // Outcome
-  params.set("populate[outcome][fields][0]", "title");
-  params.set("populate[outcome][fields][1]", "description");
-  populateMediaFields(
-    params,
-    "populate[outcome][populate][background_image]",
-  );
+  // Request component scalars only – no =* so Strapi won't try to expand background_image
+  params.set("populate[outcome]", "true");
 
   // Team members (identical to regular case study populate)
   populateMediaFields(
@@ -192,11 +182,9 @@ function mapDesignProjectToViewModel(
     .filter(Boolean);
 
   const briefRaw = unwrapStrapiData<any>(project.brief_and_background);
+  // backgroundImage is hardcoded in the template (/backgrounds/brief-background-bg.png)
   const briefAndBackground = briefRaw
-    ? {
-        descriptionBlocks: toBlocks(briefRaw.description),
-        backgroundImage: toMedia(briefRaw.background_image),
-      }
+    ? { descriptionBlocks: toBlocks(briefRaw.description) }
     : undefined;
 
   const toneRaw = unwrapStrapiData<any>(project.design_tone);
@@ -213,12 +201,10 @@ function mapDesignProjectToViewModel(
   );
 
   const outcomeRaw = unwrapStrapiData<any>(project.outcome);
+  // The shared.outcome component on this Strapi instance has no `title` field
+  // The background image is hardcoded in the template (/backgrounds/outcome-bg.png)
   const outcome = outcomeRaw
-    ? {
-        title: str(outcomeRaw.title) || "Outcome",
-        descriptionBlocks: toBlocks(outcomeRaw.description),
-        backgroundImage: toMedia(outcomeRaw.background_image),
-      }
+    ? { descriptionBlocks: toBlocks(outcomeRaw.description) }
     : undefined;
 
   const teamMembersList = mapFeaturedTeamMembers(

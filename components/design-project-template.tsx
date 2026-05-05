@@ -33,31 +33,31 @@ export default function DesignProjectTemplate({
           </div>
         ) : null}
 
-        <div className="relative flex min-h-[640px] w-full items-stretch mq1100:min-h-[520px] mq900:min-h-[560px] mq450:min-h-[500px]">
-          <div className="relative z-10 flex w-full flex-none flex-col justify-between pb-[160px] pl-[60px] pr-8 mq1100:pb-10 mq900:pb-16 mq900:pl-[30px] mq900:pr-[30px] mq900:pt-[60px] mq450:pl-5 mq450:pr-5">
+        <div className="relative flex min-h-[636px] w-full items-stretch mq1100:min-h-[520px] mq900:min-h-[480px] mq450:min-h-[420px]">
+          <div className="relative z-10 flex w-full flex-none flex-col justify-between pb-14 pl-[60px] pr-8 mq900:pb-10 mq900:pl-[30px] mq900:pr-[30px] mq900:pt-[60px] mq450:pl-5 mq450:pr-5">
             {designProject.heroLogo?.url ? (
               <Image
                 src={designProject.heroLogo.url}
                 alt={
                   designProject.heroLogo.alt || `${designProject.title} logo`
                 }
-                width={100}
-                height={98}
+                width={320}
+                height={64}
                 priority
                 unoptimized
-                className="object-contain"
+                className="mt-10 object-contain object-left"
               />
             ) : null}
 
-            <div className="max-w-[600px]">
-              <h1 className="m-0 font-sora text-[64px] font-semibold capitalize leading-[82px] mq1100:text-[50px] mq1100:leading-[64px] mq900:text-[48px] mq900:leading-[60px] mq450:text-[38px] mq450:leading-[48px]">
+            <div className="mb-16">
+              <h1 className="m-0 max-w-[600px] font-sora text-[64px] font-semibold capitalize leading-[82px] mq1100:text-[50px] mq1100:leading-[64px] mq900:text-[48px] mq900:leading-[60px] mq450:text-[38px] mq450:leading-[48px]">
                 {designProject.title}
               </h1>
 
               {designProject.heroTags.length > 0 ? (
                 <div className="mt-10">
-                  <p className="m-0 font-reg text-[10px] font-semibold uppercase leading-3 tracking-[2px] text-white-60">
-                    What we did
+                  <p className="m-0 font-reg text-[10px] font-semibold uppercase leading-3 tracking-[2px] text-white opacity-[0.6]">
+                    What we did:
                   </p>
                   <div className="mt-4 flex flex-wrap gap-3">
                     {designProject.heroTags.map((tag) => (
@@ -74,13 +74,6 @@ export default function DesignProjectTemplate({
             </div>
           </div>
         </div>
-
-        <div
-          className="absolute bottom-0 left-0 right-0 h-[60px]"
-          style={{
-            background: "linear-gradient(to bottom, transparent, #1b1333)",
-          }}
-        />
       </section>
 
       {/* ------------------------------------------------------------------ */}
@@ -155,7 +148,7 @@ export default function DesignProjectTemplate({
               backgroundClassName="pointer-events-none object-cover object-right"
             >
               <h2 className="m-0 font-sora text-[40px] font-semibold capitalize leading-none mq900:text-[32px] mq900:leading-[1.2] mq450:text-5xl">
-                {designProject.outcome.title}
+                Outcome
               </h2>
               <StrapiBlocks
                 blocks={designProject.outcome.descriptionBlocks}
@@ -185,24 +178,14 @@ export default function DesignProjectTemplate({
             type="button"
             disabled
             aria-label="Download deck (coming soon)"
-            className="flex h-12 w-12 cursor-not-allowed items-center justify-center rounded-full border border-white/20 bg-white/5 text-white/40 transition-colors"
+            className="cursor-not-allowed bg-transparent border-none p-0"
           >
-            <svg
-              width="22"
-              height="22"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              aria-hidden
-            >
-              <path
-                d="M12 3v13M5 16l7 5 7-5M3 21h18"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+            <Image
+              src={"/icons/pdf-icon.webp"}
+              alt="PDF icon"
+              width={50}
+              height={50}
+            ></Image>
           </button>
         </div>
       </section>
