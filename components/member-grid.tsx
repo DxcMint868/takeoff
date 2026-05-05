@@ -49,11 +49,11 @@ export function TeamMemberGrid({ members, className }: TeamMemberGridProps) {
 
   return (
     <div className={`mx-auto w-full max-w-[1132px] ${className ?? ""}`.trim()}>
-      <ul className="m-0 flex w-full flex-wrap justify-center gap-3 p-0 mq900:gap-3 ms1024:gap-2">
+      <ul className="box-border m-0 grid w-full grid-cols-2 gap-0.5 px-4 py-0 ms1024:flex ms1024:flex-wrap ms1024:justify-center ms1024:gap-4 ms1024:px-0">
         {members.map((member) => (
           <li
             key={member.slug}
-            className="aspect-square w-[calc((100%-0.125rem)/2)] max-w-[200px] shrink-0 list-none mq450:w-full mq450:max-w-none ms1024:w-[200px] ms1024:max-w-[200px]"
+            className="aspect-square list-none ms1024:w-[200px] ms1024:max-w-[200px] ms1024:shrink-0"
           >
             <Link
               href={`/about-us?member=${encodeURIComponent(member.slug)}#our-team`}
