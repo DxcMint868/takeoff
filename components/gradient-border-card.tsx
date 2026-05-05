@@ -34,7 +34,7 @@ export function GradientBorderCard({
           src={backgroundSrc}
           alt={backgroundAlt}
           fill
-          className={backgroundClassName}
+          className={`mq900:hidden ${backgroundClassName}`}
           sizes={sizes}
           aria-hidden={backgroundAlt === ""}
         />

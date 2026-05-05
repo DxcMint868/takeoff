@@ -83,7 +83,7 @@ export default function DesignProjectTemplate({
         <section className="w-full bg-dark px-5 py-16">
           <div className="relative mx-auto max-w-[1132px]">
             <GradientBorderCard
-              backgroundSrc="/backgrounds/brief-background-bg.png"
+              backgroundSrc={"/backgrounds/brief-background-bg.png"}
               backgroundAlt=""
               backgroundClassName="pointer-events-none object-cover object-right"
             >
