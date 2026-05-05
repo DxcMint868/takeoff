@@ -39,7 +39,7 @@ export default function DesignGallery({
             </h2>
           )}
           {description && (
-            <p className="mt-4 max-w-[720px] font-reg text-sm font-normal leading-[22px] tracking-[0.02em] text-white-60">
+            <p className="mt-4 font-reg text-sm font-normal leading-[22px] tracking-[0.02em] text-white-60">
               {description}
             </p>
           )}

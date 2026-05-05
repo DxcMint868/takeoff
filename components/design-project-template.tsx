@@ -108,7 +108,7 @@ export default function DesignProjectTemplate({
             <h2 className="m-0 font-sora text-[40px] font-semibold capitalize leading-none mq900:text-[32px] mq450:text-3xl">
               {designProject.designTone.title}
             </h2>
-            <p className="m-0 max-w-[600px] font-reg text-sm font-normal leading-[22px] tracking-[0.02em] text-white-60">
+            <p className="m-0 font-reg text-sm font-normal leading-[22px] tracking-[0.02em] text-white-60">
               {designProject.designTone.description}
             </p>
           </div>
