@@ -126,7 +126,7 @@ function normalizeBaseUrl(value: string | undefined) {
   return value.endsWith("/") ? value.slice(0, -1) : value;
 }
 
-function hasCmsConfig() {
+export function hasCmsConfig() {
   return STRAPI_BASE_URL.length > 0;
 }
 
@@ -173,13 +173,13 @@ function toneFor(label: string): WorkTagTone {
   return TAG_TONES[hashText(label) % TAG_TONES.length];
 }
 
-function toArray<T>(value: unknown): T[] {
+export function toArray<T>(value: unknown): T[] {
   if (!value) return [];
   if (Array.isArray(value)) return value as T[];
   return [value as T];
 }
 
-function unwrapStrapiData<T = any>(value: any): T {
+export function unwrapStrapiData<T = any>(value: any): T {
   if (value === null || value === undefined) return value as T;
 
   if (Array.isArray(value)) {
@@ -212,7 +212,7 @@ function unwrapStrapiData<T = any>(value: any): T {
   return out as T;
 }
 
-function toMedia(mediaLike: unknown): CaseStudyMedia | undefined {
+export function toMedia(mediaLike: unknown): CaseStudyMedia | undefined {
   const media = unwrapStrapiData<any>(mediaLike);
   if (!media || typeof media !== "object") return undefined;
 
@@ -234,7 +234,7 @@ function toMedia(mediaLike: unknown): CaseStudyMedia | undefined {
   return { url, alt };
 }
 
-function toBlocks(value: unknown): StrapiBlocksNode[] {
+export function toBlocks(value: unknown): StrapiBlocksNode[] {
   if (!value) return [];
   if (Array.isArray(value)) return value as StrapiBlocksNode[];
 
@@ -310,7 +310,7 @@ function pickTeamMemberExternalUrl(memberLike: unknown): string | undefined {
   return undefined;
 }
 
-function mapFeaturedTeamMembers(
+export function mapFeaturedTeamMembers(
   teamMemberListLike: unknown,
 ): CaseStudyTeamMember[] {
   const list = unwrapStrapiData<any>(teamMemberListLike);
@@ -602,7 +602,7 @@ function mapProjectToWorkCard(
   };
 }
 
-async function fetchStrapiJson(path: string): Promise<any> {
+export async function fetchStrapiJson(path: string): Promise<any> {
   const headers: HeadersInit = {
     Accept: "application/json",
   };
@@ -653,7 +653,7 @@ async function fetchStrapiJson(path: string): Promise<any> {
   return response.json();
 }
 
-function populateMediaFields(params: URLSearchParams, baseKey: string) {
+export function populateMediaFields(params: URLSearchParams, baseKey: string) {
   params.set(`${baseKey}[fields][0]`, "url");
   params.set(`${baseKey}[fields][1]`, "alternativeText");
   params.set(`${baseKey}[fields][2]`, "caption");
