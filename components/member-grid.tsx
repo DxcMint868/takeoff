@@ -49,16 +49,16 @@ export function TeamMemberGrid({ members, className }: TeamMemberGridProps) {
 
   return (
     <div className={`mx-auto w-full max-w-[1132px] ${className ?? ""}`.trim()}>
-      <ul className="m-0 flex w-full flex-wrap justify-center gap-2 p-0 mq900:gap-3 ms1024:gap-4">
+      <ul className="m-0 flex w-full flex-wrap justify-center gap-3 p-0 mq900:gap-3 ms1024:gap-2">
         {members.map((member) => (
           <li
             key={member.slug}
-            className="aspect-square w-[calc((100%-0.75rem)/2)] max-w-[200px] shrink-0 list-none mq450:w-full mq450:max-w-none ms1024:w-[200px] ms1024:max-w-[200px]"
+            className="aspect-square w-[calc((100%-0.125rem)/2)] max-w-[200px] shrink-0 list-none mq450:w-full mq450:max-w-none ms1024:w-[200px] ms1024:max-w-[200px]"
           >
             <Link
               href={`/about-us?member=${encodeURIComponent(member.slug)}#our-team`}
               scroll={false}
-              className="group relative block h-full w-full overflow-hidden rounded-lg outline-none ring-offset-2 ring-offset-dark transition-shadow duration-300 focus-visible:ring-2 focus-visible:ring-purple"
+              className="group relative block h-full w-full overflow-hidden outline-none focus-visible:ring-2 focus-visible:ring-purple"
               aria-label={`${member.name}${member.role ? `, ${member.role}` : ""}`}
             >
               <div className="relative h-full w-full overflow-hidden bg-purple/90">
