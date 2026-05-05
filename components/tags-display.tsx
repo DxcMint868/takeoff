@@ -1,9 +1,13 @@
 "use client";
 
 import { createPortal } from "react-dom";
-import { useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Badge } from "./badge";
 import type { WorkTagSpec } from "./work-examples-portfolio";
+
+/** Avoids React SSR warnings: `useLayoutEffect` is a no-op on the server. */
+const useIsomorphicLayoutEffect =
+  typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 type TagsDisplayProps = {
   tags: WorkTagSpec[];
@@ -17,12 +21,12 @@ export function TagsDisplay({ tags, projectId, extra, containerClassName }: Tags
   const [visibleCount, setVisibleCount] = useState<number>(tags.length);
   const [tooltipAnchor, setTooltipAnchor] = useState<DOMRect | null>(null);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     // Reset when tags change so we re-measure
     setVisibleCount(tags.length);
   }, [tags]);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const container = containerRef.current;
     if (!container) return;
 

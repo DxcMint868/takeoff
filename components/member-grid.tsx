@@ -1,51 +1,69 @@
-import Image from "next/image";
-import { useState } from "react";
-import { MEMBERS, type Member } from "../lib/members";
-import ArrowIcon from "../public/arrow-icon.png";
+"use client";
+
+import { useRouter } from "next/router";
+import { useCallback, useEffect, useState } from "react";
+import { MEMBERS } from "../lib/members";
+import { membersToTeamGridMembers } from "../lib/team-grid-member";
+import type { TeamMemberDisplay } from "../lib/strapi/team-members";
 import MemberProfileModal from "./member-profile-modal";
+import { TeamMemberGrid } from "./team-member-grid";
 
 export default function MemberGrid() {
-  const [selectedMember, setSelectedMember] = useState<Member | null>(null);
+  const router = useRouter();
+  const [selectedMember, setSelectedMember] = useState<TeamMemberDisplay | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  const fetchMember = useCallback(async (slug: string) => {
+    setLoading(true);
+    try {
+      const res = await fetch(`/api/team-member?slug=${encodeURIComponent(slug)}`);
+      if (!res.ok) {
+        setSelectedMember(null);
+        return;
+      }
+      const data: TeamMemberDisplay = await res.json();
+      setSelectedMember(data);
+    } catch {
+      setSelectedMember(null);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!router.isReady) return;
+    const raw = router.query.member;
+    const slug = Array.isArray(raw) ? raw[0] : raw;
+    if (!slug || typeof slug !== "string") {
+      setSelectedMember(null);
+      return;
+    }
+    void fetchMember(slug);
+  }, [router.isReady, router.query.member, fetchMember]);
+
+  const handleClose = () => {
+    setSelectedMember(null);
+    if (router.query.member) {
+      void router.replace(
+        { pathname: "/about-us", query: {} },
+        "/about-us#our-team",
+        { shallow: true },
+      );
+    }
+  };
 
   return (
     <>
-      <div className="grid w-full grid-cols-5 gap-2 mq900:grid-cols-3 mq700:grid-cols-2 mq450:grid-cols-1">
-        {MEMBERS.map((member) => (
-          <button
-            key={member.id}
-            type="button"
-            className="box-border w-full cursor-pointer border-0 bg-transparent p-0 text-left"
-            onClick={() => setSelectedMember(member)}
-          >
-            <div className="group relative aspect-square w-full overflow-hidden">
-              <Image
-                src={member.image}
-                alt={member.name}
-                fill
-                className="object-cover transition-transform duration-300 ease-out"
-                sizes="(max-width: 450px) 100vw, (max-width: 700px) 50vw, (max-width: 900px) 33vw, 20vw"
-              />
-              <div
-                className="pointer-events-none absolute inset-0 bg-colbalt opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-90"
-                aria-hidden
-              />
-              <div className="absolute right-3 top-3 hidden size-10 items-center justify-center rounded-full bg-white/50 transition-all duration-300 ease-in-out group-hover:flex">
-                <Image src={ArrowIcon} alt="" width={32} height={32} className="size-8" />
-              </div>
-              <div className="absolute bottom-0 left-0 right-0 box-border hidden min-w-0 w-full max-w-full flex-col gap-1 px-2 py-4 transition-all duration-300 ease-in-out group-hover:flex">
-                <p className="m-0 min-w-0 whitespace-normal break-words text-[22px] font-sora font-semibold leading-tight text-white">
-                  {member.name}
-                </p>
-                <p className="m-0 w-full min-w-0 whitespace-normal break-words text-[14px] font-reg font-normal leading-snug text-white/50">
-                  {member.role}
-                </p>
-              </div>
-            </div>
-          </button>
-        ))}
-      </div>
+      <TeamMemberGrid members={membersToTeamGridMembers(MEMBERS)} />
 
-      <MemberProfileModal member={selectedMember} onClose={() => setSelectedMember(null)} />
+      {/* Loading overlay — shown while fetching member data after a card click */}
+      {loading && (
+        <div className="fixed inset-0 z-[119] flex items-center justify-center bg-dark/60 backdrop-blur-sm">
+          <div className="h-8 w-8 animate-spin rounded-full border-2 border-white/20 border-t-white" />
+        </div>
+      )}
+
+      <MemberProfileModal member={selectedMember} onClose={handleClose} />
     </>
   );
 }

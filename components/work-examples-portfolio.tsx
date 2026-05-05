@@ -175,18 +175,24 @@ export function WorkExamplesPortfolio({
         >
         <div className="relative flex min-h-0 w-full cursor-pointer flex-col overflow-hidden rounded-[20px] border border-surface-border bg-surface-card shadow-card transition-shadow duration-300 hover:shadow-[0_0_30px_0_rgba(255,255,255,0.2)] ms1024:min-h-[400px] ms1024:max-h-[400px] ms1024:flex-row">
           {featuredProject.logoSrc && (
-            <div className="absolute -left-3 -top-3 z-10 flex h-[92px] w-[92px] items-center justify-center rounded-full bg-[#1B1333]">
+            <div className="absolute -left-2 -top-2 z-10 flex h-[96px] w-[96px] items-center justify-center rounded-full bg-[#1B1333] ms1024:-left-2.5 ms1024:-top-2.5">
               <Image
                 src={featuredProject.logoSrc}
                 alt={featuredProject.logoAlt || `${featuredProject.title} logo`}
-                width={74}
-                height={74}
+                width={76}
+                height={76}
                 unoptimized
                 className="rounded-full object-contain"
               />
             </div>
           )}
-          <div className="relative order-2 flex min-w-0 flex-1 flex-col justify-between px-4 pb-8 pt-[90px] ms1024:order-1 ms1024:px-0 ms1024:pb-10 ms1024:pl-[42px] ms1024:pr-6 ms1024:pt-[90px]">
+          <div
+            className={`relative order-2 flex min-w-0 flex-1 flex-col justify-between px-4 pb-8 ms1024:order-1 ms1024:px-0 ms1024:pb-10 ms1024:pl-[42px] ms1024:pr-6 ${
+              featuredProject.logoSrc
+                ? "pt-10 ms1024:pt-[112px]"
+                : "pt-[90px] ms1024:pt-[90px]"
+            }`}
+          >
             <div>
               <h3 className="relative z-[2] m-0 text-center font-reg text-[32px] font-semibold leading-[40px] tracking-[0.04em] text-white ms1024:text-left">
                 {featuredProject.title}
@@ -238,7 +244,7 @@ export function WorkExamplesPortfolio({
               className="group [text-decoration:none]"
             >
             <article
-              className="relative flex h-[560px] w-[358px] max-w-full cursor-pointer flex-col overflow-hidden rounded-[20px] border border-surface-border bg-surface-card shadow-card transition-shadow duration-300 hover:shadow-[0_0_30px_0_rgba(255,255,255,0.2)] mq700:h-auto mq700:w-full"
+              className="relative flex h-[620px] w-[358px] max-w-full cursor-pointer flex-col overflow-hidden rounded-[20px] border border-surface-border bg-surface-card shadow-card transition-shadow duration-300 hover:shadow-[0_0_30px_0_rgba(255,255,255,0.2)] mq700:h-auto mq700:w-full"
             >
               <div className="relative h-[320px] w-full shrink-0 overflow-hidden rounded-b-[20px]">
                 {project.imageSrc ? (

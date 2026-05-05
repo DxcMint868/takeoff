@@ -1,6 +1,8 @@
 import { type ComponentType, type SVGProps } from "react";
 import Image from "next/image";
 import ContactSection from "./contact-section";
+import { TeamMemberGrid } from "./team-member-grid";
+import { caseStudyTeamMembersToTeamGridMembers } from "../lib/team-grid-member";
 import { GradientBorderCard } from "./gradient-border-card";
 import { GradientGlow } from "./gradient-glow";
 import {
@@ -78,7 +80,7 @@ export default function CaseStudyTemplate({
               {caseStudy.heroTags.length > 0 ? (
                 <div className="mt-10">
                   <p className="m-0 font-reg text-[10px] font-semibold uppercase leading-3 tracking-[2px] text-white-60">
-                    What we did:
+                    What we did
                   </p>
                   <div className="mt-4 flex flex-wrap gap-3">
                     {caseStudy.heroTags.map((tag) => (
@@ -138,10 +140,8 @@ export default function CaseStudyTemplate({
         <section className="w-full bg-dark px-5 py-16">
           <div className="relative mx-auto max-w-[1132px]">
             <GradientBorderCard
-              backgroundSrc={caseStudy.briefAndBackground.backgroundImage?.url}
-              backgroundAlt={
-                caseStudy.briefAndBackground.backgroundImage?.alt || ""
-              }
+              backgroundSrc="/backgrounds/brief-background-bg.png"
+              backgroundAlt=""
               backgroundClassName="pointer-events-none object-cover object-right"
             >
               <h2 className="m-0 font-sora text-[40px] font-semibold capitalize leading-none mq900:text-[32px] mq900:leading-[1.2] mq450:text-5xl">
@@ -149,7 +149,7 @@ export default function CaseStudyTemplate({
               </h2>
               <StrapiBlocks
                 blocks={caseStudy.briefAndBackground.descriptionBlocks}
-                className="mt-10 flex max-w-[663px] flex-col gap-4 font-reg text-sm font-normal leading-[22px] tracking-[0.02em] text-white-60"
+                className="mt-10 flex max-w-[663px] flex-col gap-4 font-reg text-sm font-normal leading-[22px] tracking-[0.02em] text-white-60 [&_blockquote]:border-white/25"
               />
             </GradientBorderCard>
           </div>
@@ -269,8 +269,8 @@ export default function CaseStudyTemplate({
         <section className="w-full bg-dark px-5 py-16">
           <div className="relative mx-auto max-w-[1132px]">
             <GradientBorderCard
-              backgroundSrc={caseStudy.outcome.backgroundImage?.url}
-              backgroundAlt={caseStudy.outcome.backgroundImage?.alt || ""}
+              backgroundSrc="/backgrounds/outcome-bg-old.png"
+              backgroundAlt=""
               backgroundClassName="pointer-events-none object-cover object-right"
             >
               <h2 className="m-0 font-sora text-[40px] font-semibold capitalize leading-none mq900:text-[32px] mq900:leading-[1.2] mq450:text-5xl">
@@ -282,6 +282,14 @@ export default function CaseStudyTemplate({
               />
             </GradientBorderCard>
           </div>
+        </section>
+      ) : null}
+
+      {caseStudy.teamMembers && caseStudy.teamMembers.length > 0 ? (
+        <section className="w-full bg-dark px-5 py-16 mq900:py-14">
+          <TeamMemberGrid
+            members={caseStudyTeamMembersToTeamGridMembers(caseStudy.teamMembers)}
+          />
         </section>
       ) : null}
 
