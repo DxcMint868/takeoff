@@ -213,7 +213,7 @@ const WorksPageMain = ({
                 <Link
                   key={card.id}
                   href={card.href}
-                  className="group [text-decoration:none]"
+                  className="group relative [text-decoration:none]"
                 >
                   <article className="relative flex h-[380px] w-[358px] max-w-full cursor-pointer flex-col overflow-hidden rounded-[20px] border border-surface-border bg-surface-card shadow-card transition-shadow duration-300 hover:shadow-[0_0_30px_0_rgba(255,255,255,0.2)] mq700:h-[320px] mq700:w-full">
                     {card.thumbnailUrl ? (
@@ -224,23 +224,6 @@ const WorksPageMain = ({
                         className="object-cover object-center"
                         sizes="(max-width: 700px) 100vw, 358px"
                       />
-                    ) : null}
-
-                    {/* Dark overlay for text legibility
-                    <div className="absolute inset-0 bg-black/30" aria-hidden /> */}
-
-                    {/* Logo badge – top-right */}
-                    {card.logoUrl ? (
-                      <div className="absolute right-3 top-3 z-10 flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-dark/80 ring-1 ring-white/20">
-                        <Image
-                          src={card.logoUrl}
-                          alt={`${card.title} logo`}
-                          width={32}
-                          height={32}
-                          unoptimized
-                          className="object-contain"
-                        />
-                      </div>
                     ) : null}
 
                     {/* Hero logo – absolutely centered in the card */}
@@ -282,6 +265,18 @@ const WorksPageMain = ({
                       </span>
                     </div>
                   </article>
+
+                  {/* Logo badge – outside article so it overlaps the rounded corner */}
+                  {card.logoUrl ? (
+                    <Image
+                      src={card.logoUrl}
+                      alt={`${card.title} logo`}
+                      width={72}
+                      height={72}
+                      unoptimized
+                      className="absolute -right-2 -top-2 z-10 object-contain"
+                    />
+                  ) : null}
                 </Link>
               ))}
             </div>
