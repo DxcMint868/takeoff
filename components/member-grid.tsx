@@ -49,7 +49,7 @@ export function TeamMemberGrid({ members, className }: TeamMemberGridProps) {
 
   return (
     <div className={`mx-auto w-full max-w-[1132px] ${className ?? ""}`.trim()}>
-      <ul className="box-border m-0 grid w-full grid-cols-2 gap-0.5 px-4 py-0 ms1024:flex ms1024:flex-wrap ms1024:justify-center ms1024:gap-4 ms1024:px-0">
+      <ul className="box-border m-0 grid w-full grid-cols-2 gap-3 px-4 py-0 ms1024:flex ms1024:flex-wrap ms1024:justify-center ms1024:gap-2 ms1024:px-0">
         {members.map((member) => (
           <li
             key={member.slug}
