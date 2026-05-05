@@ -60,9 +60,6 @@ const Nav = ({ className = "", initialTransparent = false, scrollThreshold = DEF
           <Link href="/works" className={onWorksPage ? navActive : navInactive}>
             Works
           </Link>
-          <Link href="/#our-team" className={navInactive}>
-            Our Team
-          </Link>
           <Link href="/about-us" className={onAboutPage ? navActive : navInactive}>
             About Us
           </Link>

@@ -347,7 +347,7 @@ const Web: NextPage<HomeProps> = ({ featuredProject, projectCards }) => {
             <TechnologiesSection />
             <WorkExamplesSection featuredProject={featuredProject} projectCards={projectCards} />
             <WorksSection />
-            <TeamSection />
+            {/* <TeamSection /> */}
             <ContactSection />
           </div>
         </div>
