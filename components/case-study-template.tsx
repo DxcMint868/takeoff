@@ -1,7 +1,7 @@
 import { type ComponentType, type SVGProps } from "react";
 import Image from "next/image";
 import ContactSection from "./contact-section";
-import { TeamMemberGrid } from "./team-member-grid";
+import { TeamMemberGrid } from "./member-grid";
 import { caseStudyTeamMembersToTeamGridMembers } from "../lib/team-grid-member";
 import { GradientBorderCard } from "./gradient-border-card";
 import { GradientGlow } from "./gradient-glow";

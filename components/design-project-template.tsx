@@ -2,7 +2,7 @@ import Image from "next/image";
 import ContactSection from "./contact-section";
 import DesignGallery from "./design-gallery";
 import { GradientBorderCard } from "./gradient-border-card";
-import { TeamMemberGrid } from "./team-member-grid";
+import { TeamMemberGrid } from "./member-grid";
 import { caseStudyTeamMembersToTeamGridMembers } from "../lib/team-grid-member";
 import StrapiBlocks from "./strapi-blocks";
 import type { DesignProjectViewModel } from "../lib/strapi/design-projects";
