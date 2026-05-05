@@ -56,7 +56,7 @@ export default function DesignGallery({
             {medias.map((media, i) => (
               <div
                 key={`${media.url}-${i}`}
-                className={`relative w-full overflow-hidden ${isFullBleed ? "" : "rounded-[12px]"}`}
+                className={`relative w-full rounded-none overflow-hidden ${isFullBleed ? "" : "rounded-[12px]"}`}
               >
                 {isVideo(media.url) ? (
                   <video
