@@ -187,30 +187,30 @@ export function WorkExamplesPortfolio({
             </div>
           )}
           <div
-            className={`relative order-2 flex min-w-0 flex-1 flex-col justify-between px-4 pb-8 ms1024:order-1 ms1024:px-0 ms1024:pb-10 ms1024:pl-[42px] ms1024:pr-6 ${
+            className={`relative order-2 flex min-w-0 flex-1 flex-col overflow-hidden px-4 pb-8 ms1024:order-1 ms1024:px-0 ms1024:pb-10 ms1024:pl-[42px] ms1024:pr-6 ${
               featuredProject.logoSrc
                 ? "pt-10 ms1024:pt-[112px]"
                 : "pt-[90px] ms1024:pt-[90px]"
             }`}
           >
-            <div>
-              <h3 className="relative z-[2] m-0 text-center font-reg text-[32px] font-semibold leading-[40px] tracking-[0.04em] text-white ms1024:text-left">
+            <div className="flex min-w-0 w-full flex-col">
+              <h3 className="m-0 text-center font-reg text-[32px] font-semibold leading-[40px] tracking-[0.04em] text-white ms1024:text-left">
                 {featuredProject.title}
               </h3>
               {featuredProject.subtitle && (
-                <p className="relative z-[2] m-0 mt-3 text-center font-reg text-xs font-normal leading-[18px] tracking-[0.02em] text-white ms1024:text-left">
+                <p className="m-0 mt-3 text-center font-reg text-xs font-normal leading-[18px] tracking-[0.02em] text-white ms1024:text-left">
                   {featuredProject.subtitle}
                 </p>
               )}
-              <p className="relative z-[2] m-0 mt-2 line-clamp-3 text-center font-reg text-sm font-medium leading-[22px] tracking-[0.02em] text-white-60 ms1024:text-left">
+              <p className="m-0 mt-2 w-full line-clamp-3 text-left font-reg text-sm font-medium leading-[22px] tracking-[0.02em] text-white-60">
                 {featuredProject.description}
               </p>
               {featuredProject.tags.length > 0 ? (
-                <div className="relative z-[2] mt-6 max-w-[520px] self-center ms1024:self-start">
+                <div className="mt-6 w-full ms1024:max-w-[520px]">
                   <TagsDisplay
                     tags={featuredProject.tags}
                     projectId={featuredProject.id}
-                    containerClassName="justify-center ms1024:justify-start"
+                    containerClassName="justify-start ms1024:justify-start"
                   />
                 </div>
               ) : null}
