@@ -38,10 +38,7 @@ export default function CaseStudyTemplate({
     <main className="relative flex w-full flex-col items-center overflow-x-clip bg-dark text-white">
       <section className="relative w-full overflow-hidden bg-[#040b1e] pt-[77px] mq900:pt-0">
         {caseStudy.heroImage?.url ? (
-          <div
-            className="pointer-events-none absolute inset-0"
-            aria-hidden
-          >
+          <div className="pointer-events-none absolute inset-0" aria-hidden>
             <Image
               src={caseStudy.heroImage.url}
               alt=""
@@ -138,7 +135,7 @@ export default function CaseStudyTemplate({
 
       {caseStudy.briefAndBackground ? (
         <section className="w-full bg-dark px-5 py-16">
-          <div className="relative mq900:mx-4 mx-auto max-w-[1132px]">
+          <div className="relative mx-4 ms1024:mx-auto max-w-[1132px]">
             <GradientBorderCard
               backgroundSrc="/backgrounds/brief-background-bg.png"
               backgroundAlt=""
@@ -260,14 +257,16 @@ export default function CaseStudyTemplate({
           slides={caseStudy.gallery.map((slide) => ({
             src: slide.src,
             alt: slide.alt,
-            ...(slide.productPlatform ? { productPlatform: slide.productPlatform } : {}),
+            ...(slide.productPlatform
+              ? { productPlatform: slide.productPlatform }
+              : {}),
           }))}
         />
       ) : null}
 
       {caseStudy.outcome ? (
         <section className="w-full bg-dark px-5 py-16">
-          <div className="relative mq900:mx-4 mx-auto max-w-[1132px]">
+          <div className="relative ms1024:mx-auto mx-4 max-w-[1132px]">
             <GradientBorderCard
               backgroundSrc="/backgrounds/outcome-bg.png"
               backgroundAlt=""
@@ -288,7 +287,9 @@ export default function CaseStudyTemplate({
       {caseStudy.teamMembers && caseStudy.teamMembers.length > 0 ? (
         <section className="w-full bg-dark px-5 py-16 mq900:py-14">
           <TeamMemberGrid
-            members={caseStudyTeamMembersToTeamGridMembers(caseStudy.teamMembers)}
+            members={caseStudyTeamMembersToTeamGridMembers(
+              caseStudy.teamMembers,
+            )}
           />
         </section>
       ) : null}
