@@ -14,6 +14,7 @@ import {
   type WorkProjectCard,
   type WorkTagSpec,
 } from "./work-examples-portfolio";
+import type { DesignProjectCard } from "../lib/strapi/design-projects";
 
 const PAGE_SUBTITLE = (
   <p className="m-0 [text-wrap:balance]">
@@ -43,6 +44,7 @@ type WorksPageMainProps = {
   projectCards?: WorkProjectCard[];
   featuredProject?: WorkProjectCard | null;
   filterChips?: WorkTagSpec[];
+  designProjectCards?: DesignProjectCard[];
 };
 
 function projectMatchesFilters(project: WorkProjectCard, active: Set<string>) {
@@ -63,6 +65,7 @@ const WorksPageMain = ({
   projectCards,
   featuredProject,
   filterChips,
+  designProjectCards,
 }: WorksPageMainProps) => {
   const cardsSource = projectCards ?? ALL_PROJECT_CARDS;
   const featuredSource = featuredProject ?? OCEAN_FINANCE_PROJECT;
@@ -140,7 +143,7 @@ const WorksPageMain = ({
             </div>
           </div>
 
-          <div className="mx-auto flex w-full max-w-[388px] flex-col rounded-[40px] border border-solid border-white-30 bg-dark/30 px-5 py-2.5 backdrop-blur-sm">
+          <div className="mx-auto box-border flex w-full max-w-[388px] flex-col rounded-[40px] border border-solid border-white-30 bg-dark/30 px-5 py-2.5 backdrop-blur-sm mq450:mx-4 mq450:w-auto">
             <label className="flex flex-row items-center gap-3">
               <span className="sr-only">Search projects</span>
               <svg
@@ -191,9 +194,97 @@ const WorksPageMain = ({
           featuredProject={featuredSource}
         />
 
+        {designProjectCards && designProjectCards.length > 0 && (
+          <section className="flex w-full max-w-[1138px] flex-col gap-8 self-center pt-20 mq900:pt-14">
+            <div className="flex flex-col gap-4">
+              <h2 className="m-0 font-sora text-[80px] font-normal capitalize leading-[1.2] tracking-normal text-white mq900:text-[52px] mq450:text-[32px] text-white/20">
+                Branding
+              </h2>
+              <p className="m-0 max-w-[680px] font-reg text-sm font-light leading-[22px] tracking-[0.02em] text-white-60">
+                We created comprehensive brand guidelines to ensure consistency
+                across every touchpoint — covering logo usage, typography,
+                colour systems, spacing, and visual rules.
+              </p>
+            </div>
+
+            <div className="flex flex-wrap justify-center gap-8 mq700:flex-col mq700:items-stretch">
+              {designProjectCards.map((card) => (
+                <Link
+                  key={card.id}
+                  href={card.href}
+                  className="group relative [text-decoration:none]"
+                >
+                  <article className="relative flex h-[380px] w-[358px] max-w-full cursor-pointer flex-col overflow-hidden rounded-[20px] border border-surface-border bg-surface-card shadow-card transition-shadow duration-300 hover:shadow-[0_0_30px_0_rgba(255,255,255,0.2)] mq700:h-[320px] mq700:w-full">
+                    {card.thumbnailUrl ? (
+                      <Image
+                        src={card.thumbnailUrl}
+                        alt={`${card.title} branding`}
+                        fill
+                        className="object-cover object-center"
+                        sizes="(max-width: 700px) 100vw, 358px"
+                      />
+                    ) : null}
+
+                    {/* Hero logo – absolutely centered in the card */}
+                    <div className="absolute inset-0 z-10 flex items-center justify-center px-8">
+                      {card.heroLogoUrl ? (
+                        <div className="relative h-16 w-full">
+                          <Image
+                            src={card.heroLogoUrl}
+                            alt={`${card.title} logo`}
+                            fill
+                            unoptimized
+                            className="object-contain"
+                            sizes="(max-width: 700px) 100vw, 294px"
+                          />
+                        </div>
+                      ) : (
+                        <h3 className="m-0 text-center font-sora text-[28px] font-semibold leading-tight text-white mq700:text-2xl">
+                          {card.title}
+                        </h3>
+                      )}
+                    </div>
+
+                    {/* Arrow – bottom-right */}
+                    <div className="relative z-20 mt-auto self-end p-4">
+                      <span className="flex h-8 w-8 items-center justify-center rounded-full border border-white/30 bg-white/10 text-white transition-colors group-hover:bg-white/20">
+                        <svg
+                          width="14"
+                          height="14"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          aria-hidden
+                        >
+                          <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                      </span>
+                    </div>
+                  </article>
+
+                  {/* Logo badge – outside article so it overlaps the rounded corner */}
+                  {card.logoUrl ? (
+                    <Image
+                      src={card.logoUrl}
+                      alt={`${card.title} logo`}
+                      width={72}
+                      height={72}
+                      unoptimized
+                      className="absolute -right-2 -top-2 z-10 object-contain"
+                    />
+                  ) : null}
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
+
         <section
           id="works-cta"
-          className="relative mt-[167px] flex w-full max-w-[1138px] self-center flex-col items-center gap-8 overflow-hidden rounded-2xl bg-surface-card px-8 py-14 text-center mq900:mt-24 mq700:mt-16 mq450:px-5 mq450:py-10"
+          className="relative mx-auto mt-[167px] box-border flex w-full max-w-[1138px] flex-col items-center gap-8 overflow-hidden rounded-2xl bg-surface-card px-8 py-14 text-center mq900:mt-24 mq700:mt-16 mq450:px-5 mq450:py-10"
         >
           <Image
             src="/backgrounds/noise.png"

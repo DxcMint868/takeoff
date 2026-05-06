@@ -11,6 +11,10 @@ import {
   type WorkTagSpec,
 } from "../components/work-examples-portfolio";
 import { fetchWorksData } from "../lib/strapi/case-studies";
+import {
+  fetchDesignProjectCards,
+  type DesignProjectCard,
+} from "../lib/strapi/design-projects";
 
 const SITE_URL = "https://www.hoasen.io";
 const TITLE = "Our Work Examples | Hoasen";
@@ -36,6 +40,7 @@ type WorksPageProps = {
   featuredProject: WorkProjectCard | null;
   projectCards: WorkProjectCard[];
   filterChips: WorkTagSpec[];
+  designProjectCards: DesignProjectCard[];
 };
 
 function buildFallbackFilterChips(items: WorkProjectCard[]) {
@@ -51,7 +56,10 @@ function buildFallbackFilterChips(items: WorkProjectCard[]) {
 }
 
 export const getStaticProps: GetStaticProps<WorksPageProps> = async () => {
-  const cmsWorks = await fetchWorksData();
+  const [cmsWorks, designProjectCards] = await Promise.all([
+    fetchWorksData(),
+    fetchDesignProjectCards(),
+  ]);
 
   const fallbackFeatured = OCEAN_FINANCE_PROJECT;
   const fallbackCards = [...CORE_PROJECT_CARDS, ...EXTRA_PAGE_PROJECT_CARDS];
@@ -72,6 +80,7 @@ export const getStaticProps: GetStaticProps<WorksPageProps> = async () => {
           cmsWorks.filterChips.length > 0
             ? cmsWorks.filterChips
             : fallbackFilterChips,
+        designProjectCards,
       },
       revalidate: 60,
     };
@@ -82,6 +91,7 @@ export const getStaticProps: GetStaticProps<WorksPageProps> = async () => {
       featuredProject: fallbackFeatured,
       projectCards: fallbackCards,
       filterChips: fallbackFilterChips,
+      designProjectCards,
     },
     revalidate: 60,
   };
@@ -91,6 +101,7 @@ const Works: NextPage<WorksPageProps> = ({
   featuredProject,
   projectCards,
   filterChips,
+  designProjectCards,
 }) => {
   const portfolioItems = [featuredProject, ...projectCards].filter(
     (item): item is WorkProjectCard => !!item,
@@ -144,6 +155,7 @@ const Works: NextPage<WorksPageProps> = ({
           featuredProject={featuredProject}
           projectCards={projectCards}
           filterChips={filterChips}
+          designProjectCards={designProjectCards}
         />
         <FooterComponent />
       </div>

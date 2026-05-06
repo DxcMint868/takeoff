@@ -65,6 +65,16 @@ export type CaseStudyTestimonial = {
   authorCompany?: string;
 };
 
+export type CaseStudyTeamMember = {
+  name: string;
+  slug: string;
+  /** Primary label for hover (from repeatable member_role in Strapi). */
+  role: string;
+  avatar?: CaseStudyMedia;
+  /** First safe https URL from contact_links, if any. */
+  linkUrl?: string;
+};
+
 export type CaseStudyViewModel = {
   slug: string;
   title: string;
@@ -82,6 +92,7 @@ export type CaseStudyViewModel = {
   outcome?: CaseStudyOutcome;
   testimonial?: CaseStudyTestimonial;
   llmTxt?: string;
+  teamMembers?: CaseStudyTeamMember[];
 };
 
 type StrapiFetchResult = {
@@ -115,7 +126,7 @@ function normalizeBaseUrl(value: string | undefined) {
   return value.endsWith("/") ? value.slice(0, -1) : value;
 }
 
-function hasCmsConfig() {
+export function hasCmsConfig() {
   return STRAPI_BASE_URL.length > 0;
 }
 
@@ -162,13 +173,13 @@ function toneFor(label: string): WorkTagTone {
   return TAG_TONES[hashText(label) % TAG_TONES.length];
 }
 
-function toArray<T>(value: unknown): T[] {
+export function toArray<T>(value: unknown): T[] {
   if (!value) return [];
   if (Array.isArray(value)) return value as T[];
   return [value as T];
 }
 
-function unwrapStrapiData<T = any>(value: any): T {
+export function unwrapStrapiData<T = any>(value: any): T {
   if (value === null || value === undefined) return value as T;
 
   if (Array.isArray(value)) {
@@ -201,7 +212,7 @@ function unwrapStrapiData<T = any>(value: any): T {
   return out as T;
 }
 
-function toMedia(mediaLike: unknown): CaseStudyMedia | undefined {
+export function toMedia(mediaLike: unknown): CaseStudyMedia | undefined {
   const media = unwrapStrapiData<any>(mediaLike);
   if (!media || typeof media !== "object") return undefined;
 
@@ -223,7 +234,7 @@ function toMedia(mediaLike: unknown): CaseStudyMedia | undefined {
   return { url, alt };
 }
 
-function toBlocks(value: unknown): StrapiBlocksNode[] {
+export function toBlocks(value: unknown): StrapiBlocksNode[] {
   if (!value) return [];
   if (Array.isArray(value)) return value as StrapiBlocksNode[];
 
@@ -240,6 +251,128 @@ function toBlocks(value: unknown): StrapiBlocksNode[] {
 
 function sortByOrder<T extends { order: number }>(items: T[]) {
   return [...items].sort((a, b) => a.order - b.order);
+}
+
+const EXTERNAL_HTTP_RE = /^https?:\/\//i;
+
+function stringifyMemberRoleEntry(entry: unknown): string {
+  if (typeof entry === "string") {
+    return entry.trim();
+  }
+  const o = unwrapStrapiData<any>(entry);
+  if (!o || typeof o !== "object") return "";
+  for (const key of [
+    "role_name",
+    "title",
+    "label",
+    "role",
+    "name",
+    "text",
+    "value",
+    "description",
+    "role_description",
+    "position",
+    "job_title",
+    "jobTitle",
+    "role_title",
+    "heading",
+    "content",
+  ]) {
+    const s = stringifyValue(o[key]);
+    if (s) return s;
+  }
+  return "";
+}
+
+function pickTeamMemberExternalUrl(memberLike: unknown): string | undefined {
+  const member = unwrapStrapiData<any>(memberLike);
+  const links = toArray<any>(member?.contact_links);
+  const URL_KEYS = [
+    "url",
+    "contact_url",
+    "href",
+    "link",
+    "URL",
+    "target",
+    "external_url",
+    "link_url",
+    "uri",
+    "website",
+  ];
+  for (const raw of links) {
+    const link = unwrapStrapiData<any>(raw);
+    if (!link || typeof link !== "object") continue;
+    for (const key of URL_KEYS) {
+      const candidate = stringifyValue(link[key]);
+      if (candidate && EXTERNAL_HTTP_RE.test(candidate)) return candidate;
+    }
+  }
+  return undefined;
+}
+
+export function mapFeaturedTeamMembers(
+  teamMemberListLike: unknown,
+): CaseStudyTeamMember[] {
+  const list = unwrapStrapiData<any>(teamMemberListLike);
+  if (!list) return [];
+
+  const members = toArray<any>(list.featured_members);
+
+  return members
+    .map((raw) => {
+      const member = unwrapStrapiData<any>(raw);
+      if (!member) return null;
+
+      const name = stringifyValue(member.name);
+      if (!name) return null;
+
+      const slug =
+        stringifyValue(member.slug) ||
+        name
+          .toLowerCase()
+          .trim()
+          .replace(/\s+/g, "-")
+          .replace(/[^a-z0-9-]/g, "");
+
+      const roleParts = toArray<any>(
+        member.member_role ?? member.memberRole,
+      )
+        .map((entry) => stringifyMemberRoleEntry(entry))
+        .filter(Boolean);
+
+      const roleFallback = (() => {
+        for (const key of [
+          "role",
+          "position",
+          "job_title",
+          "jobTitle",
+          "role_title",
+          "title",
+        ] as const) {
+          const s = stringifyValue(member[key]);
+          if (s) return s;
+        }
+        return "";
+      })();
+
+      const role =
+        roleParts.length > 0
+          ? roleParts.join(" · ")
+          : roleFallback;
+
+      const avatar = toMedia(member.avatar);
+      const linkUrl = pickTeamMemberExternalUrl(member);
+
+      const entry: CaseStudyTeamMember = {
+        name,
+        slug,
+        role,
+        ...(avatar ? { avatar } : {}),
+        ...(linkUrl ? { linkUrl } : {}),
+      };
+      return entry;
+    })
+    .filter(Boolean) as CaseStudyTeamMember[];
 }
 
 function mapProjectToCaseStudy(
@@ -356,6 +489,12 @@ function mapProjectToCaseStudy(
         }
       : undefined;
 
+  const teamMembersList = mapFeaturedTeamMembers(
+    unwrapStrapiData<any>(project.team_members),
+  );
+  const teamMembers =
+    teamMembersList.length > 0 ? teamMembersList : undefined;
+
   const slug = stringifyValue(project.slug);
   const title = stringifyValue(project.title);
   const shortDescription = stringifyValue(project.short_description);
@@ -383,6 +522,7 @@ function mapProjectToCaseStudy(
     ...(stringifyValue(project.llm_txt)
       ? { llmTxt: stringifyValue(project.llm_txt) }
       : {}),
+    ...(teamMembers && teamMembers.length > 0 ? { teamMembers } : {}),
   };
 }
 
@@ -462,7 +602,7 @@ function mapProjectToWorkCard(
   };
 }
 
-async function fetchStrapiJson(path: string): Promise<any> {
+export async function fetchStrapiJson(path: string): Promise<any> {
   const headers: HeadersInit = {
     Accept: "application/json",
   };
@@ -513,7 +653,7 @@ async function fetchStrapiJson(path: string): Promise<any> {
   return response.json();
 }
 
-function populateMediaFields(params: URLSearchParams, baseKey: string) {
+export function populateMediaFields(params: URLSearchParams, baseKey: string) {
   params.set(`${baseKey}[fields][0]`, "url");
   params.set(`${baseKey}[fields][1]`, "alternativeText");
   params.set(`${baseKey}[fields][2]`, "caption");
@@ -548,6 +688,26 @@ function buildProjectPopulateQuery() {
   params.set("populate[gallery_images][fields][1]", "order");
   params.set("populate[gallery_images][fields][2]", "productPlatform");
   populateMediaFields(params, "populate[gallery_images][populate][file]");
+  /**
+   * Do not use `fields` whitelist on `featured_members`: Strapi omits any attribute
+   * not listed, so `member_role` never appeared in the response and roles were empty on case studies.
+   */
+  populateMediaFields(
+    params,
+    "populate[team_members][populate][featured_members][populate][avatar]",
+  );
+  params.set(
+    "populate[team_members][populate][featured_members][populate][member_role]",
+    "*",
+  );
+  /**
+   * `shared.contact-link`: no `url` field in this schema — use explicit nested media only
+   * (global `=*` on contact_links hit invalid nested keys; listing `url` hit "Invalid key url").
+   */
+  populateMediaFields(
+    params,
+    "populate[team_members][populate][featured_members][populate][contact_links][populate][platform_logo]",
+  );
   return params;
 }
 

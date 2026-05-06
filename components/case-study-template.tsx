@@ -1,6 +1,8 @@
 import { type ComponentType, type SVGProps } from "react";
 import Image from "next/image";
 import ContactSection from "./contact-section";
+import { TeamMemberGrid } from "./member-grid";
+import { caseStudyTeamMembersToTeamGridMembers } from "../lib/team-grid-member";
 import { GradientBorderCard } from "./gradient-border-card";
 import { GradientGlow } from "./gradient-glow";
 import {
@@ -36,10 +38,7 @@ export default function CaseStudyTemplate({
     <main className="relative flex w-full flex-col items-center overflow-x-clip bg-dark text-white">
       <section className="relative w-full overflow-hidden bg-[#040b1e] pt-[77px] mq900:pt-0">
         {caseStudy.heroImage?.url ? (
-          <div
-            className="pointer-events-none absolute inset-0"
-            aria-hidden
-          >
+          <div className="pointer-events-none absolute inset-0" aria-hidden>
             <Image
               src={caseStudy.heroImage.url}
               alt=""
@@ -78,7 +77,7 @@ export default function CaseStudyTemplate({
               {caseStudy.heroTags.length > 0 ? (
                 <div className="mt-10">
                   <p className="m-0 font-reg text-[10px] font-semibold uppercase leading-3 tracking-[2px] text-white-60">
-                    What we did:
+                    What we did
                   </p>
                   <div className="mt-4 flex flex-wrap gap-3">
                     {caseStudy.heroTags.map((tag) => (
@@ -107,17 +106,17 @@ export default function CaseStudyTemplate({
       {caseStudy.stats.length > 0 ? (
         <section className="w-full bg-dark px-5 pb-20 pt-16 mq900:pb-16 mq450:pb-12">
           <div className="mx-auto flex max-w-[1200px] flex-col items-center gap-10">
-            <p className="m-0 max-w-[747px] text-center font-reg text-sm font-medium leading-[22px] tracking-[0.02em] text-white-60">
+            <p className="m-0 px-2 max-w-[747px] text-center font-reg text-sm font-medium leading-[22px] tracking-[0.02em] text-white-60">
               {caseStudy.shortDescription}
             </p>
             <div className="flex w-full max-w-[950px] items-center justify-center mq700:flex-col mq700:gap-10">
               {caseStudy.stats.map((stat, i) => (
                 <div
                   key={`${stat.label}-${stat.order}`}
-                  className="flex items-center mq700:flex-col"
+                  className="flex items-center mq700:flex-col mt-4"
                 >
                   {i > 0 && (
-                    <div className="mx-10 h-[110px] w-px bg-white/20 mq900:mx-6 mq700:mx-0 mq700:h-px mq700:w-[110px]" />
+                    <div className="mx-10 h-[110px] w-px bg-white/20 mq900:mx-6 mq700:mx-0 mq700:h-px mq700:w-[110px] mb-6" />
                   )}
                   <div className="flex flex-col items-center gap-2 whitespace-nowrap text-center">
                     <span className="font-sora text-[66px] font-extralight capitalize leading-none mq900:text-[48px] mq450:text-[36px]">
@@ -136,12 +135,10 @@ export default function CaseStudyTemplate({
 
       {caseStudy.briefAndBackground ? (
         <section className="w-full bg-dark px-5 py-16">
-          <div className="relative mx-auto max-w-[1132px]">
+          <div className="relative mx-4 ms1024:mx-auto max-w-[1132px]">
             <GradientBorderCard
-              backgroundSrc={caseStudy.briefAndBackground.backgroundImage?.url}
-              backgroundAlt={
-                caseStudy.briefAndBackground.backgroundImage?.alt || ""
-              }
+              backgroundSrc="/backgrounds/brief-background-bg.png"
+              backgroundAlt=""
               backgroundClassName="pointer-events-none object-cover object-right"
             >
               <h2 className="m-0 font-sora text-[40px] font-semibold capitalize leading-none mq900:text-[32px] mq900:leading-[1.2] mq450:text-5xl">
@@ -149,7 +146,7 @@ export default function CaseStudyTemplate({
               </h2>
               <StrapiBlocks
                 blocks={caseStudy.briefAndBackground.descriptionBlocks}
-                className="mt-10 flex max-w-[663px] flex-col gap-4 font-reg text-sm font-normal leading-[22px] tracking-[0.02em] text-white-60"
+                className="mt-10 flex max-w-[663px] flex-col gap-4 font-reg text-sm font-normal leading-[22px] tracking-[0.02em] text-white-60 [&_blockquote]:border-white/25"
               />
             </GradientBorderCard>
           </div>
@@ -170,17 +167,17 @@ export default function CaseStudyTemplate({
 
       {caseStudy.solutions.length > 0 ? (
         <section className="w-full bg-dark px-5 py-16 mq450:px-3">
-          <div className="relative mx-auto max-w-[1370px] overflow-hidden rounded-[50px] border border-white/20 bg-white/[0.04] py-24 mq900:rounded-[20px] mq900:py-16 mq450:rounded-2xl mq450:py-12">
+          <div className="relative max-w-[1370px] overflow-hidden rounded-[50px] border border-solid border-white/20 bg-white/[0.04] mq900:rounded-3xl py-12 mq900:mx-4 mx-12">
             <Image
               src="/backgrounds/our-solution-bg.webp"
               alt=""
               aria-hidden
               width={1370}
               height={320}
-              className="pointer-events-none absolute inset-x-0 top-0 w-full"
+              className="pointer-events-none absolute inset-x-0 top-0 z-0 w-full"
               priority={false}
             />
-            <h2 className="relative m-0 pt-36 text-center font-sora text-[40px] font-semibold capitalize leading-none mq900:text-[32px] mq900:leading-[1.2] mq450:text-5xl">
+            <h2 className="relative mb-20 pt-2 text-center font-sora text-[40px] font-semibold capitalize leading-none mq900:text-[32px] mq900:leading-[1.2] mq450:text-5xl">
               Our Solution
             </h2>
 
@@ -241,7 +238,7 @@ export default function CaseStudyTemplate({
             <h2 className="m-0 text-center font-sora text-[26px] font-semibold capitalize leading-none mq450:text-xl mq450:leading-[1.25]">
               Technical Infrastructure
             </h2>
-            <div className="flex flex-wrap justify-center gap-3">
+            <div className="flex flex-wrap justify-center gap-3 mq900:mx-4">
               {caseStudy.technicalInfrastructure.map((item) => (
                 <span
                   key={item}
@@ -260,17 +257,19 @@ export default function CaseStudyTemplate({
           slides={caseStudy.gallery.map((slide) => ({
             src: slide.src,
             alt: slide.alt,
-            ...(slide.productPlatform ? { productPlatform: slide.productPlatform } : {}),
+            ...(slide.productPlatform
+              ? { productPlatform: slide.productPlatform }
+              : {}),
           }))}
         />
       ) : null}
 
       {caseStudy.outcome ? (
         <section className="w-full bg-dark px-5 py-16">
-          <div className="relative mx-auto max-w-[1132px]">
+          <div className="relative ms1024:mx-auto mx-4 max-w-[1132px]">
             <GradientBorderCard
-              backgroundSrc={caseStudy.outcome.backgroundImage?.url}
-              backgroundAlt={caseStudy.outcome.backgroundImage?.alt || ""}
+              backgroundSrc="/backgrounds/outcome-bg.png"
+              backgroundAlt=""
               backgroundClassName="pointer-events-none object-cover object-right"
             >
               <h2 className="m-0 font-sora text-[40px] font-semibold capitalize leading-none mq900:text-[32px] mq900:leading-[1.2] mq450:text-5xl">
@@ -282,6 +281,16 @@ export default function CaseStudyTemplate({
               />
             </GradientBorderCard>
           </div>
+        </section>
+      ) : null}
+
+      {caseStudy.teamMembers && caseStudy.teamMembers.length > 0 ? (
+        <section className="w-full bg-dark px-5 py-16 mq900:py-14">
+          <TeamMemberGrid
+            members={caseStudyTeamMembersToTeamGridMembers(
+              caseStudy.teamMembers,
+            )}
+          />
         </section>
       ) : null}
 
@@ -316,7 +325,7 @@ export default function CaseStudyTemplate({
       ) : null}
 
       <div className="w-full bg-dark px-5 mq900:px-6">
-        <div className="mx-auto max-w-[1200px]">
+        <div className="mx-4 ms1024:mx-auto max-w-[1200px]">
           <ContactSection />
         </div>
       </div>
