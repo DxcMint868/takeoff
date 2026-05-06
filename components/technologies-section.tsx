@@ -151,9 +151,12 @@ const TechnologiesSection = () => (
       Proven, well rounded teams, with fintech acumen
     </div>
 
-    <div className="flex w-full flex-wrap justify-center gap-8 text-left font-sora text-3xl">
+    <div className="box-border flex w-full flex-wrap justify-center gap-8 px-4 mq900:px-6 mq700:px-4 text-left font-sora text-3xl">
       {TECHNOLOGY_ROWS.flatMap((row) => row.items).map((item) => (
-        <div key={item.id} className="w-[calc(33.333%-1.334rem)] mq900:w-[calc(50%-1rem)] mq700:w-full">
+        <div
+          key={item.id}
+          className="box-border w-[calc(33.333%-1.334rem)] max-w-full min-w-0 mq900:w-[calc(50%-1rem)] mq700:w-full"
+        >
           <GroupComponent {...item} />
         </div>
       ))}
