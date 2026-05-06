@@ -26,7 +26,7 @@ export function CaseStudyObjectives({
         <h3 className="m-0 text-center font-sora text-[26px] font-semibold capitalize leading-none mq450:text-xl mq450:leading-[1.25]">
           {title}
         </h3>
-        <div className="mt-10 grid grid-cols-2 gap-x-8 gap-y-6 mq900:grid-cols-1">
+        <div className="mq900:mx-4 mt-10 grid grid-cols-2 gap-x-8 gap-y-6 mq900:grid-cols-1">
           {objectives.map((obj, i) => {
             const Icon = icons[i];
             return (
