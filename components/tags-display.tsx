@@ -93,7 +93,9 @@ export function TagsDisplay({ tags, projectId, extra, containerClassName }: Tags
           <div
             style={{
               position: "fixed",
-              left: tooltipAnchor.left,
+              ...(tooltipAnchor.left + 280 > window.innerWidth
+                ? { right: window.innerWidth - tooltipAnchor.right }
+                : { left: tooltipAnchor.left }),
               top: tooltipAnchor.top - 10,
               transform: "translateY(-100%)",
               zIndex: 9999,
