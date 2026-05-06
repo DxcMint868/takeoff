@@ -8,7 +8,6 @@ import ContactSection from "../components/contact-section";
 import TechnologiesSection from "../components/technologies-section";
 import WorkExamplesSection from "../components/work-examples-section";
 import WorksSection from "../components/works-section";
-import TeamSection from "../components/team-section";
 import {
   CORE_PROJECT_CARDS,
   EXTRA_PAGE_PROJECT_CARDS,
@@ -347,8 +346,7 @@ const Web: NextPage<HomeProps> = ({ featuredProject, projectCards }) => {
             <TechnologiesSection />
             <WorkExamplesSection featuredProject={featuredProject} projectCards={projectCards} />
             <WorksSection />
-            {/* <TeamSection /> */}
-            <ContactSection />
+            <ContactSection className="px-4" />
           </div>
         </div>
         <FooterComponent />
