@@ -267,7 +267,7 @@ export default function CaseStudyTemplate({
 
       {caseStudy.outcome ? (
         <section className="w-full bg-dark px-5 py-16">
-          <div className="relative mx-auto max-w-[1132px]">
+          <div className="relative mq900:mx-4 mx-auto max-w-[1132px]">
             <GradientBorderCard
               backgroundSrc="/backgrounds/outcome-bg.png"
               backgroundAlt=""
