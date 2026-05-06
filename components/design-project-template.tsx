@@ -81,7 +81,7 @@ export default function DesignProjectTemplate({
       {/* ------------------------------------------------------------------ */}
       {designProject.briefAndBackground ? (
         <section className="w-full bg-dark px-5 py-16">
-          <div className="relative mx-auto max-w-[1132px]">
+          <div className="relative mx-4 ms1024:mx-auto max-w-[1132px]">
             <GradientBorderCard
               backgroundSrc={"/backgrounds/brief-background-bg.png"}
               backgroundAlt=""
@@ -104,7 +104,7 @@ export default function DesignProjectTemplate({
       {/* ------------------------------------------------------------------ */}
       {designProject.designTone ? (
         <section className="w-full bg-dark px-5 py-16 mq900:py-12">
-          <div className="mx-auto flex max-w-[1132px] flex-col items-center gap-6 text-center">
+          <div className="ms1024:mx-auto mx-4 flex max-w-[1132px] flex-col items-center gap-6 text-center">
             <h2 className="m-0 font-sora text-[40px] font-semibold capitalize leading-none mq900:text-[32px] mq450:text-3xl">
               {designProject.designTone.title}
             </h2>
@@ -141,7 +141,7 @@ export default function DesignProjectTemplate({
       {/* ------------------------------------------------------------------ */}
       {designProject.outcome ? (
         <section className="w-full bg-dark px-5 py-16">
-          <div className="relative mx-auto max-w-[1132px]">
+          <div className="relative ms1024:mx-auto mx-4 max-w-[1132px]">
             <GradientBorderCard
               backgroundSrc="/backgrounds/outcome-bg.png"
               backgroundAlt=""
@@ -212,7 +212,7 @@ export default function DesignProjectTemplate({
       {/* Get in touch                                                         */}
       {/* ------------------------------------------------------------------ */}
       <div className="w-full bg-dark px-5 mq900:px-6">
-        <div className="mx-auto max-w-[1200px]">
+        <div className="ms1024:mx-auto mx-4 max-w-[1200px]">
           <ContactSection />
         </div>
       </div>
