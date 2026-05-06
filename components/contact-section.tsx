@@ -14,7 +14,7 @@ const ContactSection: NextPage<ContactSectionType> = ({ className = "" }) => {
   return (
     <section
       id="contact-us"
-      className={`box-border flex w-full min-w-0 flex-col items-stretch px-4 pt-32 mq700:pt-20 mq450:pt-14 ${className}`}
+      className={`box-border flex w-full min-w-0 flex-col items-stretch pt-32 mq700:pt-20 mq450:pt-14 ${className}`}
     >
       <GradientBorderCard
         surfaceClassName="bg-[#282042]"
