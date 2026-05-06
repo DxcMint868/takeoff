@@ -93,10 +93,10 @@ export function TagsDisplay({ tags, projectId, extra, containerClassName }: Tags
           (() => {
             const MARGIN = 8;
             const viewW = window.innerWidth;
-            const isFlipped = tooltipAnchor.left + 280 > viewW;
-            const maxWidth = isFlipped
-              ? Math.min(280, tooltipAnchor.right - MARGIN)
-              : Math.min(280, viewW - tooltipAnchor.left - MARGIN);
+            const spaceRight = viewW - tooltipAnchor.left - MARGIN;
+            const spaceLeft = tooltipAnchor.right - MARGIN;
+            const isFlipped = spaceLeft > spaceRight;
+            const maxWidth = Math.min(280, isFlipped ? spaceLeft : spaceRight);
             return (
           <div
             style={{
