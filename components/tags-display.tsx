@@ -60,13 +60,13 @@ export function TagsDisplay({ tags, projectId, extra, containerClassName }: Tags
   return (
     <div
       ref={containerRef}
-      className={`flex flex-wrap gap-2${containerClassName ? ` ${containerClassName}` : ""}`}
+      className={`flex flex-wrap items-center gap-2${containerClassName ? ` ${containerClassName}` : ""}`}
       onClick={(e) => e.preventDefault()}
     >
       {shown.map((t) => (
-        <span key={`${projectId}-${t.label}`} data-tag-item>
-          <Badge>{t.label}</Badge>
-        </span>
+        <Badge key={`${projectId}-${t.label}`} data-tag-item="">
+          {t.label}
+        </Badge>
       ))}
 
       {hiddenCount > 0 && (
@@ -90,15 +90,26 @@ export function TagsDisplay({ tags, projectId, extra, containerClassName }: Tags
       {tooltipAnchor &&
         typeof document !== "undefined" &&
         createPortal(
+          (() => {
+            const MARGIN = 8;
+            const viewW = window.innerWidth;
+            const spaceRight = viewW - tooltipAnchor.left - MARGIN;
+            const spaceLeft = tooltipAnchor.right - MARGIN;
+            const isFlipped = spaceLeft > spaceRight;
+            const maxWidth = Math.min(280, isFlipped ? spaceLeft : spaceRight);
+            return (
           <div
             style={{
               position: "fixed",
-              left: tooltipAnchor.left,
+              ...(isFlipped
+                ? { right: viewW - tooltipAnchor.right }
+                : { left: tooltipAnchor.left }),
               top: tooltipAnchor.top - 10,
               transform: "translateY(-100%)",
               zIndex: 9999,
+              maxWidth,
             }}
-            className="w-max max-w-[280px] rounded-xl border border-white/20 bg-[#1b1333] p-3 shadow-[0_8px_32px_rgba(0,0,0,0.5)]"
+            className="w-max rounded-xl border border-white/20 bg-[#1b1333] p-3 shadow-[0_8px_32px_rgba(0,0,0,0.5)]"
             onMouseEnter={() => setTooltipAnchor(tooltipAnchor)}
             onMouseLeave={() => setTooltipAnchor(null)}
           >
@@ -112,7 +123,9 @@ export function TagsDisplay({ tags, projectId, extra, containerClassName }: Tags
                 </span>
               )}
             </div>
-          </div>,
+          </div>
+            );
+          })(),
           document.body,
         )}
     </div>
