@@ -20,10 +20,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
 }) => (
   <div
     id={id}
-    className="flex-1 shadow-[0px_0px_24px_#1f183f] rounded-3xs bg-dark border-gray border-[1px] border-solid box-border flex flex-col items-end justify-between pt-[30px] px-[23px] pb-[18px] gap-6 min-w-[286px] max-w-full h-[300px] mq900:flex-1"
-    style={{
-      boxShadow: '0 0 24px 0 #261E4D',
-    }}
+    className="flex-1 shadow-[0_0_24px_0_#261E4D] rounded-3xs bg-dark border-gray border-[1px] border-solid box-border flex flex-col items-end justify-between pt-[30px] px-[23px] pb-[18px] gap-6 min-w-[286px] max-w-full h-[300px] mq900:flex-1"
   >
     <div className="self-stretch flex flex-col items-start justify-start gap-6">
       <div className="self-stretch flex flex-row items-start justify-center py-0 pl-0.5 pr-0">
