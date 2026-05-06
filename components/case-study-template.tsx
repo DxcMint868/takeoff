@@ -241,7 +241,7 @@ export default function CaseStudyTemplate({
             <h2 className="m-0 text-center font-sora text-[26px] font-semibold capitalize leading-none mq450:text-xl mq450:leading-[1.25]">
               Technical Infrastructure
             </h2>
-            <div className="flex flex-wrap justify-center gap-3">
+            <div className="flex flex-wrap justify-center gap-3 mq900:mx-4">
               {caseStudy.technicalInfrastructure.map((item) => (
                 <span
                   key={item}
