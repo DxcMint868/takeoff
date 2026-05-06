@@ -143,7 +143,7 @@ const WorksPageMain = ({
             </div>
           </div>
 
-          <div className="mx-auto flex w-full max-w-[388px] flex-col rounded-[40px] border border-solid border-white-30 bg-dark/30 px-5 py-2.5 backdrop-blur-sm">
+          <div className="mx-auto box-border flex w-full max-w-[388px] flex-col rounded-[40px] border border-solid border-white-30 bg-dark/30 px-5 py-2.5 backdrop-blur-sm mq450:mx-4 mq450:w-auto">
             <label className="flex flex-row items-center gap-3">
               <span className="sr-only">Search projects</span>
               <svg
