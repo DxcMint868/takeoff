@@ -459,34 +459,34 @@ function mapProjectToCaseStudy(
   );
   const briefAndBackground = briefAndBackgroundRaw
     ? {
-        descriptionBlocks: toBlocks(briefAndBackgroundRaw.description),
-        backgroundImage: toMedia(briefAndBackgroundRaw.background_image),
-      }
+      descriptionBlocks: toBlocks(briefAndBackgroundRaw.description),
+      backgroundImage: toMedia(briefAndBackgroundRaw.background_image),
+    }
     : project.overview
       ? {
-          descriptionBlocks: toBlocks(project.overview),
-        }
+        descriptionBlocks: toBlocks(project.overview),
+      }
       : undefined;
 
   const outcomeRaw = unwrapStrapiData<any>(project.outcome);
   const outcome = outcomeRaw
     ? {
-        title: stringifyValue(outcomeRaw.title) || "Outcome",
-        descriptionBlocks: toBlocks(outcomeRaw.description),
-        backgroundImage: toMedia(outcomeRaw.background_image),
-      }
+      title: stringifyValue(outcomeRaw.title) || "Outcome",
+      descriptionBlocks: toBlocks(outcomeRaw.description),
+      backgroundImage: toMedia(outcomeRaw.background_image),
+    }
     : undefined;
 
   const testimonialRaw = unwrapStrapiData<any>(project.testimonial);
   const testimonial =
     testimonialRaw && stringifyValue(testimonialRaw.author_name)
       ? {
-          quoteBlocks: toBlocks(testimonialRaw.quote),
-          authorName: stringifyValue(testimonialRaw.author_name),
-          authorRole: stringifyValue(testimonialRaw.author_role) || undefined,
-          authorCompany:
-            stringifyValue(testimonialRaw.author_company) || undefined,
-        }
+        quoteBlocks: toBlocks(testimonialRaw.quote),
+        authorName: stringifyValue(testimonialRaw.author_name),
+        authorRole: stringifyValue(testimonialRaw.author_role) || undefined,
+        authorCompany:
+          stringifyValue(testimonialRaw.author_company) || undefined,
+      }
       : undefined;
 
   const teamMembersList = mapFeaturedTeamMembers(
@@ -723,6 +723,10 @@ export async function fetchCaseStudyBySlug(
     const params = buildProjectPopulateQuery();
     params.set("filters[slug][$eq]", slug);
     params.set("pagination[pageSize]", "1");
+
+    if (process.env.NODE_ENV === "test" || process.env.NODE_ENV === "development") {
+      params.set("status", "draft");
+    }
 
     const payload = await fetchStrapiJson(`/api/projects?${params.toString()}`);
     const projects = toArray<any>(unwrapStrapiData(payload?.data));
