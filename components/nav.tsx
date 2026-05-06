@@ -93,9 +93,6 @@ const Nav = ({
           <Link href="/works" className={onWorksPage ? navActive : navInactive}>
             Works
           </Link>
-          <Link href="/#our-team" className={navInactive}>
-            Our Team
-          </Link>
           <Link href="/about-us" className={onAboutPage ? navActive : navInactive}>
             About Us
           </Link>
@@ -163,13 +160,6 @@ const Nav = ({
               onClick={() => setMobileMenuOpen(false)}
             >
               Works
-            </Link>
-            <Link
-              href="/#our-team"
-              className={navInactive}
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Our Team
             </Link>
             <Link
               href="/about-us"
