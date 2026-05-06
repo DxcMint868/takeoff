@@ -92,12 +92,14 @@ const TeamSection: React.FC = () => {
                 <div className="flex flex-col gap-3">
                   <div className="flex items-start gap-4">
                     <Icon className="h-[42px] w-[42px] shrink-0 text-white" />
-                    <h3 className="m-0 font-sora text-xl font-semibold leading-[30px] tracking-[0.4px] text-white">
-                      {title}
+                    <div>
+                      <h3 className="m-0 font-sora text-xl font-semibold leading-[30px] tracking-[0.4px] text-white">
+                        {title}
+                      </h3>
                       <p className="m-0 pl-[58px] font-reg text-base font-normal leading-[24px] tracking-[0.32px] text-white-60 mq450:pl-0">
                         {description}
                       </p>
-                    </h3>
+                    </div>
                   </div>
                 </div>
               </div>
