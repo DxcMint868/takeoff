@@ -114,7 +114,7 @@ const Nav = ({
         onClick={() => setMobileMenuOpen((o) => !o)}
       >
         <Image
-          src="/menu-icon.svg"
+          src="/icons/menu-icon.svg"
           alt=""
           width={40}
           height={43}
