@@ -170,17 +170,17 @@ export default function CaseStudyTemplate({
 
       {caseStudy.solutions.length > 0 ? (
         <section className="w-full bg-dark px-5 py-16 mq450:px-3">
-          <div className="relative mx-auto max-w-[1370px] overflow-hidden rounded-[50px] border border-solid border-white/20 bg-white/[0.04] py-24 mq900:rounded-[20px] mq900:py-16 mq450:rounded-2xl mq450:py-12 mq900:mx-2">
+          <div className="relative max-w-[1370px] overflow-hidden rounded-[50px] border border-solid border-white/20 bg-white/[0.04] mq900:rounded-3xl py-12 mq900:mx-4 mx-12">
             <Image
               src="/backgrounds/our-solution-bg.webp"
               alt=""
               aria-hidden
               width={1370}
               height={320}
-              className="pointer-events-none absolute inset-x-0 top-0 w-full"
+              className="pointer-events-none absolute inset-x-0 top-0 z-0 w-full"
               priority={false}
             />
-            <h2 className="relative m-0 pt-36 text-center font-sora text-[40px] font-semibold capitalize leading-none mq900:text-[32px] mq900:leading-[1.2] mq450:text-5xl">
+            <h2 className="relative mb-20 pt-2 text-center font-sora text-[40px] font-semibold capitalize leading-none mq900:text-[32px] mq900:leading-[1.2] mq450:text-5xl">
               Our Solution
             </h2>
 
