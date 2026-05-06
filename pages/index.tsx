@@ -346,7 +346,7 @@ const Web: NextPage<HomeProps> = ({ featuredProject, projectCards }) => {
             <TechnologiesSection />
             <WorkExamplesSection featuredProject={featuredProject} projectCards={projectCards} />
             <WorksSection />
-            <ContactSection />
+            <ContactSection className="px-4" />
           </div>
         </div>
         <FooterComponent />
