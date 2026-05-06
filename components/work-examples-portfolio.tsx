@@ -210,7 +210,7 @@ export function WorkExamplesPortfolio({
                   <TagsDisplay
                     tags={featuredProject.tags}
                     projectId={featuredProject.id}
-                    containerClassName="justify-start ms1024:justify-start"
+                    containerClassName="justify-start"
                   />
                 </div>
               ) : null}
