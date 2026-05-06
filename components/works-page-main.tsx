@@ -285,7 +285,7 @@ const WorksPageMain = ({
 
         <section
           id="works-cta"
-          className="relative mt-[167px] flex w-full max-w-[1138px] self-center flex-col items-center gap-8 overflow-hidden rounded-2xl bg-surface-card px-8 py-14 text-center mq900:mt-24 mq700:mt-16 mq450:px-5 mq450:py-10"
+          className="relative mx-auto mt-[167px] box-border flex w-full max-w-[1138px] flex-col items-center gap-8 overflow-hidden rounded-2xl bg-surface-card px-8 py-14 text-center mq900:mt-24 mq700:mt-16 mq450:px-5 mq450:py-10"
         >
           <Image
             src="/backgrounds/noise.png"
