@@ -238,7 +238,7 @@ export function WorkExamplesPortfolio({
               className="group flex min-w-0 max-w-full shrink-0 basis-[358px] justify-center [text-decoration:none] mq700:w-full mq700:basis-auto mq700:max-w-none"
             >
               <article
-                className="relative flex h-[560px] w-full max-w-[358px] cursor-pointer flex-col overflow-hidden rounded-[20px] border border-surface-border bg-surface-card shadow-card transition-shadow duration-300 hover:shadow-[0_0_30px_0_rgba(255,255,255,0.2)] mq700:h-auto mq700:max-w-none"
+                className="relative flex h-[620px] w-full max-w-[358px] cursor-pointer flex-col overflow-hidden rounded-[20px] border border-surface-border bg-surface-card shadow-card transition-shadow duration-300 hover:shadow-[0_0_30px_0_rgba(255,255,255,0.2)] mq700:h-auto mq700:max-w-none"
               >
                 <div className="relative h-[320px] w-full shrink-0 overflow-hidden rounded-b-[20px]">
                   {project.imageSrc ? (

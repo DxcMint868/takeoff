@@ -1,7 +1,7 @@
 "use client";
 
 import { createPortal } from "react-dom";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Badge } from "./badge";
 import type { WorkTagSpec } from "./work-examples-portfolio";
 
@@ -18,8 +18,28 @@ type TagsDisplayProps = {
 
 export function TagsDisplay({ tags, projectId, extra, containerClassName }: TagsDisplayProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const btnRef = useRef<HTMLSpanElement>(null);
   const [visibleCount, setVisibleCount] = useState<number>(tags.length);
   const [tooltipAnchor, setTooltipAnchor] = useState<DOMRect | null>(null);
+
+  // Dismiss tooltip when tapping outside on touch devices
+  useEffect(() => {
+    if (!tooltipAnchor) return;
+    const dismiss = (e: TouchEvent) => {
+      if (btnRef.current && !btnRef.current.contains(e.target as Node)) {
+        setTooltipAnchor(null);
+      }
+    };
+    document.addEventListener("touchstart", dismiss);
+    return () => document.removeEventListener("touchstart", dismiss);
+  }, [tooltipAnchor]);
+
+  const handleTouchStart = useCallback((e: React.TouchEvent<HTMLSpanElement>) => {
+    // Prevent the browser from synthesising mouseenter/mouseleave after the tap
+    e.preventDefault();
+    const rect = e.currentTarget.getBoundingClientRect();
+    setTooltipAnchor((prev) => (prev ? null : rect));
+  }, []);
 
   useIsomorphicLayoutEffect(() => {
     // Reset when tags change so we re-measure
@@ -71,11 +91,13 @@ export function TagsDisplay({ tags, projectId, extra, containerClassName }: Tags
 
       {hiddenCount > 0 && (
         <span
+          ref={btnRef}
           className="relative inline-flex h-7 cursor-default items-center rounded-md border border-white/20 bg-white/10 px-2.5 font-reg text-xs font-medium leading-none tracking-[0.02em] text-white/70 transition-colors hover:border-white/40 hover:bg-white/20"
           onMouseEnter={(e) =>
             setTooltipAnchor(e.currentTarget.getBoundingClientRect())
           }
           onMouseLeave={() => setTooltipAnchor(null)}
+          onTouchStart={handleTouchStart}
         >
           +{hiddenCount}
         </span>
