@@ -109,17 +109,17 @@ export default function CaseStudyTemplate({
       {caseStudy.stats.length > 0 ? (
         <section className="w-full bg-dark px-5 pb-20 pt-16 mq900:pb-16 mq450:pb-12">
           <div className="mx-auto flex max-w-[1200px] flex-col items-center gap-10">
-            <p className="m-0 max-w-[747px] text-center font-reg text-sm font-medium leading-[22px] tracking-[0.02em] text-white-60">
+            <p className="m-0 px-2 max-w-[747px] text-center font-reg text-sm font-medium leading-[22px] tracking-[0.02em] text-white-60">
               {caseStudy.shortDescription}
             </p>
             <div className="flex w-full max-w-[950px] items-center justify-center mq700:flex-col mq700:gap-10">
               {caseStudy.stats.map((stat, i) => (
                 <div
                   key={`${stat.label}-${stat.order}`}
-                  className="flex items-center mq700:flex-col"
+                  className="flex items-center mq700:flex-col mt-4"
                 >
                   {i > 0 && (
-                    <div className="mx-10 h-[110px] w-px bg-white/20 mq900:mx-6 mq700:mx-0 mq700:h-px mq700:w-[110px]" />
+                    <div className="mx-10 h-[110px] w-px bg-white/20 mq900:mx-6 mq700:mx-0 mq700:h-px mq700:w-[110px] mb-6" />
                   )}
                   <div className="flex flex-col items-center gap-2 whitespace-nowrap text-center">
                     <span className="font-sora text-[66px] font-extralight capitalize leading-none mq900:text-[48px] mq450:text-[36px]">
@@ -138,7 +138,7 @@ export default function CaseStudyTemplate({
 
       {caseStudy.briefAndBackground ? (
         <section className="w-full bg-dark px-5 py-16">
-          <div className="relative mx-auto max-w-[1132px]">
+          <div className="relative mq900:mx-4 mx-auto max-w-[1132px]">
             <GradientBorderCard
               backgroundSrc="/backgrounds/brief-background-bg.png"
               backgroundAlt=""
@@ -170,7 +170,7 @@ export default function CaseStudyTemplate({
 
       {caseStudy.solutions.length > 0 ? (
         <section className="w-full bg-dark px-5 py-16 mq450:px-3">
-          <div className="relative mx-auto max-w-[1370px] overflow-hidden rounded-[50px] border border-white/20 bg-white/[0.04] py-24 mq900:rounded-[20px] mq900:py-16 mq450:rounded-2xl mq450:py-12">
+          <div className="relative mx-auto max-w-[1370px] overflow-hidden rounded-[50px] border border-solid border-white/20 bg-white/[0.04] py-24 mq900:rounded-[20px] mq900:py-16 mq450:rounded-2xl mq450:py-12 mq900:mx-2">
             <Image
               src="/backgrounds/our-solution-bg.webp"
               alt=""
