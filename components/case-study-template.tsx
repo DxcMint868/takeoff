@@ -324,7 +324,7 @@ export default function CaseStudyTemplate({
       ) : null}
 
       <div className="w-full bg-dark px-5 mq900:px-6">
-        <div className="mx-auto max-w-[1200px]">
+        <div className="mx-4 ms1024:mx-auto max-w-[1200px]">
           <ContactSection />
         </div>
       </div>
