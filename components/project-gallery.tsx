@@ -137,6 +137,8 @@ export default function ProjectGallery({
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
+            aria-hidden="true"
+            focusable="false"
           >
             <path d="M15 18l-6-6 6-6" />
           </svg>
@@ -220,7 +222,8 @@ export default function ProjectGallery({
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                aria-hidden
+                aria-hidden="true"
+                focusable="false"
               >
                 <path d="M9 18l6-6-6-6" />
               </svg>
