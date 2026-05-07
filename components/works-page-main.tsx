@@ -14,6 +14,7 @@ import {
   type WorkProjectCard,
   type WorkTagSpec,
 } from "./work-examples-portfolio";
+import type { DesignProjectCard } from "../lib/strapi/design-projects";
 
 const PAGE_SUBTITLE = (
   <p className="m-0 [text-wrap:balance]">
@@ -43,6 +44,7 @@ type WorksPageMainProps = {
   projectCards?: WorkProjectCard[];
   featuredProject?: WorkProjectCard | null;
   filterChips?: WorkTagSpec[];
+  designProjectCards?: DesignProjectCard[];
 };
 
 function projectMatchesFilters(project: WorkProjectCard, active: Set<string>) {
@@ -63,6 +65,7 @@ const WorksPageMain = ({
   projectCards,
   featuredProject,
   filterChips,
+  designProjectCards,
 }: WorksPageMainProps) => {
   const cardsSource = projectCards ?? ALL_PROJECT_CARDS;
   const featuredSource = featuredProject ?? OCEAN_FINANCE_PROJECT;
@@ -99,10 +102,10 @@ const WorksPageMain = ({
   };
 
   return (
-    <main className="relative box-border flex w-full flex-col items-center overflow-x-clip px-5 pb-24 pt-8 text-white mq900:px-6">
+    <main className="relative box-border flex w-full flex-col items-center overflow-x-clip pb-24 pt-8 text-white">
       <GradientGlow className="top-0" />
       <div className="relative flex w-full max-w-[1200px] flex-col items-stretch gap-10">
-        <div className="flex w-full flex-col gap-6">
+        <div className="box-border flex w-full flex-col gap-6 px-4">
           <Link
             href="/"
             className="group flex w-fit flex-row items-center gap-3 self-start text-left [text-decoration:none]"
@@ -132,7 +135,7 @@ const WorksPageMain = ({
           </Link>
 
           <div className="flex flex-col items-center gap-5 text-center">
-            <h1 className="m-0 max-w-[900px] font-sora text-[40px] font-normal leading-[1.1] tracking-[0.02em] text-white mq450:text-3xl mq900:text-[52px] mq900:leading-tight">
+            <h1 className="m-0 max-w-[900px] font-sora text-29xl font-normal leading-[1.1] tracking-[0.02em] text-white mq450:text-10xl mq900:text-19xl mq900:leading-tight">
               Our Work Examples
             </h1>
             <div className="w-full max-w-[900px] font-reg text-3xl font-light leading-[34px] tracking-[0.02em] text-white-60 mq450:text-base mq450:leading-7">
@@ -140,7 +143,7 @@ const WorksPageMain = ({
             </div>
           </div>
 
-          <div className="mx-auto flex w-full max-w-[388px] flex-col rounded-[40px] border border-solid border-white-30 bg-dark/30 px-5 py-2.5 backdrop-blur-sm">
+          <div className="mx-auto box-border flex w-full max-w-[388px] flex-col rounded-[40px] border border-solid border-white-30 bg-dark/30 px-5 py-2.5 backdrop-blur-sm mq450:mx-4 mq450:w-auto">
             <label className="flex flex-row items-center gap-3">
               <span className="sr-only">Search projects</span>
               <svg
@@ -175,9 +178,8 @@ const WorksPageMain = ({
                   key={chip.label}
                   type="button"
                   onClick={() => toggleFilter(chip.label)}
-                  className={`${BADGE_SURFACE_CLASSES} cursor-pointer select-none transition-opacity ${
-                    active ? "opacity-100 ring-2 ring-white/50" : "opacity-90 hover:opacity-100"
-                  }`}
+                  className={`${BADGE_SURFACE_CLASSES} cursor-pointer select-none transition-opacity ${active ? "opacity-100 ring-2 ring-white/50" : "opacity-90 hover:opacity-100"
+                    }`}
                 >
                   {chip.label}
                 </button>
@@ -192,27 +194,117 @@ const WorksPageMain = ({
           featuredProject={featuredSource}
         />
 
-        <section
-          id="works-cta"
-          className="relative mt-[167px] flex w-full max-w-[1138px] self-center flex-col items-center gap-8 overflow-hidden rounded-2xl bg-surface-card px-8 py-14 text-center mq900:mt-24 mq700:mt-16 mq450:px-5 mq450:py-10"
-        >
-          <Image
-            src="/backgrounds/noise.png"
-            alt=""
-            aria-hidden
-            fill
-            className="pointer-events-none object-cover opacity-[0.95]"
-            sizes="100vw"
-          />
-          <h2 className="relative z-[1] m-0 font-sora text-29xl font-normal leading-[58px] tracking-[0.02em] text-white mq450:text-10xl mq450:leading-[41px] mq900:text-19xl mq900:leading-[46px]">
-            Ready to Build Something Great?
-          </h2>
-          <p className="relative z-[1] m-0 max-w-[520px] font-reg text-base font-light leading-6 tracking-[0.02em] text-white-60">
-            Tell us about your product—we&apos;ll help you design, build, and
-            ship with confidence.
-          </p>
-          <CTASolid label="Start a Conversation" href="/#contact-us" />
-        </section>
+        {designProjectCards && designProjectCards.length > 0 && (
+          <section className="mx-auto box-border flex w-full min-w-0 max-w-[1138px] flex-col gap-8 px-4 pt-20 mq900:pt-14">
+            <div className="flex flex-col gap-4">
+              <h2 className="m-0 font-sora text-[80px] font-normal capitalize leading-[1.2] tracking-normal text-white mq900:text-[52px] mq450:text-[32px] text-white/20">
+                Branding
+              </h2>
+              <p className="m-0 max-w-[680px] font-reg text-sm font-light leading-[22px] tracking-[0.02em] text-white-60">
+                We created comprehensive brand guidelines to ensure consistency
+                across every touchpoint — covering logo usage, typography,
+                colour systems, spacing, and visual rules.
+              </p>
+            </div>
+
+            <div className="flex flex-wrap justify-center gap-8 mq700:flex-col mq700:items-stretch">
+              {designProjectCards.map((card) => (
+                <Link
+                  key={card.id}
+                  href={card.href}
+                  className="group relative flex min-w-0 max-w-full shrink-0 basis-[358px] justify-center [text-decoration:none] mq700:w-full mq700:basis-auto mq700:max-w-none"
+                >
+                  <article className="relative flex h-[380px] w-full max-w-[358px] cursor-pointer flex-col overflow-hidden rounded-[20px] border border-surface-border bg-surface-card shadow-card transition-shadow duration-300 hover:shadow-[0_0_30px_0_rgba(255,255,255,0.2)] mq700:h-[320px] mq700:max-w-none">
+                    {card.thumbnailUrl ? (
+                      <Image
+                        src={card.thumbnailUrl}
+                        alt={`${card.title} branding`}
+                        fill
+                        className="object-cover object-center"
+                        sizes="(max-width: 700px) 100vw, 358px"
+                      />
+                    ) : null}
+
+                    {/* Hero logo – absolutely centered in the card */}
+                    <div className="absolute inset-0 z-10 flex items-center justify-center px-8">
+                      {card.heroLogoUrl ? (
+                        <div className="relative h-16 w-full">
+                          <Image
+                            src={card.heroLogoUrl}
+                            alt={`${card.title} logo`}
+                            fill
+                            unoptimized
+                            className="object-contain"
+                            sizes="(max-width: 700px) 100vw, 294px"
+                          />
+                        </div>
+                      ) : (
+                        <h3 className="m-0 text-center font-sora text-[28px] font-semibold leading-tight text-white mq700:text-2xl">
+                          {card.title}
+                        </h3>
+                      )}
+                    </div>
+
+                    {/* Arrow – bottom-right */}
+                    <div className="relative z-20 mt-auto self-end p-4">
+                      <span className="flex h-8 w-8 items-center justify-center rounded-full border border-white/30 bg-white/10 text-white transition-colors group-hover:bg-white/20">
+                        <svg
+                          width="14"
+                          height="14"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          aria-hidden
+                        >
+                          <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                      </span>
+                    </div>
+                  </article>
+
+                  {/* Logo badge – outside article so it overlaps the rounded corner */}
+                  {card.logoUrl ? (
+                    <Image
+                      src={card.logoUrl}
+                      alt={`${card.title} logo`}
+                      width={72}
+                      height={72}
+                      unoptimized
+                      className="absolute -right-2 -top-2 z-10 object-contain"
+                    />
+                  ) : null}
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
+
+        <div className="box-border w-full px-4">
+          <section
+            id="works-cta"
+            className="relative mx-auto mt-[167px] box-border flex w-full max-w-[1138px] flex-col items-center gap-8 overflow-hidden rounded-2xl bg-surface-card px-8 py-14 text-center mq900:mt-24 mq700:mt-16 mq450:px-5 mq450:py-10"
+          >
+            <Image
+              src="/backgrounds/noise.png"
+              alt=""
+              aria-hidden
+              fill
+              className="pointer-events-none object-cover opacity-[0.95]"
+              sizes="100vw"
+            />
+            <h2 className="relative z-[1] m-0 font-sora text-29xl font-normal leading-[58px] tracking-[0.02em] text-white mq450:text-10xl mq450:leading-[41px] mq900:text-19xl mq900:leading-[46px]">
+              Ready to Build Something Great?
+            </h2>
+            <p className="relative z-[1] m-0 max-w-[520px] font-reg text-base font-light leading-6 tracking-[0.02em] text-white-60">
+              Tell us about your product—we&apos;ll help you design, build, and
+              ship with confidence.
+            </p>
+            <CTASolid label="Start a Conversation" href="/#contact-us" />
+          </section>
+        </div>
       </div>
     </main>
   );

@@ -44,7 +44,7 @@ const WorksSection = () => (
       <div className="flex w-[904px] max-w-full flex-col items-start justify-start gap-9">
         <div
           id="works-testimonials"
-          className="flex max-w-full flex-row items-start justify-start gap-6 self-stretch mq900:flex-wrap"
+          className="flex max-w-full flex-row items-start justify-start gap-6 self-stretch overflow-x-auto scrollbar-hide"
         >
           {TESTIMONIALS.map((item) => (
             <TestimonialCard key={item.id} {...item} />

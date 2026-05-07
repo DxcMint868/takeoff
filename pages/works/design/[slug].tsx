@@ -4,63 +4,52 @@ import type {
   InferGetStaticPropsType,
 } from "next";
 import Head from "next/head";
-import FooterComponent from "../../components/footer-component";
-import Nav from "../../components/nav";
-import CaseStudyTemplate from "../../components/case-study-template";
+import FooterComponent from "../../../components/footer-component";
+import Nav from "../../../components/nav";
+import DesignProjectTemplate from "../../../components/design-project-template";
 import {
-  fetchCaseStudyBySlug,
-  fetchCaseStudySlugs,
-  type CaseStudyViewModel,
-} from "../../lib/strapi/case-studies";
+  fetchDesignProjectBySlug,
+  fetchDesignProjectSlugs,
+  type DesignProjectViewModel,
+} from "../../../lib/strapi/design-projects";
 
 const SITE_URL = "https://www.hoasen.io";
-const RESERVED_SLUGS = new Set<string>(); // no slugs are reserved; all projects are served from Strapi
 
-type DynamicCaseStudyPageProps = {
-  caseStudy: CaseStudyViewModel;
+type DesignProjectPageProps = {
+  designProject: DesignProjectViewModel;
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const slugs = await fetchCaseStudySlugs();
-
+  const slugs = await fetchDesignProjectSlugs();
   return {
-    paths: slugs
-      .filter((slug) => !RESERVED_SLUGS.has(slug))
-      .map((slug) => ({ params: { slug } })),
+    paths: slugs.map((slug) => ({ params: { slug } })),
     fallback: "blocking",
   };
 };
 
-export const getStaticProps: GetStaticProps<DynamicCaseStudyPageProps> = async (
+export const getStaticProps: GetStaticProps<DesignProjectPageProps> = async (
   context,
 ) => {
   const slug = String(context.params?.slug || "").trim();
+  if (!slug) return { notFound: true, revalidate: 60 };
 
-  if (!slug || RESERVED_SLUGS.has(slug)) {
-    return { notFound: true, revalidate: 60 };
-  }
-
-  const result = await fetchCaseStudyBySlug(slug);
-  if (!result.caseStudy) {
-    return { notFound: true, revalidate: 120 };
-  }
+  const result = await fetchDesignProjectBySlug(slug);
+  if (!result.designProject) return { notFound: true, revalidate: 120 };
 
   return {
-    props: {
-      caseStudy: result.caseStudy,
-    },
+    props: { designProject: result.designProject },
     revalidate: 60,
   };
 };
 
-export default function DynamicCaseStudyPage({
-  caseStudy,
+export default function DesignProjectPage({
+  designProject,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const canonical = `${SITE_URL}/works/${caseStudy.slug}`;
-  const metaTitle = `${caseStudy.title} — Case Study | Hoasen`;
-  const metaDescription = caseStudy.shortDescription;
-  const metaKeywords = caseStudy.heroTags.join(", ");
-  const metaOgImage = caseStudy.heroImage?.url || `${SITE_URL}/og-image.png`;
+  const canonical = `${SITE_URL}/works/design/${designProject.slug}`;
+  const metaTitle = `${designProject.title} — Design Case Study | Hoasen`;
+  const metaDescription = `Explore the ${designProject.title} brand identity designed by Hoasen.`;
+  const metaOgImage =
+    designProject.heroImage?.url || `${SITE_URL}/og-image.png`;
 
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",
@@ -76,7 +65,7 @@ export default function DynamicCaseStudyPage({
       {
         "@type": "ListItem",
         position: 3,
-        name: caseStudy.title,
+        name: designProject.title,
         item: canonical,
       },
     ],
@@ -87,30 +76,37 @@ export default function DynamicCaseStudyPage({
       <Head>
         <title>{metaTitle}</title>
         <meta name="description" content={metaDescription} />
-        <meta name="keywords" content={metaKeywords} />
+        {designProject.heroTags.length > 0 && (
+          <meta
+            name="keywords"
+            content={designProject.heroTags.join(", ")}
+          />
+        )}
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href={canonical} />
 
-        <meta property="og:title" content={caseStudy.title} />
+        <meta property="og:title" content={designProject.title} />
         <meta property="og:description" content={metaDescription} />
         <meta property="og:url" content={canonical} />
         <meta property="og:image" content={metaOgImage} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
 
-        <meta name="twitter:title" content={caseStudy.title} />
+        <meta name="twitter:title" content={designProject.title} />
         <meta name="twitter:description" content={metaDescription} />
         <meta name="twitter:image" content={metaOgImage} />
 
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(breadcrumbJsonLd),
+          }}
         />
       </Head>
 
       <div className="w-full min-h-screen bg-dark leading-[normal] tracking-[normal] text-left text-3xl text-white font-sora mq450:min-h-0">
         <Nav initialTransparent scrollThreshold={80} />
-        <CaseStudyTemplate caseStudy={caseStudy} />
+        <DesignProjectTemplate designProject={designProject} />
         <FooterComponent />
       </div>
     </>
