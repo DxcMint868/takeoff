@@ -44,7 +44,7 @@ const CTASolid: NextPage<CTASolidType> = ({
     };
   }, [propWidth1, propTextDecoration, propHeight, propFlex, propMinWidth]);
 
-  const sharedClass = `relative z-[1] cursor-pointer select-none [border:none] py-[12.5px] px-8 bg-purple rounded-81xl inline-flex min-w-0 flex-row items-center justify-center whitespace-nowrap transition-colors duration-200 ease-in-out hover:bg-mediumpurple ${className}`;
+  const sharedClass = `relative z-[1] cursor-pointer select-none [border:none] py-[12.5px] px-8 bg-purple rounded-81xl inline-flex shrink-0 flex-row items-center justify-center whitespace-nowrap transition-colors duration-200 ease-in-out hover:bg-mediumpurple ${className}`;
 
   const labelEl = (
     <span

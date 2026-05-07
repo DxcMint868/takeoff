@@ -1,5 +1,7 @@
 import type { GetStaticProps, NextPage } from "next";
+import type { SSRConfig } from "next-i18next";
 import Head from "next/head";
+import { useTranslation } from "next-i18next";
 import FooterComponent from "../components/footer-component";
 import Nav from "../components/nav";
 import WorksPageMain from "../components/works-page-main";
@@ -10,12 +12,10 @@ import {
   type WorkProjectCard,
   type WorkTagSpec,
 } from "../components/work-examples-portfolio";
+import { loadCommonTranslations } from "../lib/i18n/load-common";
 import { fetchWorksData } from "../lib/strapi/case-studies";
 
 const SITE_URL = "https://www.hoasen.io";
-const TITLE = "Our Work Examples | Hoasen";
-const DESCRIPTION =
-  "Explore Hoasen's portfolio: Ocean Finance (RWA tokenisation), PowerTrade (crypto options), Crypto Paradise, bspin, TripTips, and more — spanning fintech, blockchain, and enterprise software.";
 const OG_IMAGE = `${SITE_URL}/og-image.png`;
 
 const breadcrumbJsonLd = {
@@ -32,7 +32,7 @@ const breadcrumbJsonLd = {
   ],
 };
 
-type WorksPageProps = {
+type WorksPageProps = SSRConfig & {
   featuredProject: WorkProjectCard | null;
   projectCards: WorkProjectCard[];
   filterChips: WorkTagSpec[];
@@ -50,7 +50,10 @@ function buildFallbackFilterChips(items: WorkProjectCard[]) {
   return Array.from(map.values());
 }
 
-export const getStaticProps: GetStaticProps<WorksPageProps> = async () => {
+export const getStaticProps: GetStaticProps<WorksPageProps> = async (
+  context,
+) => {
+  const tr = await loadCommonTranslations(context.locale);
   const cmsWorks = await fetchWorksData();
 
   const fallbackFeatured = OCEAN_FINANCE_PROJECT;
@@ -66,6 +69,7 @@ export const getStaticProps: GetStaticProps<WorksPageProps> = async () => {
   ) {
     return {
       props: {
+        ...tr,
         featuredProject: cmsWorks.featuredProject,
         projectCards: cmsWorks.projectCards,
         filterChips:
@@ -79,6 +83,7 @@ export const getStaticProps: GetStaticProps<WorksPageProps> = async () => {
 
   return {
     props: {
+      ...tr,
       featuredProject: fallbackFeatured,
       projectCards: fallbackCards,
       filterChips: fallbackFilterChips,
@@ -92,6 +97,7 @@ const Works: NextPage<WorksPageProps> = ({
   projectCards,
   filterChips,
 }) => {
+  const { t } = useTranslation("common");
   const portfolioItems = [featuredProject, ...projectCards].filter(
     (item): item is WorkProjectCard => !!item,
   );
@@ -112,20 +118,20 @@ const Works: NextPage<WorksPageProps> = ({
   return (
     <>
       <Head>
-        <title>{TITLE}</title>
-        <meta name="description" content={DESCRIPTION} />
+        <title>{t("meta.works.title")}</title>
+        <meta name="description" content={t("meta.works.description")} />
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href={`${SITE_URL}/works`} />
 
-        <meta property="og:title" content={TITLE} />
-        <meta property="og:description" content={DESCRIPTION} />
+        <meta property="og:title" content={t("meta.works.title")} />
+        <meta property="og:description" content={t("meta.works.description")} />
         <meta property="og:url" content={`${SITE_URL}/works`} />
         <meta property="og:image" content={OG_IMAGE} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
 
-        <meta name="twitter:title" content={TITLE} />
-        <meta name="twitter:description" content={DESCRIPTION} />
+        <meta name="twitter:title" content={t("meta.works.title")} />
+        <meta name="twitter:description" content={t("meta.works.description")} />
         <meta name="twitter:image" content={OG_IMAGE} />
 
         <script

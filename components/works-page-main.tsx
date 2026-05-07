@@ -2,7 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useTranslation } from "next-i18next";
 import { useMemo, useState } from "react";
+import { translateWorkFilterChipLabel } from "../lib/i18n/work-filter-chip-label";
 import { BADGE_SURFACE_CLASSES } from "./badge";
 import CTASolid from "./cta-solid";
 import { GradientGlow } from "./gradient-glow";
@@ -14,13 +16,6 @@ import {
   type WorkProjectCard,
   type WorkTagSpec,
 } from "./work-examples-portfolio";
-
-const PAGE_SUBTITLE = (
-  <p className="m-0 [text-wrap:balance]">
-    Featured projects and case studies showcasing our expertise across fintech,
-    blockchain, and enterprise software.
-  </p>
-);
 
 const FILTER_CHIPS: WorkTagSpec[] = [
   { label: "Smart Contract Development", tone: "lime" },
@@ -64,6 +59,7 @@ const WorksPageMain = ({
   featuredProject,
   filterChips,
 }: WorksPageMainProps) => {
+  const { t } = useTranslation("common");
   const cardsSource = projectCards ?? ALL_PROJECT_CARDS;
   const featuredSource = featuredProject ?? OCEAN_FINANCE_PROJECT;
   const chipsSource = filterChips ?? FILTER_CHIPS;
@@ -127,22 +123,22 @@ const WorksPageMain = ({
               </svg>
             </span>
             <span className="font-reg text-xs uppercase leading-4 tracking-[0.2em] text-white">
-              Back
+              {t("shared.back")}
             </span>
           </Link>
 
           <div className="flex flex-col items-center gap-5 text-center">
             <h1 className="m-0 max-w-[900px] font-sora text-[40px] font-normal leading-[1.1] tracking-[0.02em] text-white mq450:text-3xl mq900:text-[52px] mq900:leading-tight">
-              Our Work Examples
+              {t("worksPage.title")}
             </h1>
             <div className="w-full max-w-[900px] font-reg text-3xl font-light leading-[34px] tracking-[0.02em] text-white-60 mq450:text-base mq450:leading-7">
-              {PAGE_SUBTITLE}
+              <p className="m-0 [text-wrap:balance]">{t("worksPage.subtitle")}</p>
             </div>
           </div>
 
           <div className="mx-auto flex w-full max-w-[388px] flex-col rounded-[40px] border border-solid border-white-30 bg-dark/30 px-5 py-2.5 backdrop-blur-sm">
             <label className="flex flex-row items-center gap-3">
-              <span className="sr-only">Search projects</span>
+              <span className="sr-only">{t("worksPage.searchAria")}</span>
               <svg
                 className="size-5 shrink-0 text-white-60"
                 viewBox="0 0 24 24"
@@ -161,7 +157,7 @@ const WorksPageMain = ({
                 type="search"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search..."
+                placeholder={t("worksPage.searchPlaceholder")}
                 className="min-w-0 flex-1 border-0 bg-transparent py-2 font-reg text-sm font-medium leading-[22px] tracking-[0.02em] text-white placeholder:text-white-60 outline-none focus:ring-0"
               />
             </label>
@@ -179,7 +175,7 @@ const WorksPageMain = ({
                     active ? "opacity-100 ring-2 ring-white/50" : "opacity-90 hover:opacity-100"
                   }`}
                 >
-                  {chip.label}
+                  {translateWorkFilterChipLabel(chip.label, t)}
                 </button>
               );
             })}
@@ -205,13 +201,12 @@ const WorksPageMain = ({
             sizes="100vw"
           />
           <h2 className="relative z-[1] m-0 font-sora text-29xl font-normal leading-[58px] tracking-[0.02em] text-white mq450:text-10xl mq450:leading-[41px] mq900:text-19xl mq900:leading-[46px]">
-            Ready to Build Something Great?
+            {t("worksPage.ctaTitle")}
           </h2>
           <p className="relative z-[1] m-0 max-w-[520px] font-reg text-base font-light leading-6 tracking-[0.02em] text-white-60">
-            Tell us about your product—we&apos;ll help you design, build, and
-            ship with confidence.
+            {t("worksPage.ctaSubtitle")}
           </p>
-          <CTASolid label="Start a Conversation" href="/#contact-us" />
+          <CTASolid label={t("cta.startConversation")} href="/#contact-us" />
         </section>
       </div>
     </main>

@@ -3,7 +3,9 @@ import type {
   GetStaticProps,
   InferGetStaticPropsType,
 } from "next";
+import type { SSRConfig } from "next-i18next";
 import Head from "next/head";
+import { useTranslation } from "next-i18next";
 import FooterComponent from "../../components/footer-component";
 import Nav from "../../components/nav";
 import CaseStudyTemplate from "../../components/case-study-template";
@@ -12,11 +14,12 @@ import {
   fetchCaseStudySlugs,
   type CaseStudyViewModel,
 } from "../../lib/strapi/case-studies";
+import { loadCommonTranslations } from "../../lib/i18n/load-common";
 
 const SITE_URL = "https://www.hoasen.io";
 const RESERVED_SLUGS = new Set(["ocean-finance", "second-swap"]); // these have their own hardcoded pages (fallback demos)
 
-type DynamicCaseStudyPageProps = {
+type DynamicCaseStudyPageProps = SSRConfig & {
   caseStudy: CaseStudyViewModel;
 };
 
@@ -45,8 +48,11 @@ export const getStaticProps: GetStaticProps<DynamicCaseStudyPageProps> = async (
     return { notFound: true, revalidate: 120 };
   }
 
+  const tr = await loadCommonTranslations(context.locale);
+
   return {
     props: {
+      ...tr,
       caseStudy: result.caseStudy,
     },
     revalidate: 60,
@@ -56,8 +62,9 @@ export const getStaticProps: GetStaticProps<DynamicCaseStudyPageProps> = async (
 export default function DynamicCaseStudyPage({
   caseStudy,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
+  const { t } = useTranslation("common");
   const canonical = `${SITE_URL}/works/${caseStudy.slug}`;
-  const metaTitle = `${caseStudy.title} — Case Study | Hoasen`;
+  const metaTitle = `${caseStudy.title}${t("meta.caseStudySuffix")}`;
   const metaDescription = caseStudy.shortDescription;
   const metaKeywords = caseStudy.heroTags.join(", ");
   const metaOgImage = caseStudy.heroImage?.url || `${SITE_URL}/og-image.png`;

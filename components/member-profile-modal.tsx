@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { useTranslation } from "next-i18next";
 import { useEffect } from "react";
 import type { Member } from "../lib/members";
 import { GradientGlow } from "./gradient-glow";
@@ -11,6 +12,8 @@ type MemberProfileModalProps = {
 };
 
 export default function MemberProfileModal({ member, onClose }: MemberProfileModalProps) {
+  const { t } = useTranslation("common");
+
   useEffect(() => {
     if (!member) return;
 
@@ -37,7 +40,7 @@ export default function MemberProfileModal({ member, onClose }: MemberProfileMod
       onClick={onClose}
       role="dialog"
       aria-modal="true"
-      aria-label={`${member.name} profile`}
+      aria-label={t("caseStudy.profileAria", { name: member.name })}
     >
       <div
         className="relative w-full max-w-[70%] overflow-hidden rounded-3xl bg-surface-card p-8 text-white mq1100:max-w-[70%] mq700:max-w-[90%] mq700:p-5"
@@ -47,7 +50,7 @@ export default function MemberProfileModal({ member, onClose }: MemberProfileMod
           type="button"
           className="absolute right-5 top-5 inline-flex items-center justify-center border-0 bg-transparent p-0 cursor-pointer"
           onClick={onClose}
-          aria-label="Close member profile"
+          aria-label={t("caseStudy.closeProfile")}
         >
           <Image src={CloseIcon} alt="" width={24} height={24} aria-hidden />
         </button>
@@ -67,7 +70,7 @@ export default function MemberProfileModal({ member, onClose }: MemberProfileMod
             <div className="flex flex-col gap-4">
               <div className="flex flex-col gap-2">
                 <p className="m-0 font-reg text-xs uppercase tracking-[0.2em] text-white-60">
-                  Frameworks
+                  {t("caseStudy.frameworks")}
                 </p>
                 <div className="flex flex-wrap gap-2 mt-2">
                   {member.frameworks.map((item) => (
@@ -80,7 +83,7 @@ export default function MemberProfileModal({ member, onClose }: MemberProfileMod
 
               <div className="flex flex-col gap-2 mt-2">
                 <p className="m-0 font-reg text-xs uppercase tracking-[0.2em] text-white-60">
-                  Skill
+                  {t("caseStudy.skill")}
                 </p>
                 <div className="flex flex-wrap gap-2 mt-2">
                   {member.skill.map((item) => (
@@ -95,7 +98,9 @@ export default function MemberProfileModal({ member, onClose }: MemberProfileMod
         </div>
 
         <section className="mt-10 rounded-3xl bg-white/5 px-10 py-10 text-center mq700:px-4 tracking-[0.02em]">
-          <h4 className="m-0 font-sora text-3xl font-semibold text-white mq700:text-2xl">Get To Know</h4>
+          <h4 className="m-0 font-sora text-3xl font-semibold text-white mq700:text-2xl">
+            {t("caseStudy.getToKnow")}
+          </h4>
           <p className="max-w-[90%] mx-auto m-0 pt-4 font-reg text-[14px] font-light leading-8 text-white-60 mq700:text-base mq700:leading-6">
             {member.getToKnow}
           </p>

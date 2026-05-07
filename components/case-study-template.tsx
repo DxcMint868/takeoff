@@ -1,5 +1,6 @@
 import { type ComponentType, type SVGProps } from "react";
 import Image from "next/image";
+import { useTranslation } from "next-i18next";
 import ContactSection from "./contact-section";
 import { GradientBorderCard } from "./gradient-border-card";
 import { GradientGlow } from "./gradient-glow";
@@ -28,6 +29,7 @@ const OBJECTIVE_ICONS: Array<ComponentType<SVGProps<SVGSVGElement>>> = [
 export default function CaseStudyTemplate({
   caseStudy,
 }: CaseStudyTemplateProps) {
+  const { t } = useTranslation("common");
   const objectiveIcons = caseStudy.objectives.map(
     (_, index) => OBJECTIVE_ICONS[index % OBJECTIVE_ICONS.length],
   );
@@ -78,7 +80,7 @@ export default function CaseStudyTemplate({
               {caseStudy.heroTags.length > 0 ? (
                 <div className="mt-10">
                   <p className="m-0 font-reg text-[10px] font-semibold uppercase leading-3 tracking-[2px] text-white-60">
-                    What we did:
+                    {t("caseStudy.whatWeDid")}
                   </p>
                   <div className="mt-4 flex flex-wrap gap-3">
                     {caseStudy.heroTags.map((tag) => (
@@ -145,7 +147,7 @@ export default function CaseStudyTemplate({
               backgroundClassName="pointer-events-none object-cover object-right"
             >
               <h2 className="m-0 font-sora text-[40px] font-semibold capitalize leading-none mq900:text-[32px] mq900:leading-[1.2] mq450:text-5xl">
-                Brief &amp; Background
+                {t("caseStudy.briefBackground")}
               </h2>
               <StrapiBlocks
                 blocks={caseStudy.briefAndBackground.descriptionBlocks}
@@ -158,7 +160,7 @@ export default function CaseStudyTemplate({
 
       {caseStudy.objectives.length > 0 ? (
         <CaseStudyObjectives
-          title="Business Objectives"
+          title={t("caseStudy.businessObjectives")}
           objectives={caseStudy.objectives.map((objective) => ({
             title: objective.title,
             description: objective.description,
@@ -181,7 +183,7 @@ export default function CaseStudyTemplate({
               priority={false}
             />
             <h2 className="relative m-0 pt-36 text-center font-sora text-[40px] font-semibold capitalize leading-none mq900:text-[32px] mq900:leading-[1.2] mq450:text-5xl">
-              Our Solution
+              {t("caseStudy.ourSolution")}
             </h2>
 
             <div className="mt-20 flex flex-col gap-24 px-[70px] mq1100:mt-12 mq1100:gap-16 mq1100:px-10 mq450:gap-12 mq450:px-5">
@@ -239,7 +241,7 @@ export default function CaseStudyTemplate({
           <GradientGlow className="top-1/2 -translate-y-1/2" size="sm" />
           <div className="relative mx-auto flex max-w-[1200px] flex-col items-center gap-8">
             <h2 className="m-0 text-center font-sora text-[26px] font-semibold capitalize leading-none mq450:text-xl mq450:leading-[1.25]">
-              Technical Infrastructure
+              {t("caseStudy.technicalInfrastructure")}
             </h2>
             <div className="flex flex-wrap justify-center gap-3">
               {caseStudy.technicalInfrastructure.map((item) => (
@@ -303,9 +305,14 @@ export default function CaseStudyTemplate({
               <span>{caseStudy.testimonial.authorName}</span>
               {caseStudy.testimonial.authorRole ? (
                 <span>
-                  {caseStudy.testimonial.authorRole}
-                  {caseStudy.testimonial.authorCompany &&
-                    ` of ${caseStudy.testimonial.authorCompany}`}
+                  {caseStudy.testimonial.authorCompany
+                    ? t("caseStudy.testimonialOf", {
+                        role: caseStudy.testimonial.authorRole,
+                        company: caseStudy.testimonial.authorCompany,
+                      })
+                    : t("caseStudy.testimonialRoleOnly", {
+                        role: caseStudy.testimonial.authorRole,
+                      })}
                 </span>
               ) : (
                 <span>{caseStudy.testimonial.authorCompany ?? ""}</span>

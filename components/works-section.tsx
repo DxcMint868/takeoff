@@ -1,3 +1,4 @@
+import { useTranslation } from "next-i18next";
 import TestimonialCard from "./testimonial-card";
 import LogoCarousel from "./logo-carousel";
 
@@ -22,7 +23,9 @@ const TESTIMONIALS = [
   },
 ];
 
-const WorksSection = () => (
+const WorksSection = () => {
+  const { t } = useTranslation("common");
+  return (
   <section id="testimonials" className="w-full">
     <div className="box-border flex w-full max-w-full flex-row items-start justify-start px-2 pb-[52px] pt-64 font-sora text-29xl">
       <div className="flex max-w-full flex-1 flex-row items-end justify-between gap-5">
@@ -31,10 +34,10 @@ const WorksSection = () => (
           className="flex w-full max-w-[calc(100%_-_21px)] flex-col items-center gap-4 text-center"
         >
           <h1 className="font-[inherit] relative m-0 font-normal leading-[58px] text-inherit mq450:text-10xl mq450:leading-[35px] mq900:text-19xl mq900:leading-[46px]">
-            Who we&apos;ve worked with
+            {t("worksSection.title")}
           </h1>
           <div className="relative self-stretch font-reg text-base font-light leading-[24px] tracking-[0.02em] text-white-60">
-            Our team has experience working with companies large and small
+            {t("worksSection.subtitle")}
           </div>
         </div>
       </div>
@@ -57,6 +60,7 @@ const WorksSection = () => (
       <LogoCarousel />
     </div>
   </section>
-);
+  );
+};
 
 export default WorksSection;

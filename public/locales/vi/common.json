@@ -1,0 +1,191 @@
+{
+  "meta": {
+    "home": {
+      "title": "Hoasen - Kiến tạo tương lai Blockchain & Fintech",
+      "description": "Hoasen là studio phát triển blockchain và fintech tại UAE. Chúng tôi giúp startup và doanh nghiệp xây dựng và ra mắt sản phẩm on-chain — từ smart contract và DApp đến giải pháp fintech tích hợp AI."
+    },
+    "works": {
+      "title": "Dự án tiêu biểu | Hoasen",
+      "description": "Khám phá portfolio Hoasen: Ocean Finance (token hóa RWA), PowerTrade (quyền chọn crypto), Crypto Paradise, bspin, TripTips và nhiều hơn — fintech, blockchain và phần mềm doanh nghiệp."
+    },
+    "about": {
+      "title": "Giới thiệu | Hoasen",
+      "description": "Hoasen là studio blockchain và fintech tại UAE. Chúng tôi đồng hành cùng startup và doanh nghiệp thiết kế, xây dựng và triển khai sản phẩm on-chain — từ smart contract và DApp đến fintech tích hợp AI."
+    },
+    "caseStudySuffix": " — Case study | Hoasen"
+  },
+  "nav": {
+    "services": "Dịch vụ",
+    "works": "Dự án",
+    "ourTeam": "Đội ngũ",
+    "aboutUs": "Giới thiệu",
+    "contactUs": "Liên hệ",
+    "logoAlt": "Trang chủ"
+  },
+  "cta": {
+    "startToday": "Bắt đầu",
+    "buildWithUs": "Cùng xây dựng",
+    "moreProjects": "Thêm dự án",
+    "startConversation": "Bắt đầu trao đổi"
+  },
+  "lang": {
+    "en": "English",
+    "ja": "日本語",
+    "vi": "Tiếng Việt",
+    "ko": "한국어"
+  },
+  "menu": {
+    "dialogLabel": "Menu",
+    "open": "Mở menu",
+    "close": "Đóng menu"
+  },
+  "shared": {
+    "back": "Quay lại"
+  },
+  "hero": {
+    "line1": "Chúng tôi tạo ra",
+    "line2": "Sản phẩm Fintech",
+    "subtitleLine1": "Chúng tôi giúp startup và doanh nghiệp nhỏ",
+    "subtitleLine2": "xây dựng và ra mắt sản phẩm on-chain"
+  },
+  "contact": {
+    "heading": "Liên hệ với chúng tôi",
+    "subtitle": "Cùng nhau kiến tạo điều phi thường!",
+    "telegram": "Telegram"
+  },
+  "form": {
+    "fullName": "Họ và tên",
+    "email": "Email",
+    "telegram": "Telegram",
+    "companyName": "Tên công ty",
+    "projectDetails": "Cho chúng tôi biết về dự án của bạn...",
+    "submit": "Gửi",
+    "success": "Gửi biểu mẫu thành công!",
+    "error": "Gửi thất bại. Vui lòng thử lại.",
+    "emailInvalid": "Vui lòng nhập địa chỉ email hợp lệ"
+  },
+  "footer": {
+    "contactInfo": "Thông tin liên hệ",
+    "address": "AL Hamra Industrial Zone-FZ, Ras Al Khaimah, UAE",
+    "telegramAria": "Telegram",
+    "linkedinAria": "LinkedIn",
+    "xAria": "X"
+  },
+  "tech": {
+    "introTitle": "Năng lực công nghệ & thiết kế",
+    "introSubtitle": "Đội ngũ toàn diện, am hiểu fintech",
+    "card": {
+      "capability-blockchain-development": {
+        "title": "Phát triển Blockchain",
+        "description": "Chuyên tạo ứng dụng phi tập trung an toàn cho nhiều nền tảng blockchain."
+      },
+      "capability-frontend": {
+        "title": "FrontEnd",
+        "description": "Thiết kế và phát triển giao diện trực quan, responsive."
+      },
+      "capability-mobile": {
+        "title": "Mobile",
+        "description": "Xây dựng ứng dụng native và đa nền tảng hiệu năng cao."
+      },
+      "capability-backend": {
+        "title": "BackEnd",
+        "description": "Xây dựng hệ thống backend mở rộng, an toàn cho web và mobile."
+      },
+      "capability-artificial-intelligence": {
+        "title": "Trí tuệ nhân tạo",
+        "description": "Tích hợp AI để tự động hóa quy trình, nâng cấp sản phẩm và mở khả năng mới."
+      },
+      "capability-product-design-management": {
+        "title": "Thiết kế sản phẩm & Quản lý sản phẩm",
+        "description": "Thiết kế trải nghiệm số trực quan và chiến lược sản phẩm từ ý tưởng đến triển khai."
+      },
+      "capability-test-automation": {
+        "title": "Kiểm thử tự động",
+        "description": "Đảm bảo chất lượng qua pipeline kiểm thử tự động, kiểm chứng blockchain và phủ end-to-end."
+      }
+    }
+  },
+  "team": {
+    "title": "Đội ngũ & Giá trị",
+    "introLine1": "Hoasen gồm những cá nhân <bold>xuất sắc</bold> trong lĩnh vực fintech.",
+    "introLine2": "Chúng tôi hiểu <bold>chuẩn mực thế giới</bold> và đội ngũ có <bold>kiến thức chuyên sâu</bold>.",
+    "introLine3": "Nhờ đó chúng tôi <bold>triển khai nhanh</bold>, giảm chuyển giao và tránh",
+    "introLine4": "quy trình quan liêu làm chậm đội ngũ.",
+    "values": {
+      "domainExpertise": {
+        "title": "Chuyên môn lĩnh vực",
+        "description": "Hiểu sâu fintech, xây hệ thống xử lý hàng triệu giao dịch mỗi ngày."
+      },
+      "agileExecution": {
+        "title": "Thực thi linh hoạt",
+        "description": "Đội tinh gọn, giao hàng nhanh, vượt qua thủ tục để có kết quả kịp thời."
+      },
+      "transparency": {
+        "title": "Minh bạch",
+        "description": "Không hộp đen — tài liệu rõ ràng và giao tiếp cởi mở ở mọi bước."
+      },
+      "worldClass": {
+        "title": "Chất lượng đẳng cấp",
+        "description": "Chúng tôi không chỉ đạt chuẩn — chúng tôi đặt ra chuẩn."
+      }
+    }
+  },
+  "worksSection": {
+    "title": "Khách hàng & đối tác",
+    "subtitle": "Đội ngũ có kinh nghiệm với doanh nghiệp lớn và nhỏ"
+  },
+  "workExamples": {
+    "title": "Dự án tiêu biểu"
+  },
+  "worksPage": {
+    "title": "Dự án tiêu biểu",
+    "subtitle": "Dự án và case study thể hiện chuyên môn fintech, blockchain và phần mềm doanh nghiệp của chúng tôi.",
+    "searchPlaceholder": "Tìm kiếm...",
+    "searchAria": "Tìm dự án",
+    "ctaTitle": "Sẵn sàng kiến tạo điều vĩ đại?",
+    "ctaSubtitle": "Cho chúng tôi biết về sản phẩm của bạn — chúng tôi giúp bạn thiết kế, xây dựng và ra mắt tự tin.",
+    "filters": {
+      "smartContractDevelopment": "Phát triển Smart Contract",
+      "research": "Nghiên cứu",
+      "development": "Phát triển",
+      "branding": "Thương hiệu",
+      "product": "Sản phẩm",
+      "uxUi": "UX/UI",
+      "dataInfrastructure": "Hạ tầng dữ liệu",
+      "complianceControls": "Kiểm soát tuân thủ",
+      "graphicsAnimation": "Đồ họa / Hoạt ảnh"
+    }
+  },
+  "aboutPage": {
+    "title": "Giới thiệu",
+    "cultureHeading": "Văn hóa",
+    "cultureBody": "Trung tâm của đội ngũ là văn hóa tin tưởng, tôn trọng và phát triển không ngừng. Chúng tôi hỗ trợ nhau, cùng ăn mừng thành công và học nhanh từ thử thách. Mở, tò mò và hợp tác — tạo không gian cho ý tưởng lớn và mỗi người phát huy tối đa.",
+    "valuesHeading": "Giá trị",
+    "teamHeading": "Đội ngũ",
+    "teamPhotoAria": "Đội ngũ Hoasen",
+    "altTeam1": "Ảnh nhóm",
+    "altTeam2": "Đội Hoasen ngoài trời",
+    "altTeam3": "Đội Hoasen bên biển",
+    "altTeam4": "Logo Hoasen trên cát"
+  },
+  "caseStudy": {
+    "whatWeDid": "Chúng tôi đã làm:",
+    "briefBackground": "Tóm tắt & Bối cảnh",
+    "businessObjectives": "Mục tiêu kinh doanh",
+    "ourSolution": "Giải pháp của chúng tôi",
+    "technicalInfrastructure": "Hạ tầng kỹ thuật",
+    "projectGallery": "Thư viện hình ảnh dự án",
+    "closeProfile": "Đóng hồ sơ thành viên",
+    "profileAria": "Hồ sơ {{name}}",
+    "frameworks": "Framework",
+    "skill": "Kỹ năng",
+    "getToKnow": "Tìm hiểu thêm",
+    "testimonialOf": "{{role}} tại {{company}}",
+    "testimonialRoleOnly": "{{role}}",
+    "galleryPrev": "Slide trước",
+    "galleryNext": "Slide sau",
+    "slideGoTo": "Đi tới: {{alt}}",
+    "slideCurrent": "Slide hiện tại: {{alt}}",
+    "galleryDot": "Đi tới slide {{n}}"
+  }
+}

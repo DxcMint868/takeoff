@@ -1,8 +1,18 @@
-import { Html, Head, Main, NextScript } from "next/document";
+import Document, {
+  DocumentContext,
+  Head,
+  Html,
+  Main,
+  NextScript,
+} from "next/document";
 
-export default function Document() {
+type DocumentProps = {
+  locale?: string;
+};
+
+export default function MyDocument({ locale }: DocumentProps) {
   return (
-    <Html lang="en">
+    <Html lang={locale ?? "en"}>
       <Head>
         <meta charSet="utf-8" />
         <meta name="theme-color" content="#1b1333" />
@@ -17,3 +27,8 @@ export default function Document() {
     </Html>
   );
 }
+
+MyDocument.getInitialProps = async (ctx: DocumentContext) => {
+  const initialProps = await Document.getInitialProps(ctx);
+  return { ...initialProps, locale: ctx.locale };
+};

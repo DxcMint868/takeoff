@@ -1,0 +1,191 @@
+{
+  "meta": {
+    "home": {
+      "title": "Hoasen - ブロックチェーンとフィンテックの未来を創る",
+      "description": "HoasenはUAEを拠点とするブロックチェーン・フィンテック開発スタジオです。スタートアップからエンタープライズまで、スマートコントラクトやDApp、AI駆動のフィンテックまで、オンチェーン製品の構築とローンチを支援します。"
+    },
+    "works": {
+      "title": "制作事例 | Hoasen",
+      "description": "Ocean Finance（RWAトークン化）、PowerTrade（暗号オプション）、Crypto Paradise、bspin、TripTipsなど、フィンテック・ブロックチェーン・エンタープライズソフトウェアにわたるポートフォリオをご覧ください。"
+    },
+    "about": {
+      "title": "会社概要 | Hoasen",
+      "description": "UAEを拠点とするブロックチェーン・フィンテック開発スタジオです。スタートアップからエンタープライズまで、スマートコントラクトやDAppからオンチェーン製品の設計・構築・リリースまでパートナーとして支援します。"
+    },
+    "caseStudySuffix": " — 事例 | Hoasen"
+  },
+  "nav": {
+    "services": "サービス",
+    "works": "実績",
+    "ourTeam": "チーム",
+    "aboutUs": "会社概要",
+    "contactUs": "お問い合わせ",
+    "logoAlt": "ホーム"
+  },
+  "cta": {
+    "startToday": "始める",
+    "buildWithUs": "一緒に作る",
+    "moreProjects": "その他の事例",
+    "startConversation": "相談する"
+  },
+  "lang": {
+    "en": "English",
+    "ja": "日本語",
+    "vi": "Tiếng Việt",
+    "ko": "한국어"
+  },
+  "menu": {
+    "dialogLabel": "メニュー",
+    "open": "メニューを開く",
+    "close": "メニューを閉じる"
+  },
+  "shared": {
+    "back": "戻る"
+  },
+  "hero": {
+    "line1": "優れた",
+    "line2": "フィンテック製品を",
+    "subtitleLine1": "スタートアップと中小企業の",
+    "subtitleLine2": "オンチェーン製品の構築とローンチを支援します"
+  },
+  "contact": {
+    "heading": "お問い合わせ",
+    "subtitle": "共に特別なものを創りましょう。",
+    "telegram": "Telegram"
+  },
+  "form": {
+    "fullName": "氏名",
+    "email": "メール",
+    "telegram": "Telegram",
+    "companyName": "会社名",
+    "projectDetails": "プロジェクトについて教えてください…",
+    "submit": "送信",
+    "success": "送信しました。",
+    "error": "送信に失敗しました。もう一度お試しください。",
+    "emailInvalid": "有効なメールアドレスを入力してください"
+  },
+  "footer": {
+    "contactInfo": "連絡先",
+    "address": "AL Hamra Industrial Zone-FZ, Ras Al Khaimah, UAE",
+    "telegramAria": "Telegram",
+    "linkedinAria": "LinkedIn",
+    "xAria": "X"
+  },
+  "tech": {
+    "introTitle": "テックとデザインの力",
+    "introSubtitle": "フィンテックに強い、実績あるチーム",
+    "card": {
+      "capability-blockchain-development": {
+        "title": "ブロックチェーン開発",
+        "description": "各種ブロックチェーン向けの安全な分散型アプリケーション開発を専門としています。"
+      },
+      "capability-frontend": {
+        "title": "フロントエンド",
+        "description": "視覚的に優れたレスポンシブUIの設計・開発に注力しています。"
+      },
+      "capability-mobile": {
+        "title": "モバイル",
+        "description": "高性能なネイティブおよびクロスプラットフォームアプリを構築します。"
+      },
+      "capability-backend": {
+        "title": "バックエンド",
+        "description": "Web・モバイル向けにスケーラブルで安全なバックエンドシステムを構築します。"
+      },
+      "capability-artificial-intelligence": {
+        "title": "人工知能",
+        "description": "業務自動化、製品強化、新機能のためのAIソリューションを統合します。"
+      },
+      "capability-product-design-management": {
+        "title": "プロダクトデザイン・プロダクトマネジメント",
+        "description": "直感的なデジタル体験と、発見からリリースまでのプロダクト戦略を支えます。"
+      },
+      "capability-test-automation": {
+        "title": "テスト自動化",
+        "description": "自動テストパイプライン、ブロックチェーン検証、E2Eカバレッジで品質を担保します。"
+      }
+    }
+  },
+  "team": {
+    "title": "チームと価値観",
+    "introLine1": "Hoasenはフィンテック領域で<bold>高いパフォーマンス</bold>を発揮するメンバーで構成されています。",
+    "introLine2": "<bold>世界水準</bold>を理解し、チームは<bold>ドメイン知識</bold>を備えています。",
+    "introLine3": "だからこそ<bold>迅速に動き</bold>、すり合わせを減らし、",
+    "introLine4": "チームを遅らせる官僚的プロセスを避けられます。",
+    "values": {
+      "domainExpertise": {
+        "title": "ドメイン専門性",
+        "description": "深いフィンテック知識で、日々数百万件を処理するシステムを構築します。"
+      },
+      "agileExecution": {
+        "title": "アジャイルな実行",
+        "description": "リーンなチームで迅速に提供し、迅速な結果のために冗長な手続きを排除します。"
+      },
+      "transparency": {
+        "title": "透明性",
+        "description": "ブラックボックスはなし。明確な文書と各段階でのオープンなコミュニケーション。"
+      },
+      "worldClass": {
+        "title": "世界水準の品質",
+        "description": "基準を満たすだけでなく、基準を創ります。"
+      }
+    }
+  },
+  "worksSection": {
+    "title": "協業実績",
+    "subtitle": "大手からスタートアップまで幅広い企業との経験があります"
+  },
+  "workExamples": {
+    "title": "制作事例"
+  },
+  "worksPage": {
+    "title": "制作事例",
+    "subtitle": "フィンテック、ブロックチェーン、エンタープライズソフトウェアにわたる特集プロジェクトと事例です。",
+    "searchPlaceholder": "検索…",
+    "searchAria": "プロジェクトを検索",
+    "ctaTitle": "素晴らしいものを一緒に創りませんか？",
+    "ctaSubtitle": "プロダクトについてお聞かせください。設計・構築・リリースを自信を持って支援します。",
+    "filters": {
+      "smartContractDevelopment": "スマートコントラクト開発",
+      "research": "リサーチ",
+      "development": "開発",
+      "branding": "ブランディング",
+      "product": "プロダクト",
+      "uxUi": "UX/UI",
+      "dataInfrastructure": "データ基盤",
+      "complianceControls": "コンプライアンス",
+      "graphicsAnimation": "グラフィック／アニメーション"
+    }
+  },
+  "aboutPage": {
+    "title": "会社概要",
+    "cultureHeading": "カルチャー",
+    "cultureBody": "チームの中心にあるのは信頼・尊重・継続的な成長です。互いを支え、成果を共に祝い、課題から素早く学びます。オープンで好奇心があり協力的であることで、優れたアイデアが生まれ、誰もが最高の仕事ができる余地が生まれます。",
+    "valuesHeading": "価値観",
+    "teamHeading": "チーム",
+    "teamPhotoAria": "Hoasenチーム",
+    "altTeam1": "チーム写真",
+    "altTeam2": "屋外のHoasenチーム",
+    "altTeam3": "海辺のHoasenチーム",
+    "altTeam4": "砂浜のHoasenロゴ"
+  },
+  "caseStudy": {
+    "whatWeDid": "実施内容：",
+    "briefBackground": "概要・背景",
+    "businessObjectives": "ビジネス目標",
+    "ourSolution": "ソリューション",
+    "technicalInfrastructure": "技術基盤",
+    "projectGallery": "プロジェクトギャラリー",
+    "closeProfile": "プロフィールを閉じる",
+    "profileAria": "{{name}}のプロフィール",
+    "frameworks": "フレームワーク",
+    "skill": "スキル",
+    "getToKnow": "もっと知る",
+    "testimonialOf": "{{company}}の{{role}}",
+    "testimonialRoleOnly": "{{role}}",
+    "galleryPrev": "前のスライド",
+    "galleryNext": "次のスライド",
+    "slideGoTo": "移動: {{alt}}",
+    "slideCurrent": "現在のスライド: {{alt}}",
+    "galleryDot": "スライド {{n}}へ"
+  }
+}

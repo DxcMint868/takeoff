@@ -1,4 +1,5 @@
 import type { NextPage } from "next";
+import { useTranslation } from "next-i18next";
 import Image from "next/image";
 import { PhoneIcon, MailIcon, TelegramIcon, LinkedInIcon, XIcon } from "./icons";
 
@@ -7,6 +8,7 @@ export type FooterComponentType = {
 };
 
 const FooterComponent: NextPage<FooterComponentType> = ({ className = "" }) => {
+  const { t } = useTranslation("common");
   return (
     <section
       className={`relative w-full flex flex-col items-start justify-start pt-10 px-[25px] pb-8 box-border gap-8 text-center text-xl text-white font-sora overflow-hidden ${className}`}
@@ -24,7 +26,7 @@ const FooterComponent: NextPage<FooterComponentType> = ({ className = "" }) => {
         <div className="w-[348px] flex flex-col items-start justify-start gap-12 max-w-full">
           <div className="self-stretch flex flex-col items-center justify-center gap-6 z-[1]">
             <h2 className="m-0 relative text-inherit tracking-[0.04em] leading-[26px] font-semibold font-[inherit] mq450:text-base mq450:leading-[21px]">
-              Contact Info
+              {t("footer.contactInfo")}
             </h2>
             <div className="self-stretch flex flex-col items-center justify-center gap-6 text-left text-base font-reg">
               <div className="self-stretch flex flex-row items-center justify-center gap-6 mq450:flex-wrap">
@@ -46,13 +48,13 @@ const FooterComponent: NextPage<FooterComponentType> = ({ className = "" }) => {
           <div className="self-stretch flex flex-col items-center justify-start py-0 px-2.5 box-border max-w-full text-xs text-white-60 font-reg">
             <div className="flex flex-col items-center justify-start gap-[46px] max-w-full">
               <div className="flex flex-row items-center justify-center gap-[30px]">
-                <a href="https://t.me/+4rZ4ipEl2yk2ODlk" target="_blank" rel="noopener noreferrer" aria-label="Telegram" className="text-white">
+                <a href="https://t.me/+4rZ4ipEl2yk2ODlk" target="_blank" rel="noopener noreferrer" aria-label={t("footer.telegramAria")} className="text-white">
                   <TelegramIcon className="z-[1]" />
                 </a>
-                <a href="https://www.linkedin.com/company/hoasendigital" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="text-white">
+                <a href="https://www.linkedin.com/company/hoasendigital" target="_blank" rel="noopener noreferrer" aria-label={t("footer.linkedinAria")} className="text-white">
                   <LinkedInIcon className="z-[1]" />
                 </a>
-                <a href="https://x.com/hoasenhub" target="_blank" rel="noopener noreferrer" aria-label="X" className="text-white">
+                <a href="https://x.com/hoasenhub" target="_blank" rel="noopener noreferrer" aria-label={t("footer.xAria")} className="text-white">
                   <XIcon className="z-[1]" />
                 </a>
               </div>
@@ -74,7 +76,7 @@ const FooterComponent: NextPage<FooterComponentType> = ({ className = "" }) => {
               </div> */}
 
               <div className="relative tracking-[0.2em] leading-[16px] uppercase z-[2] text-center">
-                AL Hamra Industrial Zone-FZ, Ras Al Khaimah, UAE
+                {t("footer.address")}
               </div>
             </div>
           </div>

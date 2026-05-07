@@ -1,5 +1,7 @@
 import type { GetStaticProps, NextPage } from "next";
+import type { SSRConfig } from "next-i18next";
 import Head from "next/head";
+import { useTranslation } from "next-i18next";
 import Image from "next/image";
 import Nav from "../components/nav";
 import FrameComponent from "../components/frame-component";
@@ -16,6 +18,7 @@ import {
   type WorkProjectCard,
   type WorkTagSpec,
 } from "../components/work-examples-portfolio";
+import { loadCommonTranslations } from "../lib/i18n/load-common";
 import { fetchWorksData } from "../lib/strapi/case-studies";
 
 const SITE_URL = "https://www.hoasen.io";
@@ -249,12 +252,13 @@ const breadcrumbJsonLd = {
   ],
 };
 
-type HomeProps = {
+type HomeProps = SSRConfig & {
   featuredProject: WorkProjectCard | null;
   projectCards: WorkProjectCard[];
 };
 
-export const getStaticProps: GetStaticProps<HomeProps> = async () => {
+export const getStaticProps: GetStaticProps<HomeProps> = async (context) => {
+  const tr = await loadCommonTranslations(context.locale);
   const cmsWorks = await fetchWorksData();
 
   if (
@@ -263,6 +267,7 @@ export const getStaticProps: GetStaticProps<HomeProps> = async () => {
   ) {
     return {
       props: {
+        ...tr,
         featuredProject: cmsWorks.featuredProject,
         projectCards: cmsWorks.projectCards,
       },
@@ -272,6 +277,7 @@ export const getStaticProps: GetStaticProps<HomeProps> = async () => {
 
   return {
     props: {
+      ...tr,
       featuredProject: OCEAN_FINANCE_PROJECT,
       projectCards: [...CORE_PROJECT_CARDS, ...EXTRA_PAGE_PROJECT_CARDS],
     },
@@ -280,27 +286,28 @@ export const getStaticProps: GetStaticProps<HomeProps> = async () => {
 };
 
 const Web: NextPage<HomeProps> = ({ featuredProject, projectCards }) => {
+  const { t } = useTranslation("common");
   return (
     <>
       <Head>
-        <title>{TITLE}</title>
-        <meta name="description" content={DESCRIPTION} />
+        <title>{t("meta.home.title")}</title>
+        <meta name="description" content={t("meta.home.description")} />
         <meta name="author" content="Hoasen" />
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href={SITE_URL} />
 
-        <meta property="og:title" content={TITLE} />
-        <meta property="og:description" content={DESCRIPTION} />
+        <meta property="og:title" content={t("meta.home.title")} />
+        <meta property="og:description" content={t("meta.home.description")} />
         <meta property="og:url" content={SITE_URL} />
         <meta property="og:image" content={OG_IMAGE} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
-        <meta property="og:image:alt" content="Hoasen - Blockchain & Fintech Development Studio" />
+        <meta property="og:image:alt" content={t("meta.home.title")} />
 
-        <meta name="twitter:title" content={TITLE} />
-        <meta name="twitter:description" content={DESCRIPTION} />
+        <meta name="twitter:title" content={t("meta.home.title")} />
+        <meta name="twitter:description" content={t("meta.home.description")} />
         <meta name="twitter:image" content={OG_IMAGE} />
-        <meta name="twitter:image:alt" content="Hoasen - Blockchain & Fintech Development Studio" />
+        <meta name="twitter:image:alt" content={t("meta.home.title")} />
 
         <script
           type="application/ld+json"
@@ -335,7 +342,7 @@ const Web: NextPage<HomeProps> = ({ featuredProject, projectCards }) => {
             priority
           />
         </div>
-        <Nav />
+        <Nav initialTransparent scrollThreshold={80} />
         <section className="w-full flex flex-col items-start justify-start gap-14 max-w-full mq900:gap-7 pt-[70px]">
           <FrameComponent />
         </section>
