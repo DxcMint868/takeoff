@@ -19,6 +19,13 @@ import {
 // Local helpers (trivial, not worth exporting from case-studies)
 // ---------------------------------------------------------------------------
 
+/** In non-production environments, fetch draft content so unpublished edits are visible. */
+function applyDraftStatus(params: URLSearchParams): void {
+  if (process.env.NODE_ENV !== "production") {
+    params.set("status", "draft");
+  }
+}
+
 function str(value: unknown): string {
   if (value === null || value === undefined) return "";
   return String(value);
@@ -268,12 +275,14 @@ export async function fetchDesignProjectBySlug(slug: string): Promise<{
     const params = buildDesignProjectFullPopulateQuery();
     params.set("filters[slug][$eq]", slug);
     params.set("pagination[pageSize]", "1");
+    applyDraftStatus(params);
 
     const payload = await fetchStrapiJson(
       `/api/design-projects?${params.toString()}`,
     );
     const items = toArray<any>(unwrapStrapiData(payload?.data));
     const designProject = mapDesignProjectToViewModel(items[0]);
+    console.log(designProject);
     return { designProject, source: designProject ? "cms" : "none" };
   } catch {
     return { designProject: null, source: "none" };
@@ -286,6 +295,7 @@ export async function fetchDesignProjectSlugs(): Promise<string[]> {
     const params = new URLSearchParams();
     params.set("fields[0]", "slug");
     params.set("pagination[pageSize]", "100");
+    applyDraftStatus(params);
 
     const payload = await fetchStrapiJson(
       `/api/design-projects?${params.toString()}`,
@@ -302,6 +312,8 @@ export async function fetchDesignProjectCards(): Promise<DesignProjectCard[]> {
   try {
     const params = buildDesignProjectCardPopulateQuery();
     params.set("pagination[pageSize]", "100");
+
+    applyDraftStatus(params);
 
     const payload = await fetchStrapiJson(
       `/api/design-projects?${params.toString()}`,
