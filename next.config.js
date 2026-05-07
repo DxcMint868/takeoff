@@ -1,5 +1,16 @@
 /** @type {import('next').NextConfig} */
-const remotePatterns = [];
+const remotePatterns = [
+  {
+    protocol: "https",
+    hostname: "blockworks.co",
+    pathname: "/**",
+  },
+  {
+    protocol: "https",
+    hostname: "blockworks-co.imgix.net",
+    pathname: "/**",
+  },
+];
 
 if (process.env.NEXT_PUBLIC_STRAPI_URL) {
   try {

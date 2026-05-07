@@ -20,6 +20,7 @@ const DEFAULT_SCROLL_THRESHOLD = 300;
 const Nav = ({ className = "", initialTransparent = false, scrollThreshold = DEFAULT_SCROLL_THRESHOLD }: NavType) => {
   const { pathname } = useRouter();
   const onWorksPage = pathname.startsWith("/works");
+  const onBlogPage = pathname.startsWith("/blog");
   const onAboutPage = pathname === "/about-us";
   const [scrolled, setScrolled] = useState(!initialTransparent);
 
@@ -68,6 +69,9 @@ const Nav = ({ className = "", initialTransparent = false, scrollThreshold = DEF
           </Link>
           <Link href="/#contact-us" className={navInactive}>
             Contact Us
+          </Link>
+          <Link href="/blog" className={onBlogPage ? navActive : navInactive}>
+            Blog
           </Link>
         </nav>
       </nav>
