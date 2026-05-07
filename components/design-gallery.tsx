@@ -49,14 +49,20 @@ export default function DesignGallery({
       {medias.length > 0 && (
         <div
           className={
-            isFullBleed ? "flex flex-col gap-6" : "mx-auto max-w-[1132px] px-5"
+            isFullBleed
+              ? "flex flex-col gap-6"
+              : `mx-auto max-w-[1132px] px-5 ${mediaLayout === "two columns" ? "mq700:px-0" : ""}`
           }
         >
           <div className={isFullBleed ? "flex flex-col gap-12" : gridClass}>
             {medias.map((media, i) => (
               <div
                 key={`${media.url}-${i}`}
-                className={`relative w-full rounded-none overflow-hidden ${isFullBleed ? "" : "rounded-[12px]"}`}
+                className={`relative w-full rounded-none overflow-hidden ${
+                  isFullBleed
+                    ? ""
+                    : `rounded-[12px] ${mediaLayout === "two columns" ? "mq700:rounded-none" : ""}`
+                }`}
               >
                 {isVideo(media.url) ? (
                   <video
