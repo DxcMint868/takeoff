@@ -1,6 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'next-i18next';
-import { ArrowIcon } from './icons';
+import React, { useEffect, useRef, useState } from "react";
+import { ArrowIcon } from "./icons";
 
 const fieldClass =
   "w-full bg-transparent border-x-0 border-t-0 border-b border-white-30 rounded-none px-0 py-2 focus:outline-none focus:ring-0 focus:border-white-60 font-reg text-sm leading-[22px] tracking-[0.02em] !text-white";
@@ -20,20 +19,19 @@ const textareaStyle: React.CSSProperties = {
 };
 
 const ContactForm: React.FC = () => {
-  const { t } = useTranslation('common');
   const projectDetailsRef = useRef<HTMLTextAreaElement>(null);
   const [formData, setFormData] = useState({
-    fullName: '',
-    email: '',
-    telegram: '',
-    companyName: '',
-    projectDetails: ''
+    fullName: "",
+    email: "",
+    telegram: "",
+    companyName: "",
+    projectDetails: "",
   });
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   useEffect(() => {
@@ -49,23 +47,23 @@ const ContactForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmitStatus('idle');
+    setSubmitStatus("idle");
     try {
-      const response = await fetch('/api/submit-form', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/submit-form", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
 
       if (response.ok) {
-        setSubmitStatus('success');
-        setFormData({ fullName: '', email: '', telegram: '', companyName: '', projectDetails: '' });
+        setSubmitStatus("success");
+        setFormData({ fullName: "", email: "", telegram: "", companyName: "", projectDetails: "" });
       } else {
-        setSubmitStatus('error');
+        setSubmitStatus("error");
       }
     } catch (error) {
-      console.error('Error submitting form:', error);
-      setSubmitStatus('error');
+      console.error("Error submitting form:", error);
+      setSubmitStatus("error");
     }
   };
 
@@ -80,7 +78,7 @@ const ContactForm: React.FC = () => {
           name="fullName"
           value={formData.fullName}
           onChange={handleChange}
-          placeholder={t('form.fullName')}
+          placeholder="Full Name"
           className={fieldClass}
           style={fieldStyle}
         />
@@ -92,18 +90,18 @@ const ContactForm: React.FC = () => {
             required
             value={formData.email}
             onChange={handleChange}
-            placeholder={t('form.email')}
+            placeholder="Email"
             className={fieldClass}
             style={fieldStyle}
             pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
-            title={t('form.emailInvalid')}
+            title="Please enter a valid email address"
           />
           <input
             type="text"
             name="telegram"
             value={formData.telegram}
             onChange={handleChange}
-            placeholder={t('form.telegram')}
+            placeholder="Telegram"
             className={fieldClass}
             style={fieldStyle}
           />
@@ -115,7 +113,7 @@ const ContactForm: React.FC = () => {
           required
           value={formData.companyName}
           onChange={handleChange}
-          placeholder={t('form.companyName')}
+          placeholder="Company Name"
           className={fieldClass}
           style={fieldStyle}
         />
@@ -126,7 +124,7 @@ const ContactForm: React.FC = () => {
           rows={1}
           value={formData.projectDetails}
           onChange={handleChange}
-          placeholder={t('form.projectDetails')}
+          placeholder="Tell us about your project..."
           className={`${fieldClass} resize-none overflow-hidden`}
           style={textareaStyle}
         />
@@ -136,17 +134,17 @@ const ContactForm: React.FC = () => {
             type="submit"
             className="bg-transparent border-0 p-0 flex items-center gap-2 text-white font-sora font-normal text-xl leading-[26px] tracking-[0.02em] cursor-pointer hover:opacity-80 transition-opacity"
           >
-            {t('form.submit')}
+            Submit
             <ArrowIcon width="32" height="24" />
           </button>
-          {submitStatus === 'success' && (
+          {submitStatus === "success" && (
             <p className="text-green-500 text-sm mt-2 font-reg">
-              {t('form.success')}
+              Form submitted successfully!
             </p>
           )}
-          {submitStatus === 'error' && (
+          {submitStatus === "error" && (
             <p className="text-red-500 text-sm mt-2 font-reg">
-              {t('form.error')}
+              Submission failed. Please try again.
             </p>
           )}
         </div>

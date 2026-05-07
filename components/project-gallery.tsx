@@ -1,6 +1,5 @@
 "use client";
 
-import { useTranslation } from "next-i18next";
 import { type TouchEvent, useCallback, useEffect, useRef, useState } from "react";
 
 interface GallerySlide {
@@ -18,7 +17,6 @@ export default function ProjectGallery({
   slides,
   autoPlayMs = 5000,
 }: ProjectGalleryProps) {
-  const { t } = useTranslation("common");
   const [active, setActive] = useState(0);
   const [tick, setTick] = useState(0);
   const touchStartRef = useRef<{ x: number; y: number } | null>(null);
@@ -81,7 +79,7 @@ export default function ProjectGallery({
   return (
     <section className="w-full overflow-hidden bg-dark py-16">
       <h2 className="m-0 mb-10 text-center font-sora text-[26px] font-semibold capitalize leading-none mq450:text-xl mq450:leading-[1.25]">
-        {t("caseStudy.projectGallery")}
+        Project Gallery
       </h2>
 
       {/* Desktop carousel */}
@@ -98,8 +96,8 @@ export default function ProjectGallery({
               onClick={() => goTo(i)}
               aria-label={
                 isCenter
-                  ? t("caseStudy.slideCurrent", { alt: slide.alt })
-                  : t("caseStudy.slideGoTo", { alt: slide.alt })
+                  ? `Current slide: ${slide.alt}`
+                  : `Go to: ${slide.alt}`
               }
               className="absolute left-1/2 top-1/2 flex w-[62%] -translate-x-1/2 -translate-y-1/2 cursor-pointer items-center justify-center border-0 bg-transparent p-0 outline-none focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2"
               style={{
@@ -124,7 +122,7 @@ export default function ProjectGallery({
         <button
           type="button"
           onClick={() => go(-1)}
-          aria-label={t("caseStudy.galleryPrev")}
+          aria-label="Previous slide"
           className="absolute left-4 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-dark/60 text-white backdrop-blur-sm transition-colors hover:bg-white/10"
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6" /></svg>
@@ -132,7 +130,7 @@ export default function ProjectGallery({
         <button
           type="button"
           onClick={() => go(1)}
-          aria-label={t("caseStudy.galleryNext")}
+          aria-label="Next slide"
           className="absolute right-4 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-dark/60 text-white backdrop-blur-sm transition-colors hover:bg-white/10"
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6" /></svg>
@@ -163,7 +161,7 @@ export default function ProjectGallery({
             key={slide.src}
             type="button"
             onClick={() => goTo(i)}
-            aria-label={t("caseStudy.galleryDot", { n: i + 1 })}
+            aria-label={`Go to slide ${i + 1}`}
             className={`h-[3px] w-5 cursor-pointer rounded-[40px] border-0 p-0 transition-colors duration-300 ${
               i === active ? "bg-white" : "bg-white/40"
             }`}

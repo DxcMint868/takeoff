@@ -1,6 +1,4 @@
 /** @type {import('next').NextConfig} */
-const { i18n } = require("./next-i18next.config.js");
-
 const remotePatterns = [];
 
 if (process.env.NEXT_PUBLIC_STRAPI_URL) {
@@ -18,7 +16,6 @@ if (process.env.NEXT_PUBLIC_STRAPI_URL) {
 }
 
 const nextConfig = {
-  i18n,
   reactStrictMode: true,
   images: {
     remotePatterns,

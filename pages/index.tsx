@@ -1,7 +1,5 @@
 import type { GetStaticProps, NextPage } from "next";
-import type { SSRConfig } from "next-i18next";
 import Head from "next/head";
-import { useTranslation } from "next-i18next";
 import Image from "next/image";
 import Nav from "../components/nav";
 import FrameComponent from "../components/frame-component";
@@ -18,7 +16,6 @@ import {
   type WorkProjectCard,
   type WorkTagSpec,
 } from "../components/work-examples-portfolio";
-import { loadCommonTranslations } from "../lib/i18n/load-common";
 import { fetchWorksData } from "../lib/strapi/case-studies";
 
 const SITE_URL = "https://www.hoasen.io";
@@ -252,13 +249,12 @@ const breadcrumbJsonLd = {
   ],
 };
 
-type HomeProps = SSRConfig & {
+type HomeProps = {
   featuredProject: WorkProjectCard | null;
   projectCards: WorkProjectCard[];
 };
 
-export const getStaticProps: GetStaticProps<HomeProps> = async (context) => {
-  const tr = await loadCommonTranslations(context.locale);
+export const getStaticProps: GetStaticProps<HomeProps> = async () => {
   const cmsWorks = await fetchWorksData();
 
   if (
@@ -267,7 +263,6 @@ export const getStaticProps: GetStaticProps<HomeProps> = async (context) => {
   ) {
     return {
       props: {
-        ...tr,
         featuredProject: cmsWorks.featuredProject,
         projectCards: cmsWorks.projectCards,
       },
@@ -277,7 +272,6 @@ export const getStaticProps: GetStaticProps<HomeProps> = async (context) => {
 
   return {
     props: {
-      ...tr,
       featuredProject: OCEAN_FINANCE_PROJECT,
       projectCards: [...CORE_PROJECT_CARDS, ...EXTRA_PAGE_PROJECT_CARDS],
     },
@@ -286,28 +280,27 @@ export const getStaticProps: GetStaticProps<HomeProps> = async (context) => {
 };
 
 const Web: NextPage<HomeProps> = ({ featuredProject, projectCards }) => {
-  const { t } = useTranslation("common");
   return (
     <>
       <Head>
-        <title>{t("meta.home.title")}</title>
-        <meta name="description" content={t("meta.home.description")} />
+        <title>{TITLE}</title>
+        <meta name="description" content={DESCRIPTION} />
         <meta name="author" content="Hoasen" />
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href={SITE_URL} />
 
-        <meta property="og:title" content={t("meta.home.title")} />
-        <meta property="og:description" content={t("meta.home.description")} />
+        <meta property="og:title" content={TITLE} />
+        <meta property="og:description" content={DESCRIPTION} />
         <meta property="og:url" content={SITE_URL} />
         <meta property="og:image" content={OG_IMAGE} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
-        <meta property="og:image:alt" content={t("meta.home.title")} />
+        <meta property="og:image:alt" content={TITLE} />
 
-        <meta name="twitter:title" content={t("meta.home.title")} />
-        <meta name="twitter:description" content={t("meta.home.description")} />
+        <meta name="twitter:title" content={TITLE} />
+        <meta name="twitter:description" content={DESCRIPTION} />
         <meta name="twitter:image" content={OG_IMAGE} />
-        <meta name="twitter:image:alt" content={t("meta.home.title")} />
+        <meta name="twitter:image:alt" content={TITLE} />
 
         <script
           type="application/ld+json"

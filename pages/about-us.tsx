@@ -1,21 +1,14 @@
 import type { GetStaticProps, NextPage } from "next";
-import type { SSRConfig } from "next-i18next";
 import Head from "next/head";
-import { useTranslation } from "next-i18next";
 import FooterComponent from "../components/footer-component";
 import Nav from "../components/nav";
 import AboutPageMain from "../components/about-page-main";
-import { loadCommonTranslations } from "../lib/i18n/load-common";
 
-type AboutUsPageProps = SSRConfig;
+type AboutUsPageProps = Record<string, never>;
 
-export const getStaticProps: GetStaticProps<AboutUsPageProps> = async (
-  context,
-) => {
+export const getStaticProps: GetStaticProps<AboutUsPageProps> = async () => {
   return {
-    props: {
-      ...(await loadCommonTranslations(context.locale)),
-    },
+    props: {},
   };
 };
 
@@ -47,24 +40,23 @@ const webPageJsonLd = {
 };
 
 const AboutUs: NextPage<AboutUsPageProps> = () => {
-  const { t } = useTranslation("common");
   return (
     <>
       <Head>
-        <title>{t("meta.about.title")}</title>
-        <meta name="description" content={t("meta.about.description")} />
+        <title>{TITLE}</title>
+        <meta name="description" content={DESCRIPTION} />
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href={PAGE_URL} />
 
-        <meta property="og:title" content={t("meta.about.title")} />
-        <meta property="og:description" content={t("meta.about.description")} />
+        <meta property="og:title" content={TITLE} />
+        <meta property="og:description" content={DESCRIPTION} />
         <meta property="og:url" content={PAGE_URL} />
         <meta property="og:image" content={OG_IMAGE} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
 
-        <meta name="twitter:title" content={t("meta.about.title")} />
-        <meta name="twitter:description" content={t("meta.about.description")} />
+        <meta name="twitter:title" content={TITLE} />
+        <meta name="twitter:description" content={DESCRIPTION} />
         <meta name="twitter:image" content={OG_IMAGE} />
 
         <script

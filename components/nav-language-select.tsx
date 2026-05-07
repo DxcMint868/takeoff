@@ -1,6 +1,4 @@
 import Image from "next/image";
-import { useTranslation } from "next-i18next";
-import { useRouter } from "next/router";
 import {
   useCallback,
   useEffect,
@@ -9,16 +7,17 @@ import {
   useState,
 } from "react";
 
-type LocaleDef = {
+type LocaleOption = {
   code: string;
+  label: string;
   flagSrc: string;
 };
 
-const LOCALE_DEFS: LocaleDef[] = [
-  { code: "en", flagSrc: "/language/English.svg" },
-  { code: "ja", flagSrc: "/language/Japanese.svg" },
-  { code: "vi", flagSrc: "/language/Vietnamese.svg" },
-  { code: "ko", flagSrc: "/language/Korean.svg" },
+const LOCALES: LocaleOption[] = [
+  { code: "en", label: "English", flagSrc: "/language/English.svg" },
+  { code: "ja", label: "Japanese", flagSrc: "/language/Japanese.svg" },
+  { code: "vi", label: "Vietnamese", flagSrc: "/language/Vietnamese.svg" },
+  { code: "ko", label: "Korean", flagSrc: "/language/Korean.svg" },
 ];
 
 type NavLanguageSelectProps = {
@@ -27,17 +26,13 @@ type NavLanguageSelectProps = {
 
 const OUTLINE_DARK = "var(--Ouline-Dark, #3A2F50)";
 
+/** UI-only language switcher (no routing / i18n). */
 export function NavLanguageSelect({ className = "" }: NavLanguageSelectProps) {
-  const { t } = useTranslation("common");
-  const router = useRouter();
   const id = useId();
   const listId = `${id}-list`;
   const [open, setOpen] = useState(false);
+  const [selected, setSelected] = useState(LOCALES[0]);
   const rootRef = useRef<HTMLDivElement>(null);
-
-  const currentCode = router.locale ?? "en";
-  const currentDef =
-    LOCALE_DEFS.find((l) => l.code === currentCode) ?? LOCALE_DEFS[0];
 
   const close = useCallback(() => setOpen(false), []);
 
@@ -78,16 +73,14 @@ export function NavLanguageSelect({ className = "" }: NavLanguageSelectProps) {
             aria-hidden
           >
             <Image
-              src={currentDef.flagSrc}
+              src={selected.flagSrc}
               alt=""
               width={28}
               height={28}
               className="size-7 object-cover mq1100:size-8"
             />
           </span>
-          <span className="whitespace-nowrap mq1100:sr-only">
-            {t(`lang.${currentDef.code}`)}
-          </span>
+          <span className="whitespace-nowrap mq1100:sr-only">{selected.label}</span>
         </div>
 
         <span
@@ -100,7 +93,7 @@ export function NavLanguageSelect({ className = "" }: NavLanguageSelectProps) {
 
       {open ? (
         <div
-          className="absolute left-0 top-[calc(100%+10px)] z-[110] box-border min-w-[188px] w-[188px] overflow-hidden rounded-[16px] border border-solid shadow-[0_0_24px_0_rgba(135,110,204,0.08)] mq1100:left-auto mq1100:right-0 mq1100:max-w-[calc(100vw-2rem)] mq1100:rounded-2xl mq1100:shadow-none"
+          className="absolute left-0 top-[calc(100%+10px)] z-[110] box-border min-w-[188px] w-[188px] overflow-hidden rounded-[16px] border border-solid shadow-[0_0_24px_0_rgba(135,110,204,0.08)] mq1100:left-auto mq1100:right-0 mq1100:min-w-[min(100vw-2rem,280px)] mq1100:w-[min(100vw-2rem,280px)] mq1100:max-w-[calc(100vw-2rem)] mq1100:rounded-2xl mq1100:shadow-none"
           style={{ borderColor: OUTLINE_DARK }}
         >
           <div
@@ -115,10 +108,10 @@ export function NavLanguageSelect({ className = "" }: NavLanguageSelectProps) {
             id={listId}
             role="listbox"
             aria-labelledby={`${id}-trigger`}
-            className="relative z-[2] m-0 box-border list-none bg-transparent px-1 pb-4 mq1100:px-3"
+            className="relative z-[2] m-0 box-border list-none bg-transparent px-1 py-4 mq1100:px-3 mq1100:py-5"
           >
-            {LOCALE_DEFS.map((opt) => {
-              const isSel = opt.code === currentCode;
+            {LOCALES.map((opt) => {
+              const isSel = opt.code === selected.code;
               return (
                 <li key={opt.code} role="presentation" className="list-none py-0.5">
                   <button
@@ -126,9 +119,7 @@ export function NavLanguageSelect({ className = "" }: NavLanguageSelectProps) {
                     role="option"
                     aria-selected={isSel}
                     onClick={() => {
-                      void router.push(router.asPath, router.asPath, {
-                        locale: opt.code,
-                      });
+                      setSelected(opt);
                       close();
                     }}
                     className={`flex w-full cursor-pointer items-center gap-3 rounded-full py-2.5 px-2 text-left font-reg text-[16px] font-semibold tracking-[0.02em] text-white transition-colors hover:bg-[#332952] focus-visible:outline focus-visible:ring-2 focus-visible:ring-purple/80 ${isSel ? "bg-[#332952]" : "bg-transparent"}`}
@@ -145,7 +136,7 @@ export function NavLanguageSelect({ className = "" }: NavLanguageSelectProps) {
                         className="size-6 object-cover"
                       />
                     </span>
-                    {t(`lang.${opt.code}`)}
+                    {opt.label}
                   </button>
                 </li>
               );

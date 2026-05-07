@@ -1,8 +1,6 @@
 import Head from "next/head";
 import Script from "next/script";
 import type { AppProps } from "next/app";
-import { appWithTranslation } from "next-i18next";
-import nextI18NextConfig from "../next-i18next.config.js";
 import "./global.css";
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -38,4 +36,4 @@ function MyApp({ Component, pageProps }: AppProps) {
   );
 }
 
-export default appWithTranslation(MyApp, nextI18NextConfig);
+export default MyApp;

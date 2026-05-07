@@ -1,4 +1,3 @@
-/** IDs khớp khóa `tech.card.<id>` trong `common.json`; `skills` giữ tiếng Anh (tên stack). */
 export type TechnologyCardBase = {
   id: string;
   backgroundSrc: string;

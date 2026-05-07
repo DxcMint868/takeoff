@@ -1,12 +1,11 @@
-export type NavLinkDef = { href: string; labelKey: string };
+export type NavItem = { href: string; label: string };
 
-/** Khóa `common.json` → `t(labelKey)` trong component. */
-export const NAV_LINK_DEFS: readonly NavLinkDef[] = [
-  { href: "/#our-service", labelKey: "nav.services" },
-  { href: "/works", labelKey: "nav.works" },
-  { href: "/#our-team", labelKey: "nav.ourTeam" },
-  { href: "/about-us", labelKey: "nav.aboutUs" },
-  { href: "/#contact-us", labelKey: "nav.contactUs" },
+export const NAV_ITEMS: NavItem[] = [
+  { href: "/#our-service", label: "Services" },
+  { href: "/works", label: "Works" },
+  { href: "/#our-team", label: "Our Team" },
+  { href: "/about-us", label: "About Us" },
+  { href: "/#contact-us", label: "Contact Us" },
 ];
 
 /** Desktop navbar: only Works + About use active styling (unchanged from original). */

@@ -1,12 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useTranslation } from "next-i18next";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import CTASolid from "./cta-solid";
 import { NavLanguageSelect } from "./nav-language-select";
 import { NavMobileModal } from "./nav-mobile-modal";
-import { isNavItemActiveDesktop, NAV_LINK_DEFS } from "../lib/nav-links";
+import { isNavItemActiveDesktop, NAV_ITEMS } from "../lib/nav-links";
 
 export type NavType = {
   className?: string;
@@ -27,7 +26,6 @@ const Nav = ({
   scrollThreshold = DEFAULT_SCROLL_THRESHOLD,
 }: NavType) => {
   const { pathname, asPath } = useRouter();
-  const { t } = useTranslation("common");
   const [scrolled, setScrolled] = useState(!initialTransparent);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -57,7 +55,7 @@ const Nav = ({
           <span className="relative block h-[27px] w-full max-w-full shrink-0 self-stretch overflow-hidden">
             <Image
               src="/logo@2x.png"
-              alt={t("nav.logoAlt")}
+              alt="Home"
               fill
               className="pointer-events-none object-contain object-left"
               sizes="140px"
@@ -68,7 +66,7 @@ const Nav = ({
       </div>
       <nav className="m-0 box-border flex w-fit shrink-0 flex-col items-center justify-center pt-2.5 px-0 pb-0 mq1100:hidden">
         <nav className="m-0 pl-[100px] flex h-6 flex-row items-center gap-x-12 text-left text-base font-reg">
-          {NAV_LINK_DEFS.map((item) => (
+          {NAV_ITEMS.map((item) => (
             <Link
               key={item.href}
               href={item.href}
@@ -78,7 +76,7 @@ const Nav = ({
                   : navInactive
               }
             >
-              {t(item.labelKey)}
+              {item.label}
             </Link>
           ))}
         </nav>
@@ -89,14 +87,14 @@ const Nav = ({
         <CTASolid
           className="mq1000:hidden text-[16px] w-max"
           propMinWidth="60px"
-          label={t("cta.startToday")}
+          label="Start Today"
           href="/#contact-us"
         />
         <button
           type="button"
           onClick={() => setMobileMenuOpen(true)}
           className="hidden size-8 shrink-0 items-center justify-center border-0 bg-transparent p-0 mq1100:flex focus-visible:outline focus-visible:ring-2 focus-visible:ring-purple focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
-          aria-label={t("menu.open")}
+          aria-label="Open menu"
           aria-expanded={mobileMenuOpen}
         >
           <Image
