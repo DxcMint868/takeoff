@@ -130,7 +130,7 @@ export function BlogFeaturedCarousel({
       onPointerCancel={handlePointerCancel}
       onClickCapture={handleClickCapture}
     >
-      <article className="overflow-hidden rounded-[20px] border-solid border-[1px] border-[#7068A366] bg-[#261D44] p-4 shadow-[0_0_30px_rgba(0,0,0,0.06)] backdrop-blur-sm mq900:rounded-xl cursor-grab active:cursor-grabbing select-none">
+      <article className="group overflow-hidden rounded-[20px] border-solid border-[1px] border-[#7068A366] bg-[#261D44] p-4 shadow-[0_0_30px_rgba(0,0,0,0.06)] backdrop-blur-sm transition-shadow duration-300 hover:shadow-[0_0_30px_0_rgba(255,255,255,0.2)] mq900:rounded-xl cursor-grab active:cursor-grabbing select-none">
         <div className="flex flex-row mq900:flex-col">
           <Link
             href={`/blog/${post.slug}`}
@@ -159,7 +159,7 @@ export function BlogFeaturedCarousel({
               <h2 className="mt-5 font-sora text-[22px] font-semibold leading-[1.25] tracking-[0.02em] text-white mq450:text-xl mq900:text-2xl">
                 <Link
                   href={`/blog/${post.slug}`}
-                  className="text-inherit [text-decoration:none] outline-none transition-opacity hover:opacity-95 focus-visible:ring-2 focus-visible:ring-purple focus-visible:ring-offset-2 focus-visible:ring-offset-[rgba(28,22,48,0.65)]"
+                  className="text-inherit [text-decoration:none] outline-none transition-colors group-hover:text-purple focus-visible:ring-2 focus-visible:ring-purple focus-visible:ring-offset-2 focus-visible:ring-offset-[rgba(28,22,48,0.65)]"
                 >
                   {post.title}
                 </Link>
@@ -189,7 +189,7 @@ export function BlogFeaturedCarousel({
               aria-selected={i === active}
               aria-label={`Show article ${i + 1}`}
               onClick={() => goTo(i)}
-              className={`h-[3px] w-8 rounded-full border-0 p-0 transition-colors duration-300 ${
+              className={`h-[3px] w-8 cursor-pointer rounded-full border-0 p-0 transition-colors duration-300 ${
                 i === active ? "bg-white" : "bg-white/35 hover:bg-white/50"
               }`}
             />
