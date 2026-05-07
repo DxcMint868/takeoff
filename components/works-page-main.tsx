@@ -105,7 +105,7 @@ const WorksPageMain = ({
     <main className="relative box-border flex w-full flex-col items-center overflow-x-clip pb-24 pt-8 text-white">
       <GradientGlow className="top-0" />
       <div className="relative flex w-full max-w-[1200px] flex-col items-stretch gap-10">
-        <div className="flex w-full flex-col gap-6 px-4">
+        <div className="box-border flex w-full flex-col gap-6 px-4">
           <Link
             href="/"
             className="group flex w-fit flex-row items-center gap-3 self-start text-left [text-decoration:none]"
@@ -282,27 +282,29 @@ const WorksPageMain = ({
           </section>
         )}
 
-        <section
-          id="works-cta"
-          className="relative mx-auto mt-[167px] box-border flex w-full max-w-[1138px] flex-col items-center gap-8 overflow-hidden rounded-2xl bg-surface-card px-8 py-14 text-center mq900:mt-24 mq700:mt-16 mq450:px-5 mq450:py-10"
-        >
-          <Image
-            src="/backgrounds/noise.png"
-            alt=""
-            aria-hidden
-            fill
-            className="pointer-events-none object-cover opacity-[0.95]"
-            sizes="100vw"
-          />
-          <h2 className="relative z-[1] m-0 font-sora text-29xl font-normal leading-[58px] tracking-[0.02em] text-white mq450:text-10xl mq450:leading-[41px] mq900:text-19xl mq900:leading-[46px]">
-            Ready to Build Something Great?
-          </h2>
-          <p className="relative z-[1] m-0 max-w-[520px] font-reg text-base font-light leading-6 tracking-[0.02em] text-white-60">
-            Tell us about your product—we&apos;ll help you design, build, and
-            ship with confidence.
-          </p>
-          <CTASolid label="Start a Conversation" href="/#contact-us" />
-        </section>
+        <div className="box-border w-full px-4">
+          <section
+            id="works-cta"
+            className="relative mx-auto mt-[167px] box-border flex w-full max-w-[1138px] flex-col items-center gap-8 overflow-hidden rounded-2xl bg-surface-card px-8 py-14 text-center mq900:mt-24 mq700:mt-16 mq450:px-5 mq450:py-10"
+          >
+            <Image
+              src="/backgrounds/noise.png"
+              alt=""
+              aria-hidden
+              fill
+              className="pointer-events-none object-cover opacity-[0.95]"
+              sizes="100vw"
+            />
+            <h2 className="relative z-[1] m-0 font-sora text-29xl font-normal leading-[58px] tracking-[0.02em] text-white mq450:text-10xl mq450:leading-[41px] mq900:text-19xl mq900:leading-[46px]">
+              Ready to Build Something Great?
+            </h2>
+            <p className="relative z-[1] m-0 max-w-[520px] font-reg text-base font-light leading-6 tracking-[0.02em] text-white-60">
+              Tell us about your product—we&apos;ll help you design, build, and
+              ship with confidence.
+            </p>
+            <CTASolid label="Start a Conversation" href="/#contact-us" />
+          </section>
+        </div>
       </div>
     </main>
   );
