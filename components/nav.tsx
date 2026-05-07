@@ -94,7 +94,10 @@ const Nav = ({
           <Link href="/works" className={onWorksPage ? navActive : navInactive}>
             Works
           </Link>
-          <Link href="/about-us" className={onAboutPage ? navActive : navInactive}>
+          <Link
+            href="/about-us"
+            className={onAboutPage ? navActive : navInactive}
+          >
             About Us
           </Link>
           <Link href="/#contact-us" className={navInactive}>
@@ -178,6 +181,13 @@ const Nav = ({
               onClick={() => setMobileMenuOpen(false)}
             >
               Contact Us
+            </Link>
+            <Link
+              href="/blog"
+              className={onBlogPage ? navActive : navInactive}
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Blog
             </Link>
           </nav>
           <div className="mt-auto w-full shrink-0 pt-6">
