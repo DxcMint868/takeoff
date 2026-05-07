@@ -102,10 +102,10 @@ const WorksPageMain = ({
   };
 
   return (
-    <main className="relative box-border flex w-full flex-col items-center overflow-x-clip px-5 pb-24 pt-8 text-white mq900:px-6">
+    <main className="relative box-border flex w-full flex-col items-center overflow-x-clip pb-24 pt-8 text-white">
       <GradientGlow className="top-0" />
       <div className="relative flex w-full max-w-[1200px] flex-col items-stretch gap-10">
-        <div className="flex w-full flex-col gap-6">
+        <div className="flex w-full flex-col gap-6 px-4">
           <Link
             href="/"
             className="group flex w-fit flex-row items-center gap-3 self-start text-left [text-decoration:none]"
@@ -135,7 +135,7 @@ const WorksPageMain = ({
           </Link>
 
           <div className="flex flex-col items-center gap-5 text-center">
-            <h1 className="m-0 max-w-[900px] font-sora text-[40px] font-normal leading-[1.1] tracking-[0.02em] text-white mq450:text-3xl mq900:text-[52px] mq900:leading-tight">
+            <h1 className="m-0 max-w-[900px] font-sora text-29xl font-normal leading-[1.1] tracking-[0.02em] text-white mq450:text-10xl mq900:text-19xl mq900:leading-tight">
               Our Work Examples
             </h1>
             <div className="w-full max-w-[900px] font-reg text-3xl font-light leading-[34px] tracking-[0.02em] text-white-60 mq450:text-base mq450:leading-7">
@@ -195,7 +195,7 @@ const WorksPageMain = ({
         />
 
         {designProjectCards && designProjectCards.length > 0 && (
-          <section className="flex w-full max-w-[1138px] flex-col gap-8 self-center pt-20 mq900:pt-14">
+          <section className="mx-auto box-border flex w-full min-w-0 max-w-[1138px] flex-col gap-8 px-4 pt-20 mq900:pt-14">
             <div className="flex flex-col gap-4">
               <h2 className="m-0 font-sora text-[80px] font-normal capitalize leading-[1.2] tracking-normal text-white mq900:text-[52px] mq450:text-[32px] text-white/20">
                 Branding
@@ -212,9 +212,9 @@ const WorksPageMain = ({
                 <Link
                   key={card.id}
                   href={card.href}
-                  className="group relative [text-decoration:none]"
+                  className="group relative flex min-w-0 max-w-full shrink-0 basis-[358px] justify-center [text-decoration:none] mq700:w-full mq700:basis-auto mq700:max-w-none"
                 >
-                  <article className="relative flex h-[380px] w-[358px] max-w-full cursor-pointer flex-col overflow-hidden rounded-[20px] border border-surface-border bg-surface-card shadow-card transition-shadow duration-300 hover:shadow-[0_0_30px_0_rgba(255,255,255,0.2)] mq700:h-[320px] mq700:w-full">
+                  <article className="relative flex h-[380px] w-full max-w-[358px] cursor-pointer flex-col overflow-hidden rounded-[20px] border border-surface-border bg-surface-card shadow-card transition-shadow duration-300 hover:shadow-[0_0_30px_0_rgba(255,255,255,0.2)] mq700:h-[320px] mq700:max-w-none">
                     {card.thumbnailUrl ? (
                       <Image
                         src={card.thumbnailUrl}
