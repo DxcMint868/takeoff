@@ -1,13 +1,9 @@
 "use client";
 
 import { createPortal } from "react-dom";
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Badge } from "./badge";
 import type { WorkTagSpec } from "./work-examples-portfolio";
-
-/** Avoids React SSR warnings: `useLayoutEffect` is a no-op on the server. */
-const useIsomorphicLayoutEffect =
-  typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 type TagsDisplayProps = {
   tags: WorkTagSpec[];
@@ -16,11 +12,22 @@ type TagsDisplayProps = {
   containerClassName?: string;
 };
 
-export function TagsDisplay({ tags, projectId, extra, containerClassName }: TagsDisplayProps) {
+export function TagsDisplay({
+  tags,
+  projectId,
+  extra,
+  containerClassName,
+}: TagsDisplayProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const btnRef = useRef<HTMLSpanElement>(null);
+
+  const [isMounted, setIsMounted] = useState(false);
   const [visibleCount, setVisibleCount] = useState<number>(tags.length);
   const [tooltipAnchor, setTooltipAnchor] = useState<DOMRect | null>(null);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   // Dismiss tooltip when tapping outside on touch devices
   useEffect(() => {
@@ -34,19 +41,24 @@ export function TagsDisplay({ tags, projectId, extra, containerClassName }: Tags
     return () => document.removeEventListener("touchstart", dismiss);
   }, [tooltipAnchor]);
 
-  const handleTouchStart = useCallback((e: React.TouchEvent<HTMLSpanElement>) => {
-    // Prevent the browser from synthesising mouseenter/mouseleave after the tap
-    e.preventDefault();
-    const rect = e.currentTarget.getBoundingClientRect();
-    setTooltipAnchor((prev) => (prev ? null : rect));
-  }, []);
+  const handleTouchStart = useCallback(
+    (e: React.TouchEvent<HTMLSpanElement>) => {
+      // Prevent the browser from synthesising mouseenter/mouseleave after the tap
+      e.preventDefault();
+      const rect = e.currentTarget.getBoundingClientRect();
+      setTooltipAnchor((prev) => (prev ? null : rect));
+    },
+    [],
+  );
 
-  useIsomorphicLayoutEffect(() => {
+  useEffect(() => {
     // Reset when tags change so we re-measure
     setVisibleCount(tags.length);
   }, [tags]);
 
-  useIsomorphicLayoutEffect(() => {
+  useEffect(() => {
+    if (!isMounted) return;
+
     const container = containerRef.current;
     if (!container) return;
 
@@ -71,16 +83,21 @@ export function TagsDisplay({ tags, projectId, extra, containerClassName }: Tags
     const fitting = tagEls.filter((el) => el.offsetTop <= maxTop).length;
     // Reserve the last slot on row 2 for the "+N" badge
     setVisibleCount(Math.max(1, fitting - 1));
-  }, [tags, visibleCount]);
+  }, [isMounted, tags, visibleCount]);
 
   const shown = tags.slice(0, visibleCount);
   const hiddenTags = tags.slice(visibleCount);
-  const hiddenCount = hiddenTags.length + (extra ? 1 : 0);
+
+  // If we haven't truncated any tags, and 'extra' is present, we show the 'extra' text directly
+  const hasTruncatedTags = hiddenTags.length > 0;
+  const hiddenCount = hiddenTags.length + (extra && hasTruncatedTags ? 1 : 0);
 
   return (
     <div
       ref={containerRef}
-      className={`flex flex-wrap items-center gap-2${containerClassName ? ` ${containerClassName}` : ""}`}
+      className={`flex flex-wrap items-center gap-2${
+        containerClassName ? ` ${containerClassName}` : ""
+      }`}
       onClick={(e) => e.preventDefault()}
     >
       {shown.map((t) => (
@@ -103,14 +120,14 @@ export function TagsDisplay({ tags, projectId, extra, containerClassName }: Tags
         </span>
       )}
 
-      {hiddenCount === 0 && extra && (
+      {!hasTruncatedTags && extra && (
         <span className="font-reg text-sm font-medium leading-[22px] tracking-[0.02em] text-white-60">
           {extra}
         </span>
       )}
 
-      {tooltipAnchor &&
-        typeof document !== "undefined" &&
+      {isMounted &&
+        tooltipAnchor &&
         createPortal(
           (() => {
             const MARGIN = 8;
@@ -120,32 +137,34 @@ export function TagsDisplay({ tags, projectId, extra, containerClassName }: Tags
             const isFlipped = spaceLeft > spaceRight;
             const maxWidth = Math.min(280, isFlipped ? spaceLeft : spaceRight);
             return (
-          <div
-            style={{
-              position: "fixed",
-              ...(isFlipped
-                ? { right: viewW - tooltipAnchor.right }
-                : { left: tooltipAnchor.left }),
-              top: tooltipAnchor.top - 10,
-              transform: "translateY(-100%)",
-              zIndex: 9999,
-              maxWidth,
-            }}
-            className="w-max rounded-xl border border-white/20 bg-[#1b1333] p-3 shadow-[0_8px_32px_rgba(0,0,0,0.5)]"
-            onMouseEnter={() => setTooltipAnchor(tooltipAnchor)}
-            onMouseLeave={() => setTooltipAnchor(null)}
-          >
-            <div className="flex flex-wrap gap-2">
-              {hiddenTags.map((t) => (
-                <Badge key={`tooltip-${projectId}-${t.label}`}>{t.label}</Badge>
-              ))}
-              {extra && (
-                <span className="font-reg text-sm font-medium leading-[22px] tracking-[0.02em] text-white-60">
-                  {extra}
-                </span>
-              )}
-            </div>
-          </div>
+              <div
+                style={{
+                  position: "fixed",
+                  ...(isFlipped
+                    ? { right: viewW - tooltipAnchor.right }
+                    : { left: tooltipAnchor.left }),
+                  top: tooltipAnchor.top - 10,
+                  transform: "translateY(-100%)",
+                  zIndex: 9999,
+                  maxWidth,
+                }}
+                className="w-max rounded-xl border border-white/20 bg-[#1b1333] p-3 shadow-[0_8px_32px_rgba(0,0,0,0.5)]"
+                onMouseEnter={() => setTooltipAnchor(tooltipAnchor)}
+                onMouseLeave={() => setTooltipAnchor(null)}
+              >
+                <div className="flex flex-wrap gap-2">
+                  {hiddenTags.map((t) => (
+                    <Badge key={`tooltip-${projectId}-${t.label}`}>
+                      {t.label}
+                    </Badge>
+                  ))}
+                  {extra && (
+                    <span className="font-reg text-sm font-medium leading-[22px] tracking-[0.02em] text-white-60">
+                      {extra}
+                    </span>
+                  )}
+                </div>
+              </div>
             );
           })(),
           document.body,
