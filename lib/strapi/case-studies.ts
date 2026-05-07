@@ -121,6 +121,13 @@ const TAG_TONES: WorkTagTone[] = [
   "pink",
 ];
 
+/** In non-production environments, fetch draft content so unpublished edits are visible. */
+function applyDraftStatus(params: URLSearchParams): void {
+  if (process.env.STRAPI_DRAFT_MODE === "true") {
+    params.set("status", "draft");
+  }
+}
+
 function normalizeBaseUrl(value: string | undefined) {
   if (!value) return "";
   return value.endsWith("/") ? value.slice(0, -1) : value;
@@ -724,9 +731,7 @@ export async function fetchCaseStudyBySlug(
     params.set("filters[slug][$eq]", slug);
     params.set("pagination[pageSize]", "1");
 
-    if (process.env.NODE_ENV === "test" || process.env.NODE_ENV === "development") {
-      params.set("status", "draft");
-    }
+    applyDraftStatus(params);
 
     const payload = await fetchStrapiJson(`/api/projects?${params.toString()}`);
     const projects = toArray<any>(unwrapStrapiData(payload?.data));
@@ -776,9 +781,7 @@ export async function fetchWorksData(): Promise<WorksDataResult> {
   try {
     const params = buildProjectPopulateQuery();
     params.set("pagination[pageSize]", "100");
-    if (process.env.NODE_ENV === "test" || process.env.NODE_ENV === "development") {
-      params.set("status", "draft");
-    }
+    applyDraftStatus(params);
 
     const payload = await fetchStrapiJson(`/api/projects?${params.toString()}`);
     const projects = toArray<any>(unwrapStrapiData(payload?.data));

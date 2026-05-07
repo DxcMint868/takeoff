@@ -21,7 +21,7 @@ import {
 
 /** In non-production environments, fetch draft content so unpublished edits are visible. */
 function applyDraftStatus(params: URLSearchParams): void {
-  if (process.env.NODE_ENV !== "production") {
+  if (process.env.STRAPI_DRAFT_MODE === "true") {
     params.set("status", "draft");
   }
 }
