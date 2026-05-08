@@ -20,5 +20,12 @@
   "footer.contactInfo": "Thông tin liên hệ",
   "meta.by": "Bởi:",
 
-  "common.loading": "Đang tải"
+  "common.loading": "Đang tải",
+
+  "home.hero.eyebrow": "Chúng tôi tạo ra",
+  "home.hero.title": "Sản phẩm Fintech",
+  "home.hero.subtitle": "Chúng tôi giúp các startup và doanh nghiệp nhỏ xây dựng và ra mắt sản phẩm trên blockchain",
+  "home.hero.cta": "Bắt đầu ngay",
+  "home.works.title": "Những đối tác đã làm việc cùng chúng tôi",
+  "home.works.subtitle": "Đội ngũ của chúng tôi có kinh nghiệm làm việc với các công ty từ lớn đến nhỏ"
 }

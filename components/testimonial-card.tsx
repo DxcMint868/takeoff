@@ -1,11 +1,14 @@
 import Image from "next/image";
-import React from 'react';
+import React from "react";
+import StrapiBlocks from "./strapi-blocks";
+import type { StrapiBlocksNode } from "../lib/strapi/case-studies";
 
 interface TestimonialCardProps {
   id?: string;
   name: string;
   position: string;
   quote: string;
+  quoteBlocks?: StrapiBlocksNode[];
   companyLogo: string;
   companyWebsite: string;
 }
@@ -15,6 +18,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
   name,
   position,
   quote,
+  quoteBlocks,
   companyLogo,
   companyWebsite,
 }) => (
@@ -30,28 +34,43 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
       </div>
       <div className="self-stretch flex flex-row items-start justify-end py-0 px-2 box-border max-w-full text-sm text-white-60">
         <blockquote className="m-0 flex-1 relative tracking-[0.02em] leading-[22px] font-light inline-block max-w-full z-[1] overflow-hidden">
-          <p className="m-0 line-clamp-6">&ldquo;{quote}&rdquo;</p>
+          {quoteBlocks && quoteBlocks.length > 0 ? (
+            <StrapiBlocks
+              blocks={quoteBlocks}
+              className="line-clamp-6"
+            />
+          ) : (
+            <p className="m-0 line-clamp-6">&ldquo;{quote}&rdquo;</p>
+          )}
         </blockquote>
       </div>
     </div>
     <div className="w-[246px] flex flex-row items-start justify-between gap-5 text-right text-purple">
-      <Image
-        className="relative object-contain z-[1]"
-        alt=""
-        src={companyLogo}
-        width={100}
-        height={40}
-        unoptimized={companyLogo.endsWith(".svg")}
-      />
+      {companyLogo && (
+        <Image
+          className="relative object-contain z-[1]"
+          alt=""
+          src={companyLogo}
+          width={100}
+          height={40}
+          unoptimized={companyLogo.endsWith(".svg")}
+        />
+      )}
       <div className="flex flex-col items-start justify-start pt-[9px] px-0 pb-0">
-        <a
-          href={`https://${companyWebsite}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="relative [text-decoration:underline] tracking-[0.02em] leading-[22px] font-medium inline-block min-w-[44px] z-[1] text-purple hover:text-mediumpurple transition-colors"
-        >
-          {companyWebsite}
-        </a>
+        {companyWebsite && (
+          <a
+            href={
+              companyWebsite.startsWith("http")
+                ? companyWebsite
+                : `https://${companyWebsite}`
+            }
+            target="_blank"
+            rel="noopener noreferrer"
+            className="relative [text-decoration:underline] tracking-[0.02em] leading-[22px] font-medium inline-block min-w-[44px] z-[1] text-purple hover:text-mediumpurple transition-colors"
+          >
+            {companyWebsite.replace(/^https?:\/\//, "")}
+          </a>
+        )}
       </div>
     </div>
   </div>

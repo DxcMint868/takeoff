@@ -122,7 +122,7 @@ const TAG_TONES: WorkTagTone[] = [
 ];
 
 /** In non-production environments, fetch draft content so unpublished edits are visible. */
-function applyDraftStatus(params: URLSearchParams): void {
+export function applyDraftStatus(params: URLSearchParams): void {
   if (process.env.STRAPI_DRAFT_MODE === "true") {
     params.set("status", "draft");
   }

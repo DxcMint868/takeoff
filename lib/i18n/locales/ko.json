@@ -20,5 +20,12 @@
   "footer.contactInfo": "연락처 정보",
   "meta.by": "작성:",
 
-  "common.loading": "로딩 중"
+  "common.loading": "로딩 중",
+
+  "home.hero.eyebrow": "우리가 만드는",
+  "home.hero.title": "핀테크 제품",
+  "home.hero.subtitle": "스타트업과 중소기업이 블록체인 위에서 제품을 구축하고 출시할 수 있도록 돕습니다",
+  "home.hero.cta": "지금 시작하기",
+  "home.works.title": "함께한 파트너사",
+  "home.works.subtitle": "대기업부터 소기업까지 다양한 회사와 협력한 경험이 있습니다"
 }

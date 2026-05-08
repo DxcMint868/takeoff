@@ -19,5 +19,12 @@
   "footer.contactInfo": "Contact Info",
   "meta.by": "By:",
 
-  "common.loading": "Loading"
+  "common.loading": "Loading",
+
+  "home.hero.eyebrow": "We Create Great",
+  "home.hero.title": "Fintech Products",
+  "home.hero.subtitle": "We help startups and small enterprises build and launch their product onchain",
+  "home.hero.cta": "Build with us",
+  "home.works.title": "Who we've worked with",
+  "home.works.subtitle": "Our team has experience working with companies large and small"
 }

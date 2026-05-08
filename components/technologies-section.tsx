@@ -1,5 +1,6 @@
 import Image from "next/image";
 import GroupComponent from "./group-component";
+import type { HomeCapability } from "../lib/strapi/home-page";
 
 const TECHNOLOGY_ROWS = [
   {
@@ -125,7 +126,24 @@ const TECHNOLOGY_ROWS = [
   },
 ];
 
-const TechnologiesSection = () => (
+type TechnologiesSectionProps = {
+  capabilities?: HomeCapability[];
+};
+
+const TechnologiesSection = ({ capabilities }: TechnologiesSectionProps) => {
+  const items =
+    capabilities && capabilities.length > 0
+      ? capabilities.map((cap) => ({
+          id: `cms-capability-${cap.id}`,
+          backgroundSrc: "/mask-group@2x.png",
+          iconSrc: cap.iconUrl || undefined,
+          productDelivery: cap.title,
+          description: cap.description,
+          skills: cap.tags,
+        }))
+      : TECHNOLOGY_ROWS.flatMap((row) => row.items);
+
+  return (
   <section id="our-service" className="w-full">
     <Image
       className="pointer-events-none absolute left-1/2 top-1/3 w-full max-w-[800px] -translate-x-1/2 -translate-y-1/2 transform overflow-hidden"
@@ -163,7 +181,7 @@ const TechnologiesSection = () => (
     </div>
 
     <div className="box-border flex w-full flex-wrap justify-center gap-8 px-4 mq900:px-6 mq700:px-4 text-left font-sora text-3xl">
-      {TECHNOLOGY_ROWS.flatMap((row) => row.items).map((item) => (
+      {items.map((item) => (
         <div
           key={item.id}
           className="box-border w-[calc(33.333%-1.334rem)] max-w-full min-w-0 mq900:w-[calc(50%-1rem)] mq700:w-full"
@@ -173,6 +191,7 @@ const TechnologiesSection = () => (
       ))}
     </div>
   </section>
-);
+  );
+};
 
 export default TechnologiesSection;
