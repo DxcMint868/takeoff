@@ -70,13 +70,13 @@ const Nav = ({
 
   return (
     <header
-      className={`sticky top-0 z-[99] flex w-full max-w-full shrink-0 flex-row items-center self-stretch px-[30px] py-5 box-border transition-[background-color,opacity] duration-300 ease-in-out mq900:box-border mq900:pl-[30px] mq900:pr-[30px] ${scrolled ? "bg-dark opacity-90" : "bg-transparent"} ${className}`}
+      className={`sticky top-0 z-[99] flex w-full max-w-full shrink-0 flex-row items-center justify-between self-stretch px-[30px] py-5 box-border transition-[background-color,opacity] duration-300 ease-in-out ${scrolled ? "bg-dark opacity-90" : "bg-transparent"} ${className}`}
     >
       <div className="pointer-events-none h-full w-full absolute !m-[0] top-[0px] right-[0px] bottom-[0px] left-[0px]" />
       <Link
         id="nav-logo"
         href="/"
-        className="w-[149px] flex cursor-pointer select-none flex-col items-start justify-start border-0 bg-transparent pt-[7px] pb-0 pl-0 pr-[9px] [text-decoration:none] box-border outline-none transition-opacity duration-200 ease-in-out hover:opacity-90 focus-visible:opacity-100 focus-visible:ring-2 focus-visible:ring-purple focus-visible:ring-offset-2 focus-visible:ring-offset-dark z-[1]"
+        className="w-[149px] flex shrink-0 cursor-pointer select-none flex-col items-start justify-start border-0 bg-transparent pt-[7px] pb-0 pl-0 pr-[9px] [text-decoration:none] box-border outline-none transition-opacity duration-200 ease-in-out hover:opacity-90 focus-visible:opacity-100 focus-visible:ring-2 focus-visible:ring-purple focus-visible:ring-offset-2 focus-visible:ring-offset-dark z-[1]"
       >
         <span className="relative block h-[27px] w-full max-w-full shrink-0 self-stretch overflow-hidden">
           <Image
@@ -89,8 +89,9 @@ const Nav = ({
           />
         </span>
       </Link>
-      {/* Center — truly centered relative to the full header width */}
-      <nav className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-row items-center gap-x-8 text-left text-base font-reg mq1100:hidden">
+
+      {/* Nav links — uniformly distributed across remaining space */}
+      <nav className="flex flex-1 flex-row items-center justify-evenly px-6 text-left text-base font-reg mq1100:hidden">
         <Link href="/#our-service" className={navInactive}>
           Services
         </Link>
@@ -109,7 +110,7 @@ const Nav = ({
       </nav>
 
       {/* Right cluster */}
-      <div className="ml-auto flex shrink-0 items-center gap-5">
+      <div className="flex shrink-0 items-center gap-5">
         <NavLanguageSelect />
 
         <div className="mq1100:hidden shrink-0">
