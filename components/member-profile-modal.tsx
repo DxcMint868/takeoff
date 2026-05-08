@@ -11,6 +11,7 @@ type MemberProfileModalProps = {
 };
 
 export default function MemberProfileModal({ member, onClose }: MemberProfileModalProps) {
+
   useEffect(() => {
     if (!member) return;
     const prevOverflow = document.body.style.overflow;

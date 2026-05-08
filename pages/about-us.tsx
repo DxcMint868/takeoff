@@ -1,8 +1,16 @@
-import type { NextPage } from "next";
+import type { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import FooterComponent from "../components/footer-component";
 import Nav from "../components/nav";
 import AboutPageMain from "../components/about-page-main";
+
+type AboutUsPageProps = Record<string, never>;
+
+export const getStaticProps: GetStaticProps<AboutUsPageProps> = async () => {
+  return {
+    props: {},
+  };
+};
 
 const SITE_URL = "https://www.hoasen.io";
 const PAGE_URL = `${SITE_URL}/about-us`;
@@ -31,7 +39,7 @@ const webPageJsonLd = {
   about: { "@id": `${SITE_URL}/#organization` },
 };
 
-const AboutUs: NextPage = () => {
+const AboutUs: NextPage<AboutUsPageProps> = () => {
   return (
     <>
       <Head>

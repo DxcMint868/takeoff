@@ -3,6 +3,9 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import CTASolid from "./cta-solid";
+import { NavLanguageSelect } from "./nav-language-select";
+import { NavMobileModal } from "./nav-mobile-modal";
+import { isNavItemActiveDesktop, NAV_ITEMS } from "../lib/nav-links";
 
 export type NavType = {
   className?: string;
@@ -66,7 +69,7 @@ const Nav = ({
 
   return (
     <header
-      className={`self-stretch mq1100:relative sticky flex flex-row items-start justify-between py-5 px-[60px] box-border top-[0] z-[99] gap-5 max-w-full mq900:pl-[30px] mq900:pr-[30px] mq900:box-border transition-[background-color,opacity] duration-300 ease-in-out ${scrolled ? "bg-dark opacity-90" : "bg-transparent"} ${className}`}
+      className={`sticky top-0 z-[99] flex w-full max-w-full shrink-0 flex-row items-center self-stretch px-[30px] py-5 box-border transition-[background-color,opacity] duration-300 ease-in-out mq900:box-border mq900:pl-[30px] mq900:pr-[30px] ${scrolled ? "bg-dark opacity-90" : "bg-transparent"} ${className}`}
     >
       <div className="pointer-events-none h-full w-full absolute !m-[0] top-[0px] right-[0px] bottom-[0px] left-[0px]" />
       <Link
@@ -85,43 +88,49 @@ const Nav = ({
           />
         </span>
       </Link>
-      <nav className="m-0 w-auto flex flex-col items-end justify-start pt-2.5 px-0 pb-0 box-border max-w-full shrink-0 mq1100:hidden">
-        <nav className="m-0 flex h-6 flex-row items-center gap-x-12 text-left text-base font-reg">
-          <Link href="/#our-service" className={navInactive}>
-            Services
-          </Link>
-          <Link href="/works" className={onWorksPage ? navActive : navInactive}>
-            Works
-          </Link>
-          <Link href="/about-us" className={onAboutPage ? navActive : navInactive}>
-            About Us
-          </Link>
-          <Link href="/#contact-us" className={navInactive}>
-            Contact Us
-          </Link>
-        </nav>
-      </nav>
-      <div className="mq1100:hidden shrink-0">
-        <CTASolid propWidth="150px" label="Start Today" href="/#contact-us" />
-      </div>
 
-      <button
-        type="button"
-        className="relative z-[1] mt-1.5 hidden mq1100:flex size-11 shrink-0 items-center justify-center self-center border-0 bg-transparent p-0 outline-none transition-opacity hover:opacity-80 focus-visible:ring-2 focus-visible:ring-purple focus-visible:ring-offset-2 focus-visible:ring-offset-dark"
-        aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-        aria-expanded={mobileMenuOpen}
-        aria-controls="mobile-nav-panel"
-        onClick={() => setMobileMenuOpen((o) => !o)}
-      >
-        <Image
-          src="/icons/menu-icon.svg"
-          alt=""
-          width={40}
-          height={43}
-          unoptimized
-          className="pointer-events-none block"
-        />
-      </button>
+      {/* Center — truly centered relative to the full header width */}
+      <nav className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-row items-center gap-x-12 text-left text-base font-reg mq1100:hidden">
+        <Link href="/#our-service" className={navInactive}>
+          Services
+        </Link>
+        <Link href="/works" className={onWorksPage ? navActive : navInactive}>
+          Works
+        </Link>
+        <Link href="/about-us" className={onAboutPage ? navActive : navInactive}>
+          About Us
+        </Link>
+        <Link href="/#contact-us" className={navInactive}>
+          Contact Us
+        </Link>
+      </nav>
+
+      {/* Right cluster */}
+      <div className="ml-auto flex shrink-0 items-center gap-5">
+        <NavLanguageSelect />
+
+        <div className="mq1100:hidden shrink-0">
+          <CTASolid propWidth="150px" label="Start Today" href="/#contact-us" />
+        </div>
+
+        <button
+          type="button"
+          className="relative z-[1] mt-1.5 hidden mq1100:flex size-11 shrink-0 items-center justify-center self-center border-0 bg-transparent p-0 outline-none transition-opacity hover:opacity-80 focus-visible:ring-2 focus-visible:ring-purple focus-visible:ring-offset-2 focus-visible:ring-offset-dark"
+          aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={mobileMenuOpen}
+          aria-controls="mobile-nav-panel"
+          onClick={() => setMobileMenuOpen((o) => !o)}
+        >
+          <Image
+            src="/icons/menu-icon.svg"
+            alt=""
+            width={40}
+            height={43}
+            unoptimized
+            className="pointer-events-none block"
+          />
+        </button>
+      </div>
 
       {mobileMenuOpen ? (
         <div
@@ -176,7 +185,7 @@ const Nav = ({
               Contact Us
             </Link>
           </nav>
-          <div className="mt-auto w-full shrink-0 pt-6">
+          <div className="mt-auto flex w-full shrink-0 flex-col gap-4 pt-6">
             <CTASolid
               className="flex w-full justify-center"
               propWidth="100%"

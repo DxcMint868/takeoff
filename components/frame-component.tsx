@@ -12,7 +12,9 @@ const FrameComponent: NextPage<FrameComponentType> = ({ className = "" }) => {
     >
       <div className="w-[638px] flex flex-col items-center justify-start gap-10 max-w-full z-[1] mq700:gap-5">
         <div className="self-stretch flex flex-col items-center justify-start gap-6">
-          <h1 className="m-0 self-stretch relative text-inherit tracking-[0.2em] leading-[32px] capitalize font-normal font-[inherit] mq450:text-lgi mq450:leading-[26px]">{`We Create Great `}</h1>
+          <h1 className="m-0 self-stretch relative text-inherit tracking-[0.2em] leading-[32px] capitalize font-normal font-[inherit] mq450:text-lgi mq450:leading-[26px]">
+            We Create Great
+          </h1>
           <div className="self-stretch flex flex-col items-center justify-start gap-5 text-55xl">
             <h1 className="m-0 self-stretch relative text-inherit leading-[82px] capitalize font-normal font-[inherit] mq450:text-25xl mq450:leading-[49px] mq900:text-40xl mq900:leading-[66px]">
               Fintech Products

@@ -294,12 +294,12 @@ const Web: NextPage<HomeProps> = ({ featuredProject, projectCards }) => {
         <meta property="og:image" content={OG_IMAGE} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
-        <meta property="og:image:alt" content="Hoasen - Blockchain & Fintech Development Studio" />
+        <meta property="og:image:alt" content={TITLE} />
 
         <meta name="twitter:title" content={TITLE} />
         <meta name="twitter:description" content={DESCRIPTION} />
         <meta name="twitter:image" content={OG_IMAGE} />
-        <meta name="twitter:image:alt" content="Hoasen - Blockchain & Fintech Development Studio" />
+        <meta name="twitter:image:alt" content={TITLE} />
 
         <script
           type="application/ld+json"
@@ -334,7 +334,7 @@ const Web: NextPage<HomeProps> = ({ featuredProject, projectCards }) => {
             priority
           />
         </div>
-        <Nav />
+        <Nav initialTransparent scrollThreshold={80} />
         <section className="w-full flex flex-col items-start justify-start gap-14 max-w-full mq900:gap-7 pt-[70px]">
           <FrameComponent />
         </section>
