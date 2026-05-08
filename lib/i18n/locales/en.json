@@ -1,0 +1,23 @@
+{
+  "nav.services": "Services",
+  "nav.works": "Works",
+  "nav.ourTeam": "Our Team",
+  "nav.about": "About Us",
+  "nav.contact": "Contact Us",
+  "nav.blog": "Blog",
+  "nav.home": "Home",
+  "nav.startToday": "Start Today",
+  "nav.openMenu": "Open menu",
+  "nav.closeMenu": "Close menu",
+  "nav.siteNavigation": "Site navigation",
+  "nav.menu": "Menu",
+
+  "blog.title": "Blog",
+  "blog.back": "Back",
+  "blog.readTime": "{{mins}} min read",
+  "blog.noPosts": "No posts yet. Add and publish entries in Strapi, or check your API configuration.",
+  "footer.contactInfo": "Contact Info",
+  "meta.by": "By:",
+
+  "common.loading": "Loading"
+}

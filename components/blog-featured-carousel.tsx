@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { BlogPostPreview } from "../lib/blog-posts";
-import { formatReadLabel } from "../lib/blog-posts";
+import { useTranslation } from "../lib/i18n/use-translation";
 import { BlogPostMetaRow } from "./blog-post-meta-row";
 
 type BlogFeaturedCarouselProps = {
@@ -30,6 +30,7 @@ export function BlogFeaturedCarousel({
   posts,
   formatDate,
 }: BlogFeaturedCarouselProps) {
+  const { readSeconds } = useTranslation();
   const [active, setActive] = useState(0);
   const [resumeKey, setResumeKey] = useState(0);
   const [hoverPause, setHoverPause] = useState(false);
@@ -154,7 +155,7 @@ export function BlogFeaturedCarousel({
           <div className="flex min-w-0 flex-1 flex-col justify-between px-5 py-8 mq900:px-0 mq900:py-6">
             <div>
               <span className="inline-block rounded-full bg-white/[0.08] px-3 py-1 font-reg text-xs font-medium tracking-[0.02em] text-white-60">
-                {formatReadLabel(post.timeToRead)}
+                {readSeconds(post.timeToRead)}
               </span>
               <h2 className="mt-5 font-sora text-[22px] font-semibold leading-[1.25] tracking-[0.02em] text-white mq450:text-xl mq900:text-2xl">
                 <Link

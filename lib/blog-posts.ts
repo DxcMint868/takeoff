@@ -20,8 +20,3 @@ export type BlogPostPreview = {
 /** Fallback cover when Strapi `cover_image` is missing (used by `lib/strapi/blogs.ts`). */
 export const LEGACY_BLOG_COVER_IMAGE =
   "https://blockworks.co/_next/image?url=https://blockworks-co.imgix.net/wp-content/uploads/2024/11/btc-pastel-stripes.jpg&w=1920&q=75&webp=false";
-
-export function formatReadLabel(seconds: number): string {
-  const mins = Math.max(1, Math.round(seconds / 60));
-  return `${mins} Mins Read`;
-}

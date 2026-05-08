@@ -1,11 +1,12 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import CTASolid from "./cta-solid";
 import { NavLanguageSelect } from "./nav-language-select";
-import { NavMobileModal } from "./nav-mobile-modal";
-import { isNavItemActiveDesktop, NAV_ITEMS } from "../lib/nav-links";
+import { useTranslation } from "../lib/i18n/use-translation";
 
 export type NavType = {
   className?: string;
@@ -25,6 +26,7 @@ const Nav = ({
   initialTransparent = false,
   scrollThreshold = DEFAULT_SCROLL_THRESHOLD,
 }: NavType) => {
+  const { t } = useTranslation();
   const { pathname } = useRouter();
   const onWorksPage = pathname.startsWith("/works");
   const onBlogPage = pathname.startsWith("/blog");
@@ -81,7 +83,7 @@ const Nav = ({
         <span className="relative block h-[27px] w-full max-w-full shrink-0 self-stretch overflow-hidden">
           <Image
             src="/logo@2x.png"
-            alt="Home"
+            alt={t("nav.home")}
             fill
             className="pointer-events-none object-contain object-left"
             sizes="140px"
@@ -93,19 +95,19 @@ const Nav = ({
       {/* Nav links — uniformly distributed across remaining space */}
       <nav className="flex flex-1 flex-row items-center justify-evenly px-6 text-left text-base font-reg mq1100:hidden">
         <Link href="/#our-service" className={navInactive}>
-          Services
+          {t("nav.services")}
         </Link>
         <Link href="/works" className={onWorksPage ? navActive : navInactive}>
-          Works
+          {t("nav.works")}
         </Link>
         <Link href="/about-us" className={onAboutPage ? navActive : navInactive}>
-          About Us
+          {t("nav.about")}
         </Link>
         <Link href="/#contact-us" className={navInactive}>
-          Contact Us
+          {t("nav.contact")}
         </Link>
         <Link href="/blog" className={onBlogPage ? navActive : navInactive}>
-          Blog
+          {t("nav.blog")}
         </Link>
       </nav>
 
@@ -114,13 +116,13 @@ const Nav = ({
         <NavLanguageSelect />
 
         <div className="mq1100:hidden shrink-0">
-          <CTASolid propWidth="150px" label="Start Today" href="/#contact-us" />
+          <CTASolid propWidth="150px" label={t("nav.startToday")} href="/#contact-us" />
         </div>
 
         <button
           type="button"
           className="relative z-[1] mt-1.5 hidden mq1100:flex size-11 shrink-0 items-center justify-center self-center border-0 bg-transparent p-0 outline-none transition-opacity hover:opacity-80 focus-visible:ring-2 focus-visible:ring-purple focus-visible:ring-offset-2 focus-visible:ring-offset-dark"
-          aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+          aria-label={mobileMenuOpen ? t("nav.closeMenu") : t("nav.openMenu")}
           aria-expanded={mobileMenuOpen}
           aria-controls="mobile-nav-panel"
           onClick={() => setMobileMenuOpen((o) => !o)}
@@ -141,13 +143,13 @@ const Nav = ({
           id="mobile-nav-panel"
           role="dialog"
           aria-modal="true"
-          aria-label="Site navigation"
+          aria-label={t("nav.siteNavigation")}
           className="fixed inset-0 z-[100] box-border flex min-h-[100dvh] w-full max-w-none min-w-0 flex-col gap-8 overflow-y-auto overflow-x-hidden bg-surface-card/95 px-8 pb-12 pt-20 mq900:px-6 mq450:px-5"
         >
           <button
             type="button"
             className="absolute right-5 top-5 z-[1] flex size-11 items-center justify-center border-0 bg-transparent p-0 outline-none transition-opacity hover:opacity-80 focus-visible:ring-2 focus-visible:ring-purple focus-visible:ring-offset-2 focus-visible:ring-offset-surface-card mq900:right-4 mq900:top-4"
-            aria-label="Close menu"
+            aria-label={t("nav.closeMenu")}
             onClick={() => setMobileMenuOpen(false)}
           >
             <Image
@@ -165,42 +167,42 @@ const Nav = ({
               className={navInactive}
               onClick={() => setMobileMenuOpen(false)}
             >
-              Services
+              {t("nav.services")}
             </Link>
             <Link
               href="/works"
               className={onWorksPage ? navActive : navInactive}
               onClick={() => setMobileMenuOpen(false)}
             >
-              Works
+              {t("nav.works")}
             </Link>
             <Link
               href="/about-us"
               className={onAboutPage ? navActive : navInactive}
               onClick={() => setMobileMenuOpen(false)}
             >
-              About Us
+              {t("nav.about")}
             </Link>
             <Link
               href="/#contact-us"
               className={navInactive}
               onClick={() => setMobileMenuOpen(false)}
             >
-              Contact Us
+              {t("nav.contact")}
             </Link>
             <Link
               href="/blog"
               className={onBlogPage ? navActive : navInactive}
               onClick={() => setMobileMenuOpen(false)}
             >
-              Blog
+              {t("nav.blog")}
             </Link>
           </nav>
           <div className="mt-auto flex w-full shrink-0 flex-col gap-4 pt-6">
             <CTASolid
               className="flex w-full justify-center"
               propWidth="100%"
-              label="Start Today"
+              label={t("nav.startToday")}
               href="/#contact-us"
             />
           </div>

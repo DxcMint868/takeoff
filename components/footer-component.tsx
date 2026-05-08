@@ -1,12 +1,14 @@
 import type { NextPage } from "next";
 import Image from "next/image";
 import { PhoneIcon, MailIcon, TelegramIcon, LinkedInIcon, XIcon } from "./icons";
+import { useTranslation } from "../lib/i18n/use-translation";
 
 export type FooterComponentType = {
   className?: string;
 };
 
 const FooterComponent: NextPage<FooterComponentType> = ({ className = "" }) => {
+  const { t } = useTranslation();
   return (
     <section
       className={`relative w-full flex flex-col items-start justify-start pt-10 px-[25px] pb-8 box-border gap-8 text-center text-xl text-white font-sora overflow-hidden ${className}`}
@@ -24,7 +26,7 @@ const FooterComponent: NextPage<FooterComponentType> = ({ className = "" }) => {
         <div className="w-[348px] flex flex-col items-start justify-start gap-12 max-w-full">
           <div className="self-stretch flex flex-col items-center justify-center gap-6 z-[1]">
             <h2 className="m-0 relative text-inherit tracking-[0.04em] leading-[26px] font-semibold font-[inherit] mq450:text-base mq450:leading-[21px]">
-              Contact Info
+              {t("footer.contactInfo")}
             </h2>
             <div className="self-stretch flex flex-col items-center justify-center gap-6 text-left text-base font-reg">
               <div className="self-stretch flex flex-row items-center justify-center gap-6 mq450:flex-wrap">

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useLocale } from "../contexts/locale-context";
+import { useTranslation } from "../lib/i18n/use-translation";
 import type { BlogPostPreview } from "../lib/blog-posts";
 import { BlogFeaturedCarousel } from "./blog-featured-carousel";
 import { BlogPostList } from "./blog-post-list";
@@ -11,20 +12,9 @@ import { GradientGlow } from "./gradient-glow";
 
 export type { BlogPostPreview } from "../lib/blog-posts";
 
-function formatDate(iso: string) {
-  try {
-    return new Intl.DateTimeFormat("en", {
-      month: "short",
-      day: "numeric",
-      year: "numeric",
-    }).format(new Date(iso));
-  } catch {
-    return iso;
-  }
-}
-
 export default function BlogPageMain() {
   const { locale } = useLocale();
+  const { t, formatBlogDate } = useTranslation();
   const [featuredPosts, setFeaturedPosts] = useState<BlogPostPreview[]>([]);
   const [listPosts, setListPosts] = useState<BlogPostPreview[]>([]);
   const [loading, setLoading] = useState(true);
@@ -103,29 +93,28 @@ export default function BlogPageMain() {
               </svg>
             </span>
             <span className="font-reg text-xs uppercase leading-4 tracking-[0.2em] text-white">
-              Back
+              {t("blog.back")}
             </span>
           </Link>
 
           <div className="flex flex-col items-center gap-4 text-center">
             <h1 className="m-0 max-w-[720px] font-sora text-[52px] font-normal leading-[1.08] tracking-[0.02em] text-white mq450:text-4xl mq900:text-[44px]">
-              Blog
+              {t("blog.title")}
             </h1>
             {empty ? (
               <p className="m-0 max-w-md font-reg text-sm leading-relaxed text-white-60">
-                No posts yet. Add and publish entries in Strapi, or check your
-                API configuration.
+                {t("blog.noPosts")}
               </p>
             ) : null}
           </div>
         </div>
 
         {featuredPosts.length > 0 ? (
-          <BlogFeaturedCarousel posts={featuredPosts} formatDate={formatDate} />
+          <BlogFeaturedCarousel posts={featuredPosts} formatDate={formatBlogDate} />
         ) : null}
 
         <div className="mt-20 flex w-full mq900:mt-0">
-          <BlogPostList posts={listPosts} formatDate={formatDate} />
+          <BlogPostList posts={listPosts} formatDate={formatBlogDate} />
         </div>
       </div>
     </main>

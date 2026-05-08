@@ -1,0 +1,24 @@
+{
+  "nav.services": "Dịch vụ",
+  "nav.works": "Dự án",
+  "nav.ourTeam": "Đội ngũ",
+  "nav.about": "Giới thiệu",
+  "nav.contact": "Liên hệ",
+  "nav.blog": "Blog",
+  "nav.home": "Trang chủ",
+  "nav.startToday": "Bắt đầu",
+  "nav.openMenu": "Mở menu",
+  "nav.closeMenu": "Đóng menu",
+  "nav.siteNavigation": "Điều hướng trang",
+  "nav.menu": "Menu",
+
+  "blog.title": "Blog",
+  "blog.back": "Quay lại",
+  "blog.readTime": "{{mins}} phút đọc",
+  "blog.noPosts": "Chưa có bài viết. Hãy thêm và xuất bản trên Strapi, hoặc kiểm tra cấu hình API.",
+
+  "footer.contactInfo": "Thông tin liên hệ",
+  "meta.by": "Bởi:",
+
+  "common.loading": "Đang tải"
+}

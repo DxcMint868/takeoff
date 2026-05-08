@@ -1,7 +1,9 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import type { BlogPostPreview } from "../lib/blog-posts";
-import { formatReadLabel } from "../lib/blog-posts";
+import { useTranslation } from "../lib/i18n/use-translation";
 import { BlogPostMetaRow } from "./blog-post-meta-row";
 
 type BlogPostListProps = {
@@ -10,6 +12,7 @@ type BlogPostListProps = {
 };
 
 export function BlogPostList({ posts, formatDate }: BlogPostListProps) {
+  const { readSeconds } = useTranslation();
   if (posts.length === 0) return null;
 
   return (
@@ -36,7 +39,7 @@ export function BlogPostList({ posts, formatDate }: BlogPostListProps) {
 
             <div className="flex min-w-0 flex-1 flex-col">
               <span className="mq900:hidden inline w-fit rounded-full bg-white/[0.08] px-3 py-1 font-reg text-xs font-medium tracking-[0.02em] text-white-60">
-                {formatReadLabel(post.timeToRead)}
+                {readSeconds(post.timeToRead)}
               </span>
               <h2 className="mt-3 mq900:mt-0 font-sora text-xl mq900:text-[16px] font-semibold leading-snug tracking-[0.02em] text-white mq450:text-lg">
                 <Link
