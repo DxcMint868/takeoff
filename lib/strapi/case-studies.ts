@@ -688,7 +688,10 @@ function buildProjectPopulateQuery() {
   );
   populateMediaFields(params, "populate[solutions][populate][image]");
   populateMediaFields(params, "populate[outcome][populate][background_image]");
-  params.set("populate[testimonial]", "*");
+  params.set("populate[testimonial][fields][0]", "quote");
+  params.set("populate[testimonial][fields][1]", "author_name");
+  params.set("populate[testimonial][fields][2]", "author_role");
+  params.set("populate[testimonial][fields][3]", "author_company");
   params.set("populate[tech_infra_items][fields][0]", "name");
   params.set("populate[tech_infra_items][fields][1]", "order");
   params.set("populate[gallery_images][fields][0]", "alt_text");
