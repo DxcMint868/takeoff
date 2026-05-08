@@ -33,7 +33,7 @@ const VALUES: {
   {
     Icon: WorldClassIcon,
     title: "World-Class Quality",
-    description: "We don't just meet standards; we set them.",
+    description: "We don&apos;t just meet standards; we set them.",
   },
 ];
 
