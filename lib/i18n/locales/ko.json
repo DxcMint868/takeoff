@@ -1,0 +1,24 @@
+{
+  "nav.services": "서비스",
+  "nav.works": "프로젝트",
+  "nav.ourTeam": "팀",
+  "nav.about": "소개",
+  "nav.contact": "문의",
+  "nav.blog": "블로그",
+  "nav.home": "홈",
+  "nav.startToday": "시작하기",
+  "nav.openMenu": "메뉴 열기",
+  "nav.closeMenu": "메뉴 닫기",
+  "nav.siteNavigation": "사이트 메뉴",
+  "nav.menu": "메뉴",
+
+  "blog.title": "블로그",
+  "blog.back": "돌아가기",
+  "blog.readTime": "{{mins}}분 읽기",
+  "blog.noPosts": "아직 글이 없습니다. Strapi에서 게시하거나 API 설정을 확인하세요.",
+
+  "footer.contactInfo": "연락처 정보",
+  "meta.by": "작성:",
+
+  "common.loading": "로딩 중"
+}

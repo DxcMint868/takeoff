@@ -1,7 +1,18 @@
+"use client";
+
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useCallback, useEffect } from "react";
 import { isNavItemActiveMobile, NAV_ITEMS } from "../lib/nav-links";
+import { useTranslation } from "../lib/i18n/use-translation";
+
+const HREF_TO_KEY: Record<string, string> = {
+  "/#our-service": "nav.services",
+  "/works": "nav.works",
+  "/#our-team": "nav.ourTeam",
+  "/about-us": "nav.about",
+  "/#contact-us": "nav.contact",
+};
 
 type NavMobileModalProps = {
   open: boolean;
@@ -14,6 +25,7 @@ const linkInactive = `${linkBase} text-white-60 hover:text-white`;
 const linkActive = `${linkBase} text-white font-semibold`;
 
 export function NavMobileModal({ open, onClose }: NavMobileModalProps) {
+  const { t } = useTranslation();
   const { pathname, asPath } = useRouter();
 
   const onKeyDown = useCallback(
@@ -41,14 +53,14 @@ export function NavMobileModal({ open, onClose }: NavMobileModalProps) {
       className="fixed inset-0 z-[200] flex h-[100dvh] w-full flex-col bg-dark"
       role="dialog"
       aria-modal="true"
-      aria-label="Menu"
+      aria-label={t("nav.menu")}
     >
       <div className="flex shrink-0 items-center justify-end px-[30px] py-5 mq450:px-5">
         <button
           type="button"
           onClick={onClose}
           className="flex size-11 items-center justify-center rounded-lg border-0 bg-transparent text-white transition-opacity hover:opacity-80 focus-visible:outline focus-visible:ring-2 focus-visible:ring-purple"
-          aria-label="Close menu"
+          aria-label={t("nav.closeMenu")}
         >
           <span className="font-reg text-3xl leading-none" aria-hidden>
             ×
@@ -59,6 +71,8 @@ export function NavMobileModal({ open, onClose }: NavMobileModalProps) {
       <nav className="flex min-h-0 flex-1 flex-col items-center justify-center gap-10 px-6 pb-16">
         {NAV_ITEMS.map((item) => {
           const active = isNavItemActiveMobile(pathname, asPath, item.href);
+          const key = HREF_TO_KEY[item.href];
+          const label = key ? t(key) : item.label;
           return (
             <Link
               key={item.href}
@@ -66,7 +80,7 @@ export function NavMobileModal({ open, onClose }: NavMobileModalProps) {
               className={active ? linkActive : linkInactive}
               onClick={onClose}
             >
-              {item.label}
+              {label}
             </Link>
           );
         })}

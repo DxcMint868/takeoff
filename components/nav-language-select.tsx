@@ -6,6 +6,8 @@ import {
   useRef,
   useState,
 } from "react";
+import { useLocaleOptional } from "../contexts/locale-context";
+import { isAppLocale } from "../lib/strapi/language";
 
 type LocaleOption = {
   code: string;
@@ -26,13 +28,23 @@ type NavLanguageSelectProps = {
 
 const OUTLINE_DARK = "var(--Ouline-Dark, #3A2F50)";
 
-/** UI-only language switcher (no routing / i18n). */
+/** Syncs with `LocaleProvider` when present (Strapi blog locale). */
 export function NavLanguageSelect({ className = "" }: NavLanguageSelectProps) {
+  const localeCtx = useLocaleOptional();
   const id = useId();
   const listId = `${id}-list`;
   const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState(LOCALES[0]);
+  const [selected, setSelected] = useState<LocaleOption>(() => {
+    const code = localeCtx?.locale ?? "en";
+    return LOCALES.find((l) => l.code === code) ?? LOCALES[0];
+  });
   const rootRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!localeCtx) return;
+    const match = LOCALES.find((l) => l.code === localeCtx.locale);
+    if (match) setSelected(match);
+  }, [localeCtx]);
 
   const close = useCallback(() => setOpen(false), []);
 
@@ -120,6 +132,9 @@ export function NavLanguageSelect({ className = "" }: NavLanguageSelectProps) {
                     aria-selected={isSel}
                     onClick={() => {
                       setSelected(opt);
+                      if (localeCtx && isAppLocale(opt.code)) {
+                        localeCtx.setLocale(opt.code);
+                      }
                       close();
                     }}
                     className={`flex w-full cursor-pointer items-center gap-3 rounded-full py-2.5 px-2 text-left font-reg text-[16px] font-semibold tracking-[0.02em] text-white transition-colors hover:bg-[#332952] focus-visible:outline focus-visible:ring-2 focus-visible:ring-purple/80 ${isSel ? "bg-[#332952]" : "bg-transparent"}`}
