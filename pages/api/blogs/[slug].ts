@@ -21,8 +21,15 @@ export default async function handler(
       ? req.query.locale.trim()
       : "en";
 
+  const documentId =
+    typeof req.query.documentId === "string" && req.query.documentId.trim()
+      ? req.query.documentId.trim()
+      : undefined;
+
   try {
-    const post = await fetchBlogPostFromStrapi(slug, locale);
+    const post = await fetchBlogPostFromStrapi(slug, locale, {
+      documentId,
+    });
     if (!post) {
       return res.status(404).json({ error: "Not found" });
     }

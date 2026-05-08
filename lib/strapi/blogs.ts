@@ -125,6 +125,8 @@ function mapStrapiBlog(entry: unknown): BlogPostPreview | null {
 
   const isFeatured = Boolean(u.is_featured ?? (u as { isFeatured?: boolean }).isFeatured);
 
+  const documentId = str(u.documentId).trim();
+
   return {
     slug,
     title,
@@ -140,6 +142,7 @@ function mapStrapiBlog(entry: unknown): BlogPostPreview | null {
     content: "",
     contentBlocks: blocks.length > 0 ? blocks : undefined,
     isFeatured,
+    ...(documentId ? { documentId } : {}),
   };
 }
 
@@ -165,6 +168,28 @@ async function fetchAllBlogPostsMapped(
   return rows
     .map((row) => mapStrapiBlog(row))
     .filter((p): p is BlogPostPreview => p !== null);
+}
+
+async function fetchBlogPostByDocumentId(
+  documentId: string,
+  uiLocale: string,
+): Promise<BlogPostPreview | null> {
+  const mapped = await fetchAllBlogPostsMapped(uiLocale);
+  return mapped.find((p) => p.documentId === documentId) ?? null;
+}
+
+/** Same Strapi entry in another locale — tries requested locale then fallback. */
+async function resolveBlogPostByDocumentId(
+  documentId: string,
+  uiLocale: string,
+): Promise<BlogPostPreview | null> {
+  let post = await fetchBlogPostByDocumentId(documentId, uiLocale);
+  if (post) return post;
+  const fb = fallbackUiLocale();
+  if (uiLocale.trim().toLowerCase() !== fb) {
+    post = await fetchBlogPostByDocumentId(documentId, fb);
+  }
+  return post ?? null;
 }
 
 export type BlogsListResult = {
@@ -210,6 +235,7 @@ export async function fetchBlogsFromStrapi(
 export async function fetchBlogPostFromStrapi(
   slug: string,
   uiLocale: string,
+  opts?: { documentId?: string },
 ): Promise<BlogPostPreview | null> {
   if (!hasCmsConfig()) return null;
 
@@ -218,6 +244,10 @@ export async function fetchBlogPostFromStrapi(
       const mapped = await fetchAllBlogPostsMapped(loc);
       const hit = mapped.find((p) => p.slug === slug);
       if (hit) return hit;
+    }
+    const docId = opts?.documentId?.trim();
+    if (docId) {
+      return await resolveBlogPostByDocumentId(docId, uiLocale);
     }
     return null;
   } catch (e) {

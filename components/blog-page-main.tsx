@@ -6,6 +6,7 @@ import { useLocale } from "../contexts/locale-context";
 import type { BlogPostPreview } from "../lib/blog-posts";
 import { BlogFeaturedCarousel } from "./blog-featured-carousel";
 import { BlogPostList } from "./blog-post-list";
+import { ContentLoadingOverlay } from "./content-loading-overlay";
 import { GradientGlow } from "./gradient-glow";
 
 export type { BlogPostPreview } from "../lib/blog-posts";
@@ -74,6 +75,7 @@ export default function BlogPageMain() {
 
   return (
     <main className="relative box-border flex min-h-[70vh] w-full flex-col items-center overflow-x-clip bg-gradient-to-b from-[#0d0824] via-[#1b1333] to-[#1b1333] px-5 pb-24 pt-8 text-white mq900:px-6">
+      <ContentLoadingOverlay visible={loading} fullViewport />
       <GradientGlow className="top-0 opacity-90" />
       <div className="relative flex w-full max-w-[1100px] flex-col items-stretch gap-14 mq900:gap-12">
         <div className="flex w-full flex-col gap-8">
@@ -109,9 +111,6 @@ export default function BlogPageMain() {
             <h1 className="m-0 max-w-[720px] font-sora text-[52px] font-normal leading-[1.08] tracking-[0.02em] text-white mq450:text-4xl mq900:text-[44px]">
               Blog
             </h1>
-            {loading ? (
-              <p className="m-0 font-reg text-sm text-white-60">Loading…</p>
-            ) : null}
             {empty ? (
               <p className="m-0 max-w-md font-reg text-sm leading-relaxed text-white-60">
                 No posts yet. Add and publish entries in Strapi, or check your

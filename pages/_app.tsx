@@ -1,6 +1,7 @@
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import Script from "next/script";
+import { BlogRouteProgress } from "../components/blog-route-progress";
 import { LocaleProvider } from "../contexts/locale-context";
 import "./global.css";
 
@@ -33,6 +34,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       </Script>
 
       <LocaleProvider>
+        <BlogRouteProgress />
         <Component {...pageProps} />
       </LocaleProvider>
     </>

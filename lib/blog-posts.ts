@@ -13,6 +13,8 @@ export type BlogPostPreview = {
   contentBlocks?: import("./strapi/case-studies").StrapiBlocksNode[];
   /** Strapi `is_featured` (localized) */
   isFeatured?: boolean;
+  /** Strapi document id — same across locales for one translated entry */
+  documentId?: string;
 };
 
 /** Fallback cover when Strapi `cover_image` is missing (used by `lib/strapi/blogs.ts`). */
