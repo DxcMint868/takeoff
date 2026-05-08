@@ -56,22 +56,6 @@ const FooterComponent: NextPage<FooterComponentType> = ({ className = "" }) => {
                   <XIcon className="z-[1]" />
                 </a>
               </div>
-              {/* <div className="self-stretch flex flex-row items-start justify-start py-0 pl-2.5 pr-0">
-                <div className="flex-1 flex flex-row items-start justify-start gap-[18.7px]">
-                  <div className="h-[15px] flex flex-col items-start justify-start pt-[3px] px-0 pb-0 box-border">
-                    <div className="w-px h-[13px] relative border-white-30 border-r-[1px] border-solid box-border z-[1]" />
-                  </div>
-                  <a className="[text-decoration:none] flex-1 relative tracking-[0.02em] leading-[18px] text-[inherit] inline-block min-w-[83px] z-[1]">
-                    Privacy Policy
-                  </a>
-                  <div className="h-[15px] flex flex-col items-start justify-start pt-[3px] px-0 pb-0 box-border">
-                    <div className="w-px h-[13px] relative border-white-30 border-r-[1px] border-solid box-border z-[1]" />
-                  </div>
-                  <div className="flex-1 relative tracking-[0.02em] leading-[18px] inline-block min-w-[79px] z-[1]">
-                    Terms of Use
-                  </div>
-                </div>
-              </div> */}
 
               <div className="relative tracking-[0.2em] leading-[16px] uppercase z-[2] text-center">
                 AL Hamra Industrial Zone-FZ, Ras Al Khaimah, UAE
@@ -80,11 +64,6 @@ const FooterComponent: NextPage<FooterComponentType> = ({ className = "" }) => {
           </div>
         </div>
       </div>
-      {/* <div className="flex flex-col items-start justify-start pt-2 px-[499px] pb-12 box-border relative min-h-[72px] max-w-full text-xs text-white-60 font-reg">
-        <footer className="w-full !m-[0] top-[0px] right-[-59px] text-397xl leading-[72px] font-sora text-transparent !bg-clip-text [background:linear-gradient(180deg,_rgba(255,_255,_255,_0.04),_rgba(27,_19,_51,_0))] [-webkit-background-clip:text] [-webkit-text-fill-color:transparent] text-center inline-block whitespace-nowrap z-[1] mq450:text-85xl mq450:leading-[29px] mq900:text-147xl mq900:leading-[43px]">
-          hoasen
-        </footer>
-      </div> */}
     </section>
   );
 };

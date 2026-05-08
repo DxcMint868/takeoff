@@ -12,30 +12,30 @@ const VALUES: {
   title: string;
   description: string;
 }[] = [
-    {
-      Icon: DomainExpertiseIcon,
-      title: "Domain Expertise",
-      description:
-        "Deep fintech knowledge, building systems that process millions daily.",
-    },
-    {
-      Icon: AgileExecutionIcon,
-      title: "Agile Execution",
-      description:
-        "Lean team, fast delivery cutting through red tape for swift results.",
-    },
-    {
-      Icon: TransparencyIcon,
-      title: "Transparency",
-      description:
-        "No black box clear documentation and open communication at every step.",
-    },
-    {
-      Icon: WorldClassIcon,
-      title: "World-Class Quality",
-      description: "We don't just meet standards; we set them.",
-    },
-  ];
+  {
+    Icon: DomainExpertiseIcon,
+    title: "Domain Expertise",
+    description:
+      "Deep fintech knowledge, building systems that process millions daily.",
+  },
+  {
+    Icon: AgileExecutionIcon,
+    title: "Agile Execution",
+    description:
+      "Lean team, fast delivery cutting through red tape for swift results.",
+  },
+  {
+    Icon: TransparencyIcon,
+    title: "Transparency",
+    description:
+      "No black box clear documentation and open communication at every step.",
+  },
+  {
+    Icon: WorldClassIcon,
+    title: "World-Class Quality",
+    description: "We don&apos;t just meet standards; we set them.",
+  },
+];
 
 const TeamSection: React.FC = () => {
   return (
@@ -61,21 +61,20 @@ const TeamSection: React.FC = () => {
           <div className="self-stretch relative text-base tracking-[0.02em] leading-[24px] font-light font-reg text-white-60">
             <h2 className="m-0 self-stretch relative text-3xl tracking-[0.02em] leading-[38px] z-[1] text-white-60 font-reg mq450:text-lg mq450:leading-[30px]">
               <p className="m-0">
-                <span className="font-light font-reg text-white-60">{`Hoasen is built up of a team of `}</span>
-                <span className="font-reg text-white">high-performing</span>
-                <span className="font-light">{` individuals in the fintech space. `}</span>
+                Hoasen is built up of a team of{" "}
+                <span className="font-reg text-white">high-performing</span>{" "}
+                individuals in the fintech space.
               </p>
               <p className="m-0">
-                <span className="font-light">{`We know what `}</span>
-                <span className="font-reg text-white">world-class</span>
-                <span className="font-light font-reg text-white-60">{` looks like, and our team has `}</span>
-                <span className="font-reg text-white">domain knowledge</span>
-                <span className="font-light font-reg text-white-60">{`. `}</span>
+                We know what{" "}
+                <span className="font-reg text-white">world-class</span> looks
+                like, and our team has{" "}
+                <span className="font-reg text-white">domain knowledge</span>.
               </p>
               <p className="m-0">
-                <span className="font-light font-reg text-white-60">{`This enables us to `}</span>
-                <span className="font-reg text-white">move quickly</span>
-                <span className="font-light">{`, reduce handoffs, and avoid `}</span>
+                This enables us to{" "}
+                <span className="font-reg text-white">move quickly</span>,
+                reduce handoffs, and avoid
               </p>
               <p className="m-0 font-light">
                 bureaucratic processes that slow teams down.

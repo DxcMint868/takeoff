@@ -16,13 +16,6 @@ import {
 } from "./work-examples-portfolio";
 import type { DesignProjectCard } from "../lib/strapi/design-projects";
 
-const PAGE_SUBTITLE = (
-  <p className="m-0 [text-wrap:balance]">
-    Featured projects and case studies showcasing our expertise across fintech,
-    blockchain, and enterprise software.
-  </p>
-);
-
 const FILTER_CHIPS: WorkTagSpec[] = [
   { label: "Smart Contract Development", tone: "lime" },
   { label: "Research", tone: "amber" },
@@ -139,7 +132,10 @@ const WorksPageMain = ({
               Our Work Examples
             </h1>
             <div className="w-full max-w-[900px] font-reg text-3xl font-light leading-[34px] tracking-[0.02em] text-white-60 mq450:text-base mq450:leading-7">
-              {PAGE_SUBTITLE}
+              <p className="m-0 [text-wrap:balance]">
+                Featured projects and case studies showcasing our expertise
+                across fintech, blockchain, and enterprise software.
+              </p>
             </div>
           </div>
 
@@ -178,8 +174,11 @@ const WorksPageMain = ({
                   key={chip.label}
                   type="button"
                   onClick={() => toggleFilter(chip.label)}
-                  className={`${BADGE_SURFACE_CLASSES} cursor-pointer select-none transition-opacity ${active ? "opacity-100 ring-2 ring-white/50" : "opacity-90 hover:opacity-100"
-                    }`}
+                  className={`${BADGE_SURFACE_CLASSES} cursor-pointer select-none transition-opacity ${
+                    active
+                      ? "opacity-100 ring-2 ring-white/50"
+                      : "opacity-90 hover:opacity-100"
+                  }`}
                 >
                   {chip.label}
                 </button>

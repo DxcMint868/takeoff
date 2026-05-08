@@ -142,7 +142,7 @@ export default function CaseStudyTemplate({
               backgroundClassName="pointer-events-none object-cover object-right"
             >
               <h2 className="m-0 font-sora text-[40px] font-semibold capitalize leading-none mq900:text-[32px] mq900:leading-[1.2] mq450:text-5xl">
-                Brief &amp; Background
+                Brief & Background
               </h2>
               <StrapiBlocks
                 blocks={caseStudy.briefAndBackground.descriptionBlocks}
@@ -312,9 +312,9 @@ export default function CaseStudyTemplate({
               <span>{caseStudy.testimonial.authorName}</span>
               {caseStudy.testimonial.authorRole ? (
                 <span>
-                  {caseStudy.testimonial.authorRole}
-                  {caseStudy.testimonial.authorCompany &&
-                    ` of ${caseStudy.testimonial.authorCompany}`}
+                  {caseStudy.testimonial.authorCompany
+                    ? `${caseStudy.testimonial.authorRole} of ${caseStudy.testimonial.authorCompany}`
+                    : caseStudy.testimonial.authorRole}
                 </span>
               ) : (
                 <span>{caseStudy.testimonial.authorCompany ?? ""}</span>

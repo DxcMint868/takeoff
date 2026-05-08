@@ -17,10 +17,10 @@ import {
 } from "../lib/strapi/design-projects";
 
 const SITE_URL = "https://www.hoasen.io";
-const TITLE = "Our Work Examples | Hoasen";
-const DESCRIPTION =
-  "Explore Hoasen's portfolio: Ocean Finance (RWA tokenisation), PowerTrade (crypto options), Crypto Paradise, bspin, TripTips, and more — spanning fintech, blockchain, and enterprise software.";
 const OG_IMAGE = `${SITE_URL}/og-image.png`;
+const WORKS_TITLE = "Our Work Examples | Hoasen";
+const WORKS_DESCRIPTION =
+  "Explore Hoasen's portfolio: Ocean Finance (RWA tokenisation), PowerTrade (crypto options), Crypto Paradise, bspin, TripTips, and more — spanning fintech, blockchain, and enterprise software.";
 
 const breadcrumbJsonLd = {
   "@context": "https://schema.org",
@@ -123,20 +123,20 @@ const Works: NextPage<WorksPageProps> = ({
   return (
     <>
       <Head>
-        <title>{TITLE}</title>
-        <meta name="description" content={DESCRIPTION} />
+        <title>{WORKS_TITLE}</title>
+        <meta name="description" content={WORKS_DESCRIPTION} />
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href={`${SITE_URL}/works`} />
 
-        <meta property="og:title" content={TITLE} />
-        <meta property="og:description" content={DESCRIPTION} />
+        <meta property="og:title" content={WORKS_TITLE} />
+        <meta property="og:description" content={WORKS_DESCRIPTION} />
         <meta property="og:url" content={`${SITE_URL}/works`} />
         <meta property="og:image" content={OG_IMAGE} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
 
-        <meta name="twitter:title" content={TITLE} />
-        <meta name="twitter:description" content={DESCRIPTION} />
+        <meta name="twitter:title" content={WORKS_TITLE} />
+        <meta name="twitter:description" content={WORKS_DESCRIPTION} />
         <meta name="twitter:image" content={OG_IMAGE} />
 
         <script

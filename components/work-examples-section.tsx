@@ -1,4 +1,3 @@
-import Link from "next/link";
 import CTASolid from "./cta-solid";
 import {
   CORE_PROJECT_CARDS,
