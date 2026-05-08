@@ -14,10 +14,10 @@ type LocaleOption = {
 };
 
 const LOCALES: LocaleOption[] = [
-  { code: "en", label: "English", flagSrc: "/language/English.svg" },
-  { code: "ja", label: "Japanese", flagSrc: "/language/Japanese.svg" },
-  { code: "vi", label: "Vietnamese", flagSrc: "/language/Vietnamese.svg" },
-  { code: "ko", label: "Korean", flagSrc: "/language/Korean.svg" },
+  { code: "en", label: "English", flagSrc: "/languageFlag/English.svg" },
+  { code: "ja", label: "Japanese", flagSrc: "/languageFlag/Japanese.svg" },
+  { code: "vi", label: "Vietnamese", flagSrc: "/languageFlag/Vietnamese.svg" },
+  { code: "ko", label: "Korean", flagSrc: "/languageFlag/Korean.svg" },
 ];
 
 type NavLanguageSelectProps = {
