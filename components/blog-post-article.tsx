@@ -1,13 +1,18 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { BlogPostPreview } from "../lib/blog-posts";
+import type { StrapiBlocksNode } from "../lib/strapi/case-studies";
 import { formatReadLabel } from "../lib/blog-posts";
 import { BlogShareButton } from "./blog-share-button";
 import { GradientGlow } from "./gradient-glow";
+import StrapiBlocks from "./strapi-blocks";
 
 type BlogPostArticleProps = {
   post: BlogPostPreview;
-  bodyHtml: string;
+  /** Local/static HTML body */
+  bodyHtml?: string;
+  /** Strapi blocks (overrides `post.contentBlocks` when passed) */
+  contentBlocks?: StrapiBlocksNode[];
 };
 
 function formatFooterDate(iso: string) {
@@ -22,7 +27,19 @@ function formatFooterDate(iso: string) {
   }
 }
 
-export function BlogPostArticle({ post, bodyHtml }: BlogPostArticleProps) {
+const bodyClassName =
+  "blog-post-body mt-10 font-reg text-base font-light leading-[28px] tracking-[0.02em] text-white-60 [&_a]:text-purple [&_a]:underline [&_a]:underline-offset-4 [&_p]:m-0 [&_p+p]:mt-8 [&_strong]:font-medium [&_strong]:text-white [&_h2]:mt-14 [&_h2]:font-sora [&_h2]:text-xl [&_h2]:font-semibold [&_h2]:leading-snug [&_h2]:tracking-[0.02em] [&_h2]:text-white [&_h2:first-of-type]:mt-12 [&_ul]:my-8 [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:my-8 [&_ol]:list-decimal [&_ol]:pl-6 [&_li]:mt-3 [&_blockquote]:my-10 [&_blockquote]:border-l-2 [&_blockquote]:border-purple/60 [&_blockquote]:pl-5 [&_blockquote]:italic [&_blockquote]:text-white/80";
+
+export function BlogPostArticle({
+  post,
+  bodyHtml = "",
+  contentBlocks: contentBlocksProp,
+}: BlogPostArticleProps) {
+  const blocks = contentBlocksProp ?? post.contentBlocks;
+  const remoteCover =
+    typeof post.image === "string" &&
+    (post.image.startsWith("http://") || post.image.startsWith("https://"));
+
   return (
     <article className="relative box-border flex w-full flex-col items-center overflow-x-clip px-5 pb-28 pt-8 text-white mq900:px-6">
       <GradientGlow className="top-0 opacity-90" />
@@ -56,7 +73,7 @@ export function BlogPostArticle({ post, bodyHtml }: BlogPostArticleProps) {
           </span>
         </Link>
 
-        <div className="relative w-full h-[450px] mq900:h-[300px] overflow-hidden rounded-[24px] mq900:aspect-[4/3] mq900:rounded-2xl">
+        <div className="relative h-[450px] w-full overflow-hidden rounded-[24px] mq900:aspect-[4/3] mq900:h-[300px] mq900:rounded-2xl">
           <Image
             src={post.image}
             alt=""
@@ -64,7 +81,7 @@ export function BlogPostArticle({ post, bodyHtml }: BlogPostArticleProps) {
             className="object-cover"
             sizes="(max-width: 1040px) 100vw, 1040px"
             priority
-            unoptimized
+            unoptimized={remoteCover || post.image.endsWith(".svg")}
           />
         </div>
 
@@ -77,10 +94,14 @@ export function BlogPostArticle({ post, bodyHtml }: BlogPostArticleProps) {
             {post.title}
           </h1>
 
-          <div
-            className="blog-post-body mt-10 font-reg text-base font-light leading-[28px] tracking-[0.02em] text-white-60 [&_a]:text-purple [&_a]:underline [&_a]:underline-offset-4 [&_p]:m-0 [&_p+p]:mt-8 [&_strong]:font-medium [&_strong]:text-white [&_h2]:mt-14 [&_h2]:font-sora [&_h2]:text-xl [&_h2]:font-semibold [&_h2]:leading-snug [&_h2]:tracking-[0.02em] [&_h2]:text-white [&_h2:first-of-type]:mt-12 [&_ul]:my-8 [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:my-8 [&_ol]:list-decimal [&_ol]:pl-6 [&_li]:mt-3 [&_blockquote]:my-10 [&_blockquote]:border-l-2 [&_blockquote]:border-purple/60 [&_blockquote]:pl-5 [&_blockquote]:italic [&_blockquote]:text-white/80"
-            dangerouslySetInnerHTML={{ __html: bodyHtml }}
-          />
+          {blocks && blocks.length > 0 ? (
+            <StrapiBlocks blocks={blocks} className={bodyClassName} />
+          ) : (
+            <div
+              className={bodyClassName}
+              dangerouslySetInnerHTML={{ __html: bodyHtml }}
+            />
+          )}
 
           <div className="mt-14 flex justify-center mq900:mt-12">
             <BlogShareButton

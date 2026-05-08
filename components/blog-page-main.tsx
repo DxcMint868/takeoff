@@ -1,12 +1,14 @@
+"use client";
+
 import Link from "next/link";
-import { BLOG_POSTS } from "../lib/blog-posts";
+import { useEffect, useState } from "react";
+import { useLocale } from "../contexts/locale-context";
+import type { BlogPostPreview } from "../lib/blog-posts";
 import { BlogFeaturedCarousel } from "./blog-featured-carousel";
 import { BlogPostList } from "./blog-post-list";
 import { GradientGlow } from "./gradient-glow";
 
 export type { BlogPostPreview } from "../lib/blog-posts";
-
-const FEATURED_COUNT = 3;
 
 function formatDate(iso: string) {
   try {
@@ -21,8 +23,54 @@ function formatDate(iso: string) {
 }
 
 export default function BlogPageMain() {
-  const featuredPosts = BLOG_POSTS.slice(0, Math.min(FEATURED_COUNT, BLOG_POSTS.length));
-  const listPosts = BLOG_POSTS.slice(featuredPosts.length);
+  const { locale } = useLocale();
+  const [featuredPosts, setFeaturedPosts] = useState<BlogPostPreview[]>([]);
+  const [listPosts, setListPosts] = useState<BlogPostPreview[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+    setLoading(true);
+
+    (async () => {
+      try {
+        const res = await fetch(
+          `/api/blogs?locale=${encodeURIComponent(locale)}`,
+        );
+        const data = (await res.json()) as {
+          source?: string;
+          featuredPosts?: BlogPostPreview[];
+          listPosts?: BlogPostPreview[];
+        };
+        if (cancelled) return;
+        if (
+          data.source === "cms" &&
+          Array.isArray(data.featuredPosts) &&
+          Array.isArray(data.listPosts)
+        ) {
+          setFeaturedPosts(data.featuredPosts);
+          setListPosts(data.listPosts);
+        } else {
+          setFeaturedPosts([]);
+          setListPosts([]);
+        }
+      } catch {
+        if (!cancelled) {
+          setFeaturedPosts([]);
+          setListPosts([]);
+        }
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [locale]);
+
+  const empty =
+    !loading && featuredPosts.length === 0 && listPosts.length === 0;
 
   return (
     <main className="relative box-border flex min-h-[70vh] w-full flex-col items-center overflow-x-clip bg-gradient-to-b from-[#0d0824] via-[#1b1333] to-[#1b1333] px-5 pb-24 pt-8 text-white mq900:px-6">
@@ -61,6 +109,15 @@ export default function BlogPageMain() {
             <h1 className="m-0 max-w-[720px] font-sora text-[52px] font-normal leading-[1.08] tracking-[0.02em] text-white mq450:text-4xl mq900:text-[44px]">
               Blog
             </h1>
+            {loading ? (
+              <p className="m-0 font-reg text-sm text-white-60">Loading…</p>
+            ) : null}
+            {empty ? (
+              <p className="m-0 max-w-md font-reg text-sm leading-relaxed text-white-60">
+                No posts yet. Add and publish entries in Strapi, or check your
+                API configuration.
+              </p>
+            ) : null}
           </div>
         </div>
 
@@ -68,9 +125,8 @@ export default function BlogPageMain() {
           <BlogFeaturedCarousel posts={featuredPosts} formatDate={formatDate} />
         ) : null}
 
-        <div className="flex mq900:mt-0 mt-20 w-full">
+        <div className="mt-20 flex w-full mq900:mt-0">
           <BlogPostList posts={listPosts} formatDate={formatDate} />
-
         </div>
       </div>
     </main>

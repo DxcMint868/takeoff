@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const remotePatterns = [
+  /** Blog fallback cover / imgix sample hosts (`LEGACY_BLOG_COVER_IMAGE` in `lib/blog-posts.ts`) */
   {
     protocol: "https",
     hostname: "blockworks.co",

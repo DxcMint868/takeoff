@@ -1,9 +1,14 @@
 import type { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import Head from "next/head";
-import BlogPostArticle from "../../components/blog-post-article";
+import BlogPostLoader from "../../components/blog-post-loader";
 import FooterComponent from "../../components/footer-component";
 import Nav from "../../components/nav";
-import { BLOG_POSTS, type BlogPostPreview } from "../../lib/blog-posts";
+import type { BlogPostPreview } from "../../lib/blog-posts";
+import {
+  fetchAllBlogSlugsDefaultLocale,
+  fetchBlogPostBySlugAcrossLocales,
+} from "../../lib/strapi/blogs";
+import { hasCmsConfig } from "../../lib/strapi/case-studies";
 
 type BlogPostPageProps = {
   post: BlogPostPreview;
@@ -12,22 +17,32 @@ type BlogPostPageProps = {
 
 const SITE_URL = "https://www.hoasen.io";
 
-export const getStaticPaths: GetStaticPaths = async () => ({
-  paths: BLOG_POSTS.map((p) => ({ params: { slug: p.slug } })),
-  fallback: false,
-});
+export const getStaticPaths: GetStaticPaths = async () => {
+  const cmsSlugs = hasCmsConfig()
+    ? await fetchAllBlogSlugsDefaultLocale()
+    : [];
+
+  return {
+    paths: cmsSlugs.map((slug) => ({ params: { slug } })),
+    fallback: "blocking",
+  };
+};
 
 export const getStaticProps: GetStaticProps<BlogPostPageProps> = async ({
   params,
 }) => {
   const slug = String(params?.slug ?? "");
-  const post = BLOG_POSTS.find((p) => p.slug === slug);
-  if (!post) return { notFound: true };
 
+  const cms = await fetchBlogPostBySlugAcrossLocales(slug);
+  if (!cms) {
+    return { notFound: true };
+  }
+
+  const html = (cms.content ?? "").trim();
   return {
     props: {
-      post,
-      bodyHtml: post.content.trim(),
+      post: cms,
+      bodyHtml: cms.contentBlocks?.length ? "" : html,
     },
   };
 };
@@ -53,7 +68,7 @@ const BlogPostPage: NextPage<BlogPostPageProps> = ({ post, bodyHtml }) => {
 
       <div className="w-full min-h-screen bg-dark leading-[normal] tracking-[normal] text-left text-3xl text-white font-sora mq450:min-h-0">
         <Nav initialTransparent scrollThreshold={80} />
-        <BlogPostArticle post={post} bodyHtml={bodyHtml} />
+        <BlogPostLoader initialPost={post} initialBodyHtml={bodyHtml} />
         <FooterComponent />
       </div>
     </>
