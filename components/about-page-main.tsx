@@ -185,7 +185,7 @@ const AboutPageMain = () => {
             </div>
           </section>
         </div>
-        <section id="contact-us">
+        <section className="px-4 flex w-full">
           <ContactSection />
         </section>
       </div>

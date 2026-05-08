@@ -1,6 +1,12 @@
 "use client";
 
-import { type TouchEvent, useCallback, useEffect, useRef, useState } from "react";
+import {
+  type TouchEvent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 interface GallerySlide {
   src: string;
@@ -23,23 +29,22 @@ export default function ProjectGallery({
   const touchEndRef = useRef<{ x: number; y: number } | null>(null);
   const len = slides.length;
 
-  const goTo = useCallback(
-    (index: number) => {
-      setActive(index);
-      setTick((t) => t + 1);
-    },
-    [],
-  );
+  const goTo = useCallback((index: number) => {
+    setActive(index);
+    setTick((t) => t + 1);
+  }, []);
 
   const go = useCallback(
-    (dir: 1 | -1) =>
-      goTo((active + dir + len) % len),
+    (dir: 1 | -1) => goTo((active + dir + len) % len),
     [active, len, goTo],
   );
 
   useEffect(() => {
     if (len <= 1) return;
-    const id = setInterval(() => setActive((prev) => (prev + 1) % len), autoPlayMs);
+    const id = setInterval(
+      () => setActive((prev) => (prev + 1) % len),
+      autoPlayMs,
+    );
     return () => clearInterval(id);
   }, [len, autoPlayMs, tick]);
 
@@ -95,9 +100,7 @@ export default function ProjectGallery({
               type="button"
               onClick={() => goTo(i)}
               aria-label={
-                isCenter
-                  ? `Current slide: ${slide.alt}`
-                  : `Go to: ${slide.alt}`
+                isCenter ? `Current slide: ${slide.alt}` : `Go to: ${slide.alt}`
               }
               className="absolute left-1/2 top-1/2 flex w-[62%] -translate-x-1/2 -translate-y-1/2 cursor-pointer items-center justify-center border-0 bg-transparent p-0 outline-none focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2"
               style={{
@@ -125,7 +128,20 @@ export default function ProjectGallery({
           aria-label="Previous slide"
           className="absolute left-4 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-dark/60 text-white backdrop-blur-sm transition-colors hover:bg-white/10"
         >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6" /></svg>
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <path d="M15 18l-6-6 6-6" />
+          </svg>
         </button>
         <button
           type="button"
@@ -133,25 +149,87 @@ export default function ProjectGallery({
           aria-label="Next slide"
           className="absolute right-4 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-dark/60 text-white backdrop-blur-sm transition-colors hover:bg-white/10"
         >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6" /></svg>
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <path d="M9 18l6-6-6-6" />
+          </svg>
         </button>
       </div>
 
-      {/* Mobile: simple single-image view */}
-      <div
-        className="relative hidden mq900:flex mq900:justify-center mq900:px-4"
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-        onTouchCancel={handleTouchEnd}
-        style={{ touchAction: "pan-y" }}
-      >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={slides[active].src}
-          alt={slides[active].alt}
-          className="max-h-[480px] w-auto max-w-full rounded-[20px] object-contain transition-opacity duration-500 mq450:rounded-[12px]"
-        />
+      {/* Mobile: single-image view + prev/next (gap between controls and image) */}
+      <div className="relative mx-auto hidden max-w-full mq900:block mq900:px-3">
+        <div
+          className={`relative flex items-center justify-center ${len > 1 ? "gap-3 mq450:gap-2.5" : ""}`}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+          onTouchCancel={handleTouchEnd}
+          style={{ touchAction: "pan-y" }}
+        >
+          {len > 1 ? (
+            <button
+              type="button"
+              onClick={() => go(-1)}
+              aria-label="Previous slide"
+              className="shrink-0 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-dark/80 text-white shadow-sm backdrop-blur-sm transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 mq450:h-9 mq450:w-9"
+            >
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden
+              >
+                <path d="M15 18l-6-6 6-6" />
+              </svg>
+            </button>
+          ) : null}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={slides[active].src}
+            alt={slides[active].alt}
+            className={`min-w-0 max-h-[480px] rounded-[20px] object-contain transition-opacity duration-500 mq450:rounded-[12px] ${
+              len > 1 ? "max-w-full flex-1 basis-0" : "w-full max-w-full"
+            }`}
+          />
+          {len > 1 ? (
+            <button
+              type="button"
+              onClick={() => go(1)}
+              aria-label="Next slide"
+              className="shrink-0 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-dark/80 text-white shadow-sm backdrop-blur-sm transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 mq450:h-9 mq450:w-9"
+            >
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <path d="M9 18l6-6-6-6" />
+              </svg>
+            </button>
+          ) : null}
+        </div>
       </div>
 
       {/* Dots */}

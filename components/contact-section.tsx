@@ -8,11 +8,14 @@ export type ContactSectionType = {
 };
 
 const CONTACT_CARD_PADDING =
-  "relative z-[1] flex items-start justify-between px-20 pt-[72px] pb-10 gap-[80px] mq900:flex-col mq900:items-center mq900:gap-10 mq900:px-10 mq700:px-6 mq450:px-4 mq450:pt-10 mq450:pb-6";
+  "relative z-[1] box-border flex w-full min-w-0 max-w-full items-start justify-between px-20 pt-[72px] pb-10 gap-[80px] mq900:flex-col mq900:items-center mq900:gap-10 mq900:px-10 mq700:px-6 mq450:px-4 mq450:pt-10 mq450:pb-6";
 
 const ContactSection: NextPage<ContactSectionType> = ({ className = "" }) => {
   return (
-    <section id="contact-us" className={`w-full pt-32 mq700:pt-20 mq450:pt-14 ${className}`}>
+    <section
+      id="contact-us"
+      className={`box-border flex w-full min-w-0 flex-col items-stretch pt-32 mq700:pt-20 mq450:pt-14 ${className}`}
+    >
       <GradientBorderCard
         surfaceClassName="bg-[#282042]"
         backgroundSrc="/mask-group-1@2x.png"
