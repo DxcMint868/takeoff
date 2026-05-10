@@ -1,11 +1,14 @@
+import type { TeamGridMember } from "../team-grid-member";
 import type { StrapiBlocksNode } from "./case-studies";
-import type { Member } from "../members";
+import { applyDraftStatus } from "./case-studies";
+import { toStrapiLocale } from "./language";
 
 // ─── Unified display type (used by the modal) ────────────────────────────────
 
 export type TeamMemberContactLink = {
   platform: string;
   logoUrl: string;
+  logoAlt: string;
   url: string;
 };
 
@@ -24,6 +27,8 @@ export type TeamMemberDisplay = {
   frameworks: string[];
   skills: string[];
   getToKnow: string;
+  /** From Strapi `why_work_with_them` when present. */
+  whyWorkWithThem: string;
   experience: TeamMemberExperience[];
   contactLinks: TeamMemberContactLink[];
 };
@@ -75,6 +80,53 @@ function toBlocks(v: unknown): StrapiBlocksNode[] {
   return [{ type: "paragraph", children: [{ type: "text", text }] }];
 }
 
+/** Strapi upload JSON may expose `url` only under `formats.*` depending on version/settings. */
+function pickMediaPath(mediaLike: unknown): string {
+  const media = unwrap<any>(mediaLike);
+  if (!media || typeof media !== "object") return "";
+
+  const direct = str(media.url);
+  if (direct) return direct;
+
+  const formats = media.formats as Record<string, { url?: string }> | undefined;
+  if (formats && typeof formats === "object") {
+    for (const k of ["thumbnail", "small", "medium", "large"] as const) {
+      const u = str(formats[k]?.url);
+      if (u) return u;
+    }
+  }
+  return "";
+}
+
+/** Fallback icons for `shared.contact-link` platform enum (bundled SVGs). */
+const PLATFORM_ICON_BY_ENUM: Record<string, string> = {
+  linkedin: "/icons/linked-in-icon.svg",
+  x: "/icons/x-icon.svg",
+  telegram: "/icons/telegram-icon.svg",
+  email: "/icons/mail-icon.svg",
+  instagram: "/icons/world-class-icon.svg",
+  facebook: "/icons/world-class-icon.svg",
+  google: "/icons/world-class-icon.svg",
+  zalo: "/icons/world-class-icon.svg",
+  wechat: "/icons/world-class-icon.svg",
+  weibo: "/icons/world-class-icon.svg",
+  line: "/icons/world-class-icon.svg",
+  viber: "/icons/phone-icon.svg",
+  whatsapp: "/icons/phone-icon.svg",
+};
+
+function platformFallbackIcon(platform: string): string {
+  const k = platform.toLowerCase().trim();
+  if (PLATFORM_ICON_BY_ENUM[k]) return PLATFORM_ICON_BY_ENUM[k]!;
+  if (k.includes("linked")) return "/icons/linked-in-icon.svg";
+  return "/icons/tool-icon.svg";
+}
+
+function appendLocaleAndDraft(params: URLSearchParams, uiLocale: string): void {
+  params.set("locale", toStrapiLocale(uiLocale));
+  applyDraftStatus(params);
+}
+
 /** Format ISO date string "2025-08-01" → "Aug 2025". */
 function fmtDate(iso: string | null | undefined): string {
   if (!iso) return "Present";
@@ -88,39 +140,34 @@ function fmtEmployment(v: string | null | undefined): string {
   return v.charAt(0).toUpperCase() + v.slice(1).replace(/-/g, " ");
 }
 
-// ─── Populate query for /api/team-members ─────────────────────────────────────
+// ─── Populate queries ─────────────────────────────────────────────────────────
 
-function buildTeamMemberPopulateQuery(slug: string): URLSearchParams {
+function buildTeamMemberDetailParams(slug: string, uiLocale: string): URLSearchParams {
   const p = new URLSearchParams();
   p.set("filters[slug][$eq]", slug);
   p.set("pagination[pageSize]", "1");
+  appendLocaleAndDraft(p, uiLocale);
 
-  // avatar
   p.set("populate[avatar][fields][0]", "url");
   p.set("populate[avatar][fields][1]", "alternativeText");
   p.set("populate[avatar][fields][2]", "name");
   p.set("populate[avatar][fields][3]", "updatedAt");
 
-  // framework_and_tool
   p.set("populate[framework_and_tool][fields][0]", "name");
 
-  // skills relation
   p.set("populate[skills][fields][0]", "name");
   p.set("populate[skills][fields][1]", "slug");
 
-  // member_role component
   p.set("populate[member_role]", "*");
 
-  // experience + nested role component
   p.set("populate[experience][populate][role]", "*");
-  // experience scalar fields (what_they_did is richtext = blocks JSON = scalar in Strapi REST)
   p.set("populate[experience][fields][0]", "organization");
   p.set("populate[experience][fields][1]", "start_date");
   p.set("populate[experience][fields][2]", "end_date");
   p.set("populate[experience][fields][3]", "employment_type");
   p.set("populate[experience][fields][4]", "what_they_did");
 
-  // contact_links: no fields whitelist so platform + contact_url scalars + platform_logo all come through
+  // Do not use populate=* on platform_logo — Strapi 5 rejects nested `related` on media (400).
   p.set("populate[contact_links][populate][platform_logo][fields][0]", "url");
   p.set("populate[contact_links][populate][platform_logo][fields][1]", "alternativeText");
   p.set("populate[contact_links][populate][platform_logo][fields][2]", "name");
@@ -128,7 +175,48 @@ function buildTeamMemberPopulateQuery(slug: string): URLSearchParams {
   return p;
 }
 
-// ─── Map Strapi response → TeamMemberDisplay ──────────────────────────────────
+function buildTeamMemberListParams(uiLocale: string): URLSearchParams {
+  const p = new URLSearchParams();
+  p.set("pagination[pageSize]", "100");
+  p.set("sort[0]", "name:asc");
+  appendLocaleAndDraft(p, uiLocale);
+
+  p.set("populate[avatar][fields][0]", "url");
+  p.set("populate[avatar][fields][1]", "alternativeText");
+  p.set("populate[avatar][fields][2]", "name");
+  p.set("populate[member_role]", "*");
+
+  return p;
+}
+
+// ─── Map Strapi → view models ───────────────────────────────────────────────
+
+function mapMemberRoleLines(memberRoleLike: unknown): string {
+  return toArr<any>(memberRoleLike)
+    .map((r) => str(unwrap<any>(r)?.role_name))
+    .filter(Boolean)
+    .join(" · ");
+}
+
+/** Strapi `team-member` row → grid card (About page featured list, etc.). */
+export function mapStrapiRowToGridMember(raw: unknown): TeamGridMember | null {
+  const m = unwrap<any>(raw);
+  if (!m) return null;
+
+  const name = str(m.name);
+  if (!name) return null;
+
+  const slug =
+    str(m.slug) || name.toLowerCase().trim().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "");
+
+  const role = mapMemberRoleLines(m.member_role);
+
+  const av = unwrap<any>(m.avatar);
+  const imageUrl = normalizeUrl(pickMediaPath(av));
+  const imageAlt = str(av?.alternativeText) || name;
+
+  return { slug, name, role, imageUrl, imageAlt };
+}
 
 function mapStrapiMember(raw: any): TeamMemberDisplay | null {
   const m = unwrap<any>(raw);
@@ -139,34 +227,23 @@ function mapStrapiMember(raw: any): TeamMemberDisplay | null {
 
   const slug = str(m.slug) || name.toLowerCase().trim().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "");
 
-  // primary role from member_role[0].role_name
-  const role = (() => {
-    const parts = toArr<any>(m.member_role)
-      .map((r) => str(unwrap<any>(r)?.role_name))
-      .filter(Boolean);
-    return parts.join(" · ");
-  })();
+  const role = mapMemberRoleLines(m.member_role);
 
-  // avatar
   const av = unwrap<any>(m.avatar);
-  const rawAvatarUrl = str(av?.url);
-  const imageUrl = normalizeUrl(rawAvatarUrl);
+  const imageUrl = normalizeUrl(pickMediaPath(av));
   const imageAlt = str(av?.alternativeText) || name;
 
-  // frameworks
   const frameworks = toArr<any>(m.framework_and_tool)
     .map((f) => str(unwrap<any>(f)?.name))
     .filter(Boolean);
 
-  // skills
   const skills = toArr<any>(m.skills)
     .map((s) => str(unwrap<any>(s)?.name))
     .filter(Boolean);
 
-  // get_to_know
   const getToKnow = str(m.get_to_know);
+  const whyWorkWithThem = str(m.why_work_with_them);
 
-  // experience
   const experience: TeamMemberExperience[] = toArr<any>(m.experience).map((rawExp) => {
     const exp = unwrap<any>(rawExp);
     const roleName = str(unwrap<any>(exp?.role)?.role_name);
@@ -186,38 +263,95 @@ function mapStrapiMember(raw: any): TeamMemberDisplay | null {
     };
   });
 
-  // contact_links
   const contactLinks: TeamMemberContactLink[] = toArr<any>(m.contact_links).map((rawLink) => {
     const link = unwrap<any>(rawLink);
     const logo = unwrap<any>(link?.platform_logo);
+    const platform = str(link?.platform);
+    const rawPath = pickMediaPath(logo);
+    let logoUrl = normalizeUrl(rawPath);
+    const logoAlt =
+      str(logo?.alternativeText) || str(logo?.name) || platform || "Contact";
+
+    if (
+      !logoUrl ||
+      (!/^https?:\/\//i.test(logoUrl) && !logoUrl.startsWith("/")) ||
+      (logoUrl.startsWith("/") && !STRAPI_BASE_URL)
+    ) {
+      logoUrl = platformFallbackIcon(platform);
+    }
+
     return {
-      platform: str(link?.platform),
-      logoUrl: normalizeUrl(str(logo?.url)),
+      platform,
+      logoUrl,
+      logoAlt,
       url: str(link?.contact_url),
     };
   }).filter((l) => l.url);
 
-  return { slug, name, role, imageUrl, imageAlt, frameworks, skills, getToKnow, experience, contactLinks };
+  return {
+    slug,
+    name,
+    role,
+    imageUrl,
+    imageAlt,
+    frameworks,
+    skills,
+    getToKnow,
+    whyWorkWithThem,
+    experience,
+    contactLinks,
+  };
 }
 
-// ─── Public fetch ─────────────────────────────────────────────────────────────
-
-export async function fetchTeamMemberBySlug(slug: string): Promise<TeamMemberDisplay | null> {
+async function strapiFetch(pathWithQuery: string): Promise<Response | null> {
   if (!STRAPI_BASE_URL) return null;
 
   const token = process.env.STRAPI_API_TOKEN || process.env.STRAPI_BEARER_TOKEN || "";
-  const params = buildTeamMemberPopulateQuery(slug);
-  const url = `${STRAPI_BASE_URL}/api/team-members?${params.toString()}`;
+  const url = `${STRAPI_BASE_URL}${pathWithQuery.startsWith("/") ? "" : "/"}${pathWithQuery}`;
 
   const headers: Record<string, string> = { Accept: "application/json" };
   if (token) headers.Authorization = `Bearer ${token}`;
 
   try {
-    const res = await fetch(url, { headers });
-    if (!res.ok) {
-      console.error(`[Strapi] team-members ${res.status} for slug "${slug}"`);
-      return null;
-    }
+    return await fetch(url, { headers });
+  } catch (err) {
+    console.error("[Strapi] team-members fetch error:", err);
+    return null;
+  }
+}
+
+// ─── Public fetch ─────────────────────────────────────────────────────────────
+
+export async function fetchTeamMembersForGrid(uiLocale: string): Promise<TeamGridMember[]> {
+  const params = buildTeamMemberListParams(uiLocale);
+  const res = await strapiFetch(`/api/team-members?${params.toString()}`);
+  if (!res?.ok) {
+    if (res) console.error(`[Strapi] team-members list ${res.status}`);
+    return [];
+  }
+
+  try {
+    const payload = await res.json();
+    const rows = toArr<any>(unwrap(payload?.data));
+    return rows.map(mapStrapiRowToGridMember).filter(Boolean) as TeamGridMember[];
+  } catch (err) {
+    console.error("[Strapi] fetchTeamMembersForGrid parse error:", err);
+    return [];
+  }
+}
+
+export async function fetchTeamMemberBySlug(
+  slug: string,
+  uiLocale: string,
+): Promise<TeamMemberDisplay | null> {
+  const params = buildTeamMemberDetailParams(slug, uiLocale);
+  const res = await strapiFetch(`/api/team-members?${params.toString()}`);
+  if (!res?.ok) {
+    if (res) console.error(`[Strapi] team-members ${res.status} for slug "${slug}"`);
+    return null;
+  }
+
+  try {
     const payload = await res.json();
     const items = toArr<any>(unwrap(payload?.data));
     return mapStrapiMember(items[0]) ?? null;
@@ -225,52 +359,4 @@ export async function fetchTeamMemberBySlug(slug: string): Promise<TeamMemberDis
     console.error("[Strapi] fetchTeamMemberBySlug error:", err);
     return null;
   }
-}
-
-// ─── Map local Member → TeamMemberDisplay (fallback) ─────────────────────────
-
-function localMemberSlug(name: string): string {
-  return name.toLowerCase().trim().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "");
-}
-
-const PLATFORM_ICON_MAP: Record<string, string> = {
-  linkedin: "/icons/linked-in-icon.svg",
-  x: "/icons/x-icon.svg",
-  telegram: "/icons/telegram-icon.svg",
-  mail: "/icons/mail-icon.svg",
-  email: "/icons/mail-icon.svg",
-  phone: "/icons/phone-icon.svg",
-};
-
-function platformIcon(label: string): string {
-  const key = label.toLowerCase();
-  for (const [platform, icon] of Object.entries(PLATFORM_ICON_MAP)) {
-    if (key.includes(platform)) return icon;
-  }
-  return "/icons/linked-in-icon.svg";
-}
-
-export function localMemberToDisplay(m: Member): TeamMemberDisplay {
-  return {
-    slug: localMemberSlug(m.name),
-    name: m.name,
-    role: m.role,
-    imageUrl: m.image,
-    imageAlt: m.name,
-    frameworks: m.frameworks,
-    skills: m.skill,
-    getToKnow: m.getToKnow,
-    experience: m.experience.map((exp) => ({
-      title: exp.company,
-      time: exp.time,
-      descriptionBlocks: [
-        { type: "paragraph", children: [{ type: "text", text: exp.description }] },
-      ] as StrapiBlocksNode[],
-    })),
-    contactLinks: m.links.map((link) => ({
-      platform: link.label.toLowerCase(),
-      logoUrl: platformIcon(link.label),
-      url: link.url,
-    })),
-  };
 }

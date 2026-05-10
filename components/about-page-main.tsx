@@ -1,6 +1,14 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import type { ComponentType, SVGProps } from "react";
+import { useEffect, useState } from "react";
+import { useLocale } from "../contexts/locale-context";
+import type {
+  TeamPageQuote,
+  TeamPageViewModel,
+} from "../lib/strapi/team-page";
 import { GradientGlow } from "./gradient-glow";
 import MemberGrid from "./member-grid";
 import {
@@ -18,28 +26,104 @@ const VALUE_ICONS: ComponentType<SVGProps<SVGSVGElement>>[] = [
   WorldClassIcon,
 ];
 
-const VALUE_BLOCKS = [
+const FALLBACK_CULTURE: TeamPageQuote = {
+  title: "Our Culture",
+  body:
+    "At the heart of our team is a culture of trust, respect, and continuous growth. We support one another, celebrate wins together, and learn quickly from challenges. By staying open, curious, and collaborative, we create space for great ideas to emerge and for everyone to do their best work.",
+  iconUrl: "",
+  iconAlt: "",
+  iconIsVideo: false,
+};
+
+const FALLBACK_VALUES: TeamPageQuote[] = [
   {
     title: "Domain Expertise",
-    description:
+    body:
       "Deep fintech knowledge, building systems that process millions daily.",
+    iconUrl: "",
+    iconAlt: "",
+    iconIsVideo: false,
   },
   {
     title: "Agile Execution",
-    description: "Lean team, fast delivery cutting through red tape for swift results.",
+    body:
+      "Lean team, fast delivery cutting through red tape for swift results.",
+    iconUrl: "",
+    iconAlt: "",
+    iconIsVideo: false,
   },
   {
     title: "Transparency",
-    description: "No black box clear documentation and open communication at every step.",
+    body:
+      "No black box clear documentation and open communication at every step.",
+    iconUrl: "",
+    iconAlt: "",
+    iconIsVideo: false,
   },
   {
     title: "World-Class Quality",
-    description: "We don&apos;t just meet standards; we set them.",
+    body: "We don't just meet standards; we set them.",
+    iconUrl: "",
+    iconAlt: "",
+    iconIsVideo: false,
   },
-] as const;
+];
+
+function QuoteMediaIcon({
+  quote,
+  FallbackIcon,
+  className,
+}: {
+  quote: TeamPageQuote;
+  FallbackIcon: ComponentType<SVGProps<SVGSVGElement>>;
+  className?: string;
+}) {
+  const cn = `mt-0.5 h-[42px] w-[42px] shrink-0 text-white ${className ?? ""}`.trim();
+
+  if (quote.iconUrl) {
+    if (quote.iconIsVideo) {
+      return (
+        <video
+          src={quote.iconUrl}
+          className={`${cn} object-contain`}
+          muted
+          playsInline
+          loop
+          aria-hidden
+        />
+      );
+    }
+    return (
+      <span className="relative mt-0.5 block h-[42px] w-[42px] shrink-0">
+        <Image
+          src={quote.iconUrl}
+          alt={quote.iconAlt || quote.title || "Value"}
+          fill
+          className="object-contain"
+          sizes="42px"
+        />
+      </span>
+    );
+  }
+
+  return <FallbackIcon className={cn} />;
+}
 
 /** Staggered 2×2 mosaic: two columns share one height; row splits differ (~65/35 vs ~45/55) so gutters do not line up across the middle. */
-function AboutTeamPhotoGrid() {
+function AboutTeamPhotoGrid({
+  gallery,
+}: {
+  gallery: Array<{ url: string; alt: string }>;
+}) {
+  const pad: Array<{ url: string; alt: string }> = [
+    { url: "/team-pic-1.png", alt: "Team photo" },
+    { url: "/team-pic-3.png", alt: "Hoasen team outdoors" },
+    { url: "/team-pic-2.png", alt: "Hoasen team by the sea" },
+    { url: "/team-pic-4.png", alt: "Hoasen logo in the sand" },
+  ];
+  const slots = [...gallery, ...pad].slice(0, 4);
+  const [g0, g1, g2, g3] = slots;
+
   return (
     <section
       aria-label="Hoasen team"
@@ -49,8 +133,8 @@ function AboutTeamPhotoGrid() {
         <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-3">
           <div className="relative min-h-0 w-full flex-[13] overflow-hidden bg-white-30 mq700:flex-none mq700:aspect-[4/3]">
             <Image
-              src="/team-pic-1.png"
-              alt="Team photo"
+              src={g0.url}
+              alt={g0.alt}
               fill
               className="object-cover"
               sizes="(max-width: 700px) 100vw, 50vw"
@@ -58,8 +142,8 @@ function AboutTeamPhotoGrid() {
           </div>
           <div className="relative min-h-0 w-full flex-[7] overflow-hidden bg-white-30 mq700:flex-none mq700:aspect-[16/9]">
             <Image
-              src="/team-pic-3.png"
-              alt="Hoasen team outdoors"
+              src={g1.url}
+              alt={g1.alt}
               fill
               className="object-cover"
               sizes="(max-width: 700px) 100vw, 50vw"
@@ -69,8 +153,8 @@ function AboutTeamPhotoGrid() {
         <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-3">
           <div className="relative min-h-0 w-full flex-[9] overflow-hidden bg-white-30 mq700:flex-none mq700:aspect-[16/9]">
             <Image
-              src="/team-pic-2.png"
-              alt="Hoasen team by the sea"
+              src={g2.url}
+              alt={g2.alt}
               fill
               className="object-cover"
               sizes="(max-width: 700px) 100vw, 50vw"
@@ -78,8 +162,8 @@ function AboutTeamPhotoGrid() {
           </div>
           <div className="relative min-h-0 w-full flex-[11] overflow-hidden bg-white-30 mq700:flex-none mq700:aspect-[4/3]">
             <Image
-              src="/team-pic-4.png"
-              alt="Hoasen logo in the sand"
+              src={g3.url}
+              alt={g3.alt}
               fill
               className="object-cover"
               sizes="(max-width: 700px) 100vw, 50vw"
@@ -91,7 +175,82 @@ function AboutTeamPhotoGrid() {
   );
 }
 
-const AboutPageMain = () => {
+export type AboutPageMainProps = {
+  initialTeamPage: TeamPageViewModel | null;
+};
+
+export default function AboutPageMain({ initialTeamPage }: AboutPageMainProps) {
+  const { locale } = useLocale();
+  const [teamPage, setTeamPage] = useState<TeamPageViewModel | null>(
+    initialTeamPage,
+  );
+
+  useEffect(() => {
+    setTeamPage(initialTeamPage);
+  }, [initialTeamPage]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    if (locale === "en" && initialTeamPage) {
+      setTeamPage(initialTeamPage);
+      return () => {
+        cancelled = true;
+      };
+    }
+
+    void (async () => {
+      try {
+        const res = await fetch(
+          `/api/team-page?locale=${encodeURIComponent(locale)}`,
+        );
+        if (!res.ok) return;
+        const data = (await res.json()) as TeamPageViewModel | null;
+        if (!cancelled) setTeamPage(data ?? initialTeamPage ?? null);
+      } catch {
+        if (!cancelled) setTeamPage(initialTeamPage ?? null);
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [locale, initialTeamPage]);
+
+  const resolvedGallery =
+    teamPage?.gallery ??
+    initialTeamPage?.gallery ??
+    [
+      { url: "/team-pic-1.png", alt: "Team photo" },
+      { url: "/team-pic-3.png", alt: "Hoasen team outdoors" },
+      { url: "/team-pic-2.png", alt: "Hoasen team by the sea" },
+      { url: "/team-pic-4.png", alt: "Hoasen logo in the sand" },
+    ];
+
+  const culture =
+    teamPage?.culture ??
+    initialTeamPage?.culture ??
+    FALLBACK_CULTURE;
+
+  const values =
+    teamPage?.values?.length
+      ? teamPage.values
+      : initialTeamPage?.values?.length
+        ? initialTeamPage.values
+        : FALLBACK_VALUES;
+
+  const cultureTitle =
+    culture.title.trim() || "Our Culture";
+  const cultureBody = culture.body;
+
+  const featuredForGrid =
+    teamPage?.featuredMembers && teamPage.featuredMembers.length > 0
+      ? teamPage.featuredMembers
+      : initialTeamPage?.featuredMembers &&
+          initialTeamPage.featuredMembers.length > 0
+        ? initialTeamPage.featuredMembers
+        : undefined;
+
   return (
     <main className="relative box-border flex w-full flex-col items-center overflow-x-clip px-5 pb-24 pt-8 text-white mq900:px-6">
       <GradientGlow className="top-0" />
@@ -132,20 +291,41 @@ const AboutPageMain = () => {
           </div>
 
           <div id="team-pic" className="w-full mt-24">
-            <AboutTeamPhotoGrid />
+            <AboutTeamPhotoGrid gallery={resolvedGallery} />
           </div>
         </div>
 
         <div className="flex w-full flex-col gap-12 mt-20 gap-y-28">
           <div className="mx-auto flex w-full flex-col gap-6 text-left font-reg text-base font-light leading-[26px] tracking-[0.02em] text-white-60">
-            <h2 className="m-0 font-sora text-[80px] mq900:text-[60px] font-normal leading-[58px] text-white/20">
-              Our Culture
-            </h2>
+            <div className="flex flex-col gap-3">
+              <h2 className="m-0 font-sora text-[80px] mq900:text-[60px] font-normal leading-[58px] text-white/20">
+                {cultureTitle}
+              </h2>
+              {culture.iconUrl ? (
+                <div className="relative h-12 w-12 shrink-0">
+                  {culture.iconIsVideo ? (
+                    <video
+                      src={culture.iconUrl}
+                      className="h-full w-full object-contain"
+                      muted
+                      playsInline
+                      loop
+                      aria-hidden
+                    />
+                  ) : (
+                    <Image
+                      src={culture.iconUrl}
+                      alt={culture.iconAlt || cultureTitle}
+                      fill
+                      className="object-contain"
+                      sizes="48px"
+                    />
+                  )}
+                </div>
+              ) : null}
+            </div>
             <p className="mt-4 max-w-[886px] text-xl text-white mq900:text-base">
-              At the heart of our team is a culture of trust, respect, and continuous growth. We
-              support one another, celebrate wins together, and learn quickly from challenges. By
-              staying open, curious, and collaborative, we create space for great ideas to emerge
-              and for everyone to do their best work.
+              {cultureBody}
             </p>
           </div>
 
@@ -155,19 +335,28 @@ const AboutPageMain = () => {
             </h2>
 
             <div className="w-full grid grid-cols-4 gap-6 mq450:grid-cols-1 mq700:grid-cols-2 mt-20 space-between">
-              {VALUE_BLOCKS.map((block, index) => {
-                const Icon = VALUE_ICONS[index];
+              {values.map((block, index) => {
+                const FallbackIcon = VALUE_ICONS[index % VALUE_ICONS.length]!;
+                const title =
+                  block.title.trim() || FALLBACK_VALUES[index]?.title || "";
+                const body =
+                  block.body.trim() ||
+                  FALLBACK_VALUES[index]?.body ||
+                  "";
                 return (
-                  <div key={block.title} className="w-full">
+                  <div key={`${title}-${index}`} className="w-full">
                     <div className="flex flex-col gap-2 max-w-[235px]">
                       <div className="flex flex-col items-start gap-8">
-                        <Icon className="mt-0.5 h-[42px] w-[42px] shrink-0 text-white" />
+                        <QuoteMediaIcon
+                          quote={block}
+                          FallbackIcon={FallbackIcon}
+                        />
                         <h3 className="m-0 font-sora text-xl font-semibold tracking-[0.2px] text-white">
-                          {block.title}
+                          {title}
                         </h3>
                       </div>
                       <p className="mt-2 font-reg text-base font-normal leading-[24px] tracking-[0.32px] text-white-60 mq450:pl-0">
-                        {block.description}
+                        {body}
                       </p>
                     </div>
                   </div>
@@ -181,7 +370,7 @@ const AboutPageMain = () => {
               Our Team
             </h2>
             <div className="mt-12 w-full max-w-[1200px] text-left font-reg text-base text-white">
-              <MemberGrid />
+              <MemberGrid featuredMembers={featuredForGrid} />
             </div>
           </section>
         </div>
@@ -191,6 +380,4 @@ const AboutPageMain = () => {
       </div>
     </main>
   );
-};
-
-export default AboutPageMain;
+}

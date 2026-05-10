@@ -10,7 +10,7 @@ export type TeamGridMember = {
   imageAlt: string;
 };
 
-/** Same rule as `mapFeaturedTeamMembers` in `lib/strapi/case-studies.ts` for name-based slugs. */
+/** Same rule as `mapStrapiTeamMemberToCaseStudy` / involved_members mapping in `lib/strapi/case-studies.ts` for name-based slugs. */
 export function slugifyTeamMemberName(name: string): string {
   return name
     .toLowerCase()

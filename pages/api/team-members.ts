@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import type { AppLocaleCode } from "../../lib/strapi/language";
 import { isAppLocale } from "../../lib/strapi/language";
-import { fetchTeamMemberBySlug } from "../../lib/strapi/team-members";
+import { fetchTeamMembersForGrid } from "../../lib/strapi/team-members";
 
 function uiLocaleFromQuery(q: string | string[] | undefined): AppLocaleCode {
   const raw = Array.isArray(q) ? q[0] : q;
@@ -14,18 +14,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const raw = req.query.slug;
-  const slug = Array.isArray(raw) ? raw[0] : raw;
-  if (!slug || typeof slug !== "string") {
-    return res.status(400).json({ error: "slug query param is required" });
-  }
-
   const locale = uiLocaleFromQuery(req.query.locale);
-  const member = await fetchTeamMemberBySlug(slug, locale);
+  const members = await fetchTeamMembersForGrid(locale);
 
-  if (!member) {
-    return res.status(404).json({ error: "Member not found" });
-  }
-
-  return res.json(member);
+  return res.status(200).json(members);
 }
