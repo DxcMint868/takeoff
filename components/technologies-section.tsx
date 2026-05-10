@@ -1,6 +1,7 @@
 import Image from "next/image";
 import GroupComponent from "./group-component";
 import type { HomeCapability } from "../lib/strapi/home-page";
+import { useTranslation } from "../lib/i18n/use-translation";
 
 const TECHNOLOGY_ROWS = [
   {
@@ -131,6 +132,7 @@ type TechnologiesSectionProps = {
 };
 
 const TechnologiesSection = ({ capabilities }: TechnologiesSectionProps) => {
+  const { t } = useTranslation();
   const items =
     capabilities && capabilities.length > 0
       ? capabilities.map((cap) => ({
@@ -144,41 +146,41 @@ const TechnologiesSection = ({ capabilities }: TechnologiesSectionProps) => {
       : TECHNOLOGY_ROWS.flatMap((row) => row.items);
 
   return (
-  <section id="our-service" className="w-full">
-    <Image
-      className="pointer-events-none absolute left-1/2 top-1/3 w-full max-w-[800px] -translate-x-1/2 -translate-y-1/2 transform overflow-hidden"
-      src="/vector-3.svg"
-      alt=""
-      width={800}
-      height={800}
-      unoptimized
-    />
+    <section id="our-service" className="w-full">
+      <Image
+        className="pointer-events-none absolute left-1/2 top-1/3 w-full max-w-[800px] -translate-x-1/2 -translate-y-1/2 transform overflow-hidden"
+        src="/vector-3.svg"
+        alt=""
+        width={800}
+        height={800}
+        unoptimized
+      />
 
-    <div className="relative flex w-full flex-col items-center pb-40 pt-20 text-center mq450:pb-12">
-      {/* Desktop: Services label + decoration pinned to the left */}
-      <div className="absolute left-0 top-16 hidden flex-col items-center overflow-hidden ms1024:flex">
-        <span className="font-reg text-[11px] font-normal uppercase tracking-[0.2em] text-white/40 [writing-mode:vertical-rl] rotate-180">
-          Services
+      <div className="relative flex w-full flex-col items-center pb-40 pt-20 text-center mq450:pb-12">
+        {/* Desktop: Services label + decoration pinned to the left */}
+        <div className="absolute left-0 top-16 hidden flex-col items-center overflow-hidden ms1024:flex">
+          <span className="font-reg text-[11px] font-normal uppercase tracking-[0.2em] text-white/40 [writing-mode:vertical-rl] rotate-180">
+            {t("home.capabilities.eyebrow")}
+          </span>
+          <Image
+            src="/service-decoration.png"
+            alt=""
+            width={10}
+            height={56}
+            unoptimized
+            className="mt-1 object-contain object-top"
+          />
+        </div>
+
+        {/* Mobile: Services label above title */}
+        <span className="mb-3 font-reg text-[11px] font-normal uppercase tracking-[0.2em] text-white/40 ms1024:hidden">
+          {t("home.capabilities.eyebrow")}
         </span>
-        <Image
-          src="/service-decoration.png"
-          alt=""
-          width={10}
-          height={56}
-          unoptimized
-          className="mt-1 object-contain object-top"
-        />
+
+        <h2 className="m-0 box-border w-full px-4 font-sora text-29xl font-normal leading-[1.1] text-white ms1024:pl-8 ms1024:pr-0 mq450:text-10xl mq450:leading-[41px] mq900:text-19xl mq900:leading-[54px]">
+          {t("home.capabilities.title")}
+        </h2>
       </div>
-
-      {/* Mobile: Services label above title */}
-      <span className="mb-3 font-reg text-[11px] font-normal uppercase tracking-[0.2em] text-white/40 ms1024:hidden">
-        Services
-      </span>
-
-      <h2 className="m-0 box-border w-full px-4 font-sora text-29xl font-normal leading-[1.1] text-white ms1024:pl-8 ms1024:pr-0 mq450:text-10xl mq450:leading-[41px] mq900:text-19xl mq900:leading-[54px]">
-        Our Capabilities in Tech and Design
-      </h2>
-    </div>
 
     <div className="box-border flex w-full flex-wrap justify-center gap-8 px-4 mq900:px-6 mq700:px-4 text-left font-sora text-3xl">
       {items.map((item) => (

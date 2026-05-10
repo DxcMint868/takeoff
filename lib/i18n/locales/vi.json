@@ -27,5 +27,30 @@
   "home.hero.subtitle": "Chúng tôi giúp các startup và doanh nghiệp nhỏ xây dựng và ra mắt sản phẩm trên blockchain",
   "home.hero.cta": "Bắt đầu ngay",
   "home.works.title": "Những đối tác đã làm việc cùng chúng tôi",
-  "home.works.subtitle": "Đội ngũ của chúng tôi có kinh nghiệm làm việc với các công ty từ lớn đến nhỏ"
+  "home.works.subtitle": "Đội ngũ của chúng tôi có kinh nghiệm làm việc với các công ty từ lớn đến nhỏ",
+
+  "home.capabilities.eyebrow": "Dịch vụ",
+  "home.capabilities.title": "Chuyên môn của chúng tôi",
+  "home.workExamples.title": "Dự án tiêu biểu",
+  "home.workExamples.cta": "Xem thêm",
+
+  "works.hero.title": "Dự án tiêu biểu",
+  "works.hero.subtitle": "Cùng điểm qua những sản phẩm và giải pháp chuyên sâu chúng tôi đã thực hiện trong lĩnh vực Fintech & Blockchain.",
+  "works.branding.title": "Thiết kế thương hiệu",
+  "works.branding.subtitle": "Chúng tôi xây dựng bộ quy chuẩn thương hiệu toàn diện nhằm đảm bảo tính nhất quán trên mọi điểm chạm — bao gồm quy cách sử dụng logo, hệ thống phông chữ, bảng màu, khoảng cách và các quy tắc thị giác.",
+  "works.cta.title": "Bắt đầu dự án của bạn ngay hôm nay",
+  "works.cta.subtitle": "Hãy cho chúng tôi biết về dự án của bạn — chúng tôi sẽ giúp bạn thiết kế, xây dựng và ra mắt sản phẩm với sự chuẩn bị kỹ lưỡng nhất.",
+  "works.cta.actionButton": "Kết nối cùng chúng tôi",
+
+  "contact.title": "Liên hệ với chúng tôi",
+  "contact.subtitle": "Hãy cùng nhau xây dựng những điều phi thường!",
+  "contact.telegram": "Telegram",
+  "contact.form.fullName": "Họ và tên",
+  "contact.form.email": "Email",
+  "contact.form.telegram": "Telegram",
+  "contact.form.companyName": "Tên công ty",
+  "contact.form.projectDetails": "Hãy cho chúng tôi biết về dự án của bạn...",
+  "contact.form.submit": "Gửi thông tin",
+  "contact.form.success": "Gửi thông tin thành công!",
+  "contact.form.error": "Gửi thông tin thất bại. Vui lòng thử lại."
 }

@@ -317,68 +317,61 @@ function pickTeamMemberExternalUrl(memberLike: unknown): string | undefined {
   return undefined;
 }
 
-export function mapFeaturedTeamMembers(
-  teamMemberListLike: unknown,
-): CaseStudyTeamMember[] {
-  const list = unwrapStrapiData<any>(teamMemberListLike);
-  if (!list) return [];
+function mapStrapiTeamMemberToCaseStudy(raw: unknown): CaseStudyTeamMember | null {
+  const member = unwrapStrapiData<any>(raw);
+  if (!member) return null;
 
-  const members = toArray<any>(list.featured_members);
+  const name = stringifyValue(member.name);
+  if (!name) return null;
 
-  return members
-    .map((raw) => {
-      const member = unwrapStrapiData<any>(raw);
-      if (!member) return null;
+  const slug =
+    stringifyValue(member.slug) ||
+    name
+      .toLowerCase()
+      .trim()
+      .replace(/\s+/g, "-")
+      .replace(/[^a-z0-9-]/g, "");
 
-      const name = stringifyValue(member.name);
-      if (!name) return null;
+  const roleParts = toArray<any>(member.member_role ?? member.memberRole)
+    .map((entry) => stringifyMemberRoleEntry(entry))
+    .filter(Boolean);
 
-      const slug =
-        stringifyValue(member.slug) ||
-        name
-          .toLowerCase()
-          .trim()
-          .replace(/\s+/g, "-")
-          .replace(/[^a-z0-9-]/g, "");
+  const roleFallback = (() => {
+    for (const key of [
+      "role",
+      "position",
+      "job_title",
+      "jobTitle",
+      "role_title",
+      "title",
+    ] as const) {
+      const s = stringifyValue(member[key]);
+      if (s) return s;
+    }
+    return "";
+  })();
 
-      const roleParts = toArray<any>(
-        member.member_role ?? member.memberRole,
-      )
-        .map((entry) => stringifyMemberRoleEntry(entry))
-        .filter(Boolean);
+  const role =
+    roleParts.length > 0 ? roleParts.join(" · ") : roleFallback;
 
-      const roleFallback = (() => {
-        for (const key of [
-          "role",
-          "position",
-          "job_title",
-          "jobTitle",
-          "role_title",
-          "title",
-        ] as const) {
-          const s = stringifyValue(member[key]);
-          if (s) return s;
-        }
-        return "";
-      })();
+  const avatar = toMedia(member.avatar);
+  const linkUrl = pickTeamMemberExternalUrl(member);
 
-      const role =
-        roleParts.length > 0
-          ? roleParts.join(" · ")
-          : roleFallback;
+  const entry: CaseStudyTeamMember = {
+    name,
+    slug,
+    role,
+    ...(avatar ? { avatar } : {}),
+    ...(linkUrl ? { linkUrl } : {}),
+  };
+  return entry;
+}
 
-      const avatar = toMedia(member.avatar);
-      const linkUrl = pickTeamMemberExternalUrl(member);
-
-      const entry: CaseStudyTeamMember = {
-        name,
-        slug,
-        role,
-        ...(avatar ? { avatar } : {}),
-        ...(linkUrl ? { linkUrl } : {}),
-      };
-      return entry;
-    })
+/** Maps many-to-many `involved_members` → TeamMember (same shape as former TeamMemberList.featured_members). */
+export function mapInvolvedTeamMembers(involvedLike: unknown): CaseStudyTeamMember[] {
+  const list = toArray<any>(unwrapStrapiData(involvedLike));
+  return list
+    .map((raw) => mapStrapiTeamMemberToCaseStudy(raw))
     .filter(Boolean) as CaseStudyTeamMember[];
 }
 
@@ -496,9 +489,7 @@ function mapProjectToCaseStudy(
       }
       : undefined;
 
-  const teamMembersList = mapFeaturedTeamMembers(
-    unwrapStrapiData<any>(project.team_members),
-  );
+  const teamMembersList = mapInvolvedTeamMembers(project.involved_members);
   const teamMembers =
     teamMembersList.length > 0 ? teamMembersList : undefined;
 
@@ -699,24 +690,20 @@ function buildProjectPopulateQuery() {
   params.set("populate[gallery_images][fields][2]", "productPlatform");
   populateMediaFields(params, "populate[gallery_images][populate][file]");
   /**
-   * Do not use `fields` whitelist on `featured_members`: Strapi omits any attribute
-   * not listed, so `member_role` never appeared in the response and roles were empty on case studies.
+   * Many-to-many `involved_members` → TeamMember. Do not whitelist fields on members:
+   * Strapi omits `member_role` if not populated deeply enough.
    */
   populateMediaFields(
     params,
-    "populate[team_members][populate][featured_members][populate][avatar]",
+    "populate[involved_members][populate][avatar]",
   );
   params.set(
-    "populate[team_members][populate][featured_members][populate][member_role]",
+    "populate[involved_members][populate][member_role]",
     "*",
   );
-  /**
-   * `shared.contact-link`: no `url` field in this schema — use explicit nested media only
-   * (global `=*` on contact_links hit invalid nested keys; listing `url` hit "Invalid key url").
-   */
   populateMediaFields(
     params,
-    "populate[team_members][populate][featured_members][populate][contact_links][populate][platform_logo]",
+    "populate[involved_members][populate][contact_links][populate][platform_logo]",
   );
   return params;
 }

@@ -26,5 +26,30 @@
   "home.hero.subtitle": "We help startups and small enterprises build and launch their product onchain",
   "home.hero.cta": "Build with us",
   "home.works.title": "Who we've worked with",
-  "home.works.subtitle": "Our team has experience working with companies large and small"
+  "home.works.subtitle": "Our team has experience working with companies large and small",
+
+  "home.capabilities.eyebrow": "Services",
+  "home.capabilities.title": "Our Capabilities in Tech and Design",
+  "home.workExamples.title": "Our Work Examples",
+  "home.workExamples.cta": "More Projects",
+
+  "works.hero.title": "Featured Projects",
+  "works.hero.subtitle": "Featured projects and case studies showcasing our expertise across fintech, blockchain, and enterprise software.",
+  "works.branding.title": "Branding",
+  "works.branding.subtitle": "We created comprehensive brand guidelines to ensure consistency across every touchpoint — covering logo usage, typography, colour systems, spacing, and visual rules.",
+  "works.cta.title": "Ready to Build Something Great?",
+  "works.cta.subtitle": "Tell us about your product—we'll help you design, build, and ship with confidence.",
+  "works.cta.actionButton": "Start a Conversation",
+
+  "contact.title": "Get in touch with us",
+  "contact.subtitle": "Let's build something extraordinary together!",
+  "contact.telegram": "Telegram",
+  "contact.form.fullName": "Full Name",
+  "contact.form.email": "Email",
+  "contact.form.telegram": "Telegram",
+  "contact.form.companyName": "Company Name",
+  "contact.form.projectDetails": "Tell us about your project...",
+  "contact.form.submit": "Submit",
+  "contact.form.success": "Form submitted successfully!",
+  "contact.form.error": "Submission failed. Please try again."
 }

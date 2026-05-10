@@ -6,6 +6,7 @@ import { useMemo, useState } from "react";
 import { BADGE_SURFACE_CLASSES } from "./badge";
 import CTASolid from "./cta-solid";
 import { GradientGlow } from "./gradient-glow";
+import { useTranslation } from "../lib/i18n/use-translation";
 import {
   CORE_PROJECT_CARDS,
   EXTRA_PAGE_PROJECT_CARDS,
@@ -60,6 +61,7 @@ const WorksPageMain = ({
   filterChips,
   designProjectCards,
 }: WorksPageMainProps) => {
+  const { t } = useTranslation();
   const cardsSource = projectCards ?? ALL_PROJECT_CARDS;
   const featuredSource = featuredProject ?? OCEAN_FINANCE_PROJECT;
   const chipsSource = filterChips ?? FILTER_CHIPS;
@@ -123,18 +125,17 @@ const WorksPageMain = ({
               </svg>
             </span>
             <span className="font-reg text-xs uppercase leading-4 tracking-[0.2em] text-white">
-              Back
+              {t("blog.back")}
             </span>
           </Link>
 
           <div className="flex flex-col items-center gap-5 text-center">
             <h1 className="m-0 max-w-[900px] font-sora text-29xl font-normal leading-[1.1] tracking-[0.02em] text-white mq450:text-10xl mq900:text-19xl mq900:leading-tight">
-              Our Work Examples
+              {t("works.hero.title")}
             </h1>
             <div className="w-full max-w-[900px] font-reg text-3xl font-light leading-[34px] tracking-[0.02em] text-white-60 mq450:text-base mq450:leading-7">
               <p className="m-0 [text-wrap:balance]">
-                Featured projects and case studies showcasing our expertise
-                across fintech, blockchain, and enterprise software.
+                {t("works.hero.subtitle")}
               </p>
             </div>
           </div>
@@ -197,12 +198,10 @@ const WorksPageMain = ({
           <section className="mx-auto box-border flex w-full min-w-0 max-w-[1138px] flex-col gap-8 px-4 pt-20 mq900:pt-14">
             <div className="flex flex-col gap-4">
               <h2 className="m-0 font-sora text-[80px] font-normal capitalize leading-[1.2] tracking-normal text-white mq900:text-[52px] mq450:text-[32px] text-white/20">
-                Branding
+                {t("works.branding.title")}
               </h2>
               <p className="m-0 max-w-[680px] font-reg text-sm font-light leading-[22px] tracking-[0.02em] text-white-60">
-                We created comprehensive brand guidelines to ensure consistency
-                across every touchpoint — covering logo usage, typography,
-                colour systems, spacing, and visual rules.
+                {t("works.branding.subtitle")}
               </p>
             </div>
 
@@ -295,11 +294,10 @@ const WorksPageMain = ({
               sizes="100vw"
             />
             <h2 className="relative z-[1] m-0 font-sora text-29xl font-normal leading-[58px] tracking-[0.02em] text-white mq450:text-10xl mq450:leading-[41px] mq900:text-19xl mq900:leading-[46px]">
-              Ready to Build Something Great?
+              {t("works.cta.title")}
             </h2>
             <p className="relative z-[1] m-0 max-w-[520px] font-reg text-base font-light leading-6 tracking-[0.02em] text-white-60">
-              Tell us about your product—we&apos;ll help you design, build, and
-              ship with confidence.
+              {t("works.cta.subtitle")}
             </p>
             <CTASolid label="Start a Conversation" href="/#contact-us" />
           </section>
