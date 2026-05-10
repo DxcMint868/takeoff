@@ -9,6 +9,7 @@ import {
   unwrapStrapiData,
 } from "./case-studies";
 import type { StrapiBlocksNode } from "./case-studies";
+import { toStrapiLocale } from "./language";
 
 export type HomeHero = {
   eyebrow: string;
@@ -50,7 +51,7 @@ function stringifyValue(value: unknown): string {
   return String(value);
 }
 
-function buildHomePagePopulateQuery(locale?: string) {
+function buildHomePagePopulateQuery(uiLocale: string) {
   const params = new URLSearchParams();
 
   params.set("populate[hero][fields][0]", "eyebrow");
@@ -76,9 +77,7 @@ function buildHomePagePopulateQuery(locale?: string) {
   populateMediaFields(params, "populate[capabilities][populate][icon]");
   params.set("populate[capabilities][populate][framework_and_tools]", "*");
 
-  if (locale) {
-    params.set("locale", locale);
-  }
+  params.set("locale", toStrapiLocale(uiLocale));
 
   applyDraftStatus(params);
 
@@ -180,13 +179,14 @@ function mapLogoCloud(brandLogosLike: unknown): HomeLogoCloud | null {
   return { logos };
 }
 
+/** @param uiLocale App locale code (`en` | `ja` | `vi` | `ko`) — mapped to Strapi i18n via env. */
 export async function fetchHomePageData(
-  locale?: string,
+  uiLocale = "en",
 ): Promise<HomePageCmsData | null> {
   if (!hasCmsConfig()) return null;
 
   try {
-    const params = buildHomePagePopulateQuery(locale);
+    const params = buildHomePagePopulateQuery(uiLocale);
     const payload = await fetchStrapiJson(
       `/api/homepage?${params.toString()}`,
     );

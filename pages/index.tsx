@@ -2,12 +2,8 @@ import type { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import Nav from "../components/nav";
-import FrameComponent from "../components/frame-component";
 import FooterComponent from "../components/footer-component";
-import ContactSection from "../components/contact-section";
-import TechnologiesSection from "../components/technologies-section";
-import WorkExamplesSection from "../components/work-examples-section";
-import WorksSection from "../components/works-section";
+import HomeCmsSections from "../components/home-cms-sections";
 import {
   CORE_PROJECT_CARDS,
   EXTRA_PAGE_PROJECT_CARDS,
@@ -258,7 +254,7 @@ type HomeProps = {
 export const getStaticProps: GetStaticProps<HomeProps> = async () => {
   const [cmsWorks, homePageData] = await Promise.all([
     fetchWorksData(),
-    fetchHomePageData(),
+    fetchHomePageData("en"),
   ]);
 
   const worksProps =
@@ -339,23 +335,11 @@ const Web: NextPage<HomeProps> = ({ featuredProject, projectCards, homePageData 
           />
         </div>
         <Nav initialTransparent scrollThreshold={80} />
-        <section className="w-full flex flex-col items-start justify-start gap-14 max-w-full mq900:gap-7 pt-[70px]">
-          <FrameComponent hero={homePageData?.hero ?? null} />
-        </section>
-
-        <div className="w-full flex justify-center">
-          <div
-            className={`flex flex-col pt-96 items-start justify-start gap-3 max-w-[1200px] w-full text-center text-xs text-white font-reg`}
-          >
-            <TechnologiesSection capabilities={homePageData?.capabilities ?? undefined} />
-            <WorkExamplesSection featuredProject={featuredProject} projectCards={projectCards} />
-            <WorksSection
-              testimonials={homePageData?.testimonials ?? undefined}
-              logoCloud={homePageData?.logoCloud ?? undefined}
-            />
-            <ContactSection className="px-4" />
-          </div>
-        </div>
+        <HomeCmsSections
+          initialHomePageData={homePageData}
+          featuredProject={featuredProject}
+          projectCards={projectCards}
+        />
         <FooterComponent />
       </div>
     </>
