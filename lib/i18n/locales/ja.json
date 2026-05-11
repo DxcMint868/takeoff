@@ -52,5 +52,11 @@
   "contact.form.projectDetails": "プロジェクトの詳細について教えてください...",
   "contact.form.submit": "送信",
   "contact.form.success": "送信が完了しました！",
-  "contact.form.error": "送信に失敗しました。もう一度お試しください。"
+  "contact.form.error": "送信に失敗しました。もう一度お試しください。",
+
+  "about.pageTitle": "会社概要",
+  "about.culture.fallbackTitle": "私たちの文化",
+  "about.culture.fallbackBody": "私たちのチームの中心にあるのは、信頼・敬意・継続的な成長を重んじる文化です。互いを支え合い、成功を共に祝い、課題からは素早く学びます。オープンで好奇心旺盛、協力的であることで、優れたアイデアが生まれ、誰もが最高の仕事ができる場をつくります。",
+  "about.values.sectionTitle": "私たちの価値観",
+  "about.team.sectionTitle": "私たちのチーム"
 }

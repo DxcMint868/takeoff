@@ -52,5 +52,11 @@
   "contact.form.projectDetails": "Hãy cho chúng tôi biết về dự án của bạn...",
   "contact.form.submit": "Gửi thông tin",
   "contact.form.success": "Gửi thông tin thành công!",
-  "contact.form.error": "Gửi thông tin thất bại. Vui lòng thử lại."
+  "contact.form.error": "Gửi thông tin thất bại. Vui lòng thử lại.",
+
+  "about.pageTitle": "Giới thiệu",
+  "about.culture.fallbackTitle": "Văn hóa của chúng tôi",
+  "about.culture.fallbackBody": "Trái tim của đội ngũ chúng tôi là văn hóa dựa trên lòng tin, tôn trọng và phát triển không ngừng. Chúng tôi đồng hành cùng nhau, cùng nhau ăn mừng thành công và học hỏi nhanh chóng từ thử thách. Bằng cách duy trì sự cởi mở, tò mò và hợp tác, chúng tôi tạo không gian để những ý tưởng tuyệt vời xuất hiện và mọi người đều có thể phát huy tối đa.",
+  "about.values.sectionTitle": "Giá trị của chúng tôi",
+  "about.team.sectionTitle": "Đội ngũ của chúng tôi"
 }

@@ -51,5 +51,11 @@
   "contact.form.projectDetails": "Tell us about your project...",
   "contact.form.submit": "Submit",
   "contact.form.success": "Form submitted successfully!",
-  "contact.form.error": "Submission failed. Please try again."
+  "contact.form.error": "Submission failed. Please try again.",
+
+  "about.pageTitle": "About Us",
+  "about.culture.fallbackTitle": "Our Culture",
+  "about.culture.fallbackBody": "At the heart of our team is a culture of trust, respect, and continuous growth. We support one another, celebrate wins together, and learn quickly from challenges. By staying open, curious, and collaborative, we create space for great ideas to emerge and for everyone to do their best work.",
+  "about.values.sectionTitle": "Our Values",
+  "about.team.sectionTitle": "Our Team"
 }

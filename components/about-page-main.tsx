@@ -18,55 +18,13 @@ import {
   WorldClassIcon,
 } from "./icons";
 import ContactSection from "./contact-section";
+import { useTranslation } from "../lib/i18n/use-translation";
 
 const VALUE_ICONS: ComponentType<SVGProps<SVGSVGElement>>[] = [
   DomainExpertiseIcon,
   AgileExecutionIcon,
   TransparencyIcon,
   WorldClassIcon,
-];
-
-const FALLBACK_CULTURE: TeamPageQuote = {
-  title: "Our Culture",
-  body:
-    "At the heart of our team is a culture of trust, respect, and continuous growth. We support one another, celebrate wins together, and learn quickly from challenges. By staying open, curious, and collaborative, we create space for great ideas to emerge and for everyone to do their best work.",
-  iconUrl: "",
-  iconAlt: "",
-  iconIsVideo: false,
-};
-
-const FALLBACK_VALUES: TeamPageQuote[] = [
-  {
-    title: "Domain Expertise",
-    body:
-      "Deep fintech knowledge, building systems that process millions daily.",
-    iconUrl: "",
-    iconAlt: "",
-    iconIsVideo: false,
-  },
-  {
-    title: "Agile Execution",
-    body:
-      "Lean team, fast delivery cutting through red tape for swift results.",
-    iconUrl: "",
-    iconAlt: "",
-    iconIsVideo: false,
-  },
-  {
-    title: "Transparency",
-    body:
-      "No black box clear documentation and open communication at every step.",
-    iconUrl: "",
-    iconAlt: "",
-    iconIsVideo: false,
-  },
-  {
-    title: "World-Class Quality",
-    body: "We don't just meet standards; we set them.",
-    iconUrl: "",
-    iconAlt: "",
-    iconIsVideo: false,
-  },
 ];
 
 function QuoteMediaIcon({
@@ -181,6 +139,7 @@ export type AboutPageMainProps = {
 
 export default function AboutPageMain({ initialTeamPage }: AboutPageMainProps) {
   const { locale } = useLocale();
+  const { t } = useTranslation();
   const [teamPage, setTeamPage] = useState<TeamPageViewModel | null>(
     initialTeamPage,
   );
@@ -227,21 +186,24 @@ export default function AboutPageMain({ initialTeamPage }: AboutPageMainProps) {
       { url: "/team-pic-4.png", alt: "Hoasen logo in the sand" },
     ];
 
-  const culture =
-    teamPage?.culture ??
-    initialTeamPage?.culture ??
-    FALLBACK_CULTURE;
+  const cultureFromCms =
+    teamPage?.culture ?? initialTeamPage?.culture ?? null;
 
-  const values =
+  const cultureTitle =
+    cultureFromCms?.title?.trim() || t("about.culture.fallbackTitle");
+  const cultureBody =
+    cultureFromCms?.body?.trim() || t("about.culture.fallbackBody");
+
+  const rawValues =
     teamPage?.values?.length
       ? teamPage.values
       : initialTeamPage?.values?.length
         ? initialTeamPage.values
-        : FALLBACK_VALUES;
+        : [];
 
-  const cultureTitle =
-    culture.title.trim() || "Our Culture";
-  const cultureBody = culture.body;
+  const displayValues = rawValues.filter(
+    (b) => (b.title?.trim() ?? "") !== "" || (b.body?.trim() ?? "") !== "",
+  );
 
   const featuredForGrid =
     teamPage?.featuredMembers && teamPage.featuredMembers.length > 0
@@ -280,13 +242,13 @@ export default function AboutPageMain({ initialTeamPage }: AboutPageMainProps) {
               </svg>
             </span>
             <span className="font-reg text-xs uppercase leading-4 tracking-[0.2em] text-white">
-              Back
+              {t("blog.back")}
             </span>
           </Link>
 
           <div className="flex flex-col items-center gap-5 text-center">
             <h1 className="m-0 max-w-[900px] font-sora text-[40px] font-normal leading-[1.1] tracking-[0.02em] text-white mq450:text-3xl mq900:text-[52px] mq900:leading-tight">
-              About Us
+              {t("about.pageTitle")}
             </h1>
           </div>
 
@@ -301,11 +263,11 @@ export default function AboutPageMain({ initialTeamPage }: AboutPageMainProps) {
               <h2 className="m-0 font-sora text-[80px] mq900:text-[60px] font-normal leading-[58px] text-white/20">
                 {cultureTitle}
               </h2>
-              {culture.iconUrl ? (
+              {cultureFromCms?.iconUrl ? (
                 <div className="relative h-12 w-12 shrink-0">
-                  {culture.iconIsVideo ? (
+                  {cultureFromCms.iconIsVideo ? (
                     <video
-                      src={culture.iconUrl}
+                      src={cultureFromCms.iconUrl}
                       className="h-full w-full object-contain"
                       muted
                       playsInline
@@ -314,8 +276,8 @@ export default function AboutPageMain({ initialTeamPage }: AboutPageMainProps) {
                     />
                   ) : (
                     <Image
-                      src={culture.iconUrl}
-                      alt={culture.iconAlt || cultureTitle}
+                      src={cultureFromCms.iconUrl}
+                      alt={cultureFromCms.iconAlt || cultureTitle}
                       fill
                       className="object-contain"
                       sizes="48px"
@@ -331,18 +293,14 @@ export default function AboutPageMain({ initialTeamPage }: AboutPageMainProps) {
 
           <div className="w-full">
             <h2 className="m-0 font-sora text-[80px] mq900:text-[60px] font-normal leading-[58px] text-white/20">
-              Our Values
+              {t("about.values.sectionTitle")}
             </h2>
 
             <div className="w-full grid grid-cols-4 gap-6 mq450:grid-cols-1 mq700:grid-cols-2 mt-20 space-between">
-              {values.map((block, index) => {
+              {displayValues.map((block, index) => {
                 const FallbackIcon = VALUE_ICONS[index % VALUE_ICONS.length]!;
-                const title =
-                  block.title.trim() || FALLBACK_VALUES[index]?.title || "";
-                const body =
-                  block.body.trim() ||
-                  FALLBACK_VALUES[index]?.body ||
-                  "";
+                const title = block.title.trim();
+                const body = block.body.trim();
                 return (
                   <div key={`${title}-${index}`} className="w-full">
                     <div className="flex flex-col gap-2 max-w-[235px]">
@@ -367,7 +325,7 @@ export default function AboutPageMain({ initialTeamPage }: AboutPageMainProps) {
 
           <section id="our-team" className="w-full">
             <h2 className="m-0 font-sora text-[80px] mq900:text-[60px] font-normal leading-[58px] text-white/20">
-              Our Team
+              {t("about.team.sectionTitle")}
             </h2>
             <div className="mt-12 w-full max-w-[1200px] text-left font-reg text-base text-white">
               <MemberGrid featuredMembers={featuredForGrid} />

@@ -52,5 +52,11 @@
   "contact.form.projectDetails": "프로젝트에 대해 설명해주세요...",
   "contact.form.submit": "제출하기",
   "contact.form.success": "성공적으로 제출되었습니다!",
-  "contact.form.error": "제출에 실패했습니다. 다시 시도해주세요."
+  "contact.form.error": "제출에 실패했습니다. 다시 시도해주세요.",
+
+  "about.pageTitle": "소개",
+  "about.culture.fallbackTitle": "우리의 문화",
+  "about.culture.fallbackBody": "팀의 중심에는 신뢰, 존중, 그리고 끊임없는 성장을 추구하는 문화가 있습니다. 서로를 지지하고 함께 성과를 축하하며, 어려움에서 빠르게 배웁니다. 열린 마음, 호기심, 협력을 바탕으로 뛰어난 아이디어가 나올 수 있는 공간을 만들고 모두가 최선을 다할 수 있도록 합니다.",
+  "about.values.sectionTitle": "우리의 가치",
+  "about.team.sectionTitle": "우리 팀"
 }
