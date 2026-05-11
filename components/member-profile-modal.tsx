@@ -128,6 +128,17 @@ export default function MemberProfileModal({ member, onClose }: MemberProfileMod
           </section>
         ) : null}
 
+        {member.whyWorkWithThem ? (
+          <section className="mt-10 rounded-3xl bg-white/5 px-10 py-10 text-center tracking-[0.02em] mq700:px-4">
+            <h4 className="m-0 font-sora text-3xl font-semibold text-white mq700:text-2xl">
+              Why work with them
+            </h4>
+            <p className="mx-auto m-0 max-w-[90%] pt-4 font-reg text-[14px] font-light leading-8 text-white-60 mq700:text-base mq700:leading-6">
+              {member.whyWorkWithThem}
+            </p>
+          </section>
+        ) : null}
+
         {/* ── Experience ── */}
         {member.experience.length > 0 && (
           <section className="mb-16 mt-20 flex flex-col gap-8">
@@ -163,9 +174,10 @@ export default function MemberProfileModal({ member, onClose }: MemberProfileMod
                 aria-label={link.platform}
               >
                 {link.logoUrl ? (
-                  <Image
+                  // eslint-disable-next-line @next/next/no-img-element -- CMS logos may use any CDN host.
+                  <img
                     src={link.logoUrl}
-                    alt={link.platform}
+                    alt={link.logoAlt || link.platform}
                     width={48}
                     height={48}
                     className="h-12 w-12 object-contain"

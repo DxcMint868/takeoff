@@ -20,5 +20,43 @@
   "footer.contactInfo": "お問い合わせ情報",
   "meta.by": "投稿者:",
 
-  "common.loading": "読み込み中"
+  "common.loading": "読み込み中",
+
+  "home.hero.eyebrow": "私たちが創る",
+  "home.hero.title": "フィンテック製品",
+  "home.hero.subtitle": "スタートアップや中小企業がブロックチェーン上で製品を構築・ローンチするお手伝いをします",
+  "home.hero.cta": "今すぐ始める",
+  "home.works.title": "これまでのお客様",
+  "home.works.subtitle": "大企業から小規模企業まで幅広い実績があります",
+
+  "home.capabilities.eyebrow": "サービス",
+  "home.capabilities.title": "技術とデザインの枠組み",
+  "home.workExamples.title": "実績・プロジェクト",
+  "home.workExamples.cta": "すべてのプロジェクト",
+
+  "works.hero.title": "実績・プロジェクト",
+  "works.hero.subtitle": "Fintechとブロックチェーン領域における、私たちの専門知識を詰め込んだプロジェクトとソリューションをご紹介します。",
+  "works.branding.title": "ブランディング",
+  "works.branding.subtitle": "ロゴの使用規定、タイポグラフィ、カラーシステム、スペーシング、視覚的ルールなど、あらゆる接点で一貫性を保つための包括的なブランドガイドラインを策定しました。",
+  "works.cta.title": "今 바로, プロジェクトを始 めましょう",
+  "works.cta.subtitle": "あなたのプロジェクトについてお聞かせください。デザインから開発、そして万全な体制でのリリースまで、私たちが全力でサポートします。",
+  "works.cta.actionButton": "相談してみる",
+
+  "contact.title": "お問い合わせ",
+  "contact.subtitle": "素晴らしいプロダクトを共に作り上げましょう！",
+  "contact.telegram": "Telegram",
+  "contact.form.fullName": "お名前",
+  "contact.form.email": "メールアドレス",
+  "contact.form.telegram": "Telegram",
+  "contact.form.companyName": "会社名",
+  "contact.form.projectDetails": "プロジェクトの詳細について教えてください...",
+  "contact.form.submit": "送信",
+  "contact.form.success": "送信が完了しました！",
+  "contact.form.error": "送信に失敗しました。もう一度お試しください。",
+
+  "about.pageTitle": "会社概要",
+  "about.culture.fallbackTitle": "私たちの文化",
+  "about.culture.fallbackBody": "私たちのチームの中心にあるのは、信頼・敬意・継続的な成長を重んじる文化です。互いを支え合い、成功を共に祝い、課題からは素早く学びます。オープンで好奇心旺盛、協力的であることで、優れたアイデアが生まれ、誰もが最高の仕事ができる場をつくります。",
+  "about.values.sectionTitle": "私たちの価値観",
+  "about.team.sectionTitle": "私たちのチーム"
 }

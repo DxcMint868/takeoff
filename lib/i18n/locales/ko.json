@@ -20,5 +20,43 @@
   "footer.contactInfo": "연락처 정보",
   "meta.by": "작성:",
 
-  "common.loading": "로딩 중"
+  "common.loading": "로딩 중",
+
+  "home.hero.eyebrow": "우리가 만드는",
+  "home.hero.title": "핀테크 제품",
+  "home.hero.subtitle": "스타트업과 중소기업이 블록체인 위에서 제품을 구축하고 출시할 수 있도록 돕습니다",
+  "home.hero.cta": "지금 시작하기",
+  "home.works.title": "함께한 파트너사",
+  "home.works.subtitle": "대기업부터 소기업까지 다양한 회사와 협력한 경험이 있습니다",
+
+  "home.capabilities.eyebrow": "서비스",
+  "home.capabilities.title": "기술 및 디자인 역량",
+  "home.workExamples.title": "주요 프로젝트",
+  "home.workExamples.cta": "더 보기",
+
+  "works.hero.title": "주요 프로젝트",
+  "works.hero.subtitle": "핀테크와 블록체인 분야에서 쌓아온 저희만의 전문적인 솔루션과 프로젝트들을 확인해 보세요.",
+  "works.branding.title": "브랜딩 디자인",
+  "works.branding.subtitle": "로고 활용법, 타이포그래피, 컬러 시스템, 여백 및 시각적 규칙 등 모든 접점에서 일관성을 유지할 수 있도록 종합적인 브랜드 가이드라인을 구축했습니다.",
+  "works.cta.title": "오늘 바로 프로젝트를 시작해 보세요",
+  "works.cta.subtitle": "여러분의 프로젝트에 대해 들려주세요 — 기획부터 디자인, 개발, 그리고 완벽한 출시까지 저희가 든든한 파트너가 되어 도와드리겠습니다.",
+  "works.cta.actionButton": "상담 시작하기",
+
+  "contact.title": "문의하기",
+  "contact.subtitle": "함께 특별한 것을 만들어 봅시다!",
+  "contact.telegram": "텔레그램",
+  "contact.form.fullName": "성함",
+  "contact.form.email": "이메일",
+  "contact.form.telegram": "텔레그램",
+  "contact.form.companyName": "회사명",
+  "contact.form.projectDetails": "프로젝트에 대해 설명해주세요...",
+  "contact.form.submit": "제출하기",
+  "contact.form.success": "성공적으로 제출되었습니다!",
+  "contact.form.error": "제출에 실패했습니다. 다시 시도해주세요.",
+
+  "about.pageTitle": "소개",
+  "about.culture.fallbackTitle": "우리의 문화",
+  "about.culture.fallbackBody": "팀의 중심에는 신뢰, 존중, 그리고 끊임없는 성장을 추구하는 문화가 있습니다. 서로를 지지하고 함께 성과를 축하하며, 어려움에서 빠르게 배웁니다. 열린 마음, 호기심, 협력을 바탕으로 뛰어난 아이디어가 나올 수 있는 공간을 만들고 모두가 최선을 다할 수 있도록 합니다.",
+  "about.values.sectionTitle": "우리의 가치",
+  "about.team.sectionTitle": "우리 팀"
 }

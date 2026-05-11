@@ -3,61 +3,74 @@ import Head from "next/head";
 import FooterComponent from "../components/footer-component";
 import Nav from "../components/nav";
 import AboutPageMain from "../components/about-page-main";
+import type { TeamPageViewModel } from "../lib/strapi/team-page";
+import { fetchTeamPageData } from "../lib/strapi/team-page";
 
-type AboutUsPageProps = Record<string, never>;
+type AboutUsPageProps = {
+  teamPage: TeamPageViewModel | null;
+};
 
 export const getStaticProps: GetStaticProps<AboutUsPageProps> = async () => {
+  const teamPage = await fetchTeamPageData("en");
   return {
-    props: {},
+    props: { teamPage },
+    revalidate: 60,
   };
 };
 
 const SITE_URL = "https://www.hoasen.io";
 const PAGE_URL = `${SITE_URL}/about-us`;
-const TITLE = "About Us | Hoasen";
-const DESCRIPTION =
+const DEFAULT_TITLE = "About Us | Hoasen";
+const DEFAULT_DESCRIPTION =
   "Hoasen is a blockchain and fintech development studio based in the UAE. We partner with startups and enterprises to design, build, and ship products on chain — from smart contracts and DApps to AI-driven fintech.";
-const OG_IMAGE = `${SITE_URL}/og-image.png`;
+const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.png`;
 
-const breadcrumbJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
-    { "@type": "ListItem", position: 2, name: "About Us", item: PAGE_URL },
-  ],
-};
+const AboutUs: NextPage<AboutUsPageProps> = ({ teamPage }) => {
+  const title =
+    teamPage?.seo?.metaTitle?.trim() || DEFAULT_TITLE;
+  const description =
+    teamPage?.seo?.metaDescription?.trim() || DEFAULT_DESCRIPTION;
+  const ogImage =
+    teamPage?.seo?.ogImageUrl?.trim() || DEFAULT_OG_IMAGE;
 
-const webPageJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  "@id": `${PAGE_URL}/#webpage`,
-  url: PAGE_URL,
-  name: TITLE,
-  description: DESCRIPTION,
-  isPartOf: { "@id": `${SITE_URL}/#website` },
-  about: { "@id": `${SITE_URL}/#organization` },
-};
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+      { "@type": "ListItem", position: 2, name: "About Us", item: PAGE_URL },
+    ],
+  };
 
-const AboutUs: NextPage<AboutUsPageProps> = () => {
+  const webPageJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${PAGE_URL}/#webpage`,
+    url: PAGE_URL,
+    name: title,
+    description,
+    isPartOf: { "@id": `${SITE_URL}/#website` },
+    about: { "@id": `${SITE_URL}/#organization` },
+  };
+
   return (
     <>
       <Head>
-        <title>{TITLE}</title>
-        <meta name="description" content={DESCRIPTION} />
+        <title>{title}</title>
+        <meta name="description" content={description} />
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href={PAGE_URL} />
 
-        <meta property="og:title" content={TITLE} />
-        <meta property="og:description" content={DESCRIPTION} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
         <meta property="og:url" content={PAGE_URL} />
-        <meta property="og:image" content={OG_IMAGE} />
+        <meta property="og:image" content={ogImage} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
 
-        <meta name="twitter:title" content={TITLE} />
-        <meta name="twitter:description" content={DESCRIPTION} />
-        <meta name="twitter:image" content={OG_IMAGE} />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={description} />
+        <meta name="twitter:image" content={ogImage} />
 
         <script
           type="application/ld+json"
@@ -71,7 +84,7 @@ const AboutUs: NextPage<AboutUsPageProps> = () => {
 
       <div className="w-full min-h-screen bg-dark leading-[normal] tracking-[normal] text-left text-3xl text-white font-sora mq450:min-h-0">
         <Nav initialTransparent scrollThreshold={80} />
-        <AboutPageMain />
+        <AboutPageMain initialTeamPage={teamPage} />
         <FooterComponent />
       </div>
     </>

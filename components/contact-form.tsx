@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { ArrowIcon } from "./icons";
+import { useTranslation } from "../lib/i18n/use-translation";
 
 const fieldClass =
   "w-full bg-transparent border-x-0 border-t-0 border-b border-white-30 rounded-none px-0 py-2 focus:outline-none focus:ring-0 focus:border-white-60 font-reg text-sm leading-[22px] tracking-[0.02em] !text-white";
@@ -19,6 +20,7 @@ const textareaStyle: React.CSSProperties = {
 };
 
 const ContactForm: React.FC = () => {
+  const { t } = useTranslation();
   const projectDetailsRef = useRef<HTMLTextAreaElement>(null);
   const [formData, setFormData] = useState({
     fullName: "",
@@ -27,9 +29,13 @@ const ContactForm: React.FC = () => {
     companyName: "",
     projectDetails: "",
   });
-  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
+  const [submitStatus, setSubmitStatus] = useState<
+    "idle" | "success" | "error"
+  >("idle");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
@@ -57,7 +63,13 @@ const ContactForm: React.FC = () => {
 
       if (response.ok) {
         setSubmitStatus("success");
-        setFormData({ fullName: "", email: "", telegram: "", companyName: "", projectDetails: "" });
+        setFormData({
+          fullName: "",
+          email: "",
+          telegram: "",
+          companyName: "",
+          projectDetails: "",
+        });
       } else {
         setSubmitStatus("error");
       }
@@ -78,7 +90,7 @@ const ContactForm: React.FC = () => {
           name="fullName"
           value={formData.fullName}
           onChange={handleChange}
-          placeholder="Full Name"
+          placeholder={t("contact.form.fullName")}
           className={fieldClass}
           style={fieldStyle}
         />
@@ -90,7 +102,7 @@ const ContactForm: React.FC = () => {
             required
             value={formData.email}
             onChange={handleChange}
-            placeholder="Email"
+            placeholder={t("contact.form.email")}
             className={fieldClass}
             style={fieldStyle}
             pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
@@ -101,7 +113,7 @@ const ContactForm: React.FC = () => {
             name="telegram"
             value={formData.telegram}
             onChange={handleChange}
-            placeholder="Telegram"
+            placeholder={t("contact.form.telegram")}
             className={fieldClass}
             style={fieldStyle}
           />
@@ -113,7 +125,7 @@ const ContactForm: React.FC = () => {
           required
           value={formData.companyName}
           onChange={handleChange}
-          placeholder="Company Name"
+          placeholder={t("contact.form.companyName")}
           className={fieldClass}
           style={fieldStyle}
         />
@@ -124,7 +136,7 @@ const ContactForm: React.FC = () => {
           rows={1}
           value={formData.projectDetails}
           onChange={handleChange}
-          placeholder="Tell us about your project..."
+          placeholder={t("contact.form.projectDetails")}
           className={`${fieldClass} resize-none overflow-hidden`}
           style={textareaStyle}
         />
@@ -134,17 +146,17 @@ const ContactForm: React.FC = () => {
             type="submit"
             className="bg-transparent border-0 p-0 flex items-center gap-2 text-white font-sora font-normal text-xl leading-[26px] tracking-[0.02em] cursor-pointer hover:opacity-80 transition-opacity"
           >
-            Submit
+            {t("contact.form.submit")}
             <ArrowIcon width="32" height="24" />
           </button>
           {submitStatus === "success" && (
             <p className="text-green-500 text-sm mt-2 font-reg">
-              Form submitted successfully!
+              {t("contact.form.success")}
             </p>
           )}
           {submitStatus === "error" && (
             <p className="text-red-500 text-sm mt-2 font-reg">
-              Submission failed. Please try again.
+              {t("contact.form.error")}
             </p>
           )}
         </div>

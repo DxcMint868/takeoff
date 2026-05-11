@@ -15,8 +15,22 @@ const LOGOS: Logo[] = [
   { src: "/rice-logo.png", alt: "Rice Studios", url: "https://thisisrice.com", name: "Studios" },
 ];
 
-const LogoCarousel = () => {
-  const doubled = [...LOGOS, ...LOGOS];
+type LogoCarouselProps = {
+  cmsLogos?: Array<{ url: string; alt: string; link: string; title?: string }>;
+};
+
+const LogoCarousel = ({ cmsLogos }: LogoCarouselProps) => {
+  const logos: Logo[] =
+    cmsLogos && cmsLogos.length > 0
+      ? cmsLogos.map((logo) => ({
+          src: logo.url,
+          alt: logo.alt,
+          url: logo.link || "#",
+          ...(logo.title ? { name: logo.title } : {}),
+        }))
+      : LOGOS;
+
+  const doubled = [...logos, ...logos];
 
   return (
     <div className="group w-full overflow-hidden py-10">
@@ -39,8 +53,8 @@ const LogoCarousel = () => {
           <a
             key={`${logo.alt}-${i}`}
             href={logo.url}
-            target="_blank"
-            rel="noopener noreferrer"
+            target={logo.url !== "#" ? "_blank" : undefined}
+            rel={logo.url !== "#" ? "noopener noreferrer" : undefined}
             className="mr-16 flex shrink-0 items-center justify-center no-underline"
           >
             <Image
@@ -49,7 +63,7 @@ const LogoCarousel = () => {
               width={150}
               height={50}
               className={`h-[50px] w-auto object-contain opacity-80 transition-opacity hover:opacity-100 ${logo.invert ? "brightness-0 invert" : ""}`}
-              unoptimized={logo.src.endsWith(".svg")}
+              unoptimized={logo.src.endsWith(".svg") || logo.src.startsWith("http")}
             />
             {logo.name && (
               <span className="ml-2 whitespace-nowrap text-10xl font-semibold text-white no-underline opacity-80 transition-opacity hover:opacity-100">

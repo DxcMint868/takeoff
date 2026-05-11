@@ -4,9 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
-import { MEMBERS } from "../lib/members";
+import { useLocale } from "../contexts/locale-context";
 import type { TeamGridMember } from "../lib/team-grid-member";
-import { membersToTeamGridMembers } from "../lib/team-grid-member";
 import type { TeamMemberDisplay } from "../lib/strapi/team-members";
 import MemberProfileModal from "./member-profile-modal";
 
@@ -114,27 +113,72 @@ export function TeamMemberGrid({ members, className }: TeamMemberGridProps) {
 // Smart wrapper (About Us page — handles routing + modal)
 // ---------------------------------------------------------------------------
 
-export default function MemberGrid() {
+export type MemberGridOuterProps = {
+  /** When set (non-empty), skips loading the full team list — use Strapi Team Page `featured_members`. */
+  featuredMembers?: TeamGridMember[];
+};
+
+export default function MemberGrid({ featuredMembers }: MemberGridOuterProps) {
   const router = useRouter();
+  const { locale } = useLocale();
+  const [gridMembers, setGridMembers] = useState<TeamGridMember[]>(
+    featuredMembers ?? [],
+  );
+  const [gridLoading, setGridLoading] = useState(!featuredMembers?.length);
   const [selectedMember, setSelectedMember] = useState<TeamMemberDisplay | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const fetchMember = useCallback(async (slug: string) => {
-    setLoading(true);
-    try {
-      const res = await fetch(`/api/team-member?slug=${encodeURIComponent(slug)}`);
-      if (!res.ok) {
-        setSelectedMember(null);
-        return;
-      }
-      const data: TeamMemberDisplay = await res.json();
-      setSelectedMember(data);
-    } catch {
-      setSelectedMember(null);
-    } finally {
-      setLoading(false);
+  useEffect(() => {
+    let cancelled = false;
+
+    if (featuredMembers && featuredMembers.length > 0) {
+      setGridMembers(featuredMembers);
+      setGridLoading(false);
+      return () => {
+        cancelled = true;
+      };
     }
-  }, []);
+
+    setGridLoading(true);
+    void (async () => {
+      try {
+        const res = await fetch(`/api/team-members?locale=${encodeURIComponent(locale)}`);
+        if (!res.ok) throw new Error("team list failed");
+        const data: unknown = await res.json();
+        const list = Array.isArray(data) ? data : [];
+        if (!cancelled) setGridMembers(list as TeamGridMember[]);
+      } catch {
+        if (!cancelled) setGridMembers([]);
+      } finally {
+        if (!cancelled) setGridLoading(false);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [locale, featuredMembers]);
+
+  const fetchMember = useCallback(
+    async (slug: string) => {
+      setLoading(true);
+      try {
+        const res = await fetch(
+          `/api/team-member?slug=${encodeURIComponent(slug)}&locale=${encodeURIComponent(locale)}`,
+        );
+        if (!res.ok) {
+          setSelectedMember(null);
+          return;
+        }
+        const data: TeamMemberDisplay = await res.json();
+        setSelectedMember(data);
+      } catch {
+        setSelectedMember(null);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [locale],
+  );
 
   useEffect(() => {
     if (!router.isReady) return;
@@ -145,7 +189,7 @@ export default function MemberGrid() {
       return;
     }
     void fetchMember(slug);
-  }, [router.isReady, router.query.member, fetchMember]);
+  }, [router.isReady, router.query.member, fetchMember, locale]);
 
   const handleClose = () => {
     setSelectedMember(null);
@@ -160,7 +204,17 @@ export default function MemberGrid() {
 
   return (
     <>
-      <TeamMemberGrid members={membersToTeamGridMembers(MEMBERS)} />
+      {gridLoading ? (
+        <div className="flex min-h-[200px] w-full items-center justify-center py-12">
+          <div className="h-8 w-8 animate-spin rounded-full border-2 border-white/20 border-t-white" />
+        </div>
+      ) : gridMembers.length === 0 ? (
+        <p className="py-8 text-center font-reg text-sm text-white-60">
+          No team profiles are available in this language yet.
+        </p>
+      ) : (
+        <TeamMemberGrid members={gridMembers} />
+      )}
 
       {loading && (
         <div className="fixed inset-0 z-[119] flex items-center justify-center bg-dark/60 backdrop-blur-sm">

@@ -2,12 +2,8 @@ import type { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import Nav from "../components/nav";
-import FrameComponent from "../components/frame-component";
 import FooterComponent from "../components/footer-component";
-import ContactSection from "../components/contact-section";
-import TechnologiesSection from "../components/technologies-section";
-import WorkExamplesSection from "../components/work-examples-section";
-import WorksSection from "../components/works-section";
+import HomeCmsSections from "../components/home-cms-sections";
 import {
   CORE_PROJECT_CARDS,
   EXTRA_PAGE_PROJECT_CARDS,
@@ -16,6 +12,7 @@ import {
   type WorkTagSpec,
 } from "../components/work-examples-portfolio";
 import { fetchWorksData } from "../lib/strapi/case-studies";
+import { fetchHomePageData, type HomePageCmsData } from "../lib/strapi/home-page";
 
 const SITE_URL = "https://www.hoasen.io";
 
@@ -251,34 +248,37 @@ const breadcrumbJsonLd = {
 type HomeProps = {
   featuredProject: WorkProjectCard | null;
   projectCards: WorkProjectCard[];
+  homePageData: HomePageCmsData | null;
 };
 
 export const getStaticProps: GetStaticProps<HomeProps> = async () => {
-  const cmsWorks = await fetchWorksData();
+  const [cmsWorks, homePageData] = await Promise.all([
+    fetchWorksData(),
+    fetchHomePageData("en"),
+  ]);
 
-  if (
+  const worksProps =
     cmsWorks.source === "cms" &&
     (cmsWorks.featuredProject || cmsWorks.projectCards.length > 0)
-  ) {
-    return {
-      props: {
-        featuredProject: cmsWorks.featuredProject,
-        projectCards: cmsWorks.projectCards,
-      },
-      revalidate: 60,
-    };
-  }
+      ? {
+          featuredProject: cmsWorks.featuredProject,
+          projectCards: cmsWorks.projectCards,
+        }
+      : {
+          featuredProject: OCEAN_FINANCE_PROJECT,
+          projectCards: [...CORE_PROJECT_CARDS, ...EXTRA_PAGE_PROJECT_CARDS],
+        };
 
   return {
     props: {
-      featuredProject: OCEAN_FINANCE_PROJECT,
-      projectCards: [...CORE_PROJECT_CARDS, ...EXTRA_PAGE_PROJECT_CARDS],
+      ...worksProps,
+      homePageData: homePageData ?? null,
     },
     revalidate: 60,
   };
 };
 
-const Web: NextPage<HomeProps> = ({ featuredProject, projectCards }) => {
+const Web: NextPage<HomeProps> = ({ featuredProject, projectCards, homePageData }) => {
   return (
     <>
       <Head>
@@ -335,20 +335,11 @@ const Web: NextPage<HomeProps> = ({ featuredProject, projectCards }) => {
           />
         </div>
         <Nav initialTransparent scrollThreshold={80} />
-        <section className="w-full flex flex-col items-start justify-start gap-14 max-w-full mq900:gap-7 pt-[70px]">
-          <FrameComponent />
-        </section>
-
-        <div className="w-full flex justify-center">
-          <div
-            className={`flex flex-col pt-96 items-start justify-start gap-3 max-w-[1200px] w-full text-center text-xs text-white font-reg`}
-          >
-            <TechnologiesSection />
-            <WorkExamplesSection featuredProject={featuredProject} projectCards={projectCards} />
-            <WorksSection />
-            <ContactSection className="px-4" />
-          </div>
-        </div>
+        <HomeCmsSections
+          initialHomePageData={homePageData}
+          featuredProject={featuredProject}
+          projectCards={projectCards}
+        />
         <FooterComponent />
       </div>
     </>

@@ -1,5 +1,9 @@
+"use client";
+
 import TestimonialCard from "./testimonial-card";
 import LogoCarousel from "./logo-carousel";
+import { useTranslation } from "../lib/i18n/use-translation";
+import type { HomeTestimonial, HomeLogoCloud } from "../lib/strapi/home-page";
 
 const TESTIMONIALS = [
   {
@@ -22,42 +26,63 @@ const TESTIMONIALS = [
   },
 ];
 
-const WorksSection = () => {
+type WorksSectionProps = {
+  testimonials?: HomeTestimonial[];
+  logoCloud?: HomeLogoCloud | null;
+};
+
+const WorksSection = ({ testimonials, logoCloud }: WorksSectionProps) => {
+  const { t } = useTranslation();
+
+  const useCmsTestimonials = testimonials && testimonials.length > 0;
+
   return (
-  <section id="testimonials" className="w-full">
-    <div className="box-border flex w-full max-w-full flex-row items-start justify-start px-2 pb-[52px] pt-64 font-sora text-29xl">
-      <div className="flex max-w-full flex-1 flex-row items-end justify-between gap-5">
-        <div
-          id="works-intro"
-          className="flex w-full max-w-[calc(100%_-_21px)] flex-col items-center gap-4 text-center"
-        >
-          <h1 className="font-[inherit] relative m-0 font-normal leading-[58px] text-inherit mq450:text-10xl mq450:leading-[35px] mq900:text-19xl mq900:leading-[46px]">
-            Who we&apos;ve worked with
-          </h1>
-          <div className="relative self-stretch font-reg text-base font-light leading-[24px] tracking-[0.02em] text-white-60">
-            Our team has experience working with companies large and small
+    <section id="testimonials" className="w-full">
+      <div className="box-border flex w-full max-w-full flex-row items-start justify-start px-2 pb-[52px] pt-64 font-sora text-29xl">
+        <div className="flex max-w-full flex-1 flex-row items-end justify-between gap-5">
+          <div
+            id="works-intro"
+            className="flex w-full max-w-[calc(100%_-_21px)] flex-col items-center gap-4 text-center"
+          >
+            <h1 className="font-[inherit] relative m-0 font-normal leading-[58px] text-inherit mq450:text-10xl mq450:leading-[35px] mq900:text-19xl mq900:leading-[46px]">
+              {t("home.works.title")}
+            </h1>
+            <div className="relative self-stretch font-reg text-base font-light leading-[24px] tracking-[0.02em] text-white-60">
+              {t("home.works.subtitle")}
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div className="box-border flex max-w-full flex-row items-start justify-center self-stretch pb-[88px] pl-[22px] pr-5 pt-0">
-      <div className="flex w-[904px] max-w-full flex-col items-start justify-start gap-9">
-        <div
-          id="works-testimonials"
-          className="flex max-w-full flex-row items-start justify-start gap-6 self-stretch overflow-x-auto scrollbar-hide"
-        >
-          {TESTIMONIALS.map((item) => (
-            <TestimonialCard key={item.id} {...item} />
-          ))}
+      <div className="box-border flex max-w-full flex-row items-start justify-center self-stretch pb-[88px] pl-[22px] pr-5 pt-0">
+        <div className="flex w-[904px] max-w-full flex-col items-start justify-start gap-9">
+          <div
+            id="works-testimonials"
+            className="flex max-w-full flex-row items-start justify-start gap-6 self-stretch overflow-x-auto scrollbar-hide"
+          >
+            {useCmsTestimonials
+              ? testimonials.map((item, i) => (
+                  <TestimonialCard
+                    key={`cms-testimonial-${i}`}
+                    name={item.authorName}
+                    position={item.authorRole}
+                    quote=""
+                    quoteBlocks={item.quoteBlocks}
+                    companyLogo={item.authorCompanyLogoUrl}
+                    companyWebsite={item.authorCompanyWebsite}
+                  />
+                ))
+              : TESTIMONIALS.map((item) => (
+                  <TestimonialCard key={item.id} {...item} />
+                ))}
+          </div>
         </div>
       </div>
-    </div>
 
-    <div id="works-logo-marquee">
-      <LogoCarousel />
-    </div>
-  </section>
+      <div id="works-logo-marquee">
+        <LogoCarousel cmsLogos={logoCloud?.logos} />
+      </div>
+    </section>
   );
 };
 

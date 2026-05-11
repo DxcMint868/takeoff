@@ -7,7 +7,7 @@ import type {
 import {
   fetchStrapiJson,
   hasCmsConfig,
-  mapFeaturedTeamMembers,
+  mapInvolvedTeamMembers,
   populateMediaFields,
   toArray,
   toBlocks,
@@ -116,18 +116,17 @@ function buildDesignProjectFullPopulateQuery(): URLSearchParams {
   // Request component scalars only – no =* so Strapi won't try to expand background_image
   params.set("populate[outcome]", "true");
 
-  // Team members (identical to regular case study populate)
   populateMediaFields(
     params,
-    "populate[team_members][populate][featured_members][populate][avatar]",
+    "populate[involved_members][populate][avatar]",
   );
   params.set(
-    "populate[team_members][populate][featured_members][populate][member_role]",
+    "populate[involved_members][populate][member_role]",
     "*",
   );
   populateMediaFields(
     params,
-    "populate[team_members][populate][featured_members][populate][contact_links][populate][platform_logo]",
+    "populate[involved_members][populate][contact_links][populate][platform_logo]",
   );
 
   return params;
@@ -214,9 +213,7 @@ function mapDesignProjectToViewModel(
     ? { descriptionBlocks: toBlocks(outcomeRaw.description) }
     : undefined;
 
-  const teamMembersList = mapFeaturedTeamMembers(
-    unwrapStrapiData<any>(project.team_members),
-  );
+  const teamMembersList = mapInvolvedTeamMembers(project.involved_members);
   const teamMembers = teamMembersList.length > 0 ? teamMembersList : undefined;
 
   return {
@@ -282,7 +279,6 @@ export async function fetchDesignProjectBySlug(slug: string): Promise<{
     );
     const items = toArray<any>(unwrapStrapiData(payload?.data));
     const designProject = mapDesignProjectToViewModel(items[0]);
-    console.log(designProject);
     return { designProject, source: designProject ? "cms" : "none" };
   } catch {
     return { designProject: null, source: "none" };
