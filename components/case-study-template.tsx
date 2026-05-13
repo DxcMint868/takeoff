@@ -183,13 +183,13 @@ export default function CaseStudyTemplate({
             </h2>
 
             <div className="mt-20 flex flex-col gap-24 px-[70px] mq1100:mt-12 mq1100:gap-16 mq1100:px-10 mq450:gap-12 mq450:px-5">
-              {caseStudy.solutions.map((solution, index) => {
+              {caseStudy.solutions.map((solution) => {
                 const image = solution.image;
                 const isLeft = solution.imagePosition === "left";
                 return (
                   <div
                     key={`${solution.title}-${solution.order}`}
-                    className="flex items-start gap-16 mq1100:flex-col mq1100:gap-10"
+                    className="flex items-end gap-16 mq1100:flex-col mq1100:gap-10"
                   >
                     {image && isLeft ? (
                       <div className="relative h-[430px] w-[560px] shrink-0 overflow-hidden rounded-[20px] mq1100:order-2 mq1100:h-[300px] mq1100:w-full mq450:h-[220px]">
