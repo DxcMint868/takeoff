@@ -15,6 +15,7 @@ import type { CaseStudyViewModel } from "../lib/strapi/case-studies";
 import { CaseStudyObjectives } from "./case-study-objectives";
 import ProjectGallery from "./project-gallery";
 import StrapiBlocks from "./strapi-blocks";
+import { UrlImageOrVideo } from "./url-image-or-video";
 
 type CaseStudyTemplateProps = {
   caseStudy: CaseStudyViewModel;
@@ -192,10 +193,10 @@ export default function CaseStudyTemplate({
                   >
                     {image && isLeft ? (
                       <div className="relative h-[430px] w-[560px] shrink-0 overflow-hidden rounded-[20px] mq1100:order-2 mq1100:h-[300px] mq1100:w-full mq450:h-[220px]">
-                        <Image
-                          src={image.url}
+                        <UrlImageOrVideo
+                          url={image.url}
                           alt={image.alt || solution.title}
-                          fill
+                          layout="fill"
                           sizes="(max-width: 1100px) 100vw, 560px"
                           className="object-cover object-left-top"
                         />
@@ -214,10 +215,10 @@ export default function CaseStudyTemplate({
 
                     {image && !isLeft ? (
                       <div className="relative h-[430px] w-[560px] shrink-0 overflow-hidden rounded-[20px] mq1100:h-[300px] mq1100:w-full mq450:h-[220px]">
-                        <Image
-                          src={image.url}
+                        <UrlImageOrVideo
+                          url={image.url}
                           alt={image.alt || solution.title}
-                          fill
+                          layout="fill"
                           sizes="(max-width: 1100px) 100vw, 560px"
                           className="object-cover object-left-top"
                         />

@@ -7,6 +7,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { UrlImageOrVideo } from "./url-image-or-video";
 
 interface GallerySlide {
   src: string;
@@ -112,10 +113,10 @@ export default function ProjectGallery({
                 pointerEvents: isVisible ? "auto" : "none",
               }}
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={slide.src}
+              <UrlImageOrVideo
+                url={slide.src}
                 alt={slide.alt}
+                layout="inline"
                 className="max-h-[520px] w-auto max-w-full rounded-[20px] object-contain"
               />
             </button>
@@ -198,10 +199,10 @@ export default function ProjectGallery({
               </svg>
             </button>
           ) : null}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={slides[active].src}
+          <UrlImageOrVideo
+            url={slides[active].src}
             alt={slides[active].alt}
+            layout="inline"
             className={`min-w-0 max-h-[480px] rounded-[20px] object-contain transition-opacity duration-500 mq450:rounded-[12px] ${
               len > 1 ? "max-w-full flex-1 basis-0" : "w-full max-w-full"
             }`}
