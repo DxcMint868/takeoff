@@ -5,11 +5,7 @@ import Nav from "../components/nav";
 import FooterComponent from "../components/footer-component";
 import HomeCmsSections from "../components/home-cms-sections";
 import {
-  CORE_PROJECT_CARDS,
-  EXTRA_PAGE_PROJECT_CARDS,
-  OCEAN_FINANCE_PROJECT,
   type WorkProjectCard,
-  type WorkTagSpec,
 } from "../components/work-examples-portfolio";
 import { fetchWorksData } from "../lib/strapi/case-studies";
 import { fetchHomePageData, type HomePageCmsData } from "../lib/strapi/home-page";
@@ -257,21 +253,10 @@ export const getStaticProps: GetStaticProps<HomeProps> = async () => {
     fetchHomePageData("en"),
   ]);
 
-  const worksProps =
-    cmsWorks.source === "cms" &&
-    (cmsWorks.featuredProject || cmsWorks.projectCards.length > 0)
-      ? {
-          featuredProject: cmsWorks.featuredProject,
-          projectCards: cmsWorks.projectCards,
-        }
-      : {
-          featuredProject: OCEAN_FINANCE_PROJECT,
-          projectCards: [...CORE_PROJECT_CARDS, ...EXTRA_PAGE_PROJECT_CARDS],
-        };
-
   return {
     props: {
-      ...worksProps,
+      featuredProject: cmsWorks.featuredProject,
+      projectCards: cmsWorks.projectCards,
       homePageData: homePageData ?? null,
     },
     revalidate: 60,

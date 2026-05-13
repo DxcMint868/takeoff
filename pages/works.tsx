@@ -4,9 +4,6 @@ import FooterComponent from "../components/footer-component";
 import Nav from "../components/nav";
 import WorksPageMain from "../components/works-page-main";
 import {
-  CORE_PROJECT_CARDS,
-  EXTRA_PAGE_PROJECT_CARDS,
-  OCEAN_FINANCE_PROJECT,
   type WorkProjectCard,
   type WorkTagSpec,
 } from "../components/work-examples-portfolio";
@@ -43,17 +40,6 @@ type WorksPageProps = {
   designProjectCards: DesignProjectCard[];
 };
 
-function buildFallbackFilterChips(items: WorkProjectCard[]) {
-  const map = new Map<string, WorkTagSpec>();
-  for (const item of items) {
-    for (const tag of item.tags) {
-      if (!map.has(tag.label)) {
-        map.set(tag.label, tag);
-      }
-    }
-  }
-  return Array.from(map.values());
-}
 
 export const getStaticProps: GetStaticProps<WorksPageProps> = async () => {
   const [cmsWorks, designProjectCards] = await Promise.all([
@@ -61,36 +47,11 @@ export const getStaticProps: GetStaticProps<WorksPageProps> = async () => {
     fetchDesignProjectCards(),
   ]);
 
-  const fallbackFeatured = OCEAN_FINANCE_PROJECT;
-  const fallbackCards = [...CORE_PROJECT_CARDS, ...EXTRA_PAGE_PROJECT_CARDS];
-  const fallbackFilterChips = buildFallbackFilterChips([
-    fallbackFeatured,
-    ...fallbackCards,
-  ]);
-
-  if (
-    cmsWorks.source === "cms" &&
-    (cmsWorks.featuredProject || cmsWorks.projectCards.length > 0)
-  ) {
-    return {
-      props: {
-        featuredProject: cmsWorks.featuredProject,
-        projectCards: cmsWorks.projectCards,
-        filterChips:
-          cmsWorks.filterChips.length > 0
-            ? cmsWorks.filterChips
-            : fallbackFilterChips,
-        designProjectCards,
-      },
-      revalidate: 60,
-    };
-  }
-
   return {
     props: {
-      featuredProject: fallbackFeatured,
-      projectCards: fallbackCards,
-      filterChips: fallbackFilterChips,
+      featuredProject: cmsWorks.featuredProject,
+      projectCards: cmsWorks.projectCards,
+      filterChips: cmsWorks.filterChips,
       designProjectCards,
     },
     revalidate: 60,
