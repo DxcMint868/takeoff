@@ -167,7 +167,7 @@ export default function CaseStudyTemplate({
 
       {caseStudy.solutions.length > 0 ? (
         <section className="w-full bg-dark px-5 py-16 mq450:px-3">
-          <div className="relative max-w-[1370px] overflow-hidden rounded-[50px] border border-solid border-white/20 bg-white/[0.04] mq900:rounded-3xl py-12 mq900:mx-4 mx-12">
+          <div className="relative mx-auto max-w-[1370px] overflow-hidden rounded-[50px] border border-solid border-white/20 bg-white/[0.04] mq900:rounded-3xl py-12 mq900:mx-4">
             <Image
               src="/backgrounds/our-solution-bg.webp"
               alt=""
