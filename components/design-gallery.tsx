@@ -18,12 +18,24 @@ export default function DesignGallery({
 
   if (medias.length === 0 && !title && !description) return null;
 
-  const gridClass =
-    mediaLayout === "two columns - compact"
+  const isTwoColumnLayout =
+    mediaLayout === "two columns" || mediaLayout === "two columns - compact";
+  /** One item in a 2-col grid would sit in column 1 only; center it like a lone column. */
+  const centerSingleInTwoColumn = medias.length === 1 && isTwoColumnLayout;
+
+  const gridClass = centerSingleInTwoColumn
+    ? "flex w-full flex-col items-center"
+    : mediaLayout === "two columns - compact"
       ? "grid grid-cols-2 gap-2 mq700:grid-cols-1"
       : mediaLayout === "two columns"
         ? "grid grid-cols-2 gap-6 mq700:grid-cols-1"
         : "flex flex-col gap-6";
+
+  const singleItemMaxWidthClass = centerSingleInTwoColumn
+    ? mediaLayout === "two columns - compact"
+      ? "max-w-[calc(50%-0.25rem)] mq700:max-w-full"
+      : "max-w-[calc(50%-0.75rem)] mq700:max-w-full"
+    : "";
 
   const isFullBleed = mediaLayout === "one column";
 
@@ -58,7 +70,7 @@ export default function DesignGallery({
             {medias.map((media, i) => (
               <div
                 key={`${media.url}-${i}`}
-                className={`relative w-full rounded-none overflow-hidden ${
+                className={`relative w-full ${singleItemMaxWidthClass} rounded-none overflow-hidden ${
                   isFullBleed
                     ? ""
                     : `rounded-[12px] ${mediaLayout === "two columns" ? "mq700:rounded-none" : ""}`
