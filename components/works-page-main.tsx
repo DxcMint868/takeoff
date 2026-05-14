@@ -261,19 +261,19 @@ const WorksPageMain = ({
                         </svg>
                       </span>
                     </div>
-                  </article>
 
-                  {/* Logo badge – outside article so it overlaps the rounded corner */}
-                  {card.logoUrl ? (
-                    <Image
-                      src={card.logoUrl}
-                      alt={`${card.title} logo`}
-                      width={72}
-                      height={72}
-                      unoptimized
-                      className="absolute -right-2 -top-2 z-10 object-contain"
-                    />
-                  ) : null}
+                    {/* Logo badge – inside article so overflow-hidden clips to the card */}
+                    {card.logoUrl ? (
+                      <Image
+                        src={card.logoUrl}
+                        alt={`${card.title} logo`}
+                        width={72}
+                        height={72}
+                        unoptimized
+                        className="absolute -right-2 -top-2 z-10 object-contain"
+                      />
+                    ) : null}
+                  </article>
                 </Link>
               ))}
             </div>
