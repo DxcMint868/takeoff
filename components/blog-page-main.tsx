@@ -102,7 +102,7 @@ export default function BlogPageMain() {
               {t("blog.title")}
             </h1>
             {empty ? (
-              <p className="m-0 max-w-md font-reg text-sm leading-relaxed text-white-60">
+              <p className="m-0 max-w-md font-reg text-sm leading-relaxed text-white/70">
                 {t("blog.noPosts")}
               </p>
             ) : null}

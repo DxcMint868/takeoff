@@ -45,7 +45,7 @@ const FooterComponent: NextPage<FooterComponentType> = ({ className = "" }) => {
               </div>
             </div>
           </div>
-          <div className="self-stretch flex flex-col items-center justify-start py-0 px-2.5 box-border max-w-full text-xs text-white-60 font-reg">
+          <div className="self-stretch flex flex-col items-center justify-start py-0 px-2.5 box-border max-w-full text-xs text-white/70 font-reg">
             <div className="flex flex-col items-center justify-start gap-[46px] max-w-full">
               <div className="flex flex-row items-center justify-center gap-[30px]">
                 <a href="https://t.me/+4rZ4ipEl2yk2ODlk" target="_blank" rel="noopener noreferrer" aria-label="Telegram" className="text-white">

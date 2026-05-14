@@ -133,7 +133,7 @@ const WorksPageMain = ({
             <h1 className="m-0 max-w-[900px] font-sora text-29xl font-normal leading-[1.1] tracking-[0.02em] text-white mq450:text-10xl mq900:text-19xl mq900:leading-tight">
               {t("works.hero.title")}
             </h1>
-            <div className="w-full max-w-[900px] font-reg text-3xl font-light leading-[34px] tracking-[0.02em] text-white-60 mq450:text-base mq450:leading-7">
+            <div className="w-full max-w-[900px] font-reg text-3xl font-light leading-[34px] tracking-[0.02em] text-white/70 mq450:text-base mq450:leading-7">
               <p className="m-0 [text-wrap:balance]">
                 {t("works.hero.subtitle")}
               </p>
@@ -144,7 +144,7 @@ const WorksPageMain = ({
             <label className="flex flex-row items-center gap-3">
               <span className="sr-only">Search projects</span>
               <svg
-                className="size-5 shrink-0 text-white-60"
+                className="size-5 shrink-0 text-white/70"
                 viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -162,7 +162,7 @@ const WorksPageMain = ({
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search..."
-                className="min-w-0 flex-1 border-0 bg-transparent py-2 font-reg text-sm font-medium leading-[22px] tracking-[0.02em] text-white placeholder:text-white-60 outline-none focus:ring-0"
+                className="min-w-0 flex-1 border-0 bg-transparent py-2 font-reg text-sm font-medium leading-[22px] tracking-[0.02em] text-white placeholder:text-white/70 outline-none focus:ring-0"
               />
             </label>
           </div>
@@ -200,7 +200,7 @@ const WorksPageMain = ({
               <h2 className="m-0 font-sora text-[80px] font-normal capitalize leading-[1.2] tracking-normal text-white mq900:text-[52px] mq450:text-[32px] text-white/20">
                 {t("works.branding.title")}
               </h2>
-              <p className="m-0 max-w-[680px] font-reg text-sm font-light leading-[22px] tracking-[0.02em] text-white-60">
+              <p className="m-0 max-w-[680px] font-reg text-sm font-light leading-[22px] tracking-[0.02em] text-white/70">
                 {t("works.branding.subtitle")}
               </p>
             </div>
@@ -296,7 +296,7 @@ const WorksPageMain = ({
             <h2 className="relative z-[1] m-0 font-sora text-29xl font-normal leading-[58px] tracking-[0.02em] text-white mq450:text-10xl mq450:leading-[41px] mq900:text-19xl mq900:leading-[46px]">
               {t("works.cta.title")}
             </h2>
-            <p className="relative z-[1] m-0 max-w-[520px] font-reg text-base font-light leading-6 tracking-[0.02em] text-white-60">
+            <p className="relative z-[1] m-0 max-w-[520px] font-reg text-base font-light leading-6 tracking-[0.02em] text-white/70">
               {t("works.cta.subtitle")}
             </p>
             <CTASolid label="Start a Conversation" href="/#contact-us" />

@@ -33,7 +33,7 @@ export function ContentLoadingOverlay({
           className="size-10 shrink-0 animate-spin rounded-full border-2 border-solid border-white/20 border-t-purple motion-reduce:animate-none"
           aria-hidden
         />
-        <p className="m-0 font-reg text-sm text-white-60">{t("common.loading")}</p>
+        <p className="m-0 font-reg text-sm text-white/70">{t("common.loading")}</p>
       </div>
     </div>
   );

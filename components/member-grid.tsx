@@ -209,7 +209,7 @@ export default function MemberGrid({ featuredMembers }: MemberGridOuterProps) {
           <div className="h-8 w-8 animate-spin rounded-full border-2 border-white/20 border-t-white" />
         </div>
       ) : gridMembers.length === 0 ? (
-        <p className="py-8 text-center font-reg text-sm text-white-60">
+        <p className="py-8 text-center font-reg text-sm text-white/70">
           No team profiles are available in this language yet.
         </p>
       ) : (

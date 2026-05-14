@@ -258,7 +258,7 @@ export default function AboutPageMain({ initialTeamPage }: AboutPageMainProps) {
         </div>
 
         <div className="flex w-full flex-col gap-12 mt-20 gap-y-28">
-          <div className="mx-auto flex w-full flex-col gap-6 text-left font-reg text-base font-light leading-[26px] tracking-[0.02em] text-white-60">
+          <div className="mx-auto flex w-full flex-col gap-6 text-left font-reg text-base font-light leading-[26px] tracking-[0.02em] text-white/70">
             <div className="flex flex-col gap-3">
               <h2 className="m-0 font-sora text-[80px] mq900:text-[60px] font-normal leading-[58px] text-white/20">
                 {cultureTitle}
@@ -313,7 +313,7 @@ export default function AboutPageMain({ initialTeamPage }: AboutPageMainProps) {
                           {title}
                         </h3>
                       </div>
-                      <p className="mt-2 font-reg text-base font-normal leading-[24px] tracking-[0.32px] text-white-60 mq450:pl-0">
+                      <p className="mt-2 font-reg text-base font-normal leading-[24px] tracking-[0.32px] text-white/70 mq450:pl-0">
                         {body}
                       </p>
                     </div>

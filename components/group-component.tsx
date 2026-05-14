@@ -64,7 +64,7 @@ const GroupComponent: NextPage<GroupComponentType> = ({
             <h2 className="relative z-[1] m-0 min-h-[2lh] font-[inherit] text-inherit font-semibold leading-[30px] tracking-[0.02em] mq450:text-lg mq450:leading-[24px]">
               {productDelivery}
             </h2>
-            <div className="relative z-[1] min-h-[3lh] self-stretch font-reg text-sm leading-[22px] tracking-[0.02em] text-white-60">
+            <div className="relative z-[1] min-h-[3lh] self-stretch font-reg text-sm leading-[22px] tracking-[0.02em] text-white/70">
               {description}
             </div>
           </div>

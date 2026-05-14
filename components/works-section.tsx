@@ -47,7 +47,7 @@ const WorksSection = ({ testimonials, logoCloud }: WorksSectionProps) => {
             <h1 className="font-[inherit] relative m-0 font-normal leading-[58px] text-inherit mq450:text-10xl mq450:leading-[35px] mq900:text-19xl mq900:leading-[46px]">
               {t("home.works.title")}
             </h1>
-            <div className="relative self-stretch font-reg text-base font-light leading-[24px] tracking-[0.02em] text-white-60">
+            <div className="relative self-stretch font-reg text-base font-light leading-[24px] tracking-[0.02em] text-white/70">
               {t("home.works.subtitle")}
             </div>
           </div>
