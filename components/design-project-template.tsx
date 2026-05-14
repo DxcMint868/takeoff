@@ -28,6 +28,7 @@ export default function DesignProjectTemplate({
               fill
               priority
               sizes="100vw"
+              unoptimized
               className="object-cover object-center"
             />
           </div>
