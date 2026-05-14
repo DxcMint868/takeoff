@@ -98,7 +98,7 @@ const WorksPageMain = ({
 
   return (
     <main className="relative box-border flex w-full flex-col items-center overflow-x-clip pb-24 pt-8 text-white">
-      <GradientGlow className="top-0" />
+      <GradientGlow className="-top-24" />
       <div className="relative flex w-full max-w-[1200px] flex-col items-stretch gap-10">
         <div className="box-border flex w-full flex-col gap-6 px-4">
           <Link
@@ -175,11 +175,10 @@ const WorksPageMain = ({
                   key={chip.label}
                   type="button"
                   onClick={() => toggleFilter(chip.label)}
-                  className={`${BADGE_SURFACE_CLASSES} cursor-pointer select-none transition-opacity ${
-                    active
-                      ? "opacity-100 ring-2 ring-white/50"
-                      : "opacity-90 hover:opacity-100"
-                  }`}
+                  className={`${BADGE_SURFACE_CLASSES} cursor-pointer select-none transition-opacity ${active
+                    ? "opacity-100 ring-2 ring-white/50"
+                    : "opacity-90 hover:opacity-100"
+                    }`}
                 >
                   {chip.label}
                 </button>
@@ -212,16 +211,22 @@ const WorksPageMain = ({
                   href={card.href}
                   className="group relative flex min-w-0 max-w-full shrink-0 basis-[358px] justify-center [text-decoration:none] mq700:w-full mq700:basis-auto mq700:max-w-none"
                 >
-                  <article className="relative flex h-[380px] w-full max-w-[358px] cursor-pointer flex-col overflow-hidden rounded-[20px] border border-surface-border bg-surface-card shadow-card transition-shadow duration-300 hover:shadow-[0_0_30px_0_rgba(255,255,255,0.2)] mq700:h-[320px] mq700:max-w-none">
-                    {card.thumbnailUrl ? (
-                      <Image
-                        src={card.thumbnailUrl}
-                        alt={`${card.title} branding`}
-                        fill
-                        className="object-cover object-center"
-                        sizes="(max-width: 700px) 100vw, 358px"
+                  <article className="relative isolate flex h-[380px] w-full max-w-[358px] cursor-pointer flex-col overflow-hidden rounded-[20px] bg-surface-card shadow-card ring-1 ring-inset ring-surface-border transition-shadow duration-300 hover:shadow-[0_0_30px_0_rgba(255,255,255,0.2)] mq700:h-[320px] mq700:max-w-none">
+                    <div className="absolute inset-0 z-0 overflow-hidden rounded-[20px] bg-surface-card">
+                      {card.thumbnailUrl ? (
+                        <Image
+                          src={card.thumbnailUrl}
+                          alt={`${card.title} branding`}
+                          fill
+                          className="object-cover object-center motion-safe:scale-[1.02] motion-safe:transform-gpu"
+                          sizes="(max-width: 700px) 100vw, 358px"
+                        />
+                      ) : null}
+                      <div
+                        aria-hidden
+                        className="pointer-events-none absolute inset-0 z-[1] rounded-[20px] shadow-[inset_0_0_0_1px_rgb(38,29,68)]"
                       />
-                    ) : null}
+                    </div>
 
                     {/* Hero logo – absolutely centered in the card */}
                     <div className="absolute inset-0 z-10 flex items-center justify-center px-8">
@@ -232,7 +237,7 @@ const WorksPageMain = ({
                             alt={`${card.title} logo`}
                             fill
                             unoptimized
-                            className="object-contain"
+                            className="object-contain transform-gpu"
                             sizes="(max-width: 700px) 100vw, 294px"
                           />
                         </div>
@@ -245,7 +250,7 @@ const WorksPageMain = ({
 
                     {/* Arrow – bottom-right */}
                     <div className="relative z-20 mt-auto self-end p-4">
-                      <span className="flex h-8 w-8 items-center justify-center rounded-full border border-white/30 bg-white/10 text-white transition-colors group-hover:bg-white/20">
+                      <span className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full border border-white/30 bg-white/10 text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)] transition-colors group-hover:bg-white/20">
                         <svg
                           width="14"
                           height="14"
@@ -264,14 +269,16 @@ const WorksPageMain = ({
 
                     {/* Logo badge – inside article so overflow-hidden clips to the card */}
                     {card.logoUrl ? (
-                      <Image
-                        src={card.logoUrl}
-                        alt={`${card.title} logo`}
-                        width={72}
-                        height={72}
-                        unoptimized
-                        className="absolute -right-2 -top-2 z-10 object-contain"
-                      />
+                      <div className="absolute -right-2 -top-2 z-10 box-border flex size-[72px] shrink-0 items-center justify-center overflow-hidden rounded-full bg-[#1B1333] shadow-[inset_0_0_0_2px_#1B1333,0_0_0_2px_#1B1333] isolate">
+                        <Image
+                          src={card.logoUrl}
+                          alt={`${card.title} logo`}
+                          width={72}
+                          height={72}
+                          unoptimized
+                          className="transform-gpu object-contain"
+                        />
+                      </div>
                     ) : null}
                   </article>
                 </Link>
