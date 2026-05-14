@@ -95,13 +95,6 @@ export default function CaseStudyTemplate({
             </div>
           </div>
         </div>
-
-        <div
-          className="absolute bottom-0 left-0 right-0 h-[60px]"
-          style={{
-            background: "linear-gradient(to bottom, transparent, #1b1333)",
-          }}
-        />
       </section>
 
       {caseStudy.stats.length > 0 ? (
