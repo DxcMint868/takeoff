@@ -173,20 +173,20 @@ export function WorkExamplesPortfolio({
           href={featuredProject.href || `/works/${featuredProject.id}`}
           className="group block w-full min-w-0 max-w-full [text-decoration:none]"
         >
-          <div className="relative flex min-h-0 w-full min-w-0 cursor-pointer flex-col overflow-hidden rounded-[20px] border border-surface-border bg-surface-card shadow-card transition-shadow duration-300 hover:shadow-[0_0_30px_0_rgba(255,255,255,0.2)] ms1024:min-h-[400px] ms1024:max-h-[400px] ms1024:flex-row">
+          <div className="relative flex min-h-0 w-full min-w-0 cursor-pointer flex-col overflow-hidden rounded-[20px] bg-surface-card shadow-card ring-1 ring-inset ring-surface-border transition-shadow duration-300 hover:shadow-[0_0_30px_0_rgba(255,255,255,0.2)] ms1024:min-h-[400px] ms1024:max-h-[400px] ms1024:flex-row">
             {featuredProject.logoSrc && (
-              <div className="absolute -left-3 -top-3 z-10 flex h-[92px] w-[92px] items-center justify-center rounded-full bg-[#1B1333]">
+              <div className="absolute -left-3 -top-3 z-10 flex h-[70px] w-[70px] items-center justify-center overflow-hidden rounded-full bg-[#1B1333] shadow-[inset_0_0_0_2px_#1B1333,0_0_0_2px_#1B1333] isolate mq700:-left-2 mq700:-top-2 ms1024:h-[110px] ms1024:w-[110px]">
                 <Image
                   src={featuredProject.logoSrc}
                   alt={featuredProject.logoAlt || `${featuredProject.title} logo`}
-                  width={74}
-                  height={74}
+                  width={62}
+                  height={62}
                   unoptimized
-                  className="rounded-full object-contain"
+                  className="rounded-full object-contain transform-gpu w-[42px] h-[42px] ms1024:w-[62px] ms1024:h-[62px]"
                 />
               </div>
             )}
-            <div className="relative order-2 flex min-w-0 flex-1 flex-col justify-between px-4 pb-8 pt-[90px] ms1024:order-1 ms1024:px-0 ms1024:pb-10 ms1024:pl-[42px] ms1024:pr-6 ms1024:pt-[90px]">
+            <div className="relative order-2 flex min-w-0 flex-1 flex-col justify-between px-4 pb-8 pt-[50px] ms1024:order-1 ms1024:px-0 ms1024:pb-10 ms1024:pl-[42px] ms1024:pr-6 ms1024:pt-[120px]">
               <div>
                 <h3 className="relative z-[2] m-0 text-center font-reg text-[32px] font-semibold leading-[40px] tracking-[0.04em] text-white ms1024:text-left">
                   {featuredProject.title}
@@ -210,13 +210,13 @@ export function WorkExamplesPortfolio({
                 ) : null}
               </div>
             </div>
-            <div className="relative order-1 h-[220px] w-full shrink-0 overflow-hidden bg-surface-media ms1024:order-2 ms1024:h-[400px] ms1024:w-[569px] ms1024:self-start ms1024:rounded-bl-[20px]">
+            <div className="relative order-1 h-[220px] w-full shrink-0 overflow-hidden rounded-t-[20px] bg-surface-media ms1024:order-2 ms1024:h-[400px] ms1024:w-[569px] ms1024:rounded-bl-[20px] ms1024:rounded-br-[20px] ms1024:rounded-tr-[20px] ms1024:rounded-tl-0 ms1024:self-start">
               {featuredProject.imageSrc ? (
                 <Image
                   src={featuredProject.imageSrc}
                   alt={featuredProject.imageAlt}
                   fill
-                  className="object-cover object-left-top"
+                  className="object-cover object-left-top motion-safe:transform-gpu motion-safe:scale-[1.02] motion-safe:origin-top-left"
                   sizes="(max-width: 1023px) 100vw, 569px"
                 />
               ) : null}
@@ -238,27 +238,27 @@ export function WorkExamplesPortfolio({
               className="group flex min-w-0 max-w-full shrink-0 basis-[358px] justify-center [text-decoration:none] mq700:w-full mq700:basis-auto mq700:max-w-none"
             >
               <article
-                className="relative flex h-[620px] w-full max-w-[358px] cursor-pointer flex-col overflow-hidden rounded-[20px] border border-surface-border bg-surface-card shadow-card transition-shadow duration-300 hover:shadow-[0_0_30px_0_rgba(255,255,255,0.2)] mq700:h-auto mq700:max-w-none"
+                className="relative flex h-[620px] w-full max-w-[358px] cursor-pointer flex-col overflow-hidden rounded-[20px] bg-surface-card shadow-card ring-1 ring-inset ring-surface-border transition-shadow duration-300 hover:shadow-[0_0_30px_0_rgba(255,255,255,0.2)] mq700:h-auto mq700:max-w-none"
               >
-                <div className="relative h-[320px] w-full shrink-0 overflow-hidden rounded-b-[20px]">
+                <div className="relative h-[320px] w-full shrink-0 overflow-hidden rounded-t-[20px] rounded-b-[20px] bg-surface-card">
                   {project.imageSrc ? (
                     <Image
                       src={project.imageSrc}
                       alt={project.imageAlt}
                       fill
-                      className="object-cover object-right-top"
+                      className="object-cover object-right-top motion-safe:origin-top-right motion-safe:scale-[1.02] motion-safe:transform-gpu"
                       sizes="(max-width: 700px) 100vw, 358px"
                     />
                   ) : null}
                   {project.logoSrc && (
-                    <div className="absolute -right-2 -top-2 z-10">
+                    <div className="absolute -right-1.5 -top-4 z-10 box-border flex size-[70px] shrink-0 items-center justify-center overflow-hidden rounded-full bg-[#1B1333] shadow-[inset_0_0_0_2px_#1B1333,0_0_0_2px_#1B1333] isolate">
                       <Image
                         src={project.logoSrc}
                         alt={project.logoAlt || `${project.title} logo`}
-                        width={72}
-                        height={72}
+                        width={80}
+                        height={80}
                         unoptimized
-                        className="object-contain object-right-top"
+                        className="h-auto max-h-full w-full transform-gpu object-cover"
                       />
                     </div>
                   )}
