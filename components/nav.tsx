@@ -82,7 +82,7 @@ const Nav = ({
       >
         <span className="relative block h-[27px] w-full max-w-full shrink-0 self-stretch overflow-hidden">
           <Image
-            src="/logo@2x.png"
+            src="/logo-colored-lotus.svg"
             alt={t("nav.home")}
             fill
             className="pointer-events-none object-contain object-left"
