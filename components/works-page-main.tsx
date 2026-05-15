@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { BADGE_SURFACE_CLASSES } from "./badge";
-import CTASolid from "./cta-solid";
+import ContactSection from "./contact-section";
 import { GradientGlow } from "./gradient-glow";
 import { useTranslation } from "../lib/i18n/use-translation";
 import {
@@ -175,10 +175,11 @@ const WorksPageMain = ({
                   key={chip.label}
                   type="button"
                   onClick={() => toggleFilter(chip.label)}
-                  className={`${BADGE_SURFACE_CLASSES} cursor-pointer select-none transition-opacity ${active
-                    ? "opacity-100 ring-2 ring-white/50"
-                    : "opacity-90 hover:opacity-100"
-                    }`}
+                  className={`${BADGE_SURFACE_CLASSES} cursor-pointer select-none transition-opacity ${
+                    active
+                      ? "opacity-100 ring-2 ring-white/50"
+                      : "opacity-90 hover:opacity-100"
+                  }`}
                 >
                   {chip.label}
                 </button>
@@ -288,7 +289,7 @@ const WorksPageMain = ({
         )}
 
         <div className="box-border w-full px-4">
-          <section
+          {/* <section
             id="works-cta"
             className="card-grain relative mx-auto mt-[167px] box-border flex w-full max-w-[1138px] flex-col items-center gap-8 overflow-hidden rounded-2xl bg-surface-card px-8 py-14 text-center mq900:mt-24 mq700:mt-16 mq450:px-5 mq450:py-10"
           >
@@ -299,7 +300,8 @@ const WorksPageMain = ({
               {t("works.cta.subtitle")}
             </p>
             <CTASolid label="Start a Conversation" href="/#contact-us" />
-          </section>
+          </section> */}
+          <ContactSection />
         </div>
       </div>
     </main>
