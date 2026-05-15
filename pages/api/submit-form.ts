@@ -43,7 +43,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             ]
           },
           'Full Name': {
-            rich_text: [
+            title: [
               {
                 text: {
                   content: fullName
@@ -59,6 +59,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 }
               }
             ]
+          },
+          'Date': {
+            date: {
+              start: new Date().toISOString()
+            }
           }
         }
       });
