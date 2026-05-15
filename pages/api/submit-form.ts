@@ -9,12 +9,13 @@ interface FormData {
   email: string;
   telegram: string;
   companyName: string;
+  interestedService: string;
   projectDetails: string;
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
-    const { fullName, email, telegram, companyName, projectDetails }: FormData = req.body;
+    const { fullName, email, telegram, companyName, interestedService, projectDetails }: FormData = req.body;
     console.log(fullName, email, telegram, companyName, projectDetails);
     try {
       console.log(databaseId);
@@ -60,6 +61,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
               }
             ]
           },
+          ...(interestedService ? {
+            'Interested Service': {
+              select: { name: interestedService }
+            }
+          } : {}),
           'Date': {
             date: {
               start: new Date().toISOString()

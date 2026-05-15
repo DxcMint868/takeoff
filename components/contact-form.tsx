@@ -2,6 +2,15 @@ import React, { useEffect, useRef, useState } from "react";
 import { ArrowIcon } from "./icons";
 import { useTranslation } from "../lib/i18n/use-translation";
 
+const INTERESTED_SERVICES = [
+  "Branding",
+  "Software Development",
+  "Smart Contract Development",
+  "UI / UX Design",
+  "Product Management",
+  "Quality Assurance",
+] as const;
+
 const fieldClass =
   "w-full bg-transparent border-x-0 border-t-0 border-b border-white-30 rounded-none px-0 py-2 focus:outline-none focus:ring-0 focus:border-white-60 font-reg text-sm leading-[22px] tracking-[0.02em] !text-white";
 
@@ -27,6 +36,7 @@ const ContactForm: React.FC = () => {
     email: "",
     telegram: "",
     companyName: "",
+    interestedService: "",
     projectDetails: "",
   });
   const [submitStatus, setSubmitStatus] = useState<
@@ -34,7 +44,7 @@ const ContactForm: React.FC = () => {
   >("idle");
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -68,6 +78,7 @@ const ContactForm: React.FC = () => {
           email: "",
           telegram: "",
           companyName: "",
+          interestedService: "",
           projectDetails: "",
         });
       } else {
@@ -129,6 +140,35 @@ const ContactForm: React.FC = () => {
           className={fieldClass}
           style={fieldStyle}
         />
+
+        <div className="relative">
+          <select
+            name="interestedService"
+            value={formData.interestedService}
+            onChange={handleChange}
+            className={`${fieldClass} appearance-none pr-6 cursor-pointer`}
+            style={{
+              ...fieldStyle,
+              color: formData.interestedService ? "#fff" : "#a4a1ad",
+              WebkitTextFillColor: formData.interestedService ? "#fff" : "#a4a1ad",
+            }}
+          >
+            <option value="" disabled hidden style={{ color: "#a4a1ad", background: "#282042" }}>
+              {t("contact.form.interestedService")}
+            </option>
+            {INTERESTED_SERVICES.map((service) => (
+              <option key={service} value={service} style={{ color: "#fff", background: "#282042" }}>
+                {service}
+              </option>
+            ))}
+          </select>
+          <svg
+            className="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 opacity-60"
+            width="12" height="8" viewBox="0 0 12 8" fill="none"
+          >
+            <path d="M1 1l5 5 5-5" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </div>
 
         <textarea
           ref={projectDetailsRef}
