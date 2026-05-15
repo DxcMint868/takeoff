@@ -280,6 +280,11 @@ export default function CaseStudyTemplate({
 
       {caseStudy.teamMembers && caseStudy.teamMembers.length > 0 ? (
         <section className="w-full bg-dark px-5 py-16 mq900:py-14">
+          <div className="mb-10 text-center">
+            <h2 className="m-0 font-sora text-[32px] font-semibold leading-none mq450:text-2xl">
+              Project Team
+            </h2>
+          </div>
           <TeamMemberGrid
             members={caseStudyTeamMembersToTeamGridMembers(
               caseStudy.teamMembers,
