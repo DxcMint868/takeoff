@@ -3,6 +3,7 @@
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import type { BlogPostPreview } from "../lib/blog-posts";
+import { withLocale } from "../lib/i18n/routing";
 import { useLocale } from "../contexts/locale-context";
 import BlogPostArticle from "./blog-post-article";
 import { ContentLoadingOverlay } from "./content-loading-overlay";
@@ -69,9 +70,13 @@ export default function BlogPostLoader({
         setBodyHtml(data.post.contentBlocks?.length ? "" : html);
 
         if (data.post.slug !== slugFromUrl) {
-          void router.replace(`/blog/${data.post.slug}`, undefined, {
-            scroll: false,
-          });
+          void router.replace(
+            withLocale(locale, `/blog/${data.post.slug}`),
+            undefined,
+            {
+              scroll: false,
+            },
+          );
         }
       } catch {
         /* keep SSR props */

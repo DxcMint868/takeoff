@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/router";
 import {
   createContext,
   useCallback,
@@ -8,10 +9,12 @@ import {
   useMemo,
   useState,
 } from "react";
+import {
+  persistLocalePreference,
+  readLocaleFromStorage,
+} from "../lib/i18n/locale-preference";
 import type { AppLocaleCode } from "../lib/strapi/language";
 import { APP_LOCALE_CODES, isAppLocale } from "../lib/strapi/language";
-
-const STORAGE_KEY = "hoasen-ui-locale";
 
 type LocaleContextValue = {
   locale: AppLocaleCode;
@@ -21,30 +24,31 @@ type LocaleContextValue = {
 const LocaleContext = createContext<LocaleContextValue | null>(null);
 
 function readStoredLocale(): AppLocaleCode {
-  if (typeof window === "undefined") return "en";
-  try {
-    const raw = window.localStorage.getItem(STORAGE_KEY);
-    if (raw && isAppLocale(raw)) return raw;
-  } catch {
-    /* ignore */
-  }
-  return "en";
+  return readLocaleFromStorage() ?? "en";
 }
 
 export function LocaleProvider({ children }: { children: React.ReactNode }) {
+  const router = useRouter();
   const [locale, setLocaleState] = useState<AppLocaleCode>("en");
 
   useEffect(() => {
     setLocaleState(readStoredLocale());
   }, []);
 
+  useEffect(() => {
+    if (!router.isReady) return;
+    const raw = router.query.locale;
+    const code =
+      typeof raw === "string" ? raw : Array.isArray(raw) ? raw[0] : null;
+    if (code && isAppLocale(code)) {
+      setLocaleState(code);
+      persistLocalePreference(code);
+    }
+  }, [router.isReady, router.query.locale]);
+
   const setLocale = useCallback((code: AppLocaleCode) => {
     setLocaleState(code);
-    try {
-      window.localStorage.setItem(STORAGE_KEY, code);
-    } catch {
-      /* ignore */
-    }
+    persistLocalePreference(code);
   }, []);
 
   const value = useMemo(

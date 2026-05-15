@@ -41,6 +41,10 @@ const nextConfig = {
         source: "/works/:slug/llms.txt",
         destination: "/api/works-llms-txt/:slug",
       },
+      {
+        source: "/:locale(en|ja|vi|ko)/works/:slug/llms.txt",
+        destination: "/api/works-llms-txt/:slug",
+      },
     ];
   },
 };

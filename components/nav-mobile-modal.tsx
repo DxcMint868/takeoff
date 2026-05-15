@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useCallback, useEffect } from "react";
 import { isNavItemActiveMobile, NAV_ITEMS } from "../lib/nav-links";
+import { useLocalizedPath } from "../lib/i18n/use-localized-path";
 import { useTranslation } from "../lib/i18n/use-translation";
 
 const HREF_TO_KEY: Record<string, string> = {
@@ -26,6 +27,7 @@ const linkActive = `${linkBase} text-white font-semibold`;
 
 export function NavMobileModal({ open, onClose }: NavMobileModalProps) {
   const { t } = useTranslation();
+  const lp = useLocalizedPath();
   const { pathname, asPath } = useRouter();
 
   const onKeyDown = useCallback(
@@ -76,7 +78,7 @@ export function NavMobileModal({ open, onClose }: NavMobileModalProps) {
           return (
             <Link
               key={item.href}
-              href={item.href}
+              href={lp(item.href)}
               className={active ? linkActive : linkInactive}
               onClick={onClose}
             >

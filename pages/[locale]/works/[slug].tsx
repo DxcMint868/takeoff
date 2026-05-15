@@ -4,36 +4,44 @@ import type {
   InferGetStaticPropsType,
 } from "next";
 import Head from "next/head";
-import FooterComponent from "../../components/footer-component";
-import Nav from "../../components/nav";
-import CaseStudyTemplate from "../../components/case-study-template";
+import FooterComponent from "../../../components/footer-component";
+import Nav from "../../../components/nav";
+import CaseStudyTemplate from "../../../components/case-study-template";
+import { localeAbsoluteUrl, siteOrigin } from "../../../lib/i18n/routing";
+import type { AppLocaleCode } from "../../../lib/strapi/language";
+import { APP_LOCALE_CODES, isAppLocale } from "../../../lib/strapi/language";
 import {
   fetchCaseStudyBySlug,
   fetchCaseStudySlugs,
   type CaseStudyViewModel,
-} from "../../lib/strapi/case-studies";
+} from "../../../lib/strapi/case-studies";
 
-const SITE_URL = "https://www.hoasen.io";
-const RESERVED_SLUGS = new Set<string>(); // no slugs are reserved; all projects are served from Strapi
+const SITE_ROOT = siteOrigin();
+const RESERVED_SLUGS = new Set<string>();
 
 type DynamicCaseStudyPageProps = {
   caseStudy: CaseStudyViewModel;
+  locale: AppLocaleCode;
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const slugs = await fetchCaseStudySlugs();
-
-  return {
-    paths: slugs
-      .filter((slug) => !RESERVED_SLUGS.has(slug))
-      .map((slug) => ({ params: { slug } })),
-    fallback: "blocking",
-  };
+  const paths: { params: { locale: string; slug: string } }[] = [];
+  for (const locale of APP_LOCALE_CODES) {
+    for (const slug of slugs.filter((s) => !RESERVED_SLUGS.has(s))) {
+      paths.push({ params: { locale, slug } });
+    }
+  }
+  return { paths, fallback: "blocking" };
 };
 
 export const getStaticProps: GetStaticProps<DynamicCaseStudyPageProps> = async (
   context,
 ) => {
+  const rawLocale = context.params?.locale;
+  const locale = typeof rawLocale === "string" ? rawLocale : "";
+  if (!isAppLocale(locale)) return { notFound: true };
+
   const slug = String(context.params?.slug || "").trim();
 
   if (!slug || RESERVED_SLUGS.has(slug)) {
@@ -48,6 +56,7 @@ export const getStaticProps: GetStaticProps<DynamicCaseStudyPageProps> = async (
   return {
     props: {
       caseStudy: result.caseStudy,
+      locale,
     },
     revalidate: 60,
   };
@@ -55,23 +64,27 @@ export const getStaticProps: GetStaticProps<DynamicCaseStudyPageProps> = async (
 
 export default function DynamicCaseStudyPage({
   caseStudy,
+  locale,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const canonical = `${SITE_URL}/works/${caseStudy.slug}`;
+  const canonical = localeAbsoluteUrl(locale, `/works/${caseStudy.slug}`);
+  const homeUrl = localeAbsoluteUrl(locale, "/");
+  const worksUrl = localeAbsoluteUrl(locale, "/works");
+
   const metaTitle = `${caseStudy.title} — Case Study | Hoasen`;
   const metaDescription = caseStudy.shortDescription;
   const metaKeywords = caseStudy.heroTags.join(", ");
-  const metaOgImage = caseStudy.heroImage?.url || `${SITE_URL}/og-image.png`;
+  const metaOgImage = caseStudy.heroImage?.url || `${SITE_ROOT}/og-image.png`;
 
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+      { "@type": "ListItem", position: 1, name: "Home", item: homeUrl },
       {
         "@type": "ListItem",
         position: 2,
         name: "Works",
-        item: `${SITE_URL}/works`,
+        item: worksUrl,
       },
       {
         "@type": "ListItem",

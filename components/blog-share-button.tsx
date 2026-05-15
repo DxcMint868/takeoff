@@ -2,6 +2,8 @@
 
 import { useCallback } from "react";
 import Image from "next/image";
+import { useLocale } from "../contexts/locale-context";
+import { localeAbsoluteUrl } from "../lib/i18n/routing";
 
 type BlogShareButtonProps = {
   slug: string;
@@ -14,11 +16,12 @@ export function BlogShareButton({
   title,
   className = "",
 }: BlogShareButtonProps) {
+  const { locale } = useLocale();
   const onShare = useCallback(async () => {
     const url =
       typeof window !== "undefined"
-        ? `${window.location.origin}/blog/${slug}`
-        : `/blog/${slug}`;
+        ? `${window.location.origin}${window.location.pathname}${window.location.search}`
+        : localeAbsoluteUrl(locale, `/blog/${slug}`);
     try {
       if (navigator.share) {
         await navigator.share({ title, url });
@@ -28,7 +31,7 @@ export function BlogShareButton({
     } catch {
       /* user cancelled or copy failed */
     }
-  }, [slug, title]);
+  }, [slug, title, locale]);
 
   return (
     <button

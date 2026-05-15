@@ -1,6 +1,9 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { OCEAN_FINANCE_TAGLINE } from "../constants/ocean-finance";
+import { useLocalizedPath } from "../lib/i18n/use-localized-path";
 import { Badge } from "./badge";
 import { TagsDisplay } from "./tags-display";
 
@@ -163,6 +166,7 @@ export function WorkExamplesPortfolio({
   showFeatured = true,
   featuredProject = OCEAN_FINANCE_PROJECT,
 }: WorkExamplesPortfolioProps) {
+  const lp = useLocalizedPath();
   const hasResults =
     (showFeatured && !!featuredProject) || projectCards.length > 0;
 
@@ -170,7 +174,7 @@ export function WorkExamplesPortfolio({
     <div className="mx-auto box-border flex w-full min-w-0 max-w-[1138px] flex-col gap-8 overflow-x-clip px-4">
       {showFeatured && featuredProject && (
         <Link
-          href={featuredProject.href || `/works/${featuredProject.id}`}
+          href={lp(featuredProject.href || `/works/${featuredProject.id}`)}
           className="group block w-full min-w-0 max-w-full [text-decoration:none]"
         >
           <div className="relative flex min-h-0 w-full min-w-0 cursor-pointer flex-col overflow-hidden rounded-[20px] bg-surface-card shadow-card ring-1 ring-inset ring-surface-border transition-shadow duration-300 hover:shadow-[0_0_30px_0_rgba(255,255,255,0.2)] ms1024:min-h-[400px] ms1024:max-h-[400px] ms1024:flex-row">
@@ -234,7 +238,7 @@ export function WorkExamplesPortfolio({
           {projectCards.map((project) => (
             <Link
               key={project.id}
-              href={project.href || `/works/${project.id}`}
+              href={lp(project.href || `/works/${project.id}`)}
               className="group flex min-w-0 max-w-full shrink-0 basis-[358px] justify-center [text-decoration:none] mq700:w-full mq700:basis-auto mq700:max-w-none"
             >
               <article

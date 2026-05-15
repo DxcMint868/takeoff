@@ -7,6 +7,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useLocale } from "../contexts/locale-context";
 import type { TeamGridMember } from "../lib/team-grid-member";
 import type { TeamMemberDisplay } from "../lib/strapi/team-members";
+import { withLocale } from "../lib/i18n/routing";
 import MemberProfileModal from "./member-profile-modal";
 
 // ---------------------------------------------------------------------------
@@ -44,6 +45,7 @@ export type TeamMemberGridProps = {
 };
 
 export function TeamMemberGrid({ members, className }: TeamMemberGridProps) {
+  const { locale } = useLocale();
   if (!members.length) return null;
 
   return (
@@ -55,7 +57,10 @@ export function TeamMemberGrid({ members, className }: TeamMemberGridProps) {
             className="aspect-square list-none ms1024:w-[200px] ms1024:max-w-[200px] ms1024:shrink-0"
           >
             <Link
-              href={`/about-us?member=${encodeURIComponent(member.slug)}#our-team`}
+              href={withLocale(
+                locale,
+                `/about-us?member=${encodeURIComponent(member.slug)}#our-team`,
+              )}
               scroll={false}
               className="group relative block h-full w-full overflow-hidden outline-none focus-visible:ring-2 focus-visible:ring-purple"
               aria-label={`${member.name}${member.role ? `, ${member.role}` : ""}`}
@@ -195,8 +200,8 @@ export default function MemberGrid({ featuredMembers }: MemberGridOuterProps) {
     setSelectedMember(null);
     if (router.query.member) {
       void router.replace(
-        { pathname: "/about-us", query: {} },
-        "/about-us#our-team",
+        withLocale(locale, "/about-us#our-team"),
+        undefined,
         { shallow: true },
       );
     }

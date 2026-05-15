@@ -5,6 +5,7 @@ import Link from "next/link";
 import type { BlogPostPreview } from "../lib/blog-posts";
 import type { StrapiBlocksNode } from "../lib/strapi/case-studies";
 import { useTranslation } from "../lib/i18n/use-translation";
+import { useLocalizedPath } from "../lib/i18n/use-localized-path";
 import { BlogShareButton } from "./blog-share-button";
 import { GradientGlow } from "./gradient-glow";
 import StrapiBlocks from "./strapi-blocks";
@@ -26,6 +27,7 @@ export function BlogPostArticle({
   contentBlocks: contentBlocksProp,
 }: BlogPostArticleProps) {
   const { t, readSeconds, formatBlogDate } = useTranslation();
+  const lp = useLocalizedPath();
   const blocks = contentBlocksProp ?? post.contentBlocks;
   const remoteCover =
     typeof post.image === "string" &&
@@ -37,7 +39,7 @@ export function BlogPostArticle({
 
       <div className="relative w-full max-w-[1040px]">
         <Link
-          href="/blog"
+          href={lp("/blog")}
           className="group mb-8 inline-flex flex-row items-center gap-3 self-start [text-decoration:none] mq900:mb-6"
         >
           <span className="inline-flex size-10 items-center justify-center rounded-full border border-white-30 bg-dark/40 transition-colors group-hover:border-white-60">

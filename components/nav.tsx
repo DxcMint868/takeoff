@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import CTASolid from "./cta-solid";
 import { NavLanguageSelect } from "./nav-language-select";
+import { pathnameWithoutLocale } from "../lib/i18n/routing";
+import { useLocalizedPath } from "../lib/i18n/use-localized-path";
 import { useTranslation } from "../lib/i18n/use-translation";
 
 export type NavType = {
@@ -27,10 +29,14 @@ const Nav = ({
   scrollThreshold = DEFAULT_SCROLL_THRESHOLD,
 }: NavType) => {
   const { t } = useTranslation();
-  const { pathname } = useRouter();
-  const onWorksPage = pathname.startsWith("/works");
-  const onBlogPage = pathname.startsWith("/blog");
-  const onAboutPage = pathname === "/about-us";
+  const lp = useLocalizedPath();
+  const { pathname, asPath } = useRouter();
+  const pathOnly = pathnameWithoutLocale(
+    asPath.split("?")[0]?.split("#")[0] ?? "",
+  );
+  const onWorksPage = pathOnly.startsWith("/works");
+  const onBlogPage = pathOnly.startsWith("/blog");
+  const onAboutPage = pathOnly === "/about-us";
   const [scrolled, setScrolled] = useState(!initialTransparent);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -77,7 +83,7 @@ const Nav = ({
       <div className="pointer-events-none h-full w-full absolute !m-[0] top-[0px] right-[0px] bottom-[0px] left-[0px]" />
       <Link
         id="nav-logo"
-        href="/"
+        href={lp("/")}
         className="w-[149px] flex shrink-0 cursor-pointer select-none flex-col items-start justify-start border-0 bg-transparent pt-[7px] pb-0 pl-0 pr-[9px] [text-decoration:none] box-border outline-none transition-opacity duration-200 ease-in-out hover:opacity-90 focus-visible:opacity-100 focus-visible:ring-2 focus-visible:ring-purple focus-visible:ring-offset-2 focus-visible:ring-offset-dark z-[1]"
       >
         <span className="relative block h-[27px] w-full max-w-full shrink-0 self-stretch overflow-hidden">
@@ -94,19 +100,19 @@ const Nav = ({
 
       {/* Nav links — uniformly distributed across remaining space */}
       <nav className="flex flex-1 flex-row items-center justify-evenly px-6 text-left text-base font-reg mq1100:hidden">
-        <Link href="/#our-service" className={navInactive}>
+        <Link href={lp("/#our-service")} className={navInactive}>
           {t("nav.services")}
         </Link>
-        <Link href="/works" className={onWorksPage ? navActive : navInactive}>
+        <Link href={lp("/works")} className={onWorksPage ? navActive : navInactive}>
           {t("nav.works")}
         </Link>
-        <Link href="/about-us" className={onAboutPage ? navActive : navInactive}>
+        <Link href={lp("/about-us")} className={onAboutPage ? navActive : navInactive}>
           {t("nav.about")}
         </Link>
-        <Link href="/#contact-us" className={navInactive}>
+        <Link href={lp("/#contact-us")} className={navInactive}>
           {t("nav.contact")}
         </Link>
-        <Link href="/blog" className={onBlogPage ? navActive : navInactive}>
+        <Link href={lp("/blog")} className={onBlogPage ? navActive : navInactive}>
           {t("nav.blog")}
         </Link>
       </nav>
@@ -116,7 +122,7 @@ const Nav = ({
         <NavLanguageSelect />
 
         <div className="mq1100:hidden shrink-0">
-          <CTASolid propWidth="150px" label={t("nav.startToday")} href="/#contact-us" />
+          <CTASolid propWidth="150px" label={t("nav.startToday")} href={lp("/#contact-us")} />
         </div>
 
         <button
@@ -161,37 +167,43 @@ const Nav = ({
               className="pointer-events-none block"
             />
           </button>
+          <div className="hidden mq1100:flex w-full flex-col items-center gap-3 px-2">
+            <p className="m-0 text-center text-xs font-reg font-medium uppercase tracking-[0.2em] text-white/70">
+              {t("nav.language")}
+            </p>
+            <NavLanguageSelect className="w-full max-w-[min(100vw-2rem,320px)]" />
+          </div>
           <nav className="flex flex-1 flex-col justify-center w-full gap-8 text-center text-xl font-reg mq450:gap-6 mq450:text-lg">
             <Link
-              href="/#our-service"
+              href={lp("/#our-service")}
               className={navInactive}
               onClick={() => setMobileMenuOpen(false)}
             >
               {t("nav.services")}
             </Link>
             <Link
-              href="/works"
+              href={lp("/works")}
               className={onWorksPage ? navActive : navInactive}
               onClick={() => setMobileMenuOpen(false)}
             >
               {t("nav.works")}
             </Link>
             <Link
-              href="/about-us"
+              href={lp("/about-us")}
               className={onAboutPage ? navActive : navInactive}
               onClick={() => setMobileMenuOpen(false)}
             >
               {t("nav.about")}
             </Link>
             <Link
-              href="/#contact-us"
+              href={lp("/#contact-us")}
               className={navInactive}
               onClick={() => setMobileMenuOpen(false)}
             >
               {t("nav.contact")}
             </Link>
             <Link
-              href="/blog"
+              href={lp("/blog")}
               className={onBlogPage ? navActive : navInactive}
               onClick={() => setMobileMenuOpen(false)}
             >
@@ -203,7 +215,7 @@ const Nav = ({
               className="flex w-full justify-center"
               propWidth="100%"
               label={t("nav.startToday")}
-              href="/#contact-us"
+              href={lp("/#contact-us")}
             />
           </div>
         </div>

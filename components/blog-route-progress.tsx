@@ -2,6 +2,7 @@
 
 import Router from "next/router";
 import { useEffect, useState } from "react";
+import { pathnameWithoutLocale } from "../lib/i18n/routing";
 
 /**
  * Top indeterminate bar during client navigations to `/blog` routes (list → detail, etc.).
@@ -12,7 +13,7 @@ export function BlogRouteProgress() {
   useEffect(() => {
     const onStart = (url: string) => {
       try {
-        const path = url.split("?")[0] ?? "";
+        const path = pathnameWithoutLocale(url.split("?")[0] ?? "");
         if (path.startsWith("/blog")) setActive(true);
       } catch {
         setActive(true);
