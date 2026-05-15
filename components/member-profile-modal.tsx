@@ -72,21 +72,21 @@ export default function MemberProfileModal({ member, onClose }: MemberProfileMod
                 {member.name}
               </h3>
               {member.role ? (
-                <p className="m-0 py-2 font-reg text-[16px] text-white-60">{member.role}</p>
+                <p className="m-0 py-2 font-reg text-[16px] text-white/70">{member.role}</p>
               ) : null}
             </div>
 
             <div className="flex flex-col gap-4">
               {member.frameworks.length > 0 && (
                 <div className="flex flex-col gap-2">
-                  <p className="m-0 font-reg text-xs uppercase tracking-[0.2em] text-white-60">
+                  <p className="m-0 font-reg text-xs uppercase tracking-[0.2em] text-white/70">
                     Frameworks
                   </p>
                   <div className="mt-2 flex flex-wrap gap-2">
                     {member.frameworks.map((item) => (
                       <span
                         key={item}
-                        className="rounded-lg bg-white/10 px-3 py-1 font-reg text-sm text-white-60"
+                        className="rounded-lg bg-white/10 px-3 py-1 font-reg text-sm text-white/70"
                       >
                         {item}
                       </span>
@@ -97,14 +97,14 @@ export default function MemberProfileModal({ member, onClose }: MemberProfileMod
 
               {member.skills.length > 0 && (
                 <div className="mt-2 flex flex-col gap-2">
-                  <p className="m-0 font-reg text-xs uppercase tracking-[0.2em] text-white-60">
+                  <p className="m-0 font-reg text-xs uppercase tracking-[0.2em] text-white/70">
                     Skills
                   </p>
                   <div className="mt-2 flex flex-wrap gap-2">
                     {member.skills.map((item) => (
                       <span
                         key={item}
-                        className="rounded-lg bg-white/10 px-3 py-1 font-reg text-sm text-white-60"
+                        className="rounded-lg bg-white/10 px-3 py-1 font-reg text-sm text-white/70"
                       >
                         {item}
                       </span>
@@ -122,7 +122,7 @@ export default function MemberProfileModal({ member, onClose }: MemberProfileMod
             <h4 className="m-0 font-sora text-3xl font-semibold text-white mq700:text-2xl">
               Get To Know
             </h4>
-            <p className="mx-auto m-0 max-w-[90%] pt-4 font-reg text-[14px] font-light leading-8 text-white-60 mq700:text-base mq700:leading-6">
+            <p className="mx-auto m-0 max-w-[90%] pt-4 font-reg text-[14px] font-light leading-8 text-white/70 mq700:text-base mq700:leading-6">
               {member.getToKnow}
             </p>
           </section>
@@ -133,7 +133,7 @@ export default function MemberProfileModal({ member, onClose }: MemberProfileMod
             <h4 className="m-0 font-sora text-3xl font-semibold text-white mq700:text-2xl">
               Why work with them
             </h4>
-            <p className="mx-auto m-0 max-w-[90%] pt-4 font-reg text-[14px] font-light leading-8 text-white-60 mq700:text-base mq700:leading-6">
+            <p className="mx-auto m-0 max-w-[90%] pt-4 font-reg text-[14px] font-light leading-8 text-white/70 mq700:text-base mq700:leading-6">
               {member.whyWorkWithThem}
             </p>
           </section>
@@ -148,13 +148,13 @@ export default function MemberProfileModal({ member, onClose }: MemberProfileMod
                   {item.title}
                 </h5>
                 {item.time ? (
-                  <p className="m-0 font-reg text-[12px] font-normal leading-[18px] tracking-[0.02em] text-white-60">
+                  <p className="m-0 font-reg text-[12px] font-normal leading-[18px] tracking-[0.02em] text-white/70">
                     {item.time}
                   </p>
                 ) : null}
                 <StrapiBlocks
                   blocks={item.descriptionBlocks}
-                  className="font-reg text-[14px] font-medium leading-[22px] tracking-[0.02em] text-white-60 [&_p]:m-0 [&_a]:underline"
+                  className="font-reg text-[14px] font-medium leading-[22px] tracking-[0.02em] text-white/70 [&_p]:m-0 [&_a]:underline"
                 />
               </article>
             ))}

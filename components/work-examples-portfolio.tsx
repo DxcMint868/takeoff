@@ -196,7 +196,7 @@ export function WorkExamplesPortfolio({
                     {featuredProject.subtitle}
                   </p>
                 )}
-                <p className="relative z-[2] m-0 mt-2 line-clamp-3 text-center font-reg text-sm font-medium leading-[22px] tracking-[0.02em] text-white-60 ms1024:text-left">
+                <p className="relative z-[2] m-0 mt-2 line-clamp-3 text-center font-reg text-sm font-medium leading-[22px] tracking-[0.02em] text-white/70 ms1024:text-left">
                   {featuredProject.description}
                 </p>
                 {featuredProject.tags.length > 0 ? (
@@ -226,7 +226,7 @@ export function WorkExamplesPortfolio({
       )}
 
       {!hasResults ? (
-        <p className="w-full py-10 text-center font-reg text-sm leading-[22px] tracking-[0.02em] text-white-60">
+        <p className="w-full py-10 text-center font-reg text-sm leading-[22px] tracking-[0.02em] text-white/70">
           No projects match your search or filters.
         </p>
       ) : projectCards.length > 0 ? (
@@ -269,7 +269,7 @@ export function WorkExamplesPortfolio({
                     <h3 className="m-0 font-reg text-lg font-semibold leading-normal tracking-[0.02em] text-white">
                       {project.title}
                     </h3>
-                    <p className="m-0 mt-3 line-clamp-5 font-reg text-sm font-medium leading-[22px] tracking-[0.02em] text-white-60">
+                    <p className="m-0 mt-3 line-clamp-5 font-reg text-sm font-medium leading-[22px] tracking-[0.02em] text-white/70">
                       {project.description}
                     </p>
                   </div>

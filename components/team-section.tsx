@@ -58,8 +58,8 @@ const TeamSection: React.FC = () => {
           <h1 className="m-0 relative text-inherit leading-[58px] pb-12 font-normal font-[inherit] mq450:text-10xl mq450:leading-[35px] mq900:text-19xl mq900:leading-[46px]">
             Our team & Values
           </h1>
-          <div className="self-stretch relative text-base tracking-[0.02em] leading-[24px] font-light font-reg text-white-60">
-            <h2 className="m-0 self-stretch relative text-3xl tracking-[0.02em] leading-[38px] z-[1] text-white-60 font-reg mq450:text-lg mq450:leading-[30px]">
+          <div className="self-stretch relative text-base tracking-[0.02em] leading-[24px] font-light font-reg text-white/70">
+            <h2 className="m-0 self-stretch relative text-3xl tracking-[0.02em] leading-[38px] z-[1] text-white/70 font-reg mq450:text-lg mq450:leading-[30px]">
               <p className="m-0">
                 Hoasen is built up of a team of{" "}
                 <span className="font-reg text-white">high-performing</span>{" "}
@@ -95,7 +95,7 @@ const TeamSection: React.FC = () => {
                       <h3 className="m-0 font-sora text-xl font-semibold leading-[30px] tracking-[0.4px] text-white">
                         {title}
                       </h3>
-                      <p className="m-0 pl-[58px] font-reg text-base font-normal leading-[24px] tracking-[0.32px] text-white-60 mq450:pl-0">
+                      <p className="m-0 pl-[58px] font-reg text-base font-normal leading-[24px] tracking-[0.32px] text-white/70 mq450:pl-0">
                         {description}
                       </p>
                     </div>

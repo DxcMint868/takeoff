@@ -77,7 +77,7 @@ export default function CaseStudyTemplate({
 
               {caseStudy.heroTags.length > 0 ? (
                 <div className="mt-10">
-                  <p className="m-0 font-reg text-[10px] font-semibold uppercase leading-3 tracking-[2px] text-white-60">
+                  <p className="m-0 font-reg text-[10px] font-semibold uppercase leading-3 tracking-[2px] text-white/70">
                     What we did
                   </p>
                   <div className="mt-4 flex flex-wrap gap-3">
@@ -100,7 +100,7 @@ export default function CaseStudyTemplate({
       {caseStudy.stats.length > 0 ? (
         <section className="w-full bg-dark px-5 pb-20 pt-16 mq900:pb-16 mq450:pb-12">
           <div className="mx-auto flex max-w-[1200px] flex-col items-center gap-10">
-            <p className="m-0 px-2 max-w-[747px] text-center font-reg text-sm font-medium leading-[22px] tracking-[0.02em] text-white-60">
+            <p className="m-0 px-2 max-w-[747px] text-center font-reg text-sm font-medium leading-[22px] tracking-[0.02em] text-white/70">
               {caseStudy.shortDescription}
             </p>
             <div className="flex w-full max-w-[950px] items-center justify-center mq700:flex-col mq700:gap-10">
@@ -116,7 +116,7 @@ export default function CaseStudyTemplate({
                     <span className="font-sora text-[66px] font-extralight capitalize leading-none mq900:text-[48px] mq450:text-[36px]">
                       {stat.value}
                     </span>
-                    <span className="font-reg text-sm font-medium leading-[22px] tracking-[0.02em] text-white-60">
+                    <span className="font-reg text-sm font-medium leading-[22px] tracking-[0.02em] text-white/70">
                       {stat.label}
                     </span>
                   </div>
@@ -140,7 +140,7 @@ export default function CaseStudyTemplate({
               </h2>
               <StrapiBlocks
                 blocks={caseStudy.briefAndBackground.descriptionBlocks}
-                className="mt-10 flex max-w-[663px] flex-col gap-4 font-reg text-sm font-normal leading-[22px] tracking-[0.02em] text-white-60 [&_blockquote]:border-white/25"
+                className="mt-10 flex max-w-[663px] flex-col gap-4 font-reg text-sm font-normal leading-[22px] tracking-[0.02em] text-white/70 [&_blockquote]:border-white/25"
               />
             </GradientBorderCard>
           </div>
@@ -202,7 +202,7 @@ export default function CaseStudyTemplate({
                       </h3>
                       <StrapiBlocks
                         blocks={solution.descriptionBlocks}
-                        className="m-0 mt-4 flex max-w-[720px] flex-col gap-3 font-reg text-sm font-normal leading-[22px] tracking-[0.02em] text-white-60"
+                        className="m-0 mt-4 flex max-w-[720px] flex-col gap-3 font-reg text-sm font-normal leading-[22px] tracking-[0.02em] text-white/70"
                       />
                     </div>
 
@@ -271,7 +271,7 @@ export default function CaseStudyTemplate({
               </h2>
               <StrapiBlocks
                 blocks={caseStudy.outcome.descriptionBlocks}
-                className="mt-10 flex max-w-[663px] flex-col gap-6 font-reg text-sm font-normal leading-[22px] tracking-[0.02em] text-white-60 [&_p]:m-0"
+                className="mt-10 flex max-w-[663px] flex-col gap-6 font-reg text-sm font-normal leading-[22px] tracking-[0.02em] text-white/70 [&_p]:m-0"
               />
             </GradientBorderCard>
           </div>
@@ -302,7 +302,7 @@ export default function CaseStudyTemplate({
               blocks={caseStudy.testimonial.quoteBlocks}
               className="m-0 -mt-5 w-full font-reg text-[30px] font-light leading-[1.5] text-white/50 mq900:text-xl mq450:text-lg [&_p]:m-0 [&_strong]:font-semibold [&_strong]:text-white"
             />
-            <div className="mt-8 flex flex-col items-center font-reg text-xs font-normal uppercase leading-[22px] tracking-[0.2em] text-white-60">
+            <div className="mt-8 flex flex-col items-center font-reg text-xs font-normal uppercase leading-[22px] tracking-[0.2em] text-white/70">
               <span>{caseStudy.testimonial.authorName}</span>
               {caseStudy.testimonial.authorRole ? (
                 <span>

@@ -15,7 +15,7 @@ export type NavType = {
 };
 
 const navInactive =
-  "[text-decoration:none] tracking-[0.02em] leading-[24px] text-white-60 z-[1] cursor-pointer whitespace-nowrap transition-[color,text-shadow] duration-200 ease-in-out hover:text-white";
+  "[text-decoration:none] tracking-[0.02em] leading-[24px] text-white/70 z-[1] cursor-pointer whitespace-nowrap transition-[color,text-shadow] duration-200 ease-in-out hover:text-white";
 const navActive =
   "[text-decoration:none] tracking-[0.02em] leading-[24px] text-white font-semibold font-reg z-[1] cursor-pointer whitespace-nowrap [text-shadow:0_0_12px_rgba(140,120,237,0.55),0_0_28px_rgba(115,95,212,0.28)] transition-[color,text-shadow] duration-200 ease-in-out";
 
@@ -82,7 +82,7 @@ const Nav = ({
       >
         <span className="relative block h-[27px] w-full max-w-full shrink-0 self-stretch overflow-hidden">
           <Image
-            src="/logo@2x.png"
+            src="/logo-colored-lotus.svg"
             alt={t("nav.home")}
             fill
             className="pointer-events-none object-contain object-left"

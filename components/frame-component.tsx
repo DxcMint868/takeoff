@@ -30,7 +30,7 @@ const FrameComponent = ({ className = "", hero }: FrameComponentType) => {
             <h1 className="m-0 self-stretch relative text-inherit leading-[82px] capitalize font-normal font-[inherit] mq450:text-25xl mq450:leading-[49px] mq900:text-40xl mq900:leading-[66px]">
               {title}
             </h1>
-            <h2 className="m-0 self-stretch relative text-3xl tracking-[0.02em] leading-[34px] font-light font-reg text-white-60 mq450:text-lg mq450:leading-[27px]">
+            <h2 className="m-0 self-stretch relative text-3xl tracking-[0.02em] leading-[34px] font-light font-reg text-white/70 mq450:text-lg mq450:leading-[27px]">
               {subtitle}
             </h2>
           </div>

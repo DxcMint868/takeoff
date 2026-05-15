@@ -121,7 +121,7 @@ export function TagsDisplay({
       )}
 
       {!hasTruncatedTags && extra && (
-        <span className="font-reg text-sm font-medium leading-[22px] tracking-[0.02em] text-white-60">
+        <span className="font-reg text-sm font-medium leading-[22px] tracking-[0.02em] text-white/70">
           {extra}
         </span>
       )}
@@ -159,7 +159,7 @@ export function TagsDisplay({
                     </Badge>
                   ))}
                   {extra && (
-                    <span className="font-reg text-sm font-medium leading-[22px] tracking-[0.02em] text-white-60">
+                    <span className="font-reg text-sm font-medium leading-[22px] tracking-[0.02em] text-white/70">
                       {extra}
                     </span>
                   )}

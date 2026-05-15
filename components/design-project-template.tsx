@@ -93,7 +93,7 @@ export default function DesignProjectTemplate({
               </h2>
               <StrapiBlocks
                 blocks={designProject.briefAndBackground.descriptionBlocks}
-                className="mt-10 flex max-w-[663px] flex-col gap-4 font-reg text-sm font-normal leading-[22px] tracking-[0.02em] text-white-60 [&_blockquote]:border-white/25"
+                className="mt-10 flex max-w-[663px] flex-col gap-4 font-reg text-sm font-normal leading-[22px] tracking-[0.02em] text-white/70 [&_blockquote]:border-white/25"
               />
             </GradientBorderCard>
           </div>
@@ -109,7 +109,7 @@ export default function DesignProjectTemplate({
             <h2 className="m-0 font-sora text-[40px] font-semibold capitalize leading-none mq900:text-[32px] mq450:text-3xl">
               {designProject.designTone.title}
             </h2>
-            <p className="m-0 font-reg text-sm font-normal leading-[22px] tracking-[0.02em] text-white-60">
+            <p className="m-0 font-reg text-sm font-normal leading-[22px] tracking-[0.02em] text-white/70">
               {designProject.designTone.description}
             </p>
           </div>
@@ -153,7 +153,7 @@ export default function DesignProjectTemplate({
               </h2>
               <StrapiBlocks
                 blocks={designProject.outcome.descriptionBlocks}
-                className="mt-10 flex max-w-[663px] flex-col gap-6 font-reg text-sm font-normal leading-[22px] tracking-[0.02em] text-white-60 [&_p]:m-0"
+                className="mt-10 flex max-w-[663px] flex-col gap-6 font-reg text-sm font-normal leading-[22px] tracking-[0.02em] text-white/70 [&_p]:m-0"
               />
             </GradientBorderCard>
           </div>
@@ -172,7 +172,7 @@ export default function DesignProjectTemplate({
       {/* ------------------------------------------------------------------ */}
       <section className="w-full bg-dark px-5 py-10">
         <div className="mx-auto flex max-w-[1132px] flex-col items-center gap-4">
-          <p className="m-0 font-reg text-[10px] font-semibold uppercase leading-3 tracking-[2px] text-white-60">
+          <p className="m-0 font-reg text-[10px] font-semibold uppercase leading-3 tracking-[2px] text-white/70">
             Download Deck
           </p>
           <button

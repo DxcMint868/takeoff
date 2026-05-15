@@ -18,7 +18,7 @@ type BlogPostArticleProps = {
 };
 
 const bodyClassName =
-  "blog-post-body mt-10 font-reg text-base font-light leading-[28px] tracking-[0.02em] text-white-60 [&_a]:text-purple [&_a]:underline [&_a]:underline-offset-4 [&_p]:m-0 [&_p+p]:mt-8 [&_strong]:font-medium [&_strong]:text-white [&_h2]:mt-14 [&_h2]:font-sora [&_h2]:text-xl [&_h2]:font-semibold [&_h2]:leading-snug [&_h2]:tracking-[0.02em] [&_h2]:text-white [&_h2:first-of-type]:mt-12 [&_ul]:my-8 [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:my-8 [&_ol]:list-decimal [&_ol]:pl-6 [&_li]:mt-3 [&_blockquote]:my-10 [&_blockquote]:border-l-2 [&_blockquote]:border-purple/60 [&_blockquote]:pl-5 [&_blockquote]:italic [&_blockquote]:text-white/80";
+  "blog-post-body mt-10 font-reg text-base font-light leading-[28px] tracking-[0.02em] text-white/70 [&_a]:text-purple [&_a]:underline [&_a]:underline-offset-4 [&_p]:m-0 [&_p+p]:mt-8 [&_strong]:font-medium [&_strong]:text-white [&_h2]:mt-14 [&_h2]:font-sora [&_h2]:text-xl [&_h2]:font-semibold [&_h2]:leading-snug [&_h2]:tracking-[0.02em] [&_h2]:text-white [&_h2:first-of-type]:mt-12 [&_ul]:my-8 [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:my-8 [&_ol]:list-decimal [&_ol]:pl-6 [&_li]:mt-3 [&_blockquote]:my-10 [&_blockquote]:border-l-2 [&_blockquote]:border-purple/60 [&_blockquote]:pl-5 [&_blockquote]:italic [&_blockquote]:text-white/80";
 
 export function BlogPostArticle({
   post,
@@ -77,7 +77,7 @@ export function BlogPostArticle({
         </div>
 
         <div className="mx-auto mt-10 w-full mq900:mt-8">
-          <span className="inline-block rounded-full bg-white/[0.08] px-3 py-1 font-reg text-xs font-medium tracking-[0.02em] text-white-60">
+          <span className="inline-block rounded-full bg-white/[0.08] px-3 py-1 font-reg text-xs font-medium tracking-[0.02em] text-white/70">
             {readSeconds(post.timeToRead)}
           </span>
 
@@ -102,7 +102,7 @@ export function BlogPostArticle({
             />
           </div>
 
-          <p className="mt-10 text-center font-reg text-[11px] font-medium leading-relaxed tracking-[0.14em] text-white-60 mq900:mt-8">
+          <p className="mt-10 text-center font-reg text-[11px] font-medium leading-relaxed tracking-[0.14em] text-white/70 mq900:mt-8">
             {t("meta.by")} {post.author} • {formatBlogDate(post.publishedAt)}
           </p>
         </div>

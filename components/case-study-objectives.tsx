@@ -49,7 +49,7 @@ export function CaseStudyObjectives({
                   <h4 className="m-0 font-sora text-xl font-semibold leading-[30px] tracking-[0.02em]">
                     {obj.title}
                   </h4>
-                  <p className="m-0 mt-2 font-reg text-sm font-normal leading-[22px] tracking-[0.02em] text-white-60">
+                  <p className="m-0 mt-2 font-reg text-sm font-normal leading-[22px] tracking-[0.02em] text-white/70">
                     {obj.description}
                   </p>
                 </div>

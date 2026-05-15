@@ -28,7 +28,7 @@ const ContactSection: NextPage<ContactSectionType> = ({ className = "" }) => {
           <h2 className="m-0 font-sora font-normal text-[42px] leading-[50px] text-white mq900:text-[32px] mq900:leading-[40px] mq450:text-5xl mq450:leading-[32px]">
             {t("contact.title")}
           </h2>
-          <p className="m-0 font-reg font-normal text-base leading-[24px] tracking-[0.02em] text-white-60">
+          <p className="m-0 font-reg font-normal text-base leading-[24px] tracking-[0.02em] text-white/70">
             {t("contact.subtitle")}
           </p>
           <div

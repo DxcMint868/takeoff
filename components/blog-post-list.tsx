@@ -38,7 +38,7 @@ export function BlogPostList({ posts, formatDate }: BlogPostListProps) {
             </Link>
 
             <div className="flex min-w-0 flex-1 flex-col">
-              <span className="mq900:hidden inline w-fit rounded-full bg-white/[0.08] px-3 py-1 font-reg text-xs font-medium tracking-[0.02em] text-white-60">
+              <span className="mq900:hidden inline w-fit rounded-full bg-white/[0.08] px-3 py-1 font-reg text-xs font-medium tracking-[0.02em] text-white/70">
                 {readSeconds(post.timeToRead)}
               </span>
               <h2 className="mt-3 mq900:mt-0 font-sora text-xl mq900:text-[16px] font-semibold leading-snug tracking-[0.02em] text-white mq450:text-lg">
@@ -49,7 +49,7 @@ export function BlogPostList({ posts, formatDate }: BlogPostListProps) {
                   {post.title}
                 </Link>
               </h2>
-              <p className="m-0 mt-3 mq900:mt-0 line-clamp-2 font-reg text-sm font-light leading-[22px] tracking-[0.02em] text-white-60">
+              <p className="m-0 mt-3 mq900:mt-0 line-clamp-2 font-reg text-sm font-light leading-[22px] tracking-[0.02em] text-white/70">
                 {post.excerpt}
               </p>
               <div className="mq900:hidden">

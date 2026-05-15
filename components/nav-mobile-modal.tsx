@@ -21,7 +21,7 @@ type NavMobileModalProps = {
 
 const linkBase =
   "[text-decoration:none] text-center text-xl font-reg tracking-[0.02em] leading-8 transition-colors duration-200 ease-in-out";
-const linkInactive = `${linkBase} text-white-60 hover:text-white`;
+const linkInactive = `${linkBase} text-white/70 hover:text-white`;
 const linkActive = `${linkBase} text-white font-semibold`;
 
 export function NavMobileModal({ open, onClose }: NavMobileModalProps) {
