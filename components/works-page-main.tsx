@@ -290,16 +290,8 @@ const WorksPageMain = ({
         <div className="box-border w-full px-4">
           <section
             id="works-cta"
-            className="relative mx-auto mt-[167px] box-border flex w-full max-w-[1138px] flex-col items-center gap-8 overflow-hidden rounded-2xl bg-surface-card px-8 py-14 text-center mq900:mt-24 mq700:mt-16 mq450:px-5 mq450:py-10"
+            className="card-grain relative mx-auto mt-[167px] box-border flex w-full max-w-[1138px] flex-col items-center gap-8 overflow-hidden rounded-2xl bg-surface-card px-8 py-14 text-center mq900:mt-24 mq700:mt-16 mq450:px-5 mq450:py-10"
           >
-            <Image
-              src="/backgrounds/noise.png"
-              alt=""
-              aria-hidden
-              fill
-              className="pointer-events-none object-cover opacity-[0.95]"
-              sizes="100vw"
-            />
             <h2 className="relative z-[1] m-0 font-sora text-29xl font-normal leading-[58px] tracking-[0.02em] text-white mq450:text-10xl mq450:leading-[41px] mq900:text-19xl mq900:leading-[46px]">
               {t("works.cta.title")}
             </h2>

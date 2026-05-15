@@ -5,7 +5,6 @@ import { Badge } from "./badge";
 export type GroupComponentType = {
   id?: string;
   className?: string;
-  backgroundSrc?: string;
   iconSrc?: string;
   productDelivery?: string;
   description?: string;
@@ -15,7 +14,6 @@ export type GroupComponentType = {
 const GroupComponent: NextPage<GroupComponentType> = ({
   id,
   className = "",
-  backgroundSrc,
   iconSrc,
   productDelivery,
   description,
@@ -35,18 +33,7 @@ const GroupComponent: NextPage<GroupComponentType> = ({
         />
       </div>
 
-      <div className="relative z-10 flex h-full min-h-0 flex-1 flex-col items-start justify-start overflow-hidden rounded-[calc(1rem-2px)] pt-6 px-6 pb-5 text-left font-sora text-3xl text-white">
-        <div className="pointer-events-none absolute inset-0 z-0" aria-hidden>
-          {backgroundSrc ? (
-            <Image
-              src={backgroundSrc}
-              alt=""
-              fill
-              className="object-cover"
-              sizes="(max-width: 700px) min(100vw, 358px), 358px"
-            />
-          ) : null}
-        </div>
+      <div className="card-grain bg-surface-card relative z-10 flex h-full min-h-0 flex-1 flex-col items-start justify-start overflow-hidden rounded-[calc(1rem-2px)] pt-6 px-6 pb-5 text-left font-sora text-3xl text-white">
         {iconSrc ? (
           <Image
             src={iconSrc}

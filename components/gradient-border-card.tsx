@@ -14,6 +14,8 @@ type GradientBorderCardProps = {
   surfaceClassName?: string;
   sizes?: string;
   contentClassName?: string;
+  /** Use CSS-generated grain instead of a noise image */
+  grain?: boolean;
 };
 
 export function GradientBorderCard({
@@ -24,12 +26,16 @@ export function GradientBorderCard({
   surfaceClassName = "bg-dark",
   sizes = "1132px",
   contentClassName = DEFAULT_PADDING,
+  grain = false,
 }: GradientBorderCardProps) {
+  const isNoiseAsset =
+    backgroundSrc?.includes("noise") || backgroundSrc?.includes("mask-group");
+
   return (
     <div
-      className={`gradient-border relative overflow-hidden rounded-[20px] shadow-card ${surfaceClassName}`}
+      className={`gradient-border relative overflow-hidden rounded-[20px] shadow-card ${surfaceClassName} ${grain ? "card-grain" : ""}`}
     >
-      {backgroundSrc && (
+      {backgroundSrc && !(grain && isNoiseAsset) && (
         <Image
           src={backgroundSrc}
           alt={backgroundAlt}

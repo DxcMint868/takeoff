@@ -9,7 +9,6 @@ const TECHNOLOGY_ROWS = [
     items: [
       {
         id: "capability-blockchain-development",
-        backgroundSrc: "/mask-group@2x.png",
         iconSrc: "/group-blockchain.svg",
         productDelivery: "Blockchain Development",
         description:
@@ -25,7 +24,6 @@ const TECHNOLOGY_ROWS = [
       },
       {
         id: "capability-frontend",
-        backgroundSrc: "/mask-group@2x.png",
         iconSrc: "/group-frontend.svg",
         productDelivery: "FrontEnd",
         description:
@@ -41,7 +39,6 @@ const TECHNOLOGY_ROWS = [
       },
       {
         id: "capability-mobile",
-        backgroundSrc: "/mask-group@2x.png",
         iconSrc: "/group-design.svg",
         productDelivery: "Mobile",
         description:
@@ -55,7 +52,6 @@ const TECHNOLOGY_ROWS = [
     items: [
       {
         id: "capability-backend",
-        backgroundSrc: "/mask-group@2x.png",
         iconSrc: "/group-backend.svg",
         productDelivery: "BackEnd",
         description:
@@ -72,7 +68,6 @@ const TECHNOLOGY_ROWS = [
       },
       {
         id: "capability-artificial-intelligence",
-        backgroundSrc: "/mask-group@2x.png",
         iconSrc: "/group-delivery.svg",
         productDelivery: "Artificial Intelligence",
         description:
@@ -88,7 +83,6 @@ const TECHNOLOGY_ROWS = [
       },
       {
         id: "capability-product-design-management",
-        backgroundSrc: "/mask-group@2x.png",
         iconSrc: "/group-design.svg",
         productDelivery: "Product Design & Product Management",
         description:
@@ -109,7 +103,6 @@ const TECHNOLOGY_ROWS = [
     items: [
       {
         id: "capability-test-automation",
-        backgroundSrc: "/mask-group@2x.png",
         iconSrc: "/group-delivery.svg",
         productDelivery: "Test Automation",
         description:
@@ -137,7 +130,6 @@ const TechnologiesSection = ({ capabilities }: TechnologiesSectionProps) => {
     capabilities && capabilities.length > 0
       ? capabilities.map((cap) => ({
           id: `cms-capability-${cap.id}`,
-          backgroundSrc: "/mask-group@2x.png",
           iconSrc: cap.iconUrl || undefined,
           productDelivery: cap.title,
           description: cap.description,
