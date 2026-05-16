@@ -9,7 +9,7 @@ const fieldClass =
 
 /** Same as text fields but without `!text-white` so summary can be muted when empty. */
 const comboboxTriggerClass =
-  "w-full bg-transparent border-x-0 border-t-0 border-b border-white-30 rounded-none px-0 py-2 focus:outline-none focus:ring-0 focus:border-white-60 font-reg text-sm leading-[22px] tracking-[0.02em]";
+  "w-full appearance-none border-x-0 border-t-0 border-b border-solid border-b-white-30 bg-transparent rounded-none px-0 py-2 text-left font-reg text-sm leading-[22px] tracking-[0.02em] focus:outline-none focus:ring-0 focus:border-b-white-60 [border-bottom-color:theme(colors.white-30)] focus:[border-bottom-color:theme(colors.white-60)]";
 
 const fieldStyle: React.CSSProperties = {
   color: "#fff",
