@@ -54,6 +54,12 @@
   "contact.form.submit": "제출하기",
   "contact.form.success": "성공적으로 제출되었습니다!",
   "contact.form.error": "제출에 실패했습니다. 다시 시도해주세요.",
+  "contact.service.branding": "브랜딩",
+  "contact.service.softwareDevelopment": "소프트웨어 개발",
+  "contact.service.smartContractDevelopment": "스마트컨트랙트 개발",
+  "contact.service.uiUxDesign": "UI / UX 디자인",
+  "contact.service.productManagement": "프로덕트 관리",
+  "contact.service.qualityAssurance": "품질 보증",
 
   "about.pageTitle": "소개",
   "about.culture.fallbackTitle": "우리의 문화",

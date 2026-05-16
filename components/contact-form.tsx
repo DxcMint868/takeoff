@@ -2,13 +2,13 @@ import React, { useEffect, useRef, useState } from "react";
 import { ArrowIcon } from "./icons";
 import { useTranslation } from "../lib/i18n/use-translation";
 
-const INTERESTED_SERVICES = [
-  "Branding",
-  "Software Development",
-  "Smart Contract Development",
-  "UI / UX Design",
-  "Product Management",
-  "Quality Assurance",
+const INTERESTED_SERVICES_KEYS = [
+  "contact.service.branding",
+  "contact.service.softwareDevelopment",
+  "contact.service.smartContractDevelopment",
+  "contact.service.uiUxDesign",
+  "contact.service.productManagement",
+  "contact.service.qualityAssurance",
 ] as const;
 
 const fieldClass =
@@ -44,7 +44,9 @@ const ContactForm: React.FC = () => {
   >("idle");
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -150,23 +152,43 @@ const ContactForm: React.FC = () => {
             style={{
               ...fieldStyle,
               color: formData.interestedService ? "#fff" : "#a4a1ad",
-              WebkitTextFillColor: formData.interestedService ? "#fff" : "#a4a1ad",
+              WebkitTextFillColor: formData.interestedService
+                ? "#fff"
+                : "#a4a1ad",
             }}
           >
-            <option value="" disabled hidden style={{ color: "#a4a1ad", background: "#282042" }}>
+            <option
+              value=""
+              disabled
+              hidden
+              style={{ color: "#a4a1ad", background: "#282042" }}
+            >
               {t("contact.form.interestedService")}
             </option>
-            {INTERESTED_SERVICES.map((service) => (
-              <option key={service} value={service} style={{ color: "#fff", background: "#282042" }}>
-                {service}
+            {INTERESTED_SERVICES_KEYS.map((serviceKey) => (
+              <option
+                key={serviceKey}
+                value={serviceKey}
+                style={{ color: "#fff", background: "#282042" }}
+              >
+                {t(serviceKey)}
               </option>
             ))}
           </select>
           <svg
             className="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 opacity-60"
-            width="12" height="8" viewBox="0 0 12 8" fill="none"
+            width="12"
+            height="8"
+            viewBox="0 0 12 8"
+            fill="none"
           >
-            <path d="M1 1l5 5 5-5" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path
+              d="M1 1l5 5 5-5"
+              stroke="#fff"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
           </svg>
         </div>
 

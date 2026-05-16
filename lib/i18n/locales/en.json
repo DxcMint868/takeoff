@@ -53,6 +53,12 @@
   "contact.form.submit": "Submit",
   "contact.form.success": "Form submitted successfully!",
   "contact.form.error": "Submission failed. Please try again.",
+  "contact.service.branding": "Branding",
+  "contact.service.softwareDevelopment": "Software Development",
+  "contact.service.smartContractDevelopment": "Smart Contract Development",
+  "contact.service.uiUxDesign": "UI / UX Design",
+  "contact.service.productManagement": "Product Management",
+  "contact.service.qualityAssurance": "Quality Assurance",
 
   "about.pageTitle": "About Us",
   "about.culture.fallbackTitle": "Our Culture",

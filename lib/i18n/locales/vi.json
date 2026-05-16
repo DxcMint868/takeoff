@@ -54,6 +54,12 @@
   "contact.form.submit": "Gửi thông tin",
   "contact.form.success": "Gửi thông tin thành công!",
   "contact.form.error": "Gửi thông tin thất bại. Vui lòng thử lại.",
+  "contact.service.branding": "Thiết kế thương hiệu",
+  "contact.service.softwareDevelopment": "Phát triển phần mềm",
+  "contact.service.smartContractDevelopment": "Phát triển hợp đồng thông minh",
+  "contact.service.uiUxDesign": "Thiết kế UI / UX",
+  "contact.service.productManagement": "Quản lý sản phẩm",
+  "contact.service.qualityAssurance": "Đảm bảo chất lượng",
 
   "about.pageTitle": "Giới thiệu",
   "about.culture.fallbackTitle": "Văn hóa của chúng tôi",
