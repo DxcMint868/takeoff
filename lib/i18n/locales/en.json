@@ -48,6 +48,7 @@
   "contact.form.email": "Email",
   "contact.form.telegram": "Telegram",
   "contact.form.companyName": "Company Name",
+  "contact.form.interestedService": "Interested Service",
   "contact.form.projectDetails": "Tell us about your project...",
   "contact.form.submit": "Submit",
   "contact.form.success": "Form submitted successfully!",

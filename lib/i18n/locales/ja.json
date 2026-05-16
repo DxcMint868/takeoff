@@ -49,6 +49,7 @@
   "contact.form.email": "メールアドレス",
   "contact.form.telegram": "Telegram",
   "contact.form.companyName": "会社名",
+  "contact.form.interestedService": "ご希望のサービス",
   "contact.form.projectDetails": "プロジェクトの詳細について教えてください...",
   "contact.form.submit": "送信",
   "contact.form.success": "送信が完了しました！",
