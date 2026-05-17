@@ -3,6 +3,12 @@ import type {
   WorkTagSpec,
   WorkTagTone,
 } from "../../components/work-examples-portfolio";
+import {
+  APP_LOCALE_CODES,
+  projectsFallbackLocale,
+  toStrapiLocale,
+  uiLocalesToTry,
+} from "./language";
 
 export type StrapiTextNode = {
   type: "text";
@@ -77,6 +83,8 @@ export type CaseStudyTeamMember = {
 
 export type CaseStudyViewModel = {
   slug: string;
+  /** Strapi document id — stable across locales for the same project. */
+  documentId?: string;
   title: string;
   shortDescription: string;
   subtitle?: string;
@@ -499,8 +507,11 @@ function mapProjectToCaseStudy(
 
   if (!slug || !title) return null;
 
+  const documentId = stringifyValue(project.documentId) || undefined;
+
   return {
     slug,
+    ...(documentId ? { documentId } : {}),
     title,
     shortDescription,
     heroTags: skills,
@@ -587,8 +598,11 @@ function mapProjectToWorkCard(
   const logo = toMedia(project.logo_icon);
   const subtitle = stringifyValue(project.domain_subtitle);
 
+  const documentId = stringifyValue(project.documentId) || undefined;
+
   return {
     id: slug,
+    ...(documentId ? { documentId } : {}),
     title,
     ...(subtitle ? { subtitle } : {}),
     description: stringifyValue(project.short_description),
@@ -708,31 +722,220 @@ function buildProjectPopulateQuery() {
   return params;
 }
 
+function hasMediaUrl(media?: CaseStudyMedia): boolean {
+  return Boolean(media?.url?.trim());
+}
+
+/**
+ * Localized Strapi drafts often omit shared relations (skills, tech stack) and
+ * media on repeatable components. Re-use English tags/assets while keeping translated text.
+ */
+export function mergeCaseStudyMediaFromEn(
+  localized: CaseStudyViewModel,
+  en: CaseStudyViewModel,
+): CaseStudyViewModel {
+  const enSolutionByOrder = new Map(
+    en.solutions.map((solution) => [solution.order, solution]),
+  );
+
+  const solutions = localized.solutions.map((solution, index) => {
+    if (hasMediaUrl(solution.image)) return solution;
+    const enSolution =
+      enSolutionByOrder.get(solution.order) ?? en.solutions[index];
+    if (!enSolution?.image || !hasMediaUrl(enSolution.image)) return solution;
+    return { ...solution, image: enSolution.image };
+  });
+
+  const enObjectiveByOrder = new Map(
+    en.objectives.map((objective) => [objective.order, objective]),
+  );
+
+  const objectives = localized.objectives.map((objective, index) => {
+    if (hasMediaUrl(objective.icon)) return objective;
+    const enObjective =
+      enObjectiveByOrder.get(objective.order) ?? en.objectives[index];
+    if (!enObjective?.icon || !hasMediaUrl(enObjective.icon)) return objective;
+    return { ...objective, icon: enObjective.icon };
+  });
+
+  const gallery = localized.gallery.map((item, index) => {
+    if (item.src) return item;
+    const enItem =
+      en.gallery.find((g) => g.order === item.order) ?? en.gallery[index];
+    if (!enItem?.src) return item;
+    return {
+      ...item,
+      src: enItem.src,
+      alt: item.alt || enItem.alt,
+    };
+  });
+
+  const heroTags =
+    localized.heroTags.length > 0 ? localized.heroTags : en.heroTags;
+  const technicalInfrastructure =
+    localized.technicalInfrastructure.length > 0
+      ? localized.technicalInfrastructure
+      : en.technicalInfrastructure;
+
+  return {
+    ...localized,
+    solutions,
+    objectives,
+    gallery,
+    heroTags,
+    technicalInfrastructure,
+    logo: hasMediaUrl(localized.logo) ? localized.logo : en.logo,
+    heroImage: hasMediaUrl(localized.heroImage)
+      ? localized.heroImage
+      : en.heroImage,
+    briefAndBackground: localized.briefAndBackground
+      ? {
+          ...localized.briefAndBackground,
+          backgroundImage: hasMediaUrl(
+            localized.briefAndBackground.backgroundImage,
+          )
+            ? localized.briefAndBackground.backgroundImage
+            : en.briefAndBackground?.backgroundImage,
+        }
+      : localized.briefAndBackground,
+    outcome: localized.outcome
+      ? {
+          ...localized.outcome,
+          backgroundImage: hasMediaUrl(localized.outcome.backgroundImage)
+            ? localized.outcome.backgroundImage
+            : en.outcome?.backgroundImage,
+        }
+      : localized.outcome,
+  };
+}
+
+function findProjectInLocaleList(
+  projects: any[],
+  slug: string,
+  documentId?: string,
+): any | undefined {
+  const normalizedSlug = slug.trim();
+  const docId = documentId?.trim();
+
+  if (normalizedSlug) {
+    const bySlug = projects.find(
+      (p) => stringifyValue(unwrapStrapiData<any>(p)?.slug) === normalizedSlug,
+    );
+    if (bySlug) return bySlug;
+  }
+
+  if (docId) {
+    return projects.find(
+      (p) => stringifyValue(unwrapStrapiData<any>(p)?.documentId) === docId,
+    );
+  }
+
+  return undefined;
+}
+
+async function fetchCaseStudyForLocaleOnly(
+  slug: string,
+  uiLocale: string,
+  documentId?: string,
+): Promise<CaseStudyViewModel | null> {
+  const projects = await fetchProjectsListForLocale(uiLocale);
+  const hit = findProjectInLocaleList(projects, slug, documentId);
+  return mapProjectToCaseStudy(hit);
+}
+
+async function enrichCaseStudyWithEnglishMedia(
+  caseStudy: CaseStudyViewModel,
+  slug: string,
+  documentId?: string,
+): Promise<CaseStudyViewModel> {
+  const fb = projectsFallbackLocale();
+  const enCaseStudy = await fetchCaseStudyForLocaleOnly(
+    slug,
+    fb,
+    documentId ?? caseStudy.documentId,
+  );
+  if (!enCaseStudy) return caseStudy;
+  return mergeCaseStudyMediaFromEn(caseStudy, enCaseStudy);
+}
+
+async function fetchProjectsListForLocale(
+  uiLocale: string,
+): Promise<any[]> {
+  const params = buildProjectPopulateQuery();
+  params.set("locale", toStrapiLocale(uiLocale));
+  params.set("pagination[pageSize]", "100");
+  applyDraftStatus(params);
+
+  const payload = await fetchStrapiJson(`/api/projects?${params.toString()}`);
+  return toArray<any>(unwrapStrapiData(payload?.data));
+}
+
+async function fetchProjectsListResolved(
+  uiLocale: string,
+): Promise<any[]> {
+  for (const loc of uiLocalesToTry(uiLocale)) {
+    const projects = await fetchProjectsListForLocale(loc);
+    if (projects.length > 0) return projects;
+  }
+  return [];
+}
+
 export async function fetchCaseStudyBySlug(
   slug: string,
+  uiLocale = "en",
+  opts?: { documentId?: string },
 ): Promise<StrapiFetchResult> {
   if (!hasCmsConfig()) {
     console.log("No CMS configuration found");
     return { caseStudy: null, source: "none" };
   }
 
+  const normalizedSlug = slug.trim();
+  if (!normalizedSlug) {
+    return { caseStudy: null, source: "none" };
+  }
+
+  const docId = opts?.documentId?.trim();
+  const fb = projectsFallbackLocale();
+
   try {
-    const params = buildProjectPopulateQuery();
-    params.set("filters[slug][$eq]", slug);
-    params.set("pagination[pageSize]", "1");
+    for (const loc of uiLocalesToTry(uiLocale)) {
+      const projects = await fetchProjectsListForLocale(loc);
+      const hit = findProjectInLocaleList(projects, normalizedSlug, docId);
+      let caseStudy = mapProjectToCaseStudy(hit);
+      if (!caseStudy) continue;
 
-    applyDraftStatus(params);
+      if (loc !== fb) {
+        caseStudy = await enrichCaseStudyWithEnglishMedia(
+          caseStudy,
+          caseStudy.slug,
+          caseStudy.documentId ?? docId,
+        );
+      }
 
-    const payload = await fetchStrapiJson(`/api/projects?${params.toString()}`);
-    const projects = toArray<any>(unwrapStrapiData(payload?.data));
-    const caseStudy = mapProjectToCaseStudy(projects[0]);
+      return { caseStudy, source: "cms" };
+    }
 
-    return {
-      caseStudy,
-      source: caseStudy ? "cms" : "none",
-    };
+    return { caseStudy: null, source: "none" };
   } catch {
     return { caseStudy: null, source: "none" };
+  }
+}
+
+/** Resolve a case study for SSG when slug may exist in any locale. */
+export async function fetchCaseStudyBySlugAcrossLocales(
+  slug: string,
+): Promise<CaseStudyViewModel | null> {
+  if (!hasCmsConfig()) return null;
+
+  try {
+    for (const loc of APP_LOCALE_CODES) {
+      const result = await fetchCaseStudyBySlug(slug, loc);
+      if (result.caseStudy) return result.caseStudy;
+    }
+    return null;
+  } catch {
+    return null;
   }
 }
 
@@ -757,7 +960,9 @@ export async function fetchCaseStudySlugs(): Promise<string[]> {
   }
 }
 
-export async function fetchWorksData(): Promise<WorksDataResult> {
+export async function fetchWorksData(
+  uiLocale = "en",
+): Promise<WorksDataResult> {
   if (!hasCmsConfig()) {
     console.warn("No CMS configuration found");
     return {
@@ -769,12 +974,7 @@ export async function fetchWorksData(): Promise<WorksDataResult> {
   }
 
   try {
-    const params = buildProjectPopulateQuery();
-    params.set("pagination[pageSize]", "100");
-    applyDraftStatus(params);
-
-    const payload = await fetchStrapiJson(`/api/projects?${params.toString()}`);
-    const projects = toArray<any>(unwrapStrapiData(payload?.data));
+    const projects = await fetchProjectsListResolved(uiLocale);
 
     const cards = projects
       .map((project) => {

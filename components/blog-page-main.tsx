@@ -14,7 +14,7 @@ import { GradientGlow } from "./gradient-glow";
 export type { BlogPostPreview } from "../lib/blog-posts";
 
 export default function BlogPageMain() {
-  const { locale } = useLocale();
+  const { locale, isLocaleReady } = useLocale();
   const { t, formatBlogDate } = useTranslation();
   const lp = useLocalizedPath();
   const [featuredPosts, setFeaturedPosts] = useState<BlogPostPreview[]>([]);
@@ -22,6 +22,8 @@ export default function BlogPageMain() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (!isLocaleReady) return;
+
     let cancelled = false;
     setLoading(true);
 
@@ -60,7 +62,7 @@ export default function BlogPageMain() {
     return () => {
       cancelled = true;
     };
-  }, [locale]);
+  }, [locale, isLocaleReady]);
 
   const empty =
     !loading && featuredPosts.length === 0 && listPosts.length === 0;

@@ -42,6 +42,15 @@
   "works.cta.subtitle": "Tell us about your product—we'll help you design, build, and ship with confidence.",
   "works.cta.actionButton": "Start a Conversation",
 
+  "caseStudy.whatWeDid": "What we did",
+  "caseStudy.briefAndBackground": "Brief & Background",
+  "caseStudy.businessObjectives": "Business Objectives",
+  "caseStudy.ourSolution": "Our Solution",
+  "caseStudy.technicalInfrastructure": "Technical Infrastructure",
+  "caseStudy.projectTeam": "Project Team",
+  "caseStudy.outcome": "Outcome",
+  "caseStudy.projectGallery": "Project Gallery",
+
   "contact.title": "Get in touch with us",
   "contact.subtitle": "Let's build something extraordinary together!",
   "contact.telegram": "Telegram",

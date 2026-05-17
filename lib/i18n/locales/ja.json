@@ -43,6 +43,15 @@
   "works.cta.subtitle": "あなたのプロジェクトについてお聞かせください。デザインから開発、そして万全な体制でのリリースまで、私たちが全力でサポートします。",
   "works.cta.actionButton": "相談してみる",
 
+  "caseStudy.whatWeDid": "私たちの役割",
+  "caseStudy.briefAndBackground": "概要と背景",
+  "caseStudy.businessObjectives": "ビジネス目標",
+  "caseStudy.ourSolution": "ソリューション",
+  "caseStudy.technicalInfrastructure": "技術インフラ",
+  "caseStudy.projectTeam": "プロジェクトチーム",
+  "caseStudy.projectGallery": "プロジェクトギャラリー",
+  "caseStudy.outcome": "成果",
+
   "contact.title": "お問い合わせ",
   "contact.subtitle": "素晴らしいプロダクトを共に作り上げましょう！",
   "contact.telegram": "Telegram",

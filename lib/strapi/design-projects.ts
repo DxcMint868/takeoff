@@ -14,6 +14,7 @@ import {
   toMedia,
   unwrapStrapiData,
 } from "./case-studies";
+import { toStrapiLocale, uiLocalesToTry } from "./language";
 
 // ---------------------------------------------------------------------------
 // Local helpers (trivial, not worth exporting from case-studies)
@@ -44,6 +45,7 @@ export type DesignGalleryViewModel = {
 
 export type DesignProjectViewModel = {
   slug: string;
+  documentId?: string;
   /** Top-level title field */
   title: string;
   /** hero_logo – displayed above the project title in the hero section */
@@ -68,6 +70,7 @@ export type DesignProjectViewModel = {
 export type DesignProjectCard = {
   /** Slug doubles as id */
   id: string;
+  documentId?: string;
   title: string;
   /** thumbnail_image URL – card background */
   thumbnailUrl?: string;
@@ -216,8 +219,11 @@ function mapDesignProjectToViewModel(
   const teamMembersList = mapInvolvedTeamMembers(project.involved_members);
   const teamMembers = teamMembersList.length > 0 ? teamMembersList : undefined;
 
+  const documentId = str(project.documentId) || undefined;
+
   return {
     slug,
+    ...(documentId ? { documentId } : {}),
     title,
     heroTags,
     ...(heroLogo ? { heroLogo } : {}),
@@ -247,8 +253,11 @@ function mapDesignProjectToCard(projectLike: unknown): DesignProjectCard | null 
   const logo = toMedia(project.logo_icon);
   const heroLogo = toMedia(project.hero_logo);
 
+  const documentId = str(project.documentId) || undefined;
+
   return {
     id: slug,
+    ...(documentId ? { documentId } : {}),
     title,
     ...(thumbnail ? { thumbnailUrl: thumbnail.url } : {}),
     ...(logo ? { logoUrl: logo.url } : {}),
@@ -261,25 +270,80 @@ function mapDesignProjectToCard(projectLike: unknown): DesignProjectCard | null 
 // Public fetchers
 // ---------------------------------------------------------------------------
 
-export async function fetchDesignProjectBySlug(slug: string): Promise<{
+async function fetchDesignProjectsListForLocale(
+  uiLocale: string,
+): Promise<any[]> {
+  const params = buildDesignProjectCardPopulateQuery();
+  params.set("locale", toStrapiLocale(uiLocale));
+  params.set("pagination[pageSize]", "100");
+  applyDraftStatus(params);
+
+  const payload = await fetchStrapiJson(
+    `/api/design-projects?${params.toString()}`,
+  );
+  return toArray<any>(unwrapStrapiData(payload?.data));
+}
+
+async function fetchDesignProjectsListResolved(
+  uiLocale: string,
+): Promise<any[]> {
+  for (const loc of uiLocalesToTry(uiLocale)) {
+    const items = await fetchDesignProjectsListForLocale(loc);
+    if (items.length > 0) return items;
+  }
+  return [];
+}
+
+export async function fetchDesignProjectBySlug(
+  slug: string,
+  uiLocale = "en",
+  opts?: { documentId?: string },
+): Promise<{
   designProject: DesignProjectViewModel | null;
   source: "cms" | "none";
 }> {
   if (!hasCmsConfig()) {
     return { designProject: null, source: "none" };
   }
+  const normalizedSlug = slug.trim();
+  if (!normalizedSlug) {
+    return { designProject: null, source: "none" };
+  }
   try {
-    const params = buildDesignProjectFullPopulateQuery();
-    params.set("filters[slug][$eq]", slug);
-    params.set("pagination[pageSize]", "1");
-    applyDraftStatus(params);
+    for (const loc of uiLocalesToTry(uiLocale)) {
+      const params = buildDesignProjectFullPopulateQuery();
+      params.set("locale", toStrapiLocale(loc));
+      params.set("filters[slug][$eq]", normalizedSlug);
+      params.set("pagination[pageSize]", "1");
+      applyDraftStatus(params);
 
-    const payload = await fetchStrapiJson(
-      `/api/design-projects?${params.toString()}`,
-    );
-    const items = toArray<any>(unwrapStrapiData(payload?.data));
-    const designProject = mapDesignProjectToViewModel(items[0]);
-    return { designProject, source: designProject ? "cms" : "none" };
+      const payload = await fetchStrapiJson(
+        `/api/design-projects?${params.toString()}`,
+      );
+      const items = toArray<any>(unwrapStrapiData(payload?.data));
+      const designProject = mapDesignProjectToViewModel(items[0]);
+      if (designProject) {
+        return { designProject, source: "cms" };
+      }
+    }
+
+    const docId = opts?.documentId?.trim();
+    if (docId) {
+      for (const loc of uiLocalesToTry(uiLocale)) {
+        const list = await fetchDesignProjectsListForLocale(loc);
+        const hit = list.find(
+          (row) => str(unwrapStrapiData<any>(row)?.documentId) === docId,
+        );
+        const resolvedSlug = hit
+          ? str(unwrapStrapiData<any>(hit)?.slug)
+          : "";
+        if (!resolvedSlug) continue;
+        const retry = await fetchDesignProjectBySlug(resolvedSlug, loc);
+        if (retry.designProject) return retry;
+      }
+    }
+
+    return { designProject: null, source: "none" };
   } catch {
     return { designProject: null, source: "none" };
   }
@@ -303,18 +367,12 @@ export async function fetchDesignProjectSlugs(): Promise<string[]> {
   }
 }
 
-export async function fetchDesignProjectCards(): Promise<DesignProjectCard[]> {
+export async function fetchDesignProjectCards(
+  uiLocale = "en",
+): Promise<DesignProjectCard[]> {
   if (!hasCmsConfig()) return [];
   try {
-    const params = buildDesignProjectCardPopulateQuery();
-    params.set("pagination[pageSize]", "100");
-
-    applyDraftStatus(params);
-
-    const payload = await fetchStrapiJson(
-      `/api/design-projects?${params.toString()}`,
-    );
-    const items = toArray<any>(unwrapStrapiData(payload?.data));
+    const items = await fetchDesignProjectsListResolved(uiLocale);
     return items
       .map((item) => mapDesignProjectToCard(item))
       .filter((c): c is DesignProjectCard => !!c);

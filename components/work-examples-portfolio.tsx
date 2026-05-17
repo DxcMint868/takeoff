@@ -20,6 +20,8 @@ export type WorkTagSpec = { label: string; tone: WorkTagTone };
 
 export type WorkProjectCard = {
   id: string;
+  /** Strapi document id — stable across locales for the same project. */
+  documentId?: string;
   title: string;
   subtitle?: string;
   description: string;

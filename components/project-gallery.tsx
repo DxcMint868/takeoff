@@ -7,6 +7,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { useTranslation } from "../lib/i18n/use-translation";
 import { UrlImageOrVideo } from "./url-image-or-video";
 
 interface GallerySlide {
@@ -24,6 +25,7 @@ export default function ProjectGallery({
   slides,
   autoPlayMs = 5000,
 }: ProjectGalleryProps) {
+  const { t } = useTranslation();
   const [active, setActive] = useState(0);
   const [tick, setTick] = useState(0);
   const touchStartRef = useRef<{ x: number; y: number } | null>(null);
@@ -85,7 +87,7 @@ export default function ProjectGallery({
   return (
     <section className="w-full overflow-hidden bg-dark py-16">
       <h2 className="m-0 mb-10 text-center font-sora text-[26px] font-semibold capitalize leading-none mq450:text-xl mq450:leading-[1.25]">
-        Project Gallery
+        {t("caseStudy.projectGallery")}
       </h2>
 
       {/* Desktop carousel */}

@@ -19,7 +19,7 @@ export default function BlogPostLoader({
   initialBodyHtml,
 }: BlogPostLoaderProps) {
   const router = useRouter();
-  const { locale } = useLocale();
+  const { locale, isLocaleReady } = useLocale();
   const [post, setPost] = useState(initialPost);
   const [bodyHtml, setBodyHtml] = useState(initialBodyHtml);
   const [busy, setBusy] = useState(false);
@@ -35,7 +35,7 @@ export default function BlogPostLoader({
   const documentId = post.documentId ?? initialPost.documentId;
 
   useEffect(() => {
-    if (!router.isReady) return;
+    if (!router.isReady || !isLocaleReady) return;
 
     const localeSwitch =
       prevLocaleRef.current !== null && prevLocaleRef.current !== locale;
@@ -88,7 +88,7 @@ export default function BlogPostLoader({
     return () => {
       cancelled = true;
     };
-  }, [locale, slugFromUrl, documentId, router, router.isReady]);
+  }, [locale, isLocaleReady, slugFromUrl, documentId, router, router.isReady]);
 
   return (
     <div className="relative min-h-[40vh] w-full">

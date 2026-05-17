@@ -1,8 +1,10 @@
 import type { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import FooterComponent from "../../components/footer-component";
+import { HreflangLinks } from "../../components/hreflang-links";
 import Nav from "../../components/nav";
 import AboutPageMain from "../../components/about-page-main";
+import { buildHreflangAlternates } from "../../lib/i18n/hreflang";
 import { localeAbsoluteUrl, siteOrigin } from "../../lib/i18n/routing";
 import type { AppLocaleCode } from "../../lib/strapi/language";
 import { APP_LOCALE_CODES, isAppLocale } from "../../lib/strapi/language";
@@ -41,6 +43,7 @@ const DEFAULT_OG_IMAGE = `${SITE_ROOT}/og-image.png`;
 
 const AboutUs: NextPage<AboutUsPageProps> = ({ teamPage, locale }) => {
   const canonical = localeAbsoluteUrl(locale, "/about-us");
+  const hreflangAlternates = buildHreflangAlternates("/about-us");
   const homeUrl = localeAbsoluteUrl(locale, "/");
 
   const title = teamPage?.seo?.metaTitle?.trim() || DEFAULT_TITLE;
@@ -76,6 +79,7 @@ const AboutUs: NextPage<AboutUsPageProps> = ({ teamPage, locale }) => {
         <meta name="description" content={description} />
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href={canonical} />
+        <HreflangLinks alternates={hreflangAlternates} />
 
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />

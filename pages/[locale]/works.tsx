@@ -1,8 +1,10 @@
 import type { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import FooterComponent from "../../components/footer-component";
+import { HreflangLinks } from "../../components/hreflang-links";
 import Nav from "../../components/nav";
-import WorksPageMain from "../../components/works-page-main";
+import WorksPageCmsLoader from "../../components/works-page-cms-loader";
+import { buildHreflangAlternates } from "../../lib/i18n/hreflang";
 import {
   type WorkProjectCard,
   type WorkTagSpec,
@@ -41,8 +43,8 @@ export const getStaticProps: GetStaticProps<WorksPageProps> = async (ctx) => {
   if (!isAppLocale(locale)) return { notFound: true };
 
   const [cmsWorks, designProjectCards] = await Promise.all([
-    fetchWorksData(),
-    fetchDesignProjectCards(),
+    fetchWorksData("en"),
+    fetchDesignProjectCards("en"),
   ]);
 
   return {
@@ -65,6 +67,7 @@ const Works: NextPage<WorksPageProps> = ({
   locale,
 }) => {
   const canonical = localeAbsoluteUrl(locale, "/works");
+  const hreflangAlternates = buildHreflangAlternates("/works");
   const homeUrl = localeAbsoluteUrl(locale, "/");
 
   const breadcrumbJsonLd = {
@@ -105,6 +108,7 @@ const Works: NextPage<WorksPageProps> = ({
         <meta name="description" content={WORKS_DESCRIPTION} />
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href={canonical} />
+        <HreflangLinks alternates={hreflangAlternates} />
 
         <meta property="og:title" content={WORKS_TITLE} />
         <meta property="og:description" content={WORKS_DESCRIPTION} />
@@ -129,7 +133,7 @@ const Works: NextPage<WorksPageProps> = ({
 
       <div className="w-full min-h-screen bg-dark leading-[normal] tracking-[normal] text-left text-3xl text-white font-sora mq450:min-h-0">
         <Nav initialTransparent scrollThreshold={80} />
-        <WorksPageMain
+        <WorksPageCmsLoader
           featuredProject={featuredProject}
           projectCards={projectCards}
           filterChips={filterChips}

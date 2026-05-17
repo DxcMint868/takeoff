@@ -5,13 +5,15 @@ import type {
 } from "next";
 import Head from "next/head";
 import FooterComponent from "../../../components/footer-component";
+import { HreflangLinks } from "../../../components/hreflang-links";
 import Nav from "../../../components/nav";
-import CaseStudyTemplate from "../../../components/case-study-template";
+import CaseStudyLoader from "../../../components/case-study-loader";
+import { buildHreflangAlternates } from "../../../lib/i18n/hreflang";
 import { localeAbsoluteUrl, siteOrigin } from "../../../lib/i18n/routing";
 import type { AppLocaleCode } from "../../../lib/strapi/language";
 import { APP_LOCALE_CODES, isAppLocale } from "../../../lib/strapi/language";
 import {
-  fetchCaseStudyBySlug,
+  fetchCaseStudyBySlugAcrossLocales,
   fetchCaseStudySlugs,
   type CaseStudyViewModel,
 } from "../../../lib/strapi/case-studies";
@@ -48,14 +50,14 @@ export const getStaticProps: GetStaticProps<DynamicCaseStudyPageProps> = async (
     return { notFound: true, revalidate: 60 };
   }
 
-  const result = await fetchCaseStudyBySlug(slug);
-  if (!result.caseStudy) {
+  const caseStudy = await fetchCaseStudyBySlugAcrossLocales(slug);
+  if (!caseStudy) {
     return { notFound: true, revalidate: 120 };
   }
 
   return {
     props: {
-      caseStudy: result.caseStudy,
+      caseStudy,
       locale,
     },
     revalidate: 60,
@@ -67,6 +69,9 @@ export default function DynamicCaseStudyPage({
   locale,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const canonical = localeAbsoluteUrl(locale, `/works/${caseStudy.slug}`);
+  const hreflangAlternates = buildHreflangAlternates(
+    `/works/${caseStudy.slug}`,
+  );
   const homeUrl = localeAbsoluteUrl(locale, "/");
   const worksUrl = localeAbsoluteUrl(locale, "/works");
 
@@ -103,6 +108,7 @@ export default function DynamicCaseStudyPage({
         <meta name="keywords" content={metaKeywords} />
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href={canonical} />
+        <HreflangLinks alternates={hreflangAlternates} />
 
         <meta property="og:title" content={caseStudy.title} />
         <meta property="og:description" content={metaDescription} />
@@ -123,7 +129,7 @@ export default function DynamicCaseStudyPage({
 
       <div className="w-full min-h-screen bg-dark leading-[normal] tracking-[normal] text-left text-3xl text-white font-sora mq450:min-h-0">
         <Nav initialTransparent scrollThreshold={80} />
-        <CaseStudyTemplate caseStudy={caseStudy} />
+        <CaseStudyLoader initialCaseStudy={caseStudy} />
         <FooterComponent />
       </div>
     </>

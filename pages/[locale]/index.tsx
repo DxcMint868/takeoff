@@ -3,7 +3,9 @@ import Head from "next/head";
 import Image from "next/image";
 import Nav from "../../components/nav";
 import FooterComponent from "../../components/footer-component";
+import { HreflangLinks } from "../../components/hreflang-links";
 import HomeCmsSections from "../../components/home-cms-sections";
+import { buildHreflangAlternates } from "../../lib/i18n/hreflang";
 import {
   type WorkProjectCard,
 } from "../../components/work-examples-portfolio";
@@ -256,6 +258,7 @@ const Web: NextPage<HomeProps> = ({
   locale,
 }) => {
   const canonical = localeAbsoluteUrl(locale, "/");
+  const hreflangAlternates = buildHreflangAlternates("/");
   const webPageJsonLd = {
     "@context": "https://schema.org",
     "@type": "WebPage",
@@ -291,6 +294,7 @@ const Web: NextPage<HomeProps> = ({
         <meta name="author" content="Hoasen" />
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href={canonical} />
+        <HreflangLinks alternates={hreflangAlternates} />
 
         <meta property="og:title" content={TITLE} />
         <meta property="og:description" content={DESCRIPTION} />

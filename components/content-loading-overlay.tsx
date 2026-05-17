@@ -6,6 +6,10 @@ type ContentLoadingOverlayProps = {
   visible: boolean;
   /** When false, overlay only covers the nearest `relative` ancestor */
   fullViewport?: boolean;
+  /**
+   * When false (default), the overlay is visual-only — nav and links stay clickable.
+   */
+  blockInteraction?: boolean;
 };
 
 /**
@@ -14,6 +18,7 @@ type ContentLoadingOverlayProps = {
 export function ContentLoadingOverlay({
   visible,
   fullViewport = true,
+  blockInteraction = false,
 }: ContentLoadingOverlayProps) {
   const { t } = useTranslation();
   if (!visible) return null;
@@ -22,7 +27,7 @@ export function ContentLoadingOverlay({
 
   return (
     <div
-      className={`${positionClass} z-[90] flex items-center justify-center bg-[#0d0824]/70 backdrop-blur-[3px] motion-reduce:bg-[#0d0824]/85 motion-reduce:backdrop-blur-none`}
+      className={`${positionClass} z-[90] flex items-center justify-center bg-[#0d0824]/70 backdrop-blur-[3px] motion-reduce:bg-[#0d0824]/85 motion-reduce:backdrop-blur-none ${blockInteraction ? "" : "pointer-events-none"}`}
       role="status"
       aria-live="polite"
       aria-busy="true"

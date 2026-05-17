@@ -2,14 +2,17 @@ import type { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import BlogPostLoader from "../../../components/blog-post-loader";
 import FooterComponent from "../../../components/footer-component";
+import { HreflangLinks } from "../../../components/hreflang-links";
 import Nav from "../../../components/nav";
 import type { BlogPostPreview } from "../../../lib/blog-posts";
+import type { HreflangAlternate } from "../../../lib/i18n/hreflang";
 import { localeAbsoluteUrl, siteOrigin } from "../../../lib/i18n/routing";
 import type { AppLocaleCode } from "../../../lib/strapi/language";
 import { APP_LOCALE_CODES, isAppLocale } from "../../../lib/strapi/language";
 import {
   fetchAllBlogSlugsDefaultLocale,
   fetchBlogPostFromStrapi,
+  resolveBlogHreflangAlternates,
 } from "../../../lib/strapi/blogs";
 import { hasCmsConfig } from "../../../lib/strapi/case-studies";
 
@@ -17,6 +20,7 @@ type BlogPostPageProps = {
   post: BlogPostPreview;
   bodyHtml: string;
   locale: AppLocaleCode;
+  hreflangAlternates: HreflangAlternate[];
 };
 
 const SITE_ROOT = siteOrigin();
@@ -48,11 +52,17 @@ export const getStaticProps: GetStaticProps<BlogPostPageProps> = async ({
   }
 
   const html = (post.content ?? "").trim();
+  const hreflangAlternates = await resolveBlogHreflangAlternates(
+    post.documentId,
+    post.slug,
+  );
+
   return {
     props: {
       post,
       bodyHtml: post.contentBlocks?.length ? "" : html,
       locale,
+      hreflangAlternates,
     },
   };
 };
@@ -61,6 +71,7 @@ const BlogPostPage: NextPage<BlogPostPageProps> = ({
   post,
   bodyHtml,
   locale,
+  hreflangAlternates,
 }) => {
   const canonical = localeAbsoluteUrl(locale, `/blog/${post.slug}`);
   const title = `${post.title} | Hoasen`;
@@ -74,6 +85,7 @@ const BlogPostPage: NextPage<BlogPostPageProps> = ({
         <meta name="description" content={post.excerpt} />
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href={canonical} />
+        <HreflangLinks alternates={hreflangAlternates} />
         <meta property="og:title" content={post.title} />
         <meta property="og:description" content={post.excerpt} />
         <meta property="og:url" content={canonical} />

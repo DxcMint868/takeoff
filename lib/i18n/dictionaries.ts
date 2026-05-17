@@ -25,12 +25,24 @@ const intlLocale: Record<AppLocaleCode, string> = {
   ko: "ko-KR",
 };
 
+/** Open Graph `og:locale` uses language_REGION (underscore). */
+export const ogLocale: Record<AppLocaleCode, string> = {
+  en: "en_US",
+  ja: "ja_JP",
+  vi: "vi_VN",
+  ko: "ko_KR",
+};
+
 export function getMessages(locale: AppLocaleCode): MessageDict {
   return byLocale[locale] ?? byLocale.en;
 }
 
 export function resolveIntlLocale(locale: AppLocaleCode): string {
   return intlLocale[locale] ?? "en-US";
+}
+
+export function resolveOgLocale(locale: AppLocaleCode): string {
+  return ogLocale[locale] ?? ogLocale.en;
 }
 
 export function translate(
