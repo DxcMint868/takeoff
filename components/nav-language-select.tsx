@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { useRouter } from "next/router";
 import {
   useCallback,
   useEffect,
@@ -7,6 +8,9 @@ import {
   useState,
 } from "react";
 import { useLocaleOptional } from "../contexts/locale-context";
+import { persistLocalePreference } from "../lib/i18n/locale-preference";
+import { swapLocaleInAsPath } from "../lib/i18n/routing";
+import { useTranslation } from "../lib/i18n/use-translation";
 import { isAppLocale } from "../lib/strapi/language";
 
 type LocaleOption = {
@@ -30,6 +34,8 @@ const OUTLINE_DARK = "var(--Ouline-Dark, #3A2F50)";
 
 /** Syncs with `LocaleProvider` when present (Strapi blog locale). */
 export function NavLanguageSelect({ className = "" }: NavLanguageSelectProps) {
+  const router = useRouter();
+  const { t } = useTranslation();
   const localeCtx = useLocaleOptional();
   const id = useId();
   const listId = `${id}-list`;
@@ -75,6 +81,7 @@ export function NavLanguageSelect({ className = "" }: NavLanguageSelectProps) {
         aria-haspopup="listbox"
         aria-expanded={open}
         aria-controls={listId}
+        aria-label={t("nav.language")}
         onClick={() => setOpen((v) => !v)}
         className="flex w-full cursor-pointer select-none items-center justify-between gap-2.5 rounded-[200px] border border-solid bg-[rgba(135,110,204,0.2)] mq1100:bg-transparent mq1100:border-none py-2 pl-2.5 pr-3.5 font-reg text-[16px] font-semibold tracking-[0.02em] text-white outline-none hover:bg-[rgba(135,110,204,0.28)] focus-visible:ring-2 focus-visible:ring-purple focus-visible:ring-offset-2 focus-visible:ring-offset-[#1b1333] mq1100:size-10 mq1100:justify-center mq1100:rounded-full mq1100:p-0 mq1100:pl-0 mq1100:pr-0"
         style={{ borderColor: OUTLINE_DARK }}
@@ -132,9 +139,17 @@ export function NavLanguageSelect({ className = "" }: NavLanguageSelectProps) {
                     aria-selected={isSel}
                     onClick={() => {
                       setSelected(opt);
-                      if (localeCtx && isAppLocale(opt.code)) {
-                        localeCtx.setLocale(opt.code);
+                      if (!isAppLocale(opt.code)) {
+                        close();
+                        return;
                       }
+                      const code = opt.code;
+                      if (localeCtx) {
+                        localeCtx.setLocale(code);
+                      } else {
+                        persistLocalePreference(code);
+                      }
+                      void router.push(swapLocaleInAsPath(router.asPath, code));
                       close();
                     }}
                     className={`flex w-full cursor-pointer items-center gap-3 rounded-full py-2.5 px-2 text-left font-reg text-[16px] font-semibold tracking-[0.02em] text-white transition-colors hover:bg-[#332952] focus-visible:outline focus-visible:ring-2 focus-visible:ring-purple/80 ${isSel ? "bg-[#332952]" : "bg-transparent"}`}

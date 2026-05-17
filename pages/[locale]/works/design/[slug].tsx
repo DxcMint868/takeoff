@@ -4,32 +4,43 @@ import type {
   InferGetStaticPropsType,
 } from "next";
 import Head from "next/head";
-import FooterComponent from "../../../components/footer-component";
-import Nav from "../../../components/nav";
-import DesignProjectTemplate from "../../../components/design-project-template";
+import FooterComponent from "../../../../components/footer-component";
+import Nav from "../../../../components/nav";
+import DesignProjectTemplate from "../../../../components/design-project-template";
+import { localeAbsoluteUrl, siteOrigin } from "../../../../lib/i18n/routing";
+import type { AppLocaleCode } from "../../../../lib/strapi/language";
+import { APP_LOCALE_CODES, isAppLocale } from "../../../../lib/strapi/language";
 import {
   fetchDesignProjectBySlug,
   fetchDesignProjectSlugs,
   type DesignProjectViewModel,
-} from "../../../lib/strapi/design-projects";
+} from "../../../../lib/strapi/design-projects";
 
-const SITE_URL = "https://www.hoasen.io";
+const SITE_ROOT = siteOrigin();
 
 type DesignProjectPageProps = {
   designProject: DesignProjectViewModel;
+  locale: AppLocaleCode;
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const slugs = await fetchDesignProjectSlugs();
-  return {
-    paths: slugs.map((slug) => ({ params: { slug } })),
-    fallback: "blocking",
-  };
+  const paths: { params: { locale: string; slug: string } }[] = [];
+  for (const locale of APP_LOCALE_CODES) {
+    for (const slug of slugs) {
+      paths.push({ params: { locale, slug } });
+    }
+  }
+  return { paths, fallback: "blocking" };
 };
 
 export const getStaticProps: GetStaticProps<DesignProjectPageProps> = async (
   context,
 ) => {
+  const rawLocale = context.params?.locale;
+  const locale = typeof rawLocale === "string" ? rawLocale : "";
+  if (!isAppLocale(locale)) return { notFound: true };
+
   const slug = String(context.params?.slug || "").trim();
   if (!slug) return { notFound: true, revalidate: 60 };
 
@@ -37,30 +48,36 @@ export const getStaticProps: GetStaticProps<DesignProjectPageProps> = async (
   if (!result.designProject) return { notFound: true, revalidate: 120 };
 
   return {
-    props: { designProject: result.designProject },
+    props: { designProject: result.designProject, locale },
     revalidate: 60,
   };
 };
 
 export default function DesignProjectPage({
   designProject,
+  locale,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const canonical = `${SITE_URL}/works/design/${designProject.slug}`;
+  const canonical = localeAbsoluteUrl(
+    locale,
+    `/works/design/${designProject.slug}`,
+  );
+  const homeUrl = localeAbsoluteUrl(locale, "/");
+  const worksUrl = localeAbsoluteUrl(locale, "/works");
   const metaTitle = `${designProject.title} — Design Case Study | Hoasen`;
   const metaDescription = `Explore the ${designProject.title} brand identity designed by Hoasen.`;
   const metaOgImage =
-    designProject.heroImage?.url || `${SITE_URL}/og-image.png`;
+    designProject.heroImage?.url || `${SITE_ROOT}/og-image.png`;
 
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+      { "@type": "ListItem", position: 1, name: "Home", item: homeUrl },
       {
         "@type": "ListItem",
         position: 2,
         name: "Works",
-        item: `${SITE_URL}/works`,
+        item: worksUrl,
       },
       {
         "@type": "ListItem",

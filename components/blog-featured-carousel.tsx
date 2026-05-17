@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { BlogPostPreview } from "../lib/blog-posts";
 import { useTranslation } from "../lib/i18n/use-translation";
+import { useLocalizedPath } from "../lib/i18n/use-localized-path";
 import { BlogPostMetaRow } from "./blog-post-meta-row";
 
 type BlogFeaturedCarouselProps = {
@@ -31,6 +32,7 @@ export function BlogFeaturedCarousel({
   formatDate,
 }: BlogFeaturedCarouselProps) {
   const { readSeconds } = useTranslation();
+  const lp = useLocalizedPath();
   const [active, setActive] = useState(0);
   const [resumeKey, setResumeKey] = useState(0);
   const [hoverPause, setHoverPause] = useState(false);
@@ -134,7 +136,7 @@ export function BlogFeaturedCarousel({
       <article className="group overflow-hidden rounded-[20px] border-solid border-[1px] border-[#7068A366] bg-[#261D44] p-4 shadow-[0_0_30px_rgba(0,0,0,0.06)] backdrop-blur-sm transition-shadow duration-300 hover:shadow-[0_0_30px_0_rgba(255,255,255,0.2)] mq900:rounded-xl cursor-grab active:cursor-grabbing select-none">
         <div className="flex flex-row mq900:flex-col">
           <Link
-            href={`/blog/${post.slug}`}
+            href={lp(`/blog/${post.slug}`)}
             className="relative block aspect-[440/338] w-[48%] shrink-0 overflow-hidden mq900:aspect-[303/338] mq900:h-auto mq900:w-full"
           >
             <Image
@@ -159,7 +161,7 @@ export function BlogFeaturedCarousel({
               </span>
               <h2 className="mt-5 font-sora text-[22px] font-semibold leading-[1.25] tracking-[0.02em] text-white mq450:text-xl mq900:text-2xl">
                 <Link
-                  href={`/blog/${post.slug}`}
+                  href={lp(`/blog/${post.slug}`)}
                   className="text-inherit [text-decoration:none] outline-none transition-colors group-hover:text-purple focus-visible:ring-2 focus-visible:ring-purple focus-visible:ring-offset-2 focus-visible:ring-offset-[rgba(28,22,48,0.65)]"
                 >
                   {post.title}

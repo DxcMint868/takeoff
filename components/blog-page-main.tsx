@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useLocale } from "../contexts/locale-context";
 import { useTranslation } from "../lib/i18n/use-translation";
+import { useLocalizedPath } from "../lib/i18n/use-localized-path";
 import type { BlogPostPreview } from "../lib/blog-posts";
 import { BlogFeaturedCarousel } from "./blog-featured-carousel";
 import { BlogPostList } from "./blog-post-list";
@@ -15,6 +16,7 @@ export type { BlogPostPreview } from "../lib/blog-posts";
 export default function BlogPageMain() {
   const { locale } = useLocale();
   const { t, formatBlogDate } = useTranslation();
+  const lp = useLocalizedPath();
   const [featuredPosts, setFeaturedPosts] = useState<BlogPostPreview[]>([]);
   const [listPosts, setListPosts] = useState<BlogPostPreview[]>([]);
   const [loading, setLoading] = useState(true);
@@ -70,7 +72,7 @@ export default function BlogPageMain() {
       <div className="relative flex w-full max-w-[1100px] flex-col items-stretch gap-14 mq900:gap-12">
         <div className="flex w-full flex-col gap-8">
           <Link
-            href="/"
+            href={lp("/")}
             className="group flex w-fit flex-row items-center gap-3 self-start text-left [text-decoration:none]"
           >
             <span className="inline-flex size-10 items-center justify-center rounded-full border border-white-30 bg-dark/40 transition-colors group-hover:border-white-60">

@@ -19,6 +19,7 @@ import {
 } from "./icons";
 import ContactSection from "./contact-section";
 import { useTranslation } from "../lib/i18n/use-translation";
+import { useLocalizedPath } from "../lib/i18n/use-localized-path";
 
 const VALUE_ICONS: ComponentType<SVGProps<SVGSVGElement>>[] = [
   DomainExpertiseIcon,
@@ -140,6 +141,7 @@ export type AboutPageMainProps = {
 export default function AboutPageMain({ initialTeamPage }: AboutPageMainProps) {
   const { locale } = useLocale();
   const { t } = useTranslation();
+  const lp = useLocalizedPath();
   const [teamPage, setTeamPage] = useState<TeamPageViewModel | null>(
     initialTeamPage,
   );
@@ -219,7 +221,7 @@ export default function AboutPageMain({ initialTeamPage }: AboutPageMainProps) {
       <div className="relative flex w-full max-w-[1200px] flex-col items-stretch gap-10">
         <div className="flex w-full flex-col gap-6">
           <Link
-            href="/"
+            href={lp("/")}
             className="group flex w-fit flex-row items-center gap-3 self-start text-left [text-decoration:none]"
           >
             <span className="inline-flex size-10 items-center justify-center rounded-full border border-white-30 bg-dark/40 transition-colors group-hover:border-white-60">

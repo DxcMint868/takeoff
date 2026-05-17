@@ -7,6 +7,7 @@ import { BADGE_SURFACE_CLASSES } from "./badge";
 import ContactSection from "./contact-section";
 import { GradientGlow } from "./gradient-glow";
 import { useTranslation } from "../lib/i18n/use-translation";
+import { useLocalizedPath } from "../lib/i18n/use-localized-path";
 import {
   CORE_PROJECT_CARDS,
   EXTRA_PAGE_PROJECT_CARDS,
@@ -62,6 +63,7 @@ const WorksPageMain = ({
   designProjectCards,
 }: WorksPageMainProps) => {
   const { t } = useTranslation();
+  const lp = useLocalizedPath();
   const cardsSource = projectCards ?? ALL_PROJECT_CARDS;
   const featuredSource = featuredProject ?? OCEAN_FINANCE_PROJECT;
   const chipsSource = filterChips ?? FILTER_CHIPS;
@@ -102,7 +104,7 @@ const WorksPageMain = ({
       <div className="relative flex w-full max-w-[1200px] flex-col items-stretch gap-10">
         <div className="box-border flex w-full flex-col gap-6 px-4">
           <Link
-            href="/"
+            href={lp("/")}
             className="group flex w-fit flex-row items-center gap-3 self-start text-left [text-decoration:none]"
           >
             <span className="inline-flex size-10 items-center justify-center rounded-full border border-white-30 bg-dark/40 transition-colors group-hover:border-white-60">
@@ -209,7 +211,7 @@ const WorksPageMain = ({
               {designProjectCards.map((card) => (
                 <Link
                   key={card.id}
-                  href={card.href}
+                  href={lp(card.href)}
                   className="group relative flex min-w-0 max-w-full shrink-0 basis-[358px] justify-center [text-decoration:none] mq700:w-full mq700:basis-auto mq700:max-w-none"
                 >
                   <article className="relative isolate flex h-[380px] w-full max-w-[358px] cursor-pointer flex-col overflow-hidden rounded-[20px] bg-surface-card shadow-card ring-1 ring-inset ring-surface-border transition-shadow duration-300 hover:shadow-[0_0_30px_0_rgba(255,255,255,0.2)] mq700:h-[320px] mq700:max-w-none">

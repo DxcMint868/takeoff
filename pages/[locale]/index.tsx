@@ -1,31 +1,34 @@
-import type { GetStaticProps, NextPage } from "next";
+import type { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
-import Nav from "../components/nav";
-import FooterComponent from "../components/footer-component";
-import HomeCmsSections from "../components/home-cms-sections";
+import Nav from "../../components/nav";
+import FooterComponent from "../../components/footer-component";
+import HomeCmsSections from "../../components/home-cms-sections";
 import {
   type WorkProjectCard,
-} from "../components/work-examples-portfolio";
-import { fetchWorksData } from "../lib/strapi/case-studies";
-import { fetchHomePageData, type HomePageCmsData } from "../lib/strapi/home-page";
+} from "../../components/work-examples-portfolio";
+import { localeAbsoluteUrl, siteOrigin } from "../../lib/i18n/routing";
+import type { AppLocaleCode } from "../../lib/strapi/language";
+import { APP_LOCALE_CODES, isAppLocale } from "../../lib/strapi/language";
+import { fetchWorksData } from "../../lib/strapi/case-studies";
+import { fetchHomePageData, type HomePageCmsData } from "../../lib/strapi/home-page";
 
-const SITE_URL = "https://www.hoasen.io";
+const SITE_ROOT = siteOrigin();
 
 const TITLE = "Hoasen - Crafting the Future of Blockchain & Fintech";
 const DESCRIPTION =
   "Hoasen is a blockchain and fintech development studio based in the UAE. We help startups and enterprises build and launch products on chain — from smart contracts and DApps to AI-driven fintech solutions.";
-const OG_IMAGE = `${SITE_URL}/og-image.png`;
+const OG_IMAGE = `${SITE_ROOT}/og-image.png`;
 
 const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
-  "@id": `${SITE_URL}/#organization`,
+  "@id": `${SITE_ROOT}/#organization`,
   name: "Hoasen",
-  url: SITE_URL,
+  url: SITE_ROOT,
   logo: {
     "@type": "ImageObject",
-    url: `${SITE_URL}/base-logo.svg`,
+    url: `${SITE_ROOT}/base-logo.svg`,
     width: 512,
     height: 512,
   },
@@ -207,50 +210,32 @@ const organizationJsonLd = {
 const webSiteJsonLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  "@id": `${SITE_URL}/#website`,
+  "@id": `${SITE_ROOT}/#website`,
   name: "Hoasen",
-  url: SITE_URL,
-  publisher: { "@id": `${SITE_URL}/#organization` },
-};
-
-const webPageJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  "@id": `${SITE_URL}/#webpage`,
-  url: SITE_URL,
-  name: TITLE,
-  description: DESCRIPTION,
-  isPartOf: { "@id": `${SITE_URL}/#website` },
-  about: { "@id": `${SITE_URL}/#organization` },
-  primaryImageOfPage: {
-    "@type": "ImageObject",
-    url: OG_IMAGE,
-  },
-};
-
-const breadcrumbJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    {
-      "@type": "ListItem",
-      position: 1,
-      name: "Home",
-      item: SITE_URL,
-    },
-  ],
+  url: SITE_ROOT,
+  publisher: { "@id": `${SITE_ROOT}/#organization` },
 };
 
 type HomeProps = {
   featuredProject: WorkProjectCard | null;
   projectCards: WorkProjectCard[];
   homePageData: HomePageCmsData | null;
+  locale: AppLocaleCode;
 };
 
-export const getStaticProps: GetStaticProps<HomeProps> = async () => {
+export const getStaticPaths: GetStaticPaths = async () => ({
+  paths: APP_LOCALE_CODES.map((locale) => ({ params: { locale } })),
+  fallback: false,
+});
+
+export const getStaticProps: GetStaticProps<HomeProps> = async (ctx) => {
+  const raw = ctx.params?.locale;
+  const locale = typeof raw === "string" ? raw : "";
+  if (!isAppLocale(locale)) return { notFound: true };
+
   const [cmsWorks, homePageData] = await Promise.all([
     fetchWorksData(),
-    fetchHomePageData("en"),
+    fetchHomePageData(locale),
   ]);
 
   return {
@@ -258,12 +243,46 @@ export const getStaticProps: GetStaticProps<HomeProps> = async () => {
       featuredProject: cmsWorks.featuredProject,
       projectCards: cmsWorks.projectCards,
       homePageData: homePageData ?? null,
+      locale,
     },
     revalidate: 60,
   };
 };
 
-const Web: NextPage<HomeProps> = ({ featuredProject, projectCards, homePageData }) => {
+const Web: NextPage<HomeProps> = ({
+  featuredProject,
+  projectCards,
+  homePageData,
+  locale,
+}) => {
+  const canonical = localeAbsoluteUrl(locale, "/");
+  const webPageJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${canonical}#webpage`,
+    url: canonical,
+    name: TITLE,
+    description: DESCRIPTION,
+    isPartOf: { "@id": `${SITE_ROOT}/#website` },
+    about: { "@id": `${SITE_ROOT}/#organization` },
+    primaryImageOfPage: {
+      "@type": "ImageObject",
+      url: OG_IMAGE,
+    },
+  };
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: canonical,
+      },
+    ],
+  };
+
   return (
     <>
       <Head>
@@ -271,11 +290,11 @@ const Web: NextPage<HomeProps> = ({ featuredProject, projectCards, homePageData 
         <meta name="description" content={DESCRIPTION} />
         <meta name="author" content="Hoasen" />
         <meta name="robots" content="index, follow" />
-        <link rel="canonical" href={SITE_URL} />
+        <link rel="canonical" href={canonical} />
 
         <meta property="og:title" content={TITLE} />
         <meta property="og:description" content={DESCRIPTION} />
-        <meta property="og:url" content={SITE_URL} />
+        <meta property="og:url" content={canonical} />
         <meta property="og:image" content={OG_IMAGE} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />

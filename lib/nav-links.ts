@@ -1,3 +1,5 @@
+import { pathnameWithoutLocale } from "./i18n/routing";
+
 export type NavItem = { href: string; label: string };
 
 export const NAV_ITEMS: NavItem[] = [
@@ -8,13 +10,19 @@ export const NAV_ITEMS: NavItem[] = [
   { href: "/#contact-us", label: "Contact Us" },
 ];
 
+function strip(pathnameOrAsPath: string): string {
+  const bare = pathnameOrAsPath.split("?")[0]?.split("#")[0] ?? "";
+  return pathnameWithoutLocale(bare);
+}
+
 /** Desktop navbar: only Works + About use active styling (unchanged from original). */
 export function isNavItemActiveDesktop(
   pathname: string,
   itemHref: string,
 ): boolean {
-  if (itemHref === "/works") return pathname.startsWith("/works");
-  if (itemHref === "/about-us") return pathname === "/about-us";
+  const p = strip(pathname);
+  if (itemHref === "/works") return p.startsWith("/works");
+  if (itemHref === "/about-us") return p === "/about-us";
   return false;
 }
 
@@ -24,11 +32,17 @@ export function isNavItemActiveMobile(
   asPath: string,
   itemHref: string,
 ): boolean {
-  if (itemHref === "/works") return pathname.startsWith("/works");
-  if (itemHref === "/about-us") return pathname === "/about-us";
+  const p = strip(pathname);
+  const ap = strip(asPath);
+  if (itemHref === "/works") return p.startsWith("/works");
+  if (itemHref === "/about-us") return p === "/about-us";
   if (itemHref.startsWith("/#")) {
-    if (pathname !== "/") return false;
-    return asPath === itemHref || asPath.includes(itemHref.slice(1));
+    if (ap !== "/") return false;
+    return (
+      asPath === itemHref ||
+      asPath.includes(itemHref.slice(1)) ||
+      asPath.includes(itemHref)
+    );
   }
   return false;
 }

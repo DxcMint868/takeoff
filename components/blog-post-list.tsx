@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { BlogPostPreview } from "../lib/blog-posts";
 import { useTranslation } from "../lib/i18n/use-translation";
+import { useLocalizedPath } from "../lib/i18n/use-localized-path";
 import { BlogPostMetaRow } from "./blog-post-meta-row";
 
 type BlogPostListProps = {
@@ -13,6 +14,7 @@ type BlogPostListProps = {
 
 export function BlogPostList({ posts, formatDate }: BlogPostListProps) {
   const { readSeconds } = useTranslation();
+  const lp = useLocalizedPath();
   if (posts.length === 0) return null;
 
   return (
@@ -24,7 +26,7 @@ export function BlogPostList({ posts, formatDate }: BlogPostListProps) {
         >
           <div className="flex flex-row gap-8 mq900:gap-5">
             <Link
-              href={`/blog/${post.slug}`}
+              href={lp(`/blog/${post.slug}`)}
               className="relative block h-[170px] w-[170px] aspect-square shrink-0 overflow-hidden rounded-xl mq900:h-[100px] mq900:w-[100px]"
             >
               <Image
@@ -43,7 +45,7 @@ export function BlogPostList({ posts, formatDate }: BlogPostListProps) {
               </span>
               <h2 className="mt-3 mq900:mt-0 font-sora text-xl mq900:text-[16px] font-semibold leading-snug tracking-[0.02em] text-white mq450:text-lg">
                 <Link
-                  href={`/blog/${post.slug}`}
+                  href={lp(`/blog/${post.slug}`)}
                   className="block text-inherit [text-decoration:none] outline-none transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-purple focus-visible:ring-offset-2 focus-visible:ring-offset-dark mq900:line-clamp-2"
                 >
                   {post.title}

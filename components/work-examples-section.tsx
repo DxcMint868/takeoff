@@ -1,3 +1,5 @@
+"use client";
+
 import CTASolid from "./cta-solid";
 import {
   CORE_PROJECT_CARDS,
@@ -6,6 +8,7 @@ import {
   WorkExamplesPortfolio,
   type WorkProjectCard,
 } from "./work-examples-portfolio";
+import { useLocalizedPath } from "../lib/i18n/use-localized-path";
 import { useTranslation } from "../lib/i18n/use-translation";
 
 type WorkExamplesSectionProps = {
@@ -18,6 +21,7 @@ const WorkExamplesSection = ({
   projectCards,
 }: WorkExamplesSectionProps) => {
   const { t } = useTranslation();
+  const lp = useLocalizedPath();
   const featured = featuredProject ?? OCEAN_FINANCE_PROJECT;
   const cards = projectCards ?? [
     ...CORE_PROJECT_CARDS,
@@ -45,7 +49,7 @@ const WorkExamplesSection = ({
           <CTASolid
             propWidth="200px"
             label={t("home.workExamples.cta")}
-            href="/works"
+            href={lp("/works")}
           />
         </div>
       </div>
