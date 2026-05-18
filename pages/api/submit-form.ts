@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { Client } from '@notionhq/client';
+import { NOTION_INTERESTED_SERVICE_NAMES } from '../../lib/contact-interested-services';
 
 const notion = new Client({ auth: process.env.NOTION_API_KEY });
 const databaseId = process.env.NOTION_DATABASE_ID as string;
@@ -9,13 +10,16 @@ interface FormData {
   email: string;
   telegram: string;
   companyName: string;
+  interestedServices?: string[];
   projectDetails: string;
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
-    const { fullName, email, telegram, companyName, projectDetails }: FormData = req.body;
-    console.log(fullName, email, telegram, companyName, projectDetails);
+    const { fullName, email, telegram, companyName, interestedServices, projectDetails }: FormData = req.body;
+    const servicesRaw = Array.isArray(interestedServices) ? interestedServices : [];
+    const services = servicesRaw.filter((name) => NOTION_INTERESTED_SERVICE_NAMES.has(name));
+    console.log(fullName, email, telegram, companyName, services, projectDetails);
     try {
       console.log(databaseId);
       const response = await notion.pages.create({
@@ -60,6 +64,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
               }
             ]
           },
+          'Source': {
+            select: {
+              name: 'Website'
+            }
+          },
+          ...(services.length > 0 ? {
+            'Interested Services': {
+              multi_select: services.map((name) => ({ name }))
+            }
+          } : {}),
           'Date': {
             date: {
               start: new Date().toISOString()

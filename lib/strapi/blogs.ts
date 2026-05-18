@@ -15,6 +15,12 @@ import {
   toMedia,
   unwrapStrapiData,
 } from "./case-studies";
+import {
+  buildHreflangAlternates,
+  buildHreflangFromLocalePaths,
+  type HreflangAlternate,
+} from "../i18n/hreflang";
+import type { AppLocaleCode } from "./language";
 import { APP_LOCALE_CODES, toStrapiLocale } from "./language";
 
 /**
@@ -304,4 +310,28 @@ export async function fetchAllBlogSlugsDefaultLocale(): Promise<string[]> {
   } catch {
     return [];
   }
+}
+
+/** Hreflang URLs for a blog post — uses per-locale slugs when `documentId` is set. */
+export async function resolveBlogHreflangAlternates(
+  documentId: string | undefined,
+  fallbackSlug: string,
+): Promise<HreflangAlternate[]> {
+  const slugPath = `/blog/${fallbackSlug.trim()}`;
+
+  if (!hasCmsConfig() || !documentId?.trim()) {
+    return buildHreflangAlternates(slugPath);
+  }
+
+  const pathsByLocale: Partial<Record<AppLocaleCode, string>> = {};
+
+  for (const locale of APP_LOCALE_CODES) {
+    const post = await fetchBlogPostByDocumentId(documentId.trim(), locale);
+    if (post) pathsByLocale[locale] = `/blog/${post.slug}`;
+  }
+
+  const hasAny = APP_LOCALE_CODES.some((locale) => pathsByLocale[locale]);
+  if (!hasAny) return buildHreflangAlternates(slugPath);
+
+  return buildHreflangFromLocalePaths(pathsByLocale);
 }

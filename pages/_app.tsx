@@ -1,12 +1,20 @@
-import type { AppProps } from "next/app";
+import type { AppContext, AppProps } from "next/app";
+import App from "next/app";
 import Head from "next/head";
 import Script from "next/script";
 import { BlogRouteProgress } from "../components/blog-route-progress";
 import { HtmlLangSync } from "../components/html-lang-sync";
+import { OgLocaleMeta } from "../components/og-locale-meta";
 import { LocaleProvider } from "../contexts/locale-context";
+import { localeFromPathname } from "../lib/i18n/routing";
+import type { AppLocaleCode } from "../lib/strapi/language";
 import "./global.css";
 
-function MyApp({ Component, pageProps }: AppProps) {
+type HoasenAppProps = AppProps & {
+  ssrLocale: AppLocaleCode;
+};
+
+function MyApp({ Component, pageProps, ssrLocale }: HoasenAppProps) {
   return (
     <>
       <Head>
@@ -16,7 +24,6 @@ function MyApp({ Component, pageProps }: AppProps) {
         />
         <meta property="og:site_name" content="Hoasen" />
         <meta property="og:type" content="website" />
-        <meta property="og:locale" content="en_US" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@hoasenhub" />
       </Head>
@@ -35,12 +42,22 @@ function MyApp({ Component, pageProps }: AppProps) {
       </Script>
 
       <LocaleProvider>
-        <HtmlLangSync />
+        <HtmlLangSync ssrLocale={ssrLocale} />
+        <OgLocaleMeta ssrLocale={ssrLocale} />
         <BlogRouteProgress />
         <Component {...pageProps} />
       </LocaleProvider>
     </>
   );
 }
+
+MyApp.getInitialProps = async (appContext: AppContext) => {
+  const appProps = await App.getInitialProps(appContext);
+  const path = appContext.ctx.asPath ?? "";
+  return {
+    ...appProps,
+    ssrLocale: localeFromPathname(path),
+  };
+};
 
 export default MyApp;

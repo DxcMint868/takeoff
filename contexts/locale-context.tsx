@@ -18,32 +18,33 @@ import { APP_LOCALE_CODES, isAppLocale } from "../lib/strapi/language";
 
 type LocaleContextValue = {
   locale: AppLocaleCode;
+  /** False until URL/storage locale is resolved on the client. */
+  isLocaleReady: boolean;
   setLocale: (code: AppLocaleCode) => void;
 };
 
 const LocaleContext = createContext<LocaleContextValue | null>(null);
 
-function readStoredLocale(): AppLocaleCode {
-  return readLocaleFromStorage() ?? "en";
-}
-
 export function LocaleProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const [locale, setLocaleState] = useState<AppLocaleCode>("en");
-
-  useEffect(() => {
-    setLocaleState(readStoredLocale());
-  }, []);
+  const [isLocaleReady, setIsLocaleReady] = useState(false);
 
   useEffect(() => {
     if (!router.isReady) return;
+
     const raw = router.query.locale;
-    const code =
+    const fromUrl =
       typeof raw === "string" ? raw : Array.isArray(raw) ? raw[0] : null;
-    if (code && isAppLocale(code)) {
-      setLocaleState(code);
-      persistLocalePreference(code);
+
+    if (fromUrl && isAppLocale(fromUrl)) {
+      setLocaleState(fromUrl);
+      persistLocalePreference(fromUrl);
+    } else {
+      setLocaleState(readLocaleFromStorage() ?? "en");
     }
+
+    setIsLocaleReady(true);
   }, [router.isReady, router.query.locale]);
 
   const setLocale = useCallback((code: AppLocaleCode) => {
@@ -52,8 +53,8 @@ export function LocaleProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const value = useMemo(
-    () => ({ locale, setLocale }),
-    [locale, setLocale],
+    () => ({ locale, isLocaleReady, setLocale }),
+    [locale, isLocaleReady, setLocale],
   );
 
   return (

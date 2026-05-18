@@ -25,3 +25,22 @@ export function toStrapiLocale(uiLocale: string): string {
 export function isAppLocale(code: string): code is AppLocaleCode {
   return (APP_LOCALE_CODES as readonly string[]).includes(code);
 }
+
+/** Fallback UI locale when Strapi has no published entry for the requested language. */
+export function projectsFallbackLocale(): string {
+  const raw =
+    process.env.PROJECTS_FALLBACK_LOCALE ||
+    process.env.NEXT_PUBLIC_PROJECTS_FALLBACK_LOCALE ||
+    process.env.BLOG_FALLBACK_LOCALE ||
+    process.env.NEXT_PUBLIC_BLOG_FALLBACK_LOCALE ||
+    "en";
+  return raw.trim().toLowerCase();
+}
+
+/** Locales to query, in order — primary first, then fallback if different. */
+export function uiLocalesToTry(uiLocale: string): string[] {
+  const primary = uiLocale.trim().toLowerCase();
+  const fb = projectsFallbackLocale();
+  if (primary === fb) return [primary];
+  return [primary, fb];
+}

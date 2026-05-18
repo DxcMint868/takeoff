@@ -5,8 +5,10 @@ import type {
 } from "next";
 import Head from "next/head";
 import FooterComponent from "../../../../components/footer-component";
+import { HreflangLinks } from "../../../../components/hreflang-links";
 import Nav from "../../../../components/nav";
 import DesignProjectTemplate from "../../../../components/design-project-template";
+import { buildHreflangAlternates } from "../../../../lib/i18n/hreflang";
 import { localeAbsoluteUrl, siteOrigin } from "../../../../lib/i18n/routing";
 import type { AppLocaleCode } from "../../../../lib/strapi/language";
 import { APP_LOCALE_CODES, isAppLocale } from "../../../../lib/strapi/language";
@@ -61,6 +63,9 @@ export default function DesignProjectPage({
     locale,
     `/works/design/${designProject.slug}`,
   );
+  const hreflangAlternates = buildHreflangAlternates(
+    `/works/design/${designProject.slug}`,
+  );
   const homeUrl = localeAbsoluteUrl(locale, "/");
   const worksUrl = localeAbsoluteUrl(locale, "/works");
   const metaTitle = `${designProject.title} — Design Case Study | Hoasen`;
@@ -101,6 +106,7 @@ export default function DesignProjectPage({
         )}
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href={canonical} />
+        <HreflangLinks alternates={hreflangAlternates} />
 
         <meta property="og:title" content={designProject.title} />
         <meta property="og:description" content={metaDescription} />

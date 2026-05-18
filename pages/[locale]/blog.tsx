@@ -2,7 +2,9 @@ import type { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import BlogPageMain from "../../components/blog-page-main";
 import FooterComponent from "../../components/footer-component";
+import { HreflangLinks } from "../../components/hreflang-links";
 import Nav from "../../components/nav";
+import { buildHreflangAlternates } from "../../lib/i18n/hreflang";
 import { localeAbsoluteUrl, siteOrigin } from "../../lib/i18n/routing";
 import type { AppLocaleCode } from "../../lib/strapi/language";
 import { APP_LOCALE_CODES, isAppLocale } from "../../lib/strapi/language";
@@ -29,6 +31,7 @@ export const getStaticProps: GetStaticProps<BlogPageProps> = async (ctx) => {
 
 const Blog: NextPage<BlogPageProps> = ({ locale }) => {
   const canonical = localeAbsoluteUrl(locale, "/blog");
+  const hreflangAlternates = buildHreflangAlternates("/blog");
   const homeUrl = localeAbsoluteUrl(locale, "/");
 
   const breadcrumbJsonLd = {
@@ -57,6 +60,7 @@ const Blog: NextPage<BlogPageProps> = ({ locale }) => {
         <meta name="description" content={DESCRIPTION} />
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href={canonical} />
+        <HreflangLinks alternates={hreflangAlternates} />
 
         <meta property="og:title" content={TITLE} />
         <meta property="og:description" content={DESCRIPTION} />

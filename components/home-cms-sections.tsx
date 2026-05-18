@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useLocale } from "../contexts/locale-context";
 import type { HomePageCmsData } from "../lib/strapi/home-page";
+import type { WorksApiResponse } from "../pages/api/works";
 import type { WorkProjectCard } from "./work-examples-portfolio";
 import ContactSection from "./contact-section";
 import FrameComponent from "./frame-component";
@@ -18,19 +19,23 @@ export type HomeCmsSectionsProps = {
 
 export default function HomeCmsSections({
   initialHomePageData,
-  featuredProject,
-  projectCards,
+  featuredProject: initialFeatured,
+  projectCards: initialProjectCards,
 }: HomeCmsSectionsProps) {
-  const { locale } = useLocale();
+  const { locale, isLocaleReady } = useLocale();
   const [homePageData, setHomePageData] = useState<HomePageCmsData | null>(
     initialHomePageData,
   );
+  const [featuredProject, setFeaturedProject] = useState(initialFeatured);
+  const [projectCards, setProjectCards] = useState(initialProjectCards);
 
   useEffect(() => {
     setHomePageData(initialHomePageData);
   }, [initialHomePageData]);
 
   useEffect(() => {
+    if (!isLocaleReady) return;
+
     let cancelled = false;
 
     if (locale === "en" && initialHomePageData) {
@@ -56,7 +61,35 @@ export default function HomeCmsSections({
     return () => {
       cancelled = true;
     };
-  }, [locale, initialHomePageData]);
+  }, [locale, isLocaleReady, initialHomePageData]);
+
+  useEffect(() => {
+    if (!isLocaleReady) return;
+
+    let cancelled = false;
+
+    void (async () => {
+      try {
+        const res = await fetch(
+          `/api/works?locale=${encodeURIComponent(locale)}`,
+        );
+        if (!res.ok || cancelled) return;
+        const data = (await res.json()) as WorksApiResponse;
+        if (cancelled) return;
+        setFeaturedProject(data.featuredProject);
+        setProjectCards(data.projectCards);
+      } catch {
+        if (!cancelled) {
+          setFeaturedProject(initialFeatured);
+          setProjectCards(initialProjectCards);
+        }
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [locale, isLocaleReady, initialFeatured, initialProjectCards]);
 
   return (
     <>

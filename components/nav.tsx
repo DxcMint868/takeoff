@@ -78,9 +78,9 @@ const Nav = ({
 
   return (
     <header
-      className={`sticky top-0 z-[99] flex w-full max-w-full shrink-0 flex-row items-center justify-between self-stretch px-[30px] py-5 box-border transition-[background-color,opacity] duration-300 ease-in-out ${scrolled ? "bg-dark opacity-90" : "bg-transparent"} ${className}`}
+      className={`sticky top-0 z-[150] flex w-full max-w-full shrink-0 flex-row items-center justify-between self-stretch px-[30px] py-5 box-border transition-[background-color,opacity] duration-300 ease-in-out ${scrolled ? "bg-dark opacity-90" : "bg-transparent"} ${className}`}
     >
-      <div className="pointer-events-none h-full w-full absolute !m-[0] top-[0px] right-[0px] bottom-[0px] left-[0px]" />
+      <div className="pointer-events-none absolute inset-0 z-0" aria-hidden />
       <Link
         id="nav-logo"
         href={lp("/")}
@@ -99,7 +99,7 @@ const Nav = ({
       </Link>
 
       {/* Nav links — uniformly distributed across remaining space */}
-      <nav className="flex flex-1 flex-row items-center justify-evenly px-6 text-left text-base font-reg mq1100:hidden">
+      <nav className="relative z-[2] flex flex-1 flex-row items-center justify-evenly px-6 text-left text-base font-reg mq1100:hidden">
         <Link href={lp("/#our-service")} className={navInactive}>
           {t("nav.services")}
         </Link>
@@ -118,7 +118,7 @@ const Nav = ({
       </nav>
 
       {/* Right cluster */}
-      <div className="flex shrink-0 items-center gap-5">
+      <div className="relative z-[2] flex shrink-0 items-center gap-5">
         <NavLanguageSelect />
 
         <div className="mq1100:hidden shrink-0">
