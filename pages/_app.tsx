@@ -3,20 +3,16 @@ import App from "next/app";
 import Head from "next/head";
 import Script from "next/script";
 import { BlogRouteProgress } from "../components/blog-route-progress";
+import { HtmlLangSync } from "../components/html-lang-sync";
 import { OgLocaleMeta } from "../components/og-locale-meta";
 import { LocaleProvider } from "../contexts/locale-context";
+import { localeFromPathname } from "../lib/i18n/routing";
 import type { AppLocaleCode } from "../lib/strapi/language";
-import { isAppLocale } from "../lib/strapi/language";
 import "./global.css";
 
 type HoasenAppProps = AppProps & {
   ssrLocale: AppLocaleCode;
 };
-
-function localeFromPath(path: string): AppLocaleCode {
-  const seg = path.split("?")[0]?.split("#")[0]?.split("/").filter(Boolean)[0];
-  return seg && isAppLocale(seg) ? seg : "en";
-}
 
 function MyApp({ Component, pageProps, ssrLocale }: HoasenAppProps) {
   return (
@@ -46,6 +42,7 @@ function MyApp({ Component, pageProps, ssrLocale }: HoasenAppProps) {
       </Script>
 
       <LocaleProvider>
+        <HtmlLangSync ssrLocale={ssrLocale} />
         <OgLocaleMeta ssrLocale={ssrLocale} />
         <BlogRouteProgress />
         <Component {...pageProps} />
@@ -59,7 +56,7 @@ MyApp.getInitialProps = async (appContext: AppContext) => {
   const path = appContext.ctx.asPath ?? "";
   return {
     ...appProps,
-    ssrLocale: localeFromPath(path),
+    ssrLocale: localeFromPathname(path),
   };
 };
 

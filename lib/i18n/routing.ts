@@ -5,6 +5,13 @@ export const DEFAULT_LOCALE: AppLocaleCode = "en";
 
 export { APP_LOCALE_CODES, isAppLocale };
 
+/** First path segment when it is an app locale (e.g. `/vi/works` → `vi`). */
+export function localeFromPathname(pathOnly: string): AppLocaleCode {
+  const path = pathOnly.split("?")[0]?.split("#")[0] ?? "";
+  const seg = path.split("/").filter(Boolean)[0];
+  return seg && isAppLocale(seg) ? seg : DEFAULT_LOCALE;
+}
+
 /** Public site origin (canonical). No trailing slash. */
 export function siteOrigin(): string {
   const raw =
