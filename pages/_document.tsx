@@ -1,15 +1,13 @@
 import Document, { Html, Head, Main, NextScript } from "next/document";
 import type { DocumentContext } from "next/document";
-import { isAppLocale } from "../lib/strapi/language";
+import { localeFromPathname } from "../lib/i18n/routing";
 
 type DocProps = { lang: string };
 
 export default class MyDocument extends Document<DocProps> {
   static async getInitialProps(ctx: DocumentContext) {
     const initialProps = await Document.getInitialProps(ctx);
-    const path = ctx.asPath?.split("?")[0]?.split("#")[0] ?? "";
-    const seg = path.split("/").filter(Boolean)[0];
-    const lang = isAppLocale(seg) ? seg : "en";
+    const lang = localeFromPathname(ctx.asPath ?? "");
     return { ...initialProps, lang };
   }
 
