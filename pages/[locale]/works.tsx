@@ -43,8 +43,8 @@ export const getStaticProps: GetStaticProps<WorksPageProps> = async (ctx) => {
   if (!isAppLocale(locale)) return { notFound: true };
 
   const [cmsWorks, designProjectCards] = await Promise.all([
-    fetchWorksData("en"),
-    fetchDesignProjectCards("en"),
+    fetchWorksData(locale),
+    fetchDesignProjectCards(locale),
   ]);
 
   return {

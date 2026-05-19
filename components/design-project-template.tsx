@@ -1,9 +1,12 @@
+"use client";
+
 import Image from "next/image";
 import ContactSection from "./contact-section";
 import DesignGallery from "./design-gallery";
 import { GradientBorderCard } from "./gradient-border-card";
 import { TeamMemberGrid } from "./member-grid";
 import { caseStudyTeamMembersToTeamGridMembers } from "../lib/team-grid-member";
+import { useTranslation } from "../lib/i18n/use-translation";
 import StrapiBlocks from "./strapi-blocks";
 import type { DesignProjectViewModel } from "../lib/strapi/design-projects";
 
@@ -14,6 +17,8 @@ type DesignProjectTemplateProps = {
 export default function DesignProjectTemplate({
   designProject,
 }: DesignProjectTemplateProps) {
+  const { t } = useTranslation();
+
   return (
     <main className="relative flex w-full flex-col items-center overflow-x-clip bg-dark text-white">
       {/* ------------------------------------------------------------------ */}
@@ -58,7 +63,7 @@ export default function DesignProjectTemplate({
               {designProject.heroTags.length > 0 ? (
                 <div className="mt-10">
                   <p className="m-0 font-reg text-[10px] font-semibold uppercase leading-3 tracking-[2px] text-white opacity-[0.6]">
-                    What we did:
+                    {t("caseStudy.whatWeDid")}
                   </p>
                   <div className="mt-4 flex flex-wrap gap-3">
                     {designProject.heroTags.map((tag) => (
@@ -89,7 +94,7 @@ export default function DesignProjectTemplate({
               backgroundClassName="pointer-events-none object-cover object-right"
             >
               <h2 className="m-0 font-sora text-[40px] font-semibold capitalize leading-none mq900:text-[32px] mq900:leading-[1.2] mq450:text-5xl">
-                Brief &amp; Background
+                {t("caseStudy.briefAndBackground")}
               </h2>
               <StrapiBlocks
                 blocks={designProject.briefAndBackground.descriptionBlocks}
@@ -149,7 +154,7 @@ export default function DesignProjectTemplate({
               backgroundClassName="pointer-events-none object-cover object-right"
             >
               <h2 className="m-0 font-sora text-[40px] font-semibold capitalize leading-none mq900:text-[32px] mq900:leading-[1.2] mq450:text-5xl">
-                Outcome
+                {t("caseStudy.outcome")}
               </h2>
               <StrapiBlocks
                 blocks={designProject.outcome.descriptionBlocks}
@@ -173,12 +178,12 @@ export default function DesignProjectTemplate({
       <section className="w-full bg-dark px-5 py-10">
         <div className="mx-auto flex max-w-[1132px] flex-col items-center gap-4">
           <p className="m-0 font-reg text-[10px] font-semibold uppercase leading-3 tracking-[2px] text-white/70">
-            Download Deck
+            {t("branding.downloadDeck")}
           </p>
           <button
             type="button"
             disabled
-            aria-label="Download deck (coming soon)"
+            aria-label={t("branding.downloadDeckAria")}
             className="cursor-not-allowed bg-transparent border-none p-0"
           >
             <Image
@@ -198,7 +203,7 @@ export default function DesignProjectTemplate({
         <section className="w-full bg-dark px-5 py-16 mq900:py-14">
           <div className="mb-10 text-center">
             <h2 className="m-0 font-sora text-[32px] font-semibold leading-none mq450:text-2xl">
-              Project Team
+              {t("caseStudy.projectTeam")}
             </h2>
           </div>
           <TeamMemberGrid

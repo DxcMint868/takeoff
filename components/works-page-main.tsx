@@ -144,7 +144,7 @@ const WorksPageMain = ({
 
           <div className="mx-auto box-border flex w-full max-w-[388px] flex-col rounded-[40px] border border-solid border-white-30 bg-dark/30 px-5 py-2.5 backdrop-blur-sm mq450:mx-4 mq450:w-auto">
             <label className="flex flex-row items-center gap-3">
-              <span className="sr-only">Search projects</span>
+              <span className="sr-only">{t("works.searchLabel")}</span>
               <svg
                 className="size-5 shrink-0 text-white/70"
                 viewBox="0 0 24 24"
@@ -163,7 +163,7 @@ const WorksPageMain = ({
                 type="search"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search..."
+                placeholder={t("works.search")}
                 className="min-w-0 flex-1 border-0 bg-transparent py-2 font-reg text-sm font-medium leading-[22px] tracking-[0.02em] text-white placeholder:text-white/70 outline-none focus:ring-0"
               />
             </label>
@@ -219,7 +219,9 @@ const WorksPageMain = ({
                       {card.thumbnailUrl ? (
                         <Image
                           src={card.thumbnailUrl}
-                          alt={`${card.title} branding`}
+                          alt={t("works.branding.thumbnailAlt", {
+                            title: card.title,
+                          })}
                           fill
                           className="object-cover object-center motion-safe:scale-[1.02] motion-safe:transform-gpu"
                           sizes="(max-width: 700px) 100vw, 358px"
@@ -237,7 +239,9 @@ const WorksPageMain = ({
                         <div className="relative h-16 w-full">
                           <Image
                             src={card.heroLogoUrl}
-                            alt={`${card.title} logo`}
+                            alt={t("works.branding.logoAlt", {
+                              title: card.title,
+                            })}
                             fill
                             unoptimized
                             className="object-contain transform-gpu"
@@ -275,7 +279,9 @@ const WorksPageMain = ({
                       <div className="absolute -right-2 -top-2 z-10 box-border flex size-[72px] shrink-0 items-center justify-center overflow-hidden rounded-full bg-[#1B1333] shadow-[inset_0_0_0_2px_#1B1333,0_0_0_2px_#1B1333] isolate">
                         <Image
                           src={card.logoUrl}
-                          alt={`${card.title} logo`}
+                          alt={t("works.branding.logoAlt", {
+                            title: card.title,
+                          })}
                           width={72}
                           height={72}
                           unoptimized
