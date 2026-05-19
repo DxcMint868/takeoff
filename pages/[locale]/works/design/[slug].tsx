@@ -7,8 +7,9 @@ import Head from "next/head";
 import FooterComponent from "../../../../components/footer-component";
 import { HreflangLinks } from "../../../../components/hreflang-links";
 import Nav from "../../../../components/nav";
-import DesignProjectTemplate from "../../../../components/design-project-template";
+import DesignProjectLoader from "../../../../components/design-project-loader";
 import { buildHreflangAlternates } from "../../../../lib/i18n/hreflang";
+import { translate } from "../../../../lib/i18n/dictionaries";
 import { localeAbsoluteUrl, siteOrigin } from "../../../../lib/i18n/routing";
 import type { AppLocaleCode } from "../../../../lib/strapi/language";
 import { APP_LOCALE_CODES, isAppLocale } from "../../../../lib/strapi/language";
@@ -23,6 +24,8 @@ const SITE_ROOT = siteOrigin();
 type DesignProjectPageProps = {
   designProject: DesignProjectViewModel;
   locale: AppLocaleCode;
+  metaTitle: string;
+  metaDescription: string;
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -46,11 +49,23 @@ export const getStaticProps: GetStaticProps<DesignProjectPageProps> = async (
   const slug = String(context.params?.slug || "").trim();
   if (!slug) return { notFound: true, revalidate: 60 };
 
-  const result = await fetchDesignProjectBySlug(slug);
+  const result = await fetchDesignProjectBySlug(slug, locale);
   if (!result.designProject) return { notFound: true, revalidate: 120 };
 
+  const metaTitle = translate(locale, "branding.meta.title", {
+    title: result.designProject.title,
+  });
+  const metaDescription = translate(locale, "branding.meta.description", {
+    title: result.designProject.title,
+  });
+
   return {
-    props: { designProject: result.designProject, locale },
+    props: {
+      designProject: result.designProject,
+      locale,
+      metaTitle,
+      metaDescription,
+    },
     revalidate: 60,
   };
 };
@@ -58,6 +73,8 @@ export const getStaticProps: GetStaticProps<DesignProjectPageProps> = async (
 export default function DesignProjectPage({
   designProject,
   locale,
+  metaTitle,
+  metaDescription,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const canonical = localeAbsoluteUrl(
     locale,
@@ -68,8 +85,6 @@ export default function DesignProjectPage({
   );
   const homeUrl = localeAbsoluteUrl(locale, "/");
   const worksUrl = localeAbsoluteUrl(locale, "/works");
-  const metaTitle = `${designProject.title} — Design Case Study | Hoasen`;
-  const metaDescription = `Explore the ${designProject.title} brand identity designed by Hoasen.`;
   const metaOgImage =
     designProject.heroImage?.url || `${SITE_ROOT}/og-image.png`;
 
@@ -77,11 +92,16 @@ export default function DesignProjectPage({
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: homeUrl },
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: translate(locale, "nav.home"),
+        item: homeUrl,
+      },
       {
         "@type": "ListItem",
         position: 2,
-        name: "Works",
+        name: translate(locale, "nav.works"),
         item: worksUrl,
       },
       {
@@ -129,7 +149,7 @@ export default function DesignProjectPage({
 
       <div className="w-full min-h-screen bg-dark leading-[normal] tracking-[normal] text-left text-3xl text-white font-sora mq450:min-h-0">
         <Nav initialTransparent scrollThreshold={80} />
-        <DesignProjectTemplate designProject={designProject} />
+        <DesignProjectLoader initialDesignProject={designProject} />
         <FooterComponent />
       </div>
     </>
