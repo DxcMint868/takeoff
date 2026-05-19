@@ -13,6 +13,7 @@ import {
   persistLocalePreference,
   readLocaleFromStorage,
 } from "../lib/i18n/locale-preference";
+import { localeFromPathname } from "../lib/i18n/routing";
 import type { AppLocaleCode } from "../lib/strapi/language";
 import { APP_LOCALE_CODES, isAppLocale } from "../lib/strapi/language";
 
@@ -25,32 +26,63 @@ type LocaleContextValue = {
 
 const LocaleContext = createContext<LocaleContextValue | null>(null);
 
+function localeFromRouter(
+  asPath: string,
+  queryLocale: string | string[] | undefined,
+): AppLocaleCode {
+  const fromQuery =
+    typeof queryLocale === "string"
+      ? queryLocale
+      : Array.isArray(queryLocale)
+        ? queryLocale[0]
+        : null;
+  if (fromQuery && isAppLocale(fromQuery)) return fromQuery;
+  return localeFromPathname(asPath);
+}
+
 export function LocaleProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const [locale, setLocaleState] = useState<AppLocaleCode>("en");
   const [isLocaleReady, setIsLocaleReady] = useState(false);
 
+  const applyLocale = useCallback((code: AppLocaleCode) => {
+    setLocaleState(code);
+    persistLocalePreference(code);
+    setIsLocaleReady(true);
+  }, []);
+
   useEffect(() => {
     if (!router.isReady) return;
 
-    const raw = router.query.locale;
-    const fromUrl =
-      typeof raw === "string" ? raw : Array.isArray(raw) ? raw[0] : null;
+    const resolved = localeFromRouter(router.asPath, router.query.locale);
+    const seg = router.asPath.split("?")[0]?.split("#")[0]?.split("/").filter(Boolean)[0];
+    applyLocale(
+      seg && isAppLocale(seg) ? resolved : readLocaleFromStorage() ?? resolved,
+    );
+  }, [router.isReady, router.asPath, router.query.locale, applyLocale]);
 
-    if (fromUrl && isAppLocale(fromUrl)) {
-      setLocaleState(fromUrl);
-      persistLocalePreference(fromUrl);
-    } else {
-      setLocaleState(readLocaleFromStorage() ?? "en");
-    }
+  useEffect(() => {
+    const onRouteStart = (url: string) => {
+      applyLocale(localeFromPathname(url));
+    };
+    const onRouteComplete = (url: string) => {
+      applyLocale(localeFromPathname(url));
+    };
 
-    setIsLocaleReady(true);
-  }, [router.isReady, router.query.locale]);
+    router.events.on("routeChangeStart", onRouteStart);
+    router.events.on("routeChangeComplete", onRouteComplete);
+    return () => {
+      router.events.off("routeChangeStart", onRouteStart);
+      router.events.off("routeChangeComplete", onRouteComplete);
+    };
+  }, [router.events, applyLocale]);
 
-  const setLocale = useCallback((code: AppLocaleCode) => {
-    setLocaleState(code);
-    persistLocalePreference(code);
-  }, []);
+  const setLocale = useCallback(
+    (code: AppLocaleCode) => {
+      applyLocale(code);
+    },
+    [applyLocale],
+  );
 
   const value = useMemo(
     () => ({ locale, isLocaleReady, setLocale }),
